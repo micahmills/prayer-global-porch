@@ -1,7 +1,7 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark pb_navbar pb_scrolled-light" id="pb-navbar">
     <div class="container">
-        <a class="navbar-brand" href="/">Site Name</a>
+        <a class="navbar-brand" href="/">Prayer.Global</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#probootstrap-navbar" aria-controls="probootstrap-navbar" aria-expanded="false" aria-label="Toggle navigation">
             <span><i class="ion-navicon"></i></span>
         </button>
@@ -10,8 +10,8 @@
                 <li class="nav-item"><a class="nav-link" href="#section-home">Home</a></li>
                 <li class="nav-item"><a class="nav-link" href="#section-about">About</a></li>
                 <li class="nav-item"><a class="nav-link" href="#section-why-us">Why</a></li>
-                <li class="nav-item"><a class="nav-link" href="#section-areas">Areas</a></li>
-                <li class="nav-item"><a class="nav-link" href="#section-team">Team</a></li>
+                <li class="nav-item"><a class="nav-link" href="#section-areas">Map</a></li>
+<!--                <li class="nav-item"><a class="nav-link" href="#section-team">Team</a></li>-->
                 <li class="nav-item"><a class="nav-link" href="#section-testimonials">Testimonials</a></li>
                 <li class="nav-item"><a class="nav-link" href="#section-contact">Contact</a></li>
             </ul>
@@ -20,14 +20,14 @@
 </nav>
 <!-- END nav -->
 
-<section class="pb_cover_v1 text-left cover-bg-black cover-bg-opacity-4" style="background-image: url(<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) ) ?>assets/images/1900x1200_img_7.jpg)" id="section-home">
+<section class="pb_cover_v1 text-left cover-bg-black cover-bg-opacity-4" style="background-image: url(<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) ) ?>assets/images/1900x1200_img_1.jpg)" id="section-home">
     <div class="container">
         <div class="row align-items-center justify-content-end">
             <div class="col-md-6  order-md-1">
 
-                <h2 class="heading mb-3">Site</h2>
-                <div class="sub-heading"><p class="mb-5">Praying for a disciple making movement</p>
-                    <p><a href="#section-contact" role="button" class="btn smoothscroll pb_outline-light btn-xl pb_font-13 p-4 rounded-0 pb_letter-spacing-2">Join Us</a></p>
+                <h2 class="heading mb-3">Cover the World in Prayer</h2>
+                <div class="sub-heading"><p class="mb-5">Join us in praying for each part of the world together. Measurable, informative, community driven, saturation prayer.</p>
+                    <p><a href="/map_app/lap1" role="button" class="btn smoothscroll pb_outline-light btn-xl pb_font-13 p-4 rounded-0 pb_letter-spacing-2">Join Us</a></p>
                 </div>
 
             </div>
@@ -41,9 +41,25 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-5 pr-md-5 pr-sm-0">
-                <h2 class="mt-0 heading-border-top mb-3 font-weight-normal">Who We Are</h2>
-                <p>No one has ever gone into heaven except the one who came from heaven—the Son of Man. Just as Moses lifted up the snake in the wilderness, so the Son of Man must be lifted up, that everyone who believes may have eternal life in him.</p>
-                <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
+                <h2 class="mt-0 heading-border-top mb-3 font-weight-normal">About Prayer Laps</h2>
+                <p>
+                    A prayer lap is when our prayer community has prayed over every location in the world.
+                </p>
+                <p>
+                    We have selected 38,229 administrative divisions from world governments and made it a selectable map.
+                    As a prayer community, we can select and pray over each location in the world, knowing where the
+                    rest of the community has already prayed.
+                </p>
+                <p>
+                    Inspired by the <a href="https://www.christianitytoday.com/history/issues/issue-1/prayer-meeting-that-lasted-100-years.html">Moravians</a>
+                    and the knowledge that every disciple making movement in history has begun with extraordinary prayer. We have crafted this prayer
+                    app to help the church pray for the entire work in measurable units, as a community, know at the end when we have finished ... and are ready to start
+                    another lap.
+                </p>
+                <p>
+                    Once every location in the world has been prayed for, we finish a lap. The prayer map resets and we try to pray over the world again
+                    ... maybe faster.
+                </p>
             </div>
             <div class="col-lg-7">
                 <div class="images">
@@ -99,8 +115,8 @@
         <div class="row align-items-center">
             <div class="col-md-12">
                 <h2 class="heading mb-3">Join Us</h2>
-                <p class="sub-heading mb-5 pb_color-light-opacity-8">I have spoken to you of earthly things and you do not believe</p>
-                <p><a href="#section-contact" role="button" class="btn smoothscroll pb_outline-light p-3 rounded-0 pb_font-13 pb_letter-spacing-2">Get Started</a></p>
+                <p class="sub-heading mb-5 pb_color-light-opacity-8">Join us and add your prayer over a part of the world.</p>
+                <p><a href="/map_app/lap1" role="button" class="btn smoothscroll pb_outline-light p-3 rounded-0 pb_font-13 pb_letter-spacing-2">Get Started</a></p>
             </div>
         </div>
 
@@ -112,7 +128,7 @@
     <div class="container">
         <div class="row justify-content-md-center text-center mb-5">
             <div class="col-lg-7">
-                <h2 class="mt-0 heading-border-top font-weight-normal">Why Us</h2>
+                <h2 class="mt-0 heading-border-top font-weight-normal">Why</h2>
                 <p>No one has ever gone into heaven except the one who came from heaven—the Son of Man. Just as Moses lifted up the snake in the wilderness, so the Son of Man must be lifted up, that everyone who believes may have eternal life in him.</p>
             </div>
         </div>
@@ -233,7 +249,7 @@
     <div class="container">
         <div class="row justify-content-md-center text-center mb-5">
             <div class="col-lg-7">
-                <h2 class="mt-0 heading-border-top font-weight-normal">Areas</h2>
+                <h2 class="mt-0 heading-border-top font-weight-normal">Map</h2>
                 <p>Very truly I tell you, we speak of what we know, and we testify to what we have seen, but still you people do not accept our testimony. I have spoken to you of earthly things and you do not believe; how then will you believe if I speak of heavenly things?</p>
             </div>
         </div>
@@ -313,56 +329,16 @@
     </div>
 </section>
 <!-- END section -->
-
-<section class="pb_section bg-light bg-image with-overlay" data-section="attorneys" id="section-team" style="background-image: url(<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) ) ?>assets/images/1900x1200_img_2.jpg)">
+<style>
+    .white {
+        color: white;
+    }
+</style>
+<section class="pb_section bg-light bg-image with-overlay" style="background-image: url(<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) ) ?>assets/images/1900x1200_img_2.jpg)" data-section="testimonials" id="section-testimonials">
     <div class="container">
         <div class="row justify-content-md-center text-center mb-5">
-            <div class="col-lg-7">
-                <h2 class="mt-0 heading-border-top light font-weight-normal text-white">Attorneys</h2>
-                <p class="text-white">No one has ever gone into heaven except the one who came from heaven—the Son of Man. Just as Moses lifted up the snake in the wilderness, so the Son of Man must be lifted up, that everyone who believes may have eternal life in him.</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md">
-                <div class="card text-center pb_card_v1 mb-4">
-                    <img class="card-img-top rounded-circle w-50 mx-auto" src="<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) ) ?>assets/images/square_img_5.jpg" alt="Card image cap">
-                    <div class="card-body">
-                        <h4 class="card-title mt-0 mb-2">Richard Wilson</h4>
-                        <h6 class="card-subtitle mb-2">Disciple-Maker</h6>
-                        <p><a href="#">Read Full Bio</a></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md">
-                <div class="card text-center pb_card_v1 mb-4">
-                    <img class="card-img-top rounded-circle w-50 mx-auto" src="<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) ) ?>assets/images/square_img_5.jpg" alt="Card image cap">
-                    <div class="card-body">
-                        <h4 class="card-title mt-0 mb-2">Steve White</h4>
-                        <h6 class="card-subtitle mb-2">Disciple-Maker</h6>
-                        <p><a href="#">Read Full Bio</a></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md">
-                <div class="card text-center pb_card_v1 mb-4">
-                    <img class="card-img-top rounded-circle w-50 mx-auto" src="<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) ) ?>assets/images/square_img_5.jpg" alt="Card image cap">
-                    <div class="card-body">
-                        <h4 class="card-title mt-0 mb-2">Ryan David</h4>
-                        <h6 class="card-subtitle mb-2">Disciple-Maker</h6>
-                        <p><a href="#">Read Full Bio</a></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-
-<section class="pb_section pb_testimonial_v1" data-section="testimonials" id="section-testimonials">
-    <div class="container">
-        <div class="row justify-content-md-center text-center mb-5">
-            <div class="col-lg-7">
-                <h2 class="mt-0 heading-border-top font-weight-normal">Testimonies</h2>
+            <div class="col-lg-7 white">
+                <h2 class="mt-0 heading-border-top font-weight-normal white">Testimonies</h2>
                 <p>Very truly I tell you, no one can enter the kingdom of God unless they are born of water and the Spirit. Flesh gives birth to flesh, but the Spirit gives birth to spirit.</p>
             </div>
         </div>
@@ -370,23 +346,23 @@
             <div class="col-md-10 col-sm-12 mb-5">
                 <div class="single-item-no-arrow pb_slide_v1">
                     <div>
-                        <div class="media">
+                        <div class="media white">
                             <img class="d-flex img-fluid rounded-circle mb-sm-5" src="<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) ) ?>assets/images/square_img_5.jpg" alt="Generic placeholder image">
                             <div class="media-body pl-md-5 pl-sm-0">
-                                <blockquote>
-                                    <p>Now there was a Pharisee, a man named Nicodemus who was a member of the Jewish ruling council. He came to Jesus at night and said, "Rabbi, we know that you are a teacher who has come from God. For no one could perform the signs you are doing if God were not with him."</p>
-                                    <p class="pb_author"><citeclass="text-uppercase">John Smith</cite></p>
+                                <blockquote >
+                                    <p class="white">Now there was a Pharisee, a man named Nicodemus who was a member of the Jewish ruling council. He came to Jesus at night and said, "Rabbi, we know that you are a teacher who has come from God. For no one could perform the signs you are doing if God were not with him."</p>
+                                    <p class="pb_author"><cite class="text-uppercase white">John Smith</cite></p>
                                 </blockquote>
                             </div>
                         </div>
                     </div>
                     <div>
-                        <div class="media">
+                        <div class="media white">
                             <img class="d-flex img-fluid rounded-circle mb-sm-5" src="<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) ) ?>assets/images/square_img_5.jpg" alt="Generic placeholder image">
                             <div class="media-body pl-md-5 pl-sm-0">
                                 <blockquote>
-                                    <p>&ldquo;A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.&rdquo;</p>
-                                    <p class="pb_author"><cite class="text-uppercase">John Smith</cite></p>
+                                    <p class="white">&ldquo;A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.&rdquo;</p>
+                                    <p class="pb_author"><cite class="text-uppercase white">John Smith</cite></p>
                                 </blockquote>
                             </div>
                         </div>
@@ -400,7 +376,7 @@
 </section>
 <!-- END section -->
 
-<section class="pb_section bg-light">
+<section class="pb_section bg-light"  >
     <div class="container">
         <div class="row">
             <div class="col-lg">
