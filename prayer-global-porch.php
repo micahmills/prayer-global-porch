@@ -80,7 +80,6 @@ class DT_Porch_Template {
 
         require_once( 'global-prayer-map/loader.php' );
 
-        require_once( 'landing-pages/loader.php' );
 
         if ( is_admin() ) {
             require_once( 'support/required-plugins/class-tgm-plugin-activation.php' );
