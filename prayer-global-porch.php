@@ -24,7 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 
 /**
- * Gets the instance of the `DT_Porch_Template` class.
+ * Gets the instance of the `Prayer_Global_Porch` class.
  *
  * @since  0.1
  * @access public
@@ -54,7 +54,7 @@ function prayer_global_porch() {
         require_once get_template_directory() . '/dt-core/global-functions.php';
     }
 
-    return DT_Porch_Template::instance();
+    return Prayer_Global_Porch::instance();
 }
 add_action( 'after_setup_theme', 'prayer_global_porch', 20 );
 
@@ -64,7 +64,7 @@ add_action( 'after_setup_theme', 'prayer_global_porch', 20 );
  * @since  0.1
  * @access public
  */
-class DT_Porch_Template {
+class Prayer_Global_Porch {
 
     private static $_instance = null;
     public static function instance() {
@@ -76,15 +76,9 @@ class DT_Porch_Template {
 
     private function __construct() {
 
-        require_once( 'home-2/loader.php' ); /* Simple, Big images, White and Image */
+        require_once( 'home/loader.php' ); /* Simple, Big images, White and Image */
 
-        require_once( 'global-prayer-map/loader.php' );
-
-
-        if ( is_admin() ) {
-            require_once( 'support/required-plugins/class-tgm-plugin-activation.php' );
-            require_once( 'support/required-plugins/config-required-plugins.php' );
-        }
+        require_once( 'magic-app/loader.php' );
 
         if ( is_admin() ){
             add_filter( 'plugin_row_meta', [ $this, 'plugin_description_links' ], 10, 4 ); // admin plugin page description
@@ -191,8 +185,8 @@ class DT_Porch_Template {
 
 
 // Register activation hook.
-register_activation_hook( __FILE__, [ 'DT_Porch_Template', 'activation' ] );
-register_deactivation_hook( __FILE__, [ 'DT_Porch_Template', 'deactivation' ] );
+register_activation_hook( __FILE__, [ 'Prayer_Global_Porch', 'activation' ] );
+register_deactivation_hook( __FILE__, [ 'Prayer_Global_Porch', 'deactivation' ] );
 
 
 if ( ! function_exists( 'prayer_global_porch_hook_admin_notice' ) ) {
@@ -240,47 +234,24 @@ if ( ! function_exists( "dt_hook_ajax_notice_handler" )){
     }
 }
 
-/**
- * Plugin Releases and updates
- * @todo Uncomment and change the url if you want to support remote plugin updating with new versions of your plugin
- * To remove: delete the section of code below and delete the file called version-control.json in the plugin root
- *
- * This section runs the remote plugin updating service, so you can issue distributed updates to your plugin
- *
- * @note See the instructions for version updating to understand the steps involved.
- * @link https://github.com/Pray4Movement/prayer-global-porch/wiki/Configuring-Remote-Updating-System
- *
- * @todo Enable this section with your own hosted file
- * @todo An example of this file can be found in (version-control.json)
- * @todo Github is a good option for delivering static json.
- */
-/**
- * Check for plugin updates even when the active theme is not Disciple.Tools
- *
- * Below is the publicly hosted .json file that carries the version information. This file can be hosted
- * anywhere as long as it is publicly accessible. You can download the version file listed below and use it as
- * a template.
- * Also, see the instructions for version updating to understand the steps involved.
- * @see https://github.com/DiscipleTools/disciple-tools-version-control/wiki/How-to-Update-the-Starter-Plugin
- */
-//add_action( 'plugins_loaded', function (){
-//    if ( is_admin() ){
-//        // Check for plugin updates
-//        if ( ! class_exists( 'Puc_v4_Factory' ) ) {
-//            if ( file_exists( get_template_directory() . '/dt-core/libraries/plugin-update-checker/plugin-update-checker.php' )){
-//                require( get_template_directory() . '/dt-core/libraries/plugin-update-checker/plugin-update-checker.php' );
-//            }
-//        }
-//        if ( class_exists( 'Puc_v4_Factory' ) ){
-//            Puc_v4_Factory::buildUpdateChecker(
-//                'https://raw.githubusercontent.com/Pray4Movement/prayer-global-porch/master/version-control.json',
-//                __FILE__,
-//                'prayer-global-porch'
-//            );
-//
-//        }
-//    }
-//} );
+add_action( 'plugins_loaded', function (){
+    if ( is_admin() ){
+        // Check for plugin updates
+        if ( ! class_exists( 'Puc_v4_Factory' ) ) {
+            if ( file_exists( get_template_directory() . '/dt-core/libraries/plugin-update-checker/plugin-update-checker.php' )){
+                require( get_template_directory() . '/dt-core/libraries/plugin-update-checker/plugin-update-checker.php' );
+            }
+        }
+        if ( class_exists( 'Puc_v4_Factory' ) ){
+            Puc_v4_Factory::buildUpdateChecker(
+                'https://raw.githubusercontent.com/Pray4Movement/prayer-global-porch/master/version-control.json',
+                __FILE__,
+                'prayer-global-porch'
+            );
+
+        }
+    }
+} );
 
 
 

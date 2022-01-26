@@ -17,7 +17,7 @@ if ( ! defined( 'PORCH_TOKEN' ) ) {
     define( 'PORCH_TOKEN', 'porch_app_2' ); // Alphanumeric key. Use underscores not hyphens. No special characters. Must be less than 20 characters
 }
 
-class DT_Porch_Template_Home_2 extends DT_Magic_Url_Base
+class Prayer_Global_Porch_Home_2 extends DT_Magic_Url_Base
 {
     public $magic = false;
     public $parts = false;
@@ -90,4 +90,4 @@ class DT_Porch_Template_Home_2 extends DT_Magic_Url_Base
         require_once( 'footer.php' );
     }
 }
-DT_Porch_Template_Home_2::instance();
+Prayer_Global_Porch_Home_2::instance();
