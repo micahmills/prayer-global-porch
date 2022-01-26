@@ -1,8 +1,8 @@
 <?php
 /**
- * Plugin Name: Prayer Global Porch
+ * Plugin Name: Prayer.Global Porch
  * Plugin URI: https://github.com/Pray4Movement/prayer-global-porch
- * Description: Front porch to the prayer.global prayer campaign
+ * Description: Prayer.Global front porch app for Disciple.Tools
  * Text Domain: prayer-global-porch
  * Domain Path: /languages
  * Version:  0.1
