@@ -6,10 +6,10 @@ class Prayer_Global_Porch_Map extends DT_Magic_Url_Base
     public $magic = false;
     public $parts = false;
     public $page_title = 'Global Prayer Map';
-    public $root = 'map_app';
-    public $type = 'lap1';
+    public $root = 'map';
+    public $type = 'lap';
     public $type_name = 'Global Prayer Map';
-    public static $token = 'map_app_lap1';
+    public static $token = 'map_lap';
     public $post_type = 'groups';
     public $us_div = 2500; // this is 2 for every 5000
     public $global_div = 2500; // this equals 2 for every 50000
@@ -59,8 +59,6 @@ class Prayer_Global_Porch_Map extends DT_Magic_Url_Base
         }
 
         if ( dt_is_rest() ) {
-//            require_once( 'rest.php' );
-//            add_filter( 'dt_allow_rest_access', [ $this, 'authorize_url' ], 10, 1 );
             require_once( 'queries.php' );
             add_action( 'rest_api_init', [ $this, 'add_endpoints' ] );
             add_filter( 'dt_allow_rest_access', [ $this, 'authorize_url' ], 10, 1 );

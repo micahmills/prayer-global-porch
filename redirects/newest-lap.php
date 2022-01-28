@@ -1,0 +1,43 @@
+<?php
+if ( !defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly.
+
+class Prayer_Global_Porch_Newest_Lap extends DT_Magic_Url_Base
+{
+    public $page_title = 'Prayer.Global';
+    public $root = 'newest';
+    public $type = 'lap';
+    public $url_token = 'newest/lap';
+    public $type_name = 'Newest Lap';
+    public $post_type = 'contacts';
+
+    private static $_instance = null;
+    public static function instance() {
+        if ( is_null( self::$_instance ) ) {
+            self::$_instance = new self();
+        }
+        return self::$_instance;
+    } // End instance()
+
+    public function __construct() {
+        parent::__construct();
+
+        $url = dt_get_url_path();
+
+        if ( substr( $url, 0, count($this->url_token ) ) !== $this->root . '/' . $this->type ) {
+            return;
+        }
+
+        $this->redirect();
+    }
+
+    public function redirect() {
+        $lap_id = dt_create_unique_key();
+
+        // @todo add logic to determine the current live lap
+
+        $link = '/map/lap/' . $lap_id;
+        wp_redirect( $link );
+    }
+
+}
+Prayer_Global_Porch_Newest_Lap::instance();

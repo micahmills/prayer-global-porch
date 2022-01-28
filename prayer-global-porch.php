@@ -79,6 +79,7 @@ class Prayer_Global_Porch {
         require_once( 'home/loader.php' ); /* Simple, Big images, White and Image */
 
         require_once( 'magic-app/loader.php' );
+        require_once( 'redirects/auto-loader.php');
 
         if ( is_admin() ){
             add_filter( 'plugin_row_meta', [ $this, 'plugin_description_links' ], 10, 4 ); // admin plugin page description

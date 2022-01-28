@@ -27,7 +27,7 @@
 
                 <h2 class="heading mb-3">Cover the World in Prayer</h2>
                 <div class="sub-heading"><p class="mb-5">Join us in praying for each part of the world together. Measurable, informative, community driven, saturation prayer.</p>
-                    <p><a href="/map_app/lap1" role="button" class="btn smoothscroll pb_outline-light btn-xl pb_font-13 p-4 rounded-0 pb_letter-spacing-2">Join Us</a></p>
+                    <p><a href="/newest/lap/" role="button" class="btn smoothscroll pb_outline-light btn-xl pb_font-13 p-4 rounded-0 pb_letter-spacing-2">Start Praying</a></p>
                 </div>
 
             </div>
