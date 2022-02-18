@@ -1,164 +1,431 @@
-<style id="custom-style">
-    #wrapper {
-        height: 2000px !important;
-    }
-    #map-wrapper {
-        height: 2000px !important;
-    }
-    #map {
-        height: 2000px !important;
-    }
-</style>
+<section class="pb_cover_v1 text-left cover-bg-black cover-bg-opacity-4" style="background-image: url(<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) ) ?>assets/images/map_background.jpg)" id="section-home">
+    <div class="container">
+        <div class="row align-items-center justify-content-end">
+            <div class="col-md-6  order-md-1">
 
-<div id="initialize-screen">
-    <div id="initialize-spinner-wrapper" class="center">
-        <progress class="success initialize-progress" max="46" value="0"></progress><br>
-        Loading the planet ...<br>
-        <span id="initialize-people" style="display:none;">Locating world population...</span><br>
-        <span id="initialize-activity" style="display:none;">Calculating movement activity...</span><br>
-        <span id="initialize-coffee" style="display:none;">Shamelessly brewing coffee...</span><br>
-        <span id="initialize-dothis" style="display:none;">Let's do this...</span><br>
-    </div>
-</div>
+                <h2 class="heading mb-3">Cover the World in Prayer</h2>
+                <div class="sub-heading"><p class="mb-5">Join us in praying for each part of the world together. Measurable, informative, community driven, saturation prayer.</p>
+                    <p><a href="/newest/lap/" role="button" class="btn smoothscroll pb_outline-light btn-xl pb_font-13 p-4 rounded-0 pb_letter-spacing-2">Start Praying</a></p>
+                </div>
 
-<div class="large reveal" id="welcome-modal" data-v-offset="10px" data-reveal>
-    <div id="welcome-content" data-close></div>
-    <div class="center"><button class="button" id="welcome-close-button" data-close>Get Started!</button></div>
-</div>
-
-
-<div id="wrapper">
-    <div class="grid-x">
-        <div class="cell medium-9" id="map-container">
-            <div id="map-wrapper">
-                <span class="loading-spinner active"></span>
-                <div id='map'></div>
             </div>
         </div>
-        <div class="cell medium-3" id="map-sidebar-wrapper">
-            <!-- details panel -->
-            <div id="details-panel">
-                <div class="grid-x grid-padding-x" >
-                    <div class="cell">
-                        <h1 id="title"></h1>
-                        <h3>Population: <span id="population">0</span></h3>
-                        <hr>
+    </div>
+</section>
+<!-- END section -->
+
+<section class="pb_section pb_section_v1" data-section="states" id="section-stats">
+    <div class="container">
+        <div class="row">
+            <div class="col-md text-center">
+                <h2 class="mt-0 heading-border-top mb-3 font-weight-normal">Current Lap</h2>
+                <h3 class="mt-0 pb_font-30">22 days, 10 hours, 5 min</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md">
+                <div class="media pb_media_v2 d-block text-center mb-3">
+                    <div class="icon border border-gray rounded-circle d-flex mr-3 display-4 mx-auto mb-4"><i class="flaticon text-secondary flaticon-law"></i></div>
+                    <div class="media-body">
+                        <h3 class="mt-0 pb_font-45">234</h3>
+                        <h3 class="mt-0 pb_font-20">Prayer Warriors</h3>
                     </div>
-                    <div class="cell">
-                        <h2 id="panel-type-title">Churches</h2>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="media pb_media_v2 d-block text-center mb-3">
+                    <div class="icon border border-gray rounded-circle d-block mr-3 display-4 mx-auto mb-4"><i class="flaticon text-secondary flaticon-jury"></i></div>
+                    <div class="media-body">
+                        <h3 class="mt-0 pb_font-45">2345</h3>
+                        <h3 class="mt-0 pb_font-20">Covered</h3>
                     </div>
-                    <div class="cell" id="needed-row">
-                        <h3>Needed: <span id="needed">0</span></h3>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="media pb_media_v2 d-block text-center  mb-3">
+                    <div class="icon border border-gray rounded-circle d-flex mr-3 display-4 mx-auto mb-4"><i class="flaticon text-secondary flaticon-jury"></i></i></div>
+                    <div class="media-body">
+                        <h3 class="mt-0 pb_font-45">345</h3>
+                        <h3 class="mt-0 pb_font-20">Remaining</h3>
                     </div>
-                    <div class="cell">
-                        <h3>Reported: <span id="reported">0</span></h3>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <br><br>
+        </div>
+        <div class="row">
+            <div class="col-md text-center">
+                <a href="/newest/lap/" role="button" class="btn smoothscroll pb_outline-dark btn-xl pb_font-13 p-4 rounded-0 pb_letter-spacing-2">Current Lap Map</a>
+                <a href="/newest/lap/" role="button" class="btn smoothscroll pb_outline-dark btn-xl pb_font-13 p-4 rounded-0 pb_letter-spacing-2">Login</a>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- END section -->
+
+<section class="pb_sm_py_cover text-center cover-bg-black cover-bg-opacity-4" style="background-image: url(<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) ) ?>assets/images/1900x1200_img_3.jpg)">
+    <div class="container">
+
+        <div class="row align-items-center">
+            <div class="col-md-12">
+                <h2 class="heading mb-3">Join Us</h2>
+                <p class="sub-heading mb-5 pb_color-light-opacity-8">Join us and add your prayer over a part of the world.</p>
+                <p><a href="/map_app/lap1" role="button" class="btn smoothscroll pb_outline-light btn-xl p-4 rounded-0 pb_font-13 pb_letter-spacing-2">Start Praying</a></p>
+            </div>
+        </div>
+
+    </div>
+</section>
+<!-- END section -->
+
+
+<section class="pb_section pb_section_v1" data-section="about" id="section-about">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-5 pr-md-5 pr-sm-0">
+                <h2 class="mt-0 heading-border-top mb-3 font-weight-normal">About Prayer Laps</h2>
+                <p>
+                    A prayer lap is when our prayer community has prayed over every location in the world.
+                </p>
+                <p>
+                    We have selected 38,229 administrative divisions from world governments and made it a selectable map.
+                    As a prayer community, we can select and pray over each location in the world, knowing where the
+                    rest of the community has already prayed.
+                </p>
+                <p>
+                    Inspired by the <a href="https://www.christianitytoday.com/history/issues/issue-1/prayer-meeting-that-lasted-100-years.html">Moravians</a>
+                    and the knowledge that every disciple making movement in history has begun with extraordinary prayer. We have crafted this prayer
+                    app to help the church pray for the entire work in measurable units, as a community, know at the end when we have finished ... and are ready to start
+                    another lap.
+                </p>
+                <p>
+                    Once every location in the world has been prayed for, we finish a lap. The prayer map resets and we try to pray over the world again
+                    ... maybe faster.
+                </p>
+            </div>
+            <div class="col-lg-7">
+                <div class="images">
+                    <img class="img1 img-fluid" src="<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) ) ?>assets/images/600x450_img_2.jpg" alt="image">
+                    <img class="img2" src="<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) ) ?>assets/images/800x500_img_1.jpg" alt="image">
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+<!-- END section -->
+
+
+
+<section class="pb_section">
+    <div class="multiple-items pb_slide_v1">
+        <div>
+            <a href="#" class="link-block">
+                <img src="<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) ) ?>assets/images/1900x1200_img_4.jpg" alt="" class="img-fluid">
+                <div class="slide-text">
+                    <h2>Reason 1</h2>
+                    <p>Read More</p>
+                </div>
+            </a>
+        </div>
+        <div>
+            <a href="#" class="link-block">
+                <img src="<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) ) ?>assets/images/1900x1200_img_2.jpg" alt="" class="img-fluid">
+                <div class="slide-text">
+                    <h2>Reason 2</h2>
+                    <span>Read More</span>
+                </div>
+            </a>
+        </div>
+        <div>
+            <a href="#" class="link-block">
+                <img src="<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) ) ?>assets/images/1900x1200_img_3.jpg" alt="" class="img-fluid">
+                <div class="slide-text">
+                    <h2>Reason 3</h2>
+                    <span>Read More</span>
+                </div>
+            </a>
+        </div>
+        <div>
+            <a href="#" class="link-block">
+                <img src="<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) ) ?>assets/images/1900x1200_img_4.jpg" alt="" class="img-fluid">
+                <div class="slide-text">
+                    <h2>Reason 4</h2>
+                    <span>Read More</span>
+                </div>
+            </a>
+        </div>
+        <div>
+            <a href="#" class="link-block">
+                <img src="<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) ) ?>assets/images/1900x1200_img_1.jpg" alt="" class="img-fluid">
+                <div class="slide-text">
+                    <h2>Reason 5</h2>
+                    <span>Read More</span>
+                </div>
+            </a>
+        </div>
+        <div>
+            <a href="#" class="link-block">
+                <img src="<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) ) ?>assets/images/1900x1200_img_2.jpg" alt="" class="img-fluid">
+                <div class="slide-text">
+                    <h2>Reason 6</h2>
+                    <span>Read More</span>
+                </div>
+            </a>
+        </div>
+        <div>
+            <a href="#" class="link-block">
+                <img src="<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) ) ?>assets/images/1900x1200_img_3.jpg" alt="" class="img-fluid">
+                <div class="slide-text">
+                    <h2>Reason 7</h2>
+                    <span>Read More</span>
+                </div>
+            </a>
+        </div>
+    </div>
+
+</section>
+<!-- END section -->
+
+
+
+
+<section class="pb_section" data-section="why-us" id="section-why-us">
+    <div class="container">
+        <div class="row justify-content-md-center text-center mb-5">
+            <div class="col-lg-7">
+                <h2 class="mt-0 heading-border-top font-weight-normal">Why</h2>
+                <p>No one has ever gone into heaven except the one who came from heaven—the Son of Man. Just as Moses lifted up the snake in the wilderness, so the Son of Man must be lifted up, that everyone who believes may have eternal life in him.</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-7">
+                <div class="images right">
+                    <img class="img1 img-fluid" src="<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) ) ?>assets/images/600x450_img_2.jpg" alt="image">
+                    <img class="img2" src="<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) ) ?>assets/images/800x500_img_1.jpg" alt="image">
+                </div>
+            </div>
+            <div class="col-lg-5 pl-md-5 pl-sm-0">
+                <div id="exampleAccordion" class="pb_accordion" data-children=".item">
+                    <div class="item">
+                        <a data-toggle="collapse" data-parent="#exampleAccordion" href="#exampleAccordion1" aria-expanded="true" aria-controls="exampleAccordion1" class="pb_font-18">Expandable Thought 1</a>
+                        <div id="exampleAccordion1" class="collapse show" role="tabpanel">
+                            <p>The wind blows wherever it pleases. You hear its sound, but you cannot tell where it comes from or where it is going.</p>
+                            <p>Now there was a Pharisee, a man named Nicodemus who was a member of the Jewish ruling council. He came to Jesus at night and said, "Rabbi, we know that you are a teacher who has come from God. For no one could perform the signs you are doing if God were not with him."</p>
+                        </div>
                     </div>
-                    <div class="cell">
-                        <hr>
+                    <div class="item">
+                        <a data-toggle="collapse" data-parent="#exampleAccordion" href="#exampleAccordion2" aria-expanded="false" aria-controls="exampleAccordion2" class="pb_font-18">Expandable Thought 2</a>
+                        <div id="exampleAccordion2" class="collapse" role="tabpanel">
+                            <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
+                        </div>
                     </div>
-                    <div class="cell" id="goal-row">
-                        <h2>Goal: <span id="saturation-goal">0</span>%</h2>
-                        <meter id="meter" class="meter" value="30" min="0" low="33" high="66" optimum="100" max="100"></meter>
+                    <div class="item">
+                        <a data-toggle="collapse" data-parent="#exampleAccordion" href="#exampleAccordion3" aria-expanded="false" aria-controls="exampleAccordion3" class="pb_font-18">Expandable Thought 3</a>
+                        <div id="exampleAccordion3" class="collapse" role="tabpanel">
+                            <p>Very truly I tell you, we speak of what we know, and we testify to what we have seen, but still you people do not accept our testimony. I have spoken to you of earthly things and you do not believe; how then will you believe if I speak of heavenly things?</p>
+                        </div>
                     </div>
-                    <div class="cell">
-                        Our community vision is to see 1 training and 2 new churches for every 5000 people in the United States and 50,000 people globally.
+                    <div class="item">
+                        <a data-toggle="collapse" data-parent="#exampleAccordion" href="#exampleAccordion4" aria-expanded="false" aria-controls="exampleAccordion4" class="pb_font-18">Expandable Thought 4</a>
+                        <div id="exampleAccordion4" class="collapse" role="tabpanel">
+                            <p>Now there was a Pharisee, a man named Nicodemus who was a member of the Jewish ruling council. He came to Jesus at night and said, "Rabbi, we know that you are a teacher who has come from God. For no one could perform the signs you are doing if God were not with him."</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+<!-- END section -->
+
+
+<section class="pb_section bg-light"  >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg">
+
+                <div class="media pb_media_v1 mb-5">
+                    <div class="icon border border-gray rounded-circle d-flex mr-3 display-4 text-primary"><i class="flaticon flaticon-jury"></i></div>
+                    <div class="media-body">
+                        <h3 class="mt-0 pb_font-17">Fact 1</h3>
+                        <p class="pb_font-14">I have spoken to you of earthly things and you do not believe</p>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-lg">
+                <div class="media pb_media_v1 mb-5">
+                    <div class="icon border border-gray rounded-circle d-flex mr-3 display-4 text-primary"><i class="flaticon flaticon-law"></i></div>
+                    <div class="media-body">
+                        <h3 class="mt-0 pb_font-17">Fact 2</h3>
+                        <p class="pb_font-14">The wind blows wherever it pleases. You hear its sound, but you cannot tell where it comes from or where it is going. So it is with everyone born of the Spirit.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg">
+                <div class="media pb_media_v1 mb-5">
+                    <div class="icon border border-gray rounded-circle d-flex mr-3 display-4 text-primary"><i class="flaticon flaticon-courthouse"></i></div>
+                    <div class="media-body">
+                        <h3 class="mt-0 pb_font-17">Fact 3</h3>
+                        <p class="pb_font-14">The wind blows wherever it pleases. You hear its sound, but you cannot tell where it comes from or where it is going.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="w-100"></div>
+            <div class="col-lg">
+
+                <div class="media pb_media_v1 mb-5">
+                    <div class="icon border border-gray rounded-circle d-flex mr-3 display-4 text-primary"><i class="flaticon flaticon-jury"></i></div>
+                    <div class="media-body">
+                        <h3 class="mt-0 pb_font-17">Fact 4</h3>
+                        <p class="pb_font-14">I have spoken to you of earthly things and you do not believe</p>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-lg">
+                <div class="media pb_media_v1 mb-5">
+                    <div class="icon border border-gray rounded-circle d-flex mr-3 display-4 text-primary"><i class="flaticon flaticon-courthouse"></i></div>
+                    <div class="media-body">
+                        <h3 class="mt-0 pb_font-17">Fact 5</h3>
+                        <p class="pb_font-14">The wind blows wherever it pleases. You hear its sound, but you cannot tell where it comes from or where it is going. So it is with everyone born of the Spirit.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg">
+                <div class="media pb_media_v1 mb-5">
+
+                    <div class="icon border border-gray rounded-circle d-flex mr-3 display-4 text-primary"><i class="flaticon flaticon-law"></i></div>
+                    <div class="media-body">
+                        <h3 class="mt-0 pb_font-17">Fact 6</h3>
+                        <p class="pb_font-14">The wind blows wherever it pleases. You hear its sound, but you cannot tell where it comes from or where it is going.</p>
                     </div>
                 </div>
             </div>
 
-            <!-- start screen training-->
-            <div id="training-start-screen" class="training-content"></div>
-            <div id="training-help-screen" class="training-content" style="display:none;"><hr></div>
-            <div class="center"><i class="fi-info" id="help-toggle-icon" onclick="jQuery('#training-help-screen').toggle()"></i></div>
         </div>
     </div>
-</div>
+</section>
 
 
-<!-- modal -->
-<div class="off-canvas position-right is-closed" id="offCanvasNestedPush" data-transition-time=".3s" data-off-canvas>
-    <div class="grid-x" id="canvas_panel">
-        <div class="cell">
-            <h1 id="modal_tile"></h1>
-            <h3>Population: <span id="modal_population">0</span></h3>
-            <hr>
+
+<section class="pb_section bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-md">
+                <div class="media pb_media_v2 d-block text-center mb-3">
+                    <div class="icon border border-gray rounded-circle d-block mr-3 display-4 mx-auto mb-4"><i class="flaticon text-secondary flaticon-jury"></i></div>
+                    <div class="media-body">
+                        <h3 class="mt-0 pb_font-20">Thought 1</h3>
+                        <p>I have spoken to you of earthly things and you do not believe</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="media pb_media_v2 d-block text-center  mb-3">
+                    <div class="icon border border-gray rounded-circle d-flex mr-3 display-4 mx-auto mb-4"><i class="flaticon text-secondary flaticon-law"></i></div>
+                    <div class="media-body">
+                        <h3 class="mt-0 pb_font-20">Thought 2</h3>
+                        <p>The wind blows wherever it pleases. You hear its sound, but you cannot tell where it comes from or where it is going. So it is with everyone born of the Spirit.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="media pb_media_v2 d-block text-center  mb-3">
+                    <div class="icon border border-gray rounded-circle d-flex mr-3 display-4 mx-auto mb-4"><i class="flaticon text-secondary flaticon-courthouse"></i></div>
+                    <div class="media-body">
+                        <h3 class="mt-0 pb_font-20">Thought 3</h3>
+                        <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="cell" id="slider-content">
-            <div class="grid-x grid-padding-x">
-                <div class="cell medium-6">
-                    <div class="grid-x">
-                        <div class="cell">
-                            <h3>PROGRESS</h3>
-                        </div>
-                        <div class="cell" id="progress-content">
-                            <div class="grid-x">
-                                <div class="cell">
-                                    <p>
-                                        Our community vision is to see 1 training and 2 new churches for every 5000 people
-                                        in the United States and 50,000 people globally.
-                                    </p>
-                                    <p id="custom-paragraph" class="temp-spinner"></p>
-                                </div>
-                                <div class="cell"><hr></div>
-                                <div class="cell temp-spinner" id="a3-list-item"></div>
-                                <div class="cell temp-spinner" id="a2-list-item"></div>
-                                <div class="cell temp-spinner" id="a1-list-item"></div>
-                                <div class="cell temp-spinner" id="a0-list-item"></div>
-                                <div class="cell temp-spinner" id="world-list-item"></div>
+    </div>
+</section>
+<!-- END section -->
 
+
+
+<section class="pb_section" data-section="contact" id="section-contact">
+    <div class="container">
+
+        <div class="row justify-content-md-center text-center mb-5">
+            <div class="col-lg-7">
+                <h2 class="mt-0 heading-border-top font-weight-normal">Get In Touch</h2>
+                <p>No one has ever gone into heaven except the one who came from heaven—the Son of Man. Just as Moses lifted up the snake in the wilderness, so the Son of Man must be lifted up, that everyone who believes may have eternal life in him.</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8 pr-md-5 pr-sm-0 mb-4">
+                <form action="#">
+                    <div class="row">
+                        <div class="col-md">
+                            <div class="form-group">
+                                <label for="name">Name</label>
+                                <input type="text" class="form-control p-3 rounded-0" id="name">
+                            </div>
+                        </div>
+                        <div class="col-md">
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="text" class="form-control p-3 rounded-0" id="email">
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="cell medium-6">
-                    <div class="grid-x">
-                        <div class="cell">
-                            <h3>ACTIVITY</h3>
-                        </div>
-                        <div class="cell">
-                            <!-- Security disclaimer -->
-                            <div class="caption">For identity protection, names and locations are obfuscated. <a href="javascript:void(0);" data-open="security">what's this</a></div>
-                            <div id="security" class="large reveal" data-reveal >
-                                <h2>Obfuscating Names and Locations</h2>
-                                <hr>
-                                <p>
-                                    Our map is made public for two purposes: (1) <b>encouragement</b> of the movement community, and (2) feeding <b>prayer</b> efforts with real-time prayer points.
-                                    We realize both encouragement and prayer do not need exact names and exact addresses. Beyond this security and protection of identity are essential.
-                                </p>
-                                <p>
-                                    For this reason we obfuscate names and locations, so security is protected, but prayer efforts can feel confident and connected to the kingdom steps listed.
-                                </p>
-                                <hr>
-                                <div class="grid-x grid-padding-x">
-                                    <div class="cell medium-6">
-                                        <h3>Alias Facts:</h3>
-                                        <ul>
-                                            <li>These initials do not correspond to the actual first and last name of the person doing the action. No initials used are personally identifiable.</li>
-                                            <li>An algorithm is used to consistently generate the same alias for the same person, but with letters that do not correspond to their actual name.</li>
-                                        </ul>
-                                    </div>
-                                    <div class="cell medium-6">
-                                        <h3>Location Facts:</h3>
-                                        <ul>
-                                            <li>These are not personally identifiable locations.</li>
-                                            <li>Accuracy of locations have be reduced to between 11 kilometers to 111 kilometers, depending on the security level of the country.</li>
-                                            <li>Countries that are known to be hostile towards Christians are obfuscated most. (<a href="https://www.opendoorsusa.org/christian-persecution/world-watch-list/">Top Countries</a>)</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <button class="close-button" data-close aria-label="Close modal" type="button">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="cell"><hr></div>
-                        <div class="cell temp-spinner" id="activity-content"></div>
+
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea cols="30" rows="10" class="form-control p-3 rounded-0" id="message"></textarea>
                     </div>
-                </div>
+                    <div class="form-group">
+                        <input type="submit" class="btn pb_outline-dark pb_font-13 pb_letter-spacing-2 p-3 rounded-0" value="Send Message">
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-4">
+                <ul class="pb_contact_details_v1">
+                    <li>
+                        <span class="text-uppercase">Phone</span>
+                        +30 976 1382 9921
+                    </li>
+                    <li>
+                        <span class="text-uppercase">WhatsApp</span>
+                        +30 976 1382 9922
+                    </li>
+                    <li>
+                        <span class="text-uppercase">Facebook Username</span>
+                        pray4movement
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</section>
+<!-- END section -->
+
+<footer class="pb_footer bg-light" role="contentinfo">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col">
+                <ul class="list-inline">
+                    <li class="list-inline-item"><a href="#" class="p-2"><i class="fa fa-facebook"></i></a></li>
+                    <li class="list-inline-item"><a href="#" class="p-2"><i class="fa fa-twitter"></i></a></li>
+                    <li class="list-inline-item"><a href="#" class="p-2"><i class="fa fa-linkedin"></i></a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-center">
+                <p class="pb_font-14">&copy; <script>document.write(new Date().getFullYear())</script>. All Rights Reserved.</p>
             </div>
         </div>
     </div>
-    <button class="close-button" data-close aria-label="Close modal" type="button">
-        <span aria-hidden="true">&times;</span>
-    </button>
-</div>
+</footer>
+
+<!-- loader -->
+<div id="pb_loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#FDA04F"/></svg></div>
