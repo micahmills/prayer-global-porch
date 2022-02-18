@@ -6,8 +6,8 @@ class Prayer_Global_Porch_Map_App extends DT_Magic_Url_Base
     public $magic = false;
     public $parts = false;
     public $page_title = 'Global Prayer Map';
-    public $root = 'map';
-    public $type = 'lap';
+    public $root = 'map_app';
+    public $type = 'current';
     public $type_name = 'Global Prayer Map';
     public static $token = 'map_lap';
     public $post_type = 'groups';
@@ -123,7 +123,7 @@ class Prayer_Global_Porch_Map_App extends DT_Magic_Url_Base
      * @return array
      */
     public function _initial_polygon_value_list(){
-        $flat_grid = Prayer_Global_Porch_Map_App_Queries::query_saturation_list();
+        $flat_grid = Prayer_Global_Porch_Map_Queries::query_saturation_list();
         $grid_totals = $this->get_grid_totals();
 
         $data = [];
@@ -271,10 +271,10 @@ class Prayer_Global_Porch_Map_App extends DT_Magic_Url_Base
     public function endpoint_get_level( $grid_id, $administrative_level ) {
         // add levels
         $list = $this->get_grid_totals_by_level( $administrative_level ); // get list of training counts
-        $flat_grid = Prayer_Global_Porch_Map_App_Queries::query_flat_grid_by_level( $administrative_level, $this->us_div, $this->global_div );
+        $flat_grid = Prayer_Global_Porch_Map_Queries::query_flat_grid_by_level( $administrative_level, $this->us_div, $this->global_div );
         $flat_grid_limited = $this->_limit_counts( $flat_grid, $list ); // limit counts to no larger than needed per location.
 
-        $grid = Prayer_Global_Porch_Map_App_Queries::query_grid_elements( $grid_id ); // get level ids for grid_id
+        $grid = Prayer_Global_Porch_Map_Queries::query_grid_elements( $grid_id ); // get level ids for grid_id
 
         if ( isset( $flat_grid_limited[$grid[$administrative_level]] ) && ! empty( $flat_grid_limited[$grid[$administrative_level]] ) ) {
             $level = $flat_grid_limited[$grid[$administrative_level]];

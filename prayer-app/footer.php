@@ -1,20 +1,28 @@
+<script src="<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) ) ?>assets/js/jquery.min.js"></script>
+
+<script src="<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) ) ?>assets/js/popper.min.js"></script>
+<script src="<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) ) ?>assets/js/bootstrap.min.js"></script>
+<script src="<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) ) ?>assets/js/slick.min.js"></script>
+
+<script src="<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) ) ?>assets/js/jquery.waypoints.min.js"></script>
+<script src="<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) ) ?>assets/js/jquery.easing.1.3.js"></script>
+
+<script src="<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) ) ?>assets/js/main.js"></script>
 <script>
     let jsObject = [<?php echo json_encode([
-        'map_key' => DT_Mapbox_API::get_key(),
-        'mirror_url' => dt_get_location_grid_mirror( true ),
         'theme_uri' => trailingslashit( get_stylesheet_directory_uri() ),
         'root' => esc_url_raw( rest_url() ),
         'nonce' => wp_create_nonce( 'wp_rest' ),
-        'parts' => $this->parts,
-        'post_type' => $this->post_type,
-        'trans' => [
-            'add' => __( 'Add Magic', 'disciple_tools' ),
+        'parts' => [
+            'root' => $this->root,
+            'type' => $this->type,
         ],
-        'grid_data' => ['data' => [], 'highest_value' => 1 ],
-        // 'grid_data' => $this->_initial_polygon_value_list(),
+        'trans' => [
+            'add' => __( 'Add Magic', 'prayer-global-porch' ),
+        ],
     ]) ?>][0]
 
     jQuery(document).ready(function(){
-        clearInterval(window.fiveMinuteTimer)
+        jQuery('body').data('spy', 'scroll').data('target', '#pb-navbar').data('offset', '200')
     })
 </script>

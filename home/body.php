@@ -1,3 +1,24 @@
+
+<nav class="navbar navbar-expand-lg navbar-dark pb_navbar pb_scrolled-light" id="pb-navbar">
+    <div class="container">
+        <a class="navbar-brand" href="/">Prayer.Global</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#probootstrap-navbar" aria-controls="probootstrap-navbar" aria-expanded="false" aria-label="Toggle navigation">
+            <span><i class="ion-navicon"></i></span>
+        </button>
+        <div class="collapse navbar-collapse" id="probootstrap-navbar">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item"><a class="nav-link" href="#section-home">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="#section-about">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="#section-why-us">Why</a></li>
+                <li class="nav-item"><a class="nav-link" href="#section-areas">Map</a></li>
+                <li class="nav-item"><a class="nav-link" href="#section-testimonials">Testimonials</a></li>
+                <li class="nav-item"><a class="nav-link" href="#section-contact">Contact</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- END nav -->
+
 <section class="pb_cover_v1 text-left cover-bg-black cover-bg-opacity-4" style="background-image: url(<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) ) ?>assets/images/map_background.jpg)" id="section-home">
     <div class="container">
         <div class="row align-items-center justify-content-end">
@@ -56,7 +77,7 @@
         </div>
         <div class="row">
             <div class="col-md text-center">
-                <a href="/newest/lap/" role="button" class="btn smoothscroll pb_outline-dark btn-xl pb_font-13 p-4 rounded-0 pb_letter-spacing-2">Current Lap Map</a>
+                <a href="/map_app/current/" role="button" class="btn smoothscroll pb_outline-dark btn-xl pb_font-13 p-4 rounded-0 pb_letter-spacing-2">Current Lap Map</a>
                 <a href="/newest/lap/" role="button" class="btn smoothscroll pb_outline-dark btn-xl pb_font-13 p-4 rounded-0 pb_letter-spacing-2">Login</a>
             </div>
         </div>

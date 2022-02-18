@@ -191,7 +191,7 @@ function load_map() {
   mapboxgl.accessToken = jsObject.map_key;
   let map = new mapboxgl.Map({
     container: 'map',
-    style: 'mapbox://styles/mapbox/light-v10',
+    style: 'mapbox://styles/mapbox/dark-v10',
     center: center,
     minZoom: 2,
     maxZoom: 8,
@@ -269,8 +269,8 @@ function load_map() {
             'source': i.toString(),
             'paint': {
               // 'line-color': '#323A68',
-              'line-color': 'grey',
-              'line-width': .5
+              'line-color': 'white',
+              'line-width': .8
             }
           });
 
@@ -282,7 +282,7 @@ function load_map() {
             'type': 'fill',
             'source': i.toString(),
             'paint': {
-              'fill-color': 'black',
+              'fill-color': 'white',
               'fill-opacity': [
                 'case',
                 ['boolean', ['feature-state', 'hover'], false],

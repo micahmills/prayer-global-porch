@@ -52,4 +52,4 @@
     }
 </style>
 
-<script type="text/javascript" src="<?php echo trailingslashit( plugin_dir_url( __FILE__ ) ) . 'heatmap.js'; ?>" id="heatmap-js"></script>
+<script type="text/javascript" src="<?php echo trailingslashit( plugin_dir_url( __FILE__ ) ) . 'heatmap.js?ver=2'; ?>" id="heatmap-js"></script>
