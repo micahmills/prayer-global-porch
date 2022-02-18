@@ -1,3 +1,25 @@
+
+<nav class="navbar navbar-expand-lg navbar-dark pb_navbar pb_scrolled-light" id="pb-navbar">
+    <div class="container">
+        <a class="navbar-brand" href="/">Prayer.Global</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#probootstrap-navbar" aria-controls="probootstrap-navbar" aria-expanded="false" aria-label="Toggle navigation">
+            <span><i class="ion-navicon"></i></span>
+        </button>
+        <div class="collapse navbar-collapse" id="probootstrap-navbar">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item"><a class="nav-link" href="#section-home">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="#section-about">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="#section-why-us">Why</a></li>
+                <li class="nav-item"><a class="nav-link" href="#section-areas">Map</a></li>
+                <!--                <li class="nav-item"><a class="nav-link" href="#section-team">Team</a></li>-->
+                <li class="nav-item"><a class="nav-link" href="#section-testimonials">Testimonials</a></li>
+                <li class="nav-item"><a class="nav-link" href="#section-contact">Contact</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- END nav -->
+
 <section class="pb_cover_v1 text-left cover-bg-black cover-bg-opacity-4" style="background-image: url(<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) ) ?>assets/images/map_background.jpg)" id="section-home">
     <div class="container">
         <div class="row align-items-center justify-content-end">
@@ -312,6 +334,140 @@
 
 
 
+
+<section class="pb_section pb_bg-half" data-section="areas" id="section-areas">
+    <div class="container">
+        <div class="row justify-content-md-center text-center mb-5">
+            <div class="col-lg-7">
+                <h2 class="mt-0 heading-border-top font-weight-normal">Map</h2>
+                <p>Very truly I tell you, we speak of what we know, and we testify to what we have seen, but still you people do not accept our testimony. I have spoken to you of earthly things and you do not believe; how then will you believe if I speak of heavenly things?</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+
+                <div class="single-item pb_slide_v2">
+                    <div>
+                        <div class="d-lg-flex d-md-block slide_content">
+                            <div class="pb_content-media" style="background-image: url(<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) ) ?>assets/images/1900x1200_img_4.jpg);"></div>
+                            <div class="slide_content-text text-center">
+                                <div class="pb_icon_v1"><i class="flaticon text-primary flaticon-handcuffs"></i></div>
+                                <h3 class="font-weight-normal mt-0 mb-4">Fact 1</h3>
+                                <p>Very truly I tell you, we speak of what we know, and we testify to what we have seen, but still you people do not accept our testimony. I have spoken to you of earthly things and you do not believe; how then will you believe if I speak of heavenly things?</p>
+                                <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
+                                <p>Very truly I tell you, we speak of what we know, and we testify to what we have seen, but still you people do not accept our testimony. I have spoken to you of earthly things and you do not believe; how then will you believe if I speak of heavenly things?</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="d-lg-flex d-md-block slide_content">
+                            <div class="pb_content-media" style="background-image: url(<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) ) ?>assets/images/1900x1200_img_2.jpg);"></div>
+                            <div class="slide_content-text text-center">
+                                <div class="pb_icon_v1"><i class="flaticon text-primary flaticon-wallet"></i></div>
+                                <h3 class="font-weight-normal mt-0 mb-4">Fact 2</h3>
+                                <p>Very truly I tell you, no one can enter the kingdom of God unless they are born of water and the Spirit. Flesh gives birth to flesh, but the Spirit3:6 Or but spirit gives birth to spirit.</p>
+                                <p>Now there was a Pharisee, a man named Nicodemus who was a member of the Jewish ruling council. He came to Jesus at night and said, "Rabbi, we know that you are a teacher who has come from God. For no one could perform the signs you are doing if God were not with him."</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="d-lg-flex d-md-block slide_content">
+                            <div class="pb_content-media" style="background-image: url(<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) ) ?>assets/images/1900x1200_img_3.jpg);"></div>
+                            <div class="slide_content-text text-center">
+                                <div class="pb_icon_v1"><i class="flaticon text-primary flaticon-computer-security"></i></div>
+                                <h3 class="font-weight-normal mt-0 mb-4">Fact 3</h3>
+                                <p>The wind blows wherever it pleases. You hear its sound, but you cannot tell where it comes from or where it is going. So it is with everyone born of the Spirit.</p>
+                                <p>Very truly I tell you, no one can enter the kingdom of God unless they are born of water and the Spirit. Flesh gives birth to flesh, but the Spirit3:6 Or but spirit gives birth to spirit.</p>
+                                <p>Very truly I tell you, we speak of what we know, and we testify to what we have seen, but still you people do not accept our testimony. I have spoken to you of earthly things and you do not believe; how then will you believe if I speak of heavenly things? Very truly I tell you, we speak of what we know, and we testify to what we have seen, but still you people do not accept our testimony. I have spoken to you of earthly things and you do not believe; how then will you believe if I speak of heavenly things?</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="d-lg-flex d-md-block slide_content">
+                            <div class="pb_content-media" style="background-image: url(<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) ) ?>assets/images/1900x1200_img_4.jpg);"></div>
+                            <div class="slide_content-text text-center">
+                                <div class="pb_icon_v1"><i class="flaticon text-primary flaticon-courthouse"></i></div>
+                                <h3 class="font-weight-normal mt-0 mb-4">Fact 4</h3>
+                                <p>The wind blows wherever it pleases. You hear its sound, but you cannot tell where it comes from or where it is going. So it is with everyone born of the Spirit.</p>
+                                <p>Now there was a Pharisee, a man named Nicodemus who was a member of the Jewish ruling council. He came to Jesus at night and said, "Rabbi, we know that you are a teacher who has come from God. For no one could perform the signs you are doing if God were not with him."</p>
+                                <p>Very truly I tell you, no one can enter the kingdom of God unless they are born of water and the Spirit. Flesh gives birth to flesh, but the Spirit3:6 Or but spirit gives birth to spirit.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="d-lg-flex d-md-block slide_content">
+                            <div class="pb_content-media" style="background-image: url(<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) ) ?>assets/images/1900x1200_img_4.jpg);"></div>
+                            <div class="slide_content-text text-center">
+                                <div class="pb_icon_v1"><i class="flaticon text-primary flaticon-jury"></i></div>
+                                <h3 class="font-weight-normal mt-0 mb-4">Fact 5</h3>
+                                <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
+                                <p>Now there was a Pharisee, a man named Nicodemus who was a member of the Jewish ruling council. He came to Jesus at night and said, "Rabbi, we know that you are a teacher who has come from God. For no one could perform the signs you are doing if God were not with him."</p>
+                                <p>Very truly I tell you, no one can enter the kingdom of God unless they are born of water and the Spirit. Flesh gives birth to flesh, but the Spirit3:6 Or but spirit gives birth to spirit.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+<!-- END section -->
+<style>
+    .white {
+        color: white;
+    }
+</style>
+<section class="pb_section bg-light bg-image with-overlay" style="background-image: url(<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) ) ?>assets/images/1900x1200_img_2.jpg)" data-section="testimonials" id="section-testimonials">
+    <div class="container">
+        <div class="row justify-content-md-center text-center mb-5">
+            <div class="col-lg-7 white">
+                <h2 class="mt-0 heading-border-top font-weight-normal white">Testimonies</h2>
+                <p>Very truly I tell you, no one can enter the kingdom of God unless they are born of water and the Spirit. Flesh gives birth to flesh, but the Spirit gives birth to spirit.</p>
+            </div>
+        </div>
+        <div class="row justify-content-md-center">
+            <div class="col-md-10 col-sm-12 mb-5">
+                <div class="single-item-no-arrow pb_slide_v1">
+                    <div>
+                        <div class="media white">
+                            <img class="d-flex img-fluid rounded-circle mb-sm-5" src="<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) ) ?>assets/images/square_img_5.jpg" alt="Generic placeholder image">
+                            <div class="media-body pl-md-5 pl-sm-0">
+                                <blockquote >
+                                    <p class="white">Now there was a Pharisee, a man named Nicodemus who was a member of the Jewish ruling council. He came to Jesus at night and said, "Rabbi, we know that you are a teacher who has come from God. For no one could perform the signs you are doing if God were not with him."</p>
+                                    <p class="pb_author"><cite class="text-uppercase white">John Smith</cite></p>
+                                </blockquote>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="media white">
+                            <img class="d-flex img-fluid rounded-circle mb-sm-5" src="<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) ) ?>assets/images/square_img_5.jpg" alt="Generic placeholder image">
+                            <div class="media-body pl-md-5 pl-sm-0">
+                                <blockquote>
+                                    <p class="white">&ldquo;A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.&rdquo;</p>
+                                    <p class="pb_author"><cite class="text-uppercase white">John Smith</cite></p>
+                                </blockquote>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</section>
+<!-- END section -->
+
+
+
 <section class="pb_section bg-light">
     <div class="container">
         <div class="row">
@@ -358,6 +514,7 @@
                 <p>No one has ever gone into heaven except the one who came from heaven—the Son of Man. Just as Moses lifted up the snake in the wilderness, so the Son of Man must be lifted up, that everyone who believes may have eternal life in him.</p>
             </div>
         </div>
+
 
         <div class="row">
             <div class="col-md-8 pr-md-5 pr-sm-0 mb-4">
