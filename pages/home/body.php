@@ -1,21 +1,4 @@
-
-<nav class="navbar navbar-expand-lg navbar-dark pb_navbar pb_scrolled-light" id="pb-navbar">
-    <div class="container">
-        <a class="navbar-brand" href="/">Prayer.Global</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#probootstrap-navbar" aria-controls="probootstrap-navbar" aria-expanded="false" aria-label="Toggle navigation">
-            <span><i class="ion-navicon"></i></span>
-        </button>
-        <div class="collapse navbar-collapse" id="probootstrap-navbar">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item"><a class="nav-link" href="#section-home">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="#section-lap">Current Lap</a></li>
-                <li class="nav-item"><a class="nav-link" href="#section-about">About</a></li>
-                <li class="nav-item"><a class="nav-link btn smoothscroll pb_outline-dark" style="text-transform: capitalize;" href="/newest/lap/">Start Praying</a></li>
-            </ul>
-        </div>
-    </div>
-</nav>
-<!-- END nav -->
+<?php require_once( trailingslashit( plugin_dir_path(__DIR__) ) . '/assets/nav.php') ?>
 
 <section class="pb_cover_v1 text-left cover-bg-black cover-bg-opacity-4" style="background-image: url(<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) ) ?>assets/images/map_background.jpg)" id="section-home">
     <div class="container">
@@ -25,7 +8,7 @@
                 <h2 class="heading mb-3">Cover the World in Prayer</h2>
                 <div class="sub-heading">
                     <p class="mb-5">Community driven, movement-focused, saturation prayer.</p>
-                    <p><a href="/newest/lap/" style="background-color:rgba(255,255,255,.7);" role="button" class="btn smoothscroll pb_font-25 btn-xl pb_font-13 p-4 rounded-0 pb_letter-spacing-2">Start Praying</a></p>
+                    <p><a href="/prayer_app/subscribe/" style="background-color:rgba(255,255,255,.7);" role="button" class="btn smoothscroll pb_font-25 btn-xl pb_font-13 p-4 rounded-0 pb_letter-spacing-2">Start Praying</a></p>
                 </div>
 
             </div>
@@ -77,8 +60,8 @@
         </div>
         <div class="row">
             <div class="col-md text-center">
-                <a href="/map_app/current/" role="button" class="btn smoothscroll pb_outline-dark btn-xl pb_font-13 p-4 rounded-0 pb_letter-spacing-2">Current Lap Map</a>
-                <a href="/newest/lap/" role="button" class="btn smoothscroll pb_outline-dark btn-xl pb_font-13 p-4 rounded-0 pb_letter-spacing-2">Current Lap Stats</a>
+                <a href="/prayer_app/subscribe/" role="button" class="btn smoothscroll pb_outline-dark btn-xl pb_font-13 p-4 rounded-0 pb_letter-spacing-2">Current Lap Map</a>
+                <a href="/prayer_app/subscribe/" role="button" class="btn smoothscroll pb_outline-dark btn-xl pb_font-13 p-4 rounded-0 pb_letter-spacing-2">Current Lap Stats</a>
             </div>
         </div>
     </div>
@@ -189,7 +172,7 @@
                         <a data-toggle="collapse" data-parent="#exampleAccordion" href="#exampleAccordion1" aria-expanded="true" aria-controls="exampleAccordion1" class="pb_font-18">How it works</a>
                         <div id="exampleAccordion1" class="collapse show" role="tabpanel">
                             <p>
-                                We have identified 4,770 administrative divisions into which the countries of the world are divided. And we have built this website to record prayers for these specific locations.
+                                We have identified 4,770 administrative divisions into which the countries of the world are divided. This website guides prayer warriors to pray over these specific locations.
                             </p>
                             <p>
                                 When our community prays for the "kingdom to come" over one of these divisions for one minute or more, then we mark that location as covered for that prayer lap.
@@ -200,6 +183,9 @@
                             <p>
                                 We hope that our community completes each prayer lap faster than the previous. Can you imagine a global community praying forever place in the world every 10 minutes? We dream that.
                             </p>
+                            <p>
+                                <br>
+                            </p>
                         </div>
                     </div>
                     <div class="item">
@@ -207,12 +193,15 @@
                         <div id="exampleAccordion2" class="collapse" role="tabpanel">
                             <p>
                                 Inspired by the <a href="https://www.christianitytoday.com/history/issues/issue-1/prayer-meeting-that-lasted-100-years.html">Moravians</a>, who prayed non-stop for 100 years,
-                                and the knowledge that every disciple making movement in history has begun with extraordinary prayer, we have crafted this website to help the church pray for the entire world in measurable units, as a community, and to know at the end when we have finished ... and are ready to start
+                                we have crafted this website to help the church pray for the entire world in measurable units, as a community, and to know at the end when we have finished ... and are ready to start
                                 another lap.
                             </p>
                             <p>
                                 Once every location in the world has been prayed for, we finish a lap. The prayer map resets and we try to pray over the world again
                                 ... maybe faster.
+                            </p>
+                            <p>
+                                <br>
                             </p>
                         </div>
                     </div>
@@ -221,6 +210,9 @@
                         <div id="exampleAccordion3" class="collapse" role="tabpanel">
                             <p>Based upon research, extraordinary prayer is found at the root of all modern disciple multiplying movements.</p>
                             <p>Prayer.Global seeks to encourage in creative ways extraordinary prayer for the fulfillment of the Great Commission in our generation.</p>
+                            <p>
+                                <br>
+                            </p>
                         </div>
                     </div>
                     <div class="item">
@@ -229,6 +221,9 @@
                             <p>Never before in the history of the human race have we been able to coordinate a global community of people to pray for the kingdom to come on earth as it is in heaven IN REALTIME!</p>
                             <p>It has always pleased the Lord to use current technologies for the advance of his kingdom. Remembering, written language was a technology advancement. The printing press to distribute bibles was a technology advancement.</p>
                             <p>God is now using global travel and global communication to take the gospel to the ends of the earth. Our heart is to add to that globally coordinated prayer for the kingdom.</p>
+                            <p>
+                                <br>
+                            </p>
                         </div>
                     </div>
                 </div>

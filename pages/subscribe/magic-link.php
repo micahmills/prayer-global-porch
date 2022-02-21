@@ -1,14 +1,14 @@
 <?php
 if ( !defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly.
 
-class Prayer_Global_Porch_Map_App_Lap extends DT_Magic_Url_Base
+class Prayer_Global_Porch_Subscribe extends DT_Magic_Url_Base
 {
     public $magic = false;
     public $parts = false;
-    public $page_title = 'Global Prayer Map';
+    public $page_title = 'Global Prayer - Subscribe';
     public $root = 'prayer_app';
-    public $type = 'lap';
-    public $type_name = 'Global Prayer Map';
+    public $type = 'subscribe';
+    public $type_name = 'Global Prayer - Subscribe';
     public static $token = 'prayer_app';
     public $post_type = 'groups';
 
@@ -52,13 +52,8 @@ class Prayer_Global_Porch_Map_App_Lap extends DT_Magic_Url_Base
 
             add_filter( 'dt_magic_url_base_allowed_css', [ $this, 'dt_magic_url_base_allowed_css' ], 10, 1 );
             add_filter( 'dt_magic_url_base_allowed_js', [ $this, 'dt_magic_url_base_allowed_js' ], 10, 1 );
-//            add_action( 'wp_enqueue_scripts', [ $this, '_wp_enqueue_scripts' ], 100 );
         }
 
-        if ( dt_is_rest() ) {
-            add_action( 'rest_api_init', [ $this, 'add_endpoints' ] );
-            add_filter( 'dt_allow_rest_access', [ $this, 'authorize_url' ], 10, 1 );
-        }
     }
 
     public function dt_magic_url_base_allowed_js( $allowed_js ) {
@@ -81,33 +76,5 @@ class Prayer_Global_Porch_Map_App_Lap extends DT_Magic_Url_Base
         require_once( 'body.php' );
     }
 
-    /**
-     * Register REST Endpoints
-     * @link https://github.com/DiscipleTools/disciple-tools-theme/wiki/Site-to-Site-Link for outside of wordpress authentication
-     */
-    public function add_endpoints() {
-        $namespace = $this->root . '/v1';
-        register_rest_route(
-            $namespace,
-            '/'.$this->type,
-            [
-                [
-                    'methods'  => WP_REST_Server::CREATABLE,
-                    'callback' => [ $this, 'endpoint' ],
-                ],
-            ]
-        );
-    }
-
-    public function endpoint( WP_REST_Request $request ) {
-        $params = $request->get_params();
-
-        if ( ! isset( $params['parts'], $params['action'] ) ) {
-            return new WP_Error( __METHOD__, "Missing parameters", [ 'status' => 400 ] );
-        }
-
-       return true;
-    }
-
 }
-Prayer_Global_Porch_Map_App_Lap::instance();
+Prayer_Global_Porch_Subscribe::instance();
