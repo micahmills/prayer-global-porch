@@ -1,0 +1,8 @@
+/* custom styles for prayer.global */
+.nav-link.pb_outline-dark {
+    border:none;
+    line-height: inherit;
+}
+.navbar.awake .nav-link.pb_outline-dark {
+    border:1px solid rgba(0, 0, 0, 0.2);;
+}

@@ -76,12 +76,12 @@ class Prayer_Global_Porch {
 
     private function __construct() {
 
-        require_once( 'home/loader.php' ); /* Simple, Big images, White and Image */
+        require_once( 'pages/home/magic-link.php' );
+        require_once( 'pages/map/magic-link.php' );
+        require_once( 'pages/pray/magic-link.php' );
+        require_once( 'pages/profile/magic-link.php' );
 
-        require_once( 'prayer-app/loader.php' );
-        require_once( 'map-app/loader.php' );
-
-        require_once( 'redirects/auto-loader.php');
+        require_once( 'redirects/loader.php');
 
         if ( is_admin() ){
             add_filter( 'plugin_row_meta', [ $this, 'plugin_description_links' ], 10, 4 ); // admin plugin page description
