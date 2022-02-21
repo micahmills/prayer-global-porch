@@ -17,7 +17,7 @@ $(document).ready(function($) {
 		$(window).scroll(function(){
 			var $w = $(this),
 					st = $w.scrollTop(),
-					navbar = $('.pb_navbar'),
+					navbar = $('.pb_navbar_nav'),
 					sd = $('.js-scroll-wrap');
 
 			if (st > 150) {
