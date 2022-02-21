@@ -179,8 +179,8 @@
         <div class="row">
             <div class="col-lg-7">
                 <div class="images right">
-                    <img class="img1 img-fluid" src="<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/images/600x450_img_2.jpg" alt="image">
-                    <img class="img2" src="<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/images/800x500_img_1.jpg" alt="image">
+                    <img class="img1 img-fluid" src="<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/images/pray-4770.jpg" alt="image">
+                    <img class="img2" src="<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/images/dark-map.jpg" alt="image">
                 </div>
             </div>
             <div class="col-lg-5 pl-md-5 pl-sm-0">
