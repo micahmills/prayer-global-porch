@@ -1,6 +1,6 @@
 <?php require_once( trailingslashit( plugin_dir_path(__DIR__) ) . '/assets/nav.php') ?>
 
-<section class="pb_cover_v1 text-left cover-bg-black cover-bg-opacity-4" style="background-image: url(<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) ) ?>assets/images/map_background.jpg)" id="section-home">
+<section class="pb_cover_v1 text-left cover-bg-black cover-bg-opacity-4" style="background-image: url(<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/images/map_background.jpg)" id="section-home">
     <div class="container">
         <div class="row align-items-center justify-content-end">
             <div class="col-md-6  order-md-1">
@@ -68,85 +68,25 @@
 </section>
 <!-- END section -->
 
-<style>
-    .white {
-        color: white;
-    }
-</style>
-<section class="pb_section bg-light bg-image with-overlay" style="background-image: url(<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/images/1900x1200_img_2.jpg)" data-section="testimonials" id="section-testimonials">
+
+<section class="pb_sm_py_cover text-center cover-bg-black cover-bg-opacity-4" style="background-image: url(<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/images/1900x1200_img_2.jpg)">
     <div class="container">
-        <div class="row justify-content-md-center text-center mb-5">
-            <div class="col-lg-7 white">
-                <h2 class="mt-0 heading-border-top font-weight-normal white">Testimonies</h2>
-                <p>The prayers of ordinary people change the world everyday.</p>
-            </div>
-        </div>
-        <div class="row justify-content-md-center">
-            <div class="col-md-10 col-sm-12 mb-5">
-                <div class="single-item-no-arrow pb_slide_v3">
-                    <div>
-                        <div class="media white">
-                            <img class="d-flex img-fluid rounded-circle mb-sm-5" src="<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/images/lady5.jpg" alt="Generic placeholder image">
-                            <div class="media-body pl-md-5 pl-sm-0">
-                                <blockquote >
-                                    <p class="white">"I love praying with the global family of God towards a common goal!"</p>
-                                    <p class="pb_author"><cite class="text-uppercase white">Susan</cite></p>
-                                </blockquote>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="media white">
-                            <img class="d-flex img-fluid rounded-circle mb-sm-5" src="<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/images/guy2.jpg" alt="Generic placeholder image">
-                            <div class="media-body pl-md-5 pl-sm-0">
-                                <blockquote>
-                                    <p class="white">"This generation has opportunities that are sooo unique in history! Love this!"</p>
-                                    <p class="pb_author"><cite class="text-uppercase white">Eric</cite></p>
-                                </blockquote>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="media white">
-                            <img class="d-flex img-fluid rounded-circle mb-sm-5" src="<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/images/lady3.jpg" alt="Generic placeholder image">
-                            <div class="media-body pl-md-5 pl-sm-0">
-                                <blockquote>
-                                    <p class="white">"I love prayer global. It opens my mind to the world."</p>
-                                    <p class="pb_author"><cite class="text-uppercase white">Song</cite></p>
-                                </blockquote>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="media white">
-                            <img class="d-flex img-fluid rounded-circle mb-sm-5" src="<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/images/guy1.jpg" alt="Generic placeholder image">
-                            <div class="media-body pl-md-5 pl-sm-0">
-                                <blockquote>
-                                    <p class="white">"I have never thought of some of these places, nor prayed for them. I'm thankful for this project."</p>
-                                    <p class="pb_author"><cite class="text-uppercase white">Amir</cite></p>
-                                </blockquote>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="media white">
-                            <img class="d-flex img-fluid rounded-circle mb-sm-5" src="<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/images/lady4.jpg" alt="Generic placeholder image">
-                            <div class="media-body pl-md-5 pl-sm-0">
-                                <blockquote>
-                                    <p class="white">"I add prayer.global to my devotions and know I'm impacting the world with others."</p>
-                                    <p class="pb_author"><cite class="text-uppercase white">Ellen</cite></p>
-                                </blockquote>
-                            </div>
-                        </div>
-                    </div>
+        <div class="row align-items-center">
+            <div class="col-md-12">
+                <h2 class="heading mb-3">Video</h2>
+                <p class="sub-heading mb-5 pb_color-light-opacity-8">Helping the church pray for the entire world in measurable units as a community.</p>
+                <div class=" text-center">
+                    <i class="ion-videocamera pb_font-60 border-gray rounded-circle" style="border:1px solid #868e96; padding: 1.5rem 1.9rem; cursor: pointer;"></i>
                 </div>
 
             </div>
-
         </div>
+
     </div>
 </section>
 <!-- END section -->
+
+
 
 <section class="pb_section" data-section="about" id="section-about">
     <div class="container">
@@ -234,14 +174,14 @@
 </section>
 <!-- END section -->
 
-<section class="pb_sm_py_cover text-center cover-bg-black cover-bg-opacity-4" style="background-image: url(<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) ) ?>assets/images/1900x1200_img_3.jpg)">
+<section class="pb_sm_py_cover text-center cover-bg-black cover-bg-opacity-4" style="background-image: url(<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/images/1900x1200_img_3.jpg)">
     <div class="container">
 
         <div class="row align-items-center">
             <div class="col-md-12">
                 <h2 class="heading mb-3">Join Us</h2>
                 <p class="sub-heading mb-5 pb_color-light-opacity-8">Helping the church pray for the entire world in measurable units as a community.</p>
-                <p><a href="/map_app/lap1" role="button" class="btn smoothscroll pb_outline-light btn-xl p-4 rounded-0 pb_font-13 pb_letter-spacing-2">Start Praying</a></p>
+                <p><a href="/prayer_app/subscribe/" role="button" class="btn smoothscroll pb_outline-light btn-xl p-4 rounded-0 pb_font-13 pb_letter-spacing-2">Start Praying</a></p>
             </div>
         </div>
 
@@ -345,6 +285,87 @@
     </div>
 </section>
 
+
+<style>
+    .white {
+        color: white;
+    }
+</style>
+<section class="pb_section bg-light bg-image with-overlay" style="background-image: url(<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/images/1900x1200_img_1.jpg)" data-section="testimonials" id="section-testimonials">
+    <div class="container">
+        <div class="row justify-content-md-center text-center mb-5">
+            <div class="col-lg-7 white">
+                <h2 class="mt-0 heading-border-top font-weight-normal white">Testimonies</h2>
+                <p>The prayers of ordinary people change the world everyday.</p>
+            </div>
+        </div>
+        <div class="row justify-content-md-center">
+            <div class="col-md-10 col-sm-12 mb-5">
+                <div class="single-item-no-arrow pb_slide_v3">
+                    <div>
+                        <div class="media white">
+                            <img class="d-flex img-fluid rounded-circle mb-sm-5" src="<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/images/lady5.jpg" alt="Generic placeholder image">
+                            <div class="media-body pl-md-5 pl-sm-0">
+                                <blockquote >
+                                    <p class="white">"I love praying with the global family of God towards a common goal!"</p>
+                                    <p class="pb_author"><cite class="text-uppercase white">Susan</cite></p>
+                                </blockquote>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="media white">
+                            <img class="d-flex img-fluid rounded-circle mb-sm-5" src="<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/images/guy2.jpg" alt="Generic placeholder image">
+                            <div class="media-body pl-md-5 pl-sm-0">
+                                <blockquote>
+                                    <p class="white">"This generation has opportunities that are sooo unique in history! Love this!"</p>
+                                    <p class="pb_author"><cite class="text-uppercase white">Eric</cite></p>
+                                </blockquote>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="media white">
+                            <img class="d-flex img-fluid rounded-circle mb-sm-5" src="<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/images/lady3.jpg" alt="Generic placeholder image">
+                            <div class="media-body pl-md-5 pl-sm-0">
+                                <blockquote>
+                                    <p class="white">"I love prayer global. It opens my mind to the world."</p>
+                                    <p class="pb_author"><cite class="text-uppercase white">Song</cite></p>
+                                </blockquote>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="media white">
+                            <img class="d-flex img-fluid rounded-circle mb-sm-5" src="<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/images/guy1.jpg" alt="Generic placeholder image">
+                            <div class="media-body pl-md-5 pl-sm-0">
+                                <blockquote>
+                                    <p class="white">"I have never thought of some of these places, nor prayed for them. I'm thankful for this project."</p>
+                                    <p class="pb_author"><cite class="text-uppercase white">Amir</cite></p>
+                                </blockquote>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="media white">
+                            <img class="d-flex img-fluid rounded-circle mb-sm-5" src="<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/images/lady4.jpg" alt="Generic placeholder image">
+                            <div class="media-body pl-md-5 pl-sm-0">
+                                <blockquote>
+                                    <p class="white">"I add prayer.global to my devotions and know I'm impacting the world with others."</p>
+                                    <p class="pb_author"><cite class="text-uppercase white">Ellen</cite></p>
+                                </blockquote>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</section>
+<!-- END section -->
+
 <footer class="pb_footer bg-light" role="contentinfo">
     <div class="container">
         <div class="row text-center">
@@ -363,6 +384,8 @@
         </div>
     </div>
 </footer>
+
+
 
 <!-- loader -->
 <div id="pb_loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#FDA04F"/></svg></div>
