@@ -21,7 +21,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md text-center pb_sm_py_cover">
-                <h2 class=" mb-3  heading" style="color:#212529">Current Lap</h2>
+                <h2 class=" mb-3 heading" style="color:#212529">Current Lap</h2>
                 <h3 class="mt-0 heading-border-top pb_font-30">22 days, 10 hours, 5 min</h3>
                 <br>
             </div>
@@ -75,7 +75,7 @@
             <div class="col-md-12">
                 <h2 class="heading mb-3">Video</h2>
                 <p class="sub-heading mb-5 pb_color-light-opacity-8">Helping the church pray for the entire world in measurable units as a community.</p>
-                <div class=" text-center">
+                <div class="text-center">
                     <a data-toggle="modal" data-target="#demo_video"></a><i class="ion-videocamera pb_font-60 border-gray rounded-circle" id="video-link-icon" style="border:1px solid #868e96; padding: 1.5rem 1.9rem; cursor: pointer;"></i>
                 </div>
             </div>
@@ -91,8 +91,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-            </div>
+            <div class="modal-body"></div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
@@ -187,7 +186,7 @@
 </section>
 <!-- END section -->
 
-<section class="pb_sm_py_cover text-center cover-bg-black cover-bg-opacity-4" style="background-image: url(<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/images/1900x1200_img_3.jpg)">
+<section class="pb_sm_py_cover text-center cover-bg-black cover-bg-opacity-4" style="background-image: url(<?php echo esc_url( trailingslashit( plugin_dir_url( dirname( __FILE__ ) ) ) ) ?>assets/images/1900x1200_img_3.jpg)">
     <div class="container">
 
         <div class="row align-items-center">

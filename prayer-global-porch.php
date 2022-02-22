@@ -22,7 +22,6 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit; // Exit if accessed directly
 }
 
-
 /**
  * Gets the instance of the `Prayer_Global_Porch` class.
  *
@@ -84,9 +83,6 @@ class Prayer_Global_Porch {
 
         require_once( 'redirects/loader.php');
 
-        if ( is_admin() ){
-            add_filter( 'plugin_row_meta', [ $this, 'plugin_description_links' ], 10, 4 ); // admin plugin page description
-        }
         $this->i18n();
     }
 
@@ -94,7 +90,7 @@ class Prayer_Global_Porch {
      * Filters the array of row meta for each/specific plugin in the Plugins list table.
      * Appends additional links below each/specific plugin on the plugins page.
      */
-    public function plugin_description_links( $links_array, $plugin_file_name, $plugin_data, $status ) {
+    public static function plugin_description_links( $links_array, $plugin_file_name, $plugin_data, $status ) {
         if ( strpos( $plugin_file_name, basename( __FILE__ ) ) ) {
 
             // You can still use `array_unshift()` to add links at the beginning.
@@ -187,10 +183,14 @@ class Prayer_Global_Porch {
     }
 }
 
+if ( is_admin() ){
+    add_filter( 'plugin_row_meta', [ 'Prayer_Global_Porch', 'plugin_description_links' ], 10, 4 ); // admin plugin page description
+}
+
 
 // Register activation hook.
-register_activation_hook( __FILE__, [ 'Prayer_Global_Porch', 'activation' ] );
-register_deactivation_hook( __FILE__, [ 'Prayer_Global_Porch', 'deactivation' ] );
+//register_activation_hook( __FILE__, [ 'Prayer_Global_Porch', 'activation' ] );
+//register_deactivation_hook( __FILE__, [ 'Prayer_Global_Porch', 'deactivation' ] );
 
 
 if ( ! function_exists( 'prayer_global_porch_hook_admin_notice' ) ) {
