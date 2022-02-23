@@ -1,4 +1,4 @@
-<?php require_once( trailingslashit( plugin_dir_path(__DIR__) ) . '/assets/nav.php') ?>
+<?php require_once( trailingslashit( plugin_dir_path( __DIR__ ) ) . '/assets/nav.php' ) ?>
 
 
 <section class="pb_section" data-section="about" id="section-about">

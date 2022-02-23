@@ -24,7 +24,7 @@ class Prayer_Global_Porch_Subscribe extends DT_Magic_Url_Base
         parent::__construct();
 
         $url = dt_get_url_path();
-        if ( ($this->root . '/' . $this->type) === $url ) {
+        if ( ( $this->root . '/' . $this->type ) === $url ) {
 
             $this->magic = new DT_Magic_URL( $this->root );
             $this->parts = $this->magic->parse_url_parts();

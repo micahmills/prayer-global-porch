@@ -24,7 +24,7 @@ class Prayer_Global_Porch_Stats_Previous extends DT_Magic_Url_Base
         parent::__construct();
 
         $url = dt_get_url_path();
-        if ( ($this->root . '/' . $this->type) === $url ) {
+        if ( ( $this->root . '/' . $this->type ) === $url ) {
 
             $this->magic = new DT_Magic_URL( $this->root );
             $this->parts = $this->magic->parse_url_parts();
@@ -76,9 +76,8 @@ class Prayer_Global_Porch_Stats_Previous extends DT_Magic_Url_Base
     }
 
     public function body(){
-        require_once( trailingslashit( plugin_dir_path(__DIR__) ) . '/assets/nav.php');
+        require_once( trailingslashit( plugin_dir_path( __DIR__ ) ) . '/assets/nav.php' );
         // @todo add body content
-
     }
 
     /**

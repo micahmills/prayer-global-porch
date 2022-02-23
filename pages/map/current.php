@@ -24,7 +24,7 @@ class Prayer_Global_Porch_Map_Current extends DT_Magic_Url_Base
         parent::__construct();
 
         $url = dt_get_url_path();
-        if ( ($this->root . '/' . $this->type) === $url ) {
+        if ( ( $this->root . '/' . $this->type ) === $url ) {
 
             $this->magic = new DT_Magic_URL( $this->root );
             $this->parts = $this->magic->parse_url_parts();
@@ -165,7 +165,7 @@ class Prayer_Global_Porch_Map_Current extends DT_Magic_Url_Base
             return new WP_Error( __METHOD__, "Missing parameters", [ 'status' => 400 ] );
         }
 
-       return self::state_grid_populations();
+        return self::state_grid_populations();
     }
 
     public static function state_grid_populations() {
