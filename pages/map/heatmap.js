@@ -93,19 +93,19 @@ jQuery(document).ready(function($){
   let loop = 0
   let list = 0
   window.load_map_triggered = 0
-  // window.get_page( 'state_grid_populations')
-  //   .done(function(x){
-  //     list = 1
-  //     jsObject.grid_data = x
-  //     if ( loop > 9 && list > 0 && window.load_map_triggered !== 1 ){
-  //       window.load_map_triggered = 1
-  //       load_map()
-  //     }
-  //   })
-  //   .fail(function(){
-  //     console.log('Error getting grid data')
-  //     jsObject.grid_data = {'data': {}, 'highest_value': 1 }
-  //   })
+  window.get_page( 'state_grid_populations')
+    .done(function(x){
+      list = 1
+      jsObject.grid_data = x
+      if ( loop > 9 && list > 0 && window.load_map_triggered !== 1 ){
+        window.load_map_triggered = 1
+        load_map()
+      }
+    })
+    .fail(function(){
+      console.log('Error getting grid data')
+      jsObject.grid_data = {'data': {}, 'highest_value': 1 }
+    })
   jQuery.each(asset_list, function(i,v) {
     jQuery.ajax({
       url: jsObject.mirror_url + 'tiles/world/flat_states/' + v,
@@ -286,3 +286,7 @@ jQuery(document).ready(function($){
 
 
 })
+
+function numberWithCommas(x) {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
