@@ -80,11 +80,19 @@ class Prayer_Global_Porch_Map extends DT_Magic_Url_Base
 
     public function header_javascript(){
         ?>
-        <style>
-            body {
-                background:white;
-            }
-        </style>
+        <script>
+            let jsObject = [<?php echo json_encode([
+                'map_key' => DT_Mapbox_API::get_key(),
+                'ipstack' => DT_Ipstack_API::get_key(),
+                'mirror_url' => dt_get_location_grid_mirror( true ),
+                'root' => esc_url_raw( rest_url() ),
+                'nonce' => wp_create_nonce( 'wp_rest' ),
+                'parts' => $this->parts,
+                'translations' => [
+                    'add' => __( 'Add Magic', 'disciple-tools-plugin-starter-template' ),
+                ],
+            ]) ?>][0]
+        </script>
         <?php
     }
 
@@ -97,22 +105,12 @@ class Prayer_Global_Porch_Map extends DT_Magic_Url_Base
     }
 
     public static function _wp_enqueue_scripts(){
-        wp_enqueue_script( 'lodash' );
-        wp_enqueue_script( 'jquery-ui' );
-        wp_enqueue_script( 'jquery-touch-punch' );
+        DT_Mapbox_API::load_mapbox_header_scripts();
 
         wp_enqueue_script( 'heatmap-js', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'heatmap.js', [
             'jquery',
-            'mapbox-cookie',
-            'jquery-cookie'
+            'mapbox-gl'
         ], filemtime( plugin_dir_path( __FILE__ ) .'heatmap.js' ), true );
-
-//        wp_enqueue_style( 'heatmap-css', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'heatmap.css', [], filemtime( plugin_dir_path( __FILE__ ) .'heatmap.css' ) );
-
-        wp_enqueue_script( 'jquery-cookie', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'js.cookie.min.js', [ 'jquery' ],
-            filemtime( trailingslashit( plugin_dir_path( __FILE__ ) ) .'js.cookie.min.js' ), true );
-
-        wp_enqueue_script( 'mapbox-cookie', trailingslashit( get_stylesheet_directory_uri() ) . 'dt-mapping/geocode-api/mapbox-cookie.js', [ 'jquery', 'jquery-cookie' ], '3.0.0' );
 
     }
 
