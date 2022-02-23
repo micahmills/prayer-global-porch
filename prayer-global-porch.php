@@ -78,6 +78,7 @@ class Prayer_Global_Porch {
         require_once( 'pages/home/magic-link.php' );
         require_once( 'pages/map/magic-link.php' );
         require_once( 'pages/pray/magic-link.php' );
+        require_once( 'pages/stats/magic-link.php' );
         require_once( 'pages/profile/magic-link.php' );
         require_once( 'pages/subscribe/magic-link.php' );
 

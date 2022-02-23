@@ -1,14 +1,16 @@
 <?php
 if ( !defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly.
 
-class Prayer_Global_Porch_Home extends DT_Magic_Url_Base
+class Prayer_Global_Porch_Stats extends DT_Magic_Url_Base
 {
     public $magic = false;
     public $parts = false;
-    public $page_title = 'Prayer.Global';
-    public $root = 'prayer_global';
-    public $type = 'porch';
-    public static $token = 'prayer_global_porch';
+    public $page_title = 'Global Prayer Map';
+    public $root = 'prayer_app';
+    public $type = 'stats';
+    public $type_name = 'Global Prayer Stats';
+    public static $token = 'prayer_app';
+    public $post_type = 'groups';
 
     private static $_instance = null;
     public static function instance() {
@@ -22,12 +24,16 @@ class Prayer_Global_Porch_Home extends DT_Magic_Url_Base
         parent::__construct();
 
         $url = dt_get_url_path();
-        if ( empty( $url ) && ! dt_is_rest() ) {
+        if ( ($this->root . '/' . $this->type) === $url ) {
+
+            $this->magic = new DT_Magic_URL( $this->root );
+            $this->parts = $this->magic->parse_url_parts();
+
 
             // register url and access
             add_action( "template_redirect", [ $this, 'theme_redirect' ] );
             add_filter( 'dt_blank_access', function (){ return true;
-            }, 100, 1 ); // allows non-logged in visit
+            }, 100, 1 );
             add_filter( 'dt_allow_non_login_access', function (){ return true;
             }, 100, 1 );
             add_filter( 'dt_override_header_meta', function (){ return true;
@@ -38,6 +44,7 @@ class Prayer_Global_Porch_Home extends DT_Magic_Url_Base
             add_action( 'wp_print_scripts', [ $this, 'print_scripts' ], 1500 ); // authorizes scripts
             add_action( 'wp_print_styles', [ $this, 'print_styles' ], 1500 ); // authorizes styles
 
+
             // page content
             add_action( 'dt_blank_head', [ $this, '_header' ] );
             add_action( 'dt_blank_footer', [ $this, '_footer' ] );
@@ -45,6 +52,11 @@ class Prayer_Global_Porch_Home extends DT_Magic_Url_Base
 
             add_filter( 'dt_magic_url_base_allowed_css', [ $this, 'dt_magic_url_base_allowed_css' ], 10, 1 );
             add_filter( 'dt_magic_url_base_allowed_js', [ $this, 'dt_magic_url_base_allowed_js' ], 10, 1 );
+        }
+
+        if ( dt_is_rest() ) {
+            add_action( 'rest_api_init', [ $this, 'add_endpoints' ] );
+            add_filter( 'dt_allow_rest_access', [ $this, 'authorize_url' ], 10, 1 );
         }
     }
 
@@ -67,5 +79,34 @@ class Prayer_Global_Porch_Home extends DT_Magic_Url_Base
     public function body(){
         require_once( 'body.php' );
     }
+
+    /**
+     * Register REST Endpoints
+     * @link https://github.com/DiscipleTools/disciple-tools-theme/wiki/Site-to-Site-Link for outside of wordpress authentication
+     */
+    public function add_endpoints() {
+        $namespace = $this->root . '/v1';
+        register_rest_route(
+            $namespace,
+            '/'.$this->type,
+            [
+                [
+                    'methods'  => WP_REST_Server::CREATABLE,
+                    'callback' => [ $this, 'endpoint' ],
+                ],
+            ]
+        );
+    }
+
+    public function endpoint( WP_REST_Request $request ) {
+        $params = $request->get_params();
+
+        if ( ! isset( $params['parts'], $params['action'] ) ) {
+            return new WP_Error( __METHOD__, "Missing parameters", [ 'status' => 400 ] );
+        }
+
+       return true;
+    }
+
 }
-Prayer_Global_Porch_Home::instance();
+Prayer_Global_Porch_Stats::instance();

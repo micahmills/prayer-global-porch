@@ -8,7 +8,7 @@
                 <h2 class="heading mb-3">Cover the World in Prayer</h2>
                 <div class="sub-heading">
                     <p class="mb-5">Community driven, movement-focused, saturation prayer.</p>
-                    <p><a href="/prayer_app/subscribe/" style="background-color:rgba(255,255,255,.7);" role="button" class="btn smoothscroll pb_font-25 btn-xl pb_font-13 p-4 rounded-0 pb_letter-spacing-2">Start Praying</a></p>
+                    <p><a href="/newest/lap/" style="background-color:rgba(255,255,255,.7);" role="button" class="btn smoothscroll pb_font-25 btn-xl pb_font-13 p-4 rounded-0 pb_letter-spacing-2">Start Praying</a></p>
                 </div>
 
             </div>
@@ -60,8 +60,20 @@
         </div>
         <div class="row">
             <div class="col-md text-center">
-                <a href="/prayer_app/subscribe/" role="button" class="btn smoothscroll pb_outline-dark btn-xl pb_font-13 p-4 rounded-0 pb_letter-spacing-2">Current Lap Map</a>
-                <a href="/prayer_app/subscribe/" role="button" class="btn smoothscroll pb_outline-dark btn-xl pb_font-13 p-4 rounded-0 pb_letter-spacing-2">Current Lap Stats</a>
+                <a href="/prayer_app/map/" role="button" class="btn smoothscroll pb_outline-dark btn-xl pb_font-13 p-4 rounded-0 pb_letter-spacing-2">Current Lap Map</a>
+                <a href="/prayer_app/stats/" role="button" class="btn smoothscroll pb_outline-dark btn-xl pb_font-13 p-4 rounded-0 pb_letter-spacing-2">Current Lap Stats</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md text-center pb_sm_py_cover">
+                <h2 class=" mb-3 heading" style="color:#212529">Previous Lap</h2>
+                <h3 class="mt-0 heading-border-top pb_font-30">36 days, 3 hours, 50 min</h3>
+                <br>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md text-center">
+                <a href="/prayer_app/stats/" role="button" class="btn smoothscroll pb_outline-dark btn-xl pb_font-13 p-4 rounded-0 pb_letter-spacing-2">All Previous Stats</a>
             </div>
         </div>
     </div>
@@ -108,7 +120,6 @@
                 <p>
                     One prayer lap equals a complete series of community prayers covering every populated place in the world.
                 </p>
-
             </div>
         </div>
         <div class="row">
