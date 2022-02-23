@@ -138,7 +138,7 @@ jQuery(document).ready(function($){
           jQuery('#initialize-dothis').show()
         }
 
-        if ( loop > 7 && window.load_map_triggered !== 1 ){
+        if ( loop > 7 && list > 0 && window.load_map_triggered !== 1 ){
           window.load_map_triggered = 1
           load_map()
         }
@@ -173,12 +173,12 @@ jQuery(document).ready(function($){
 
     window.previous_hover = false
 
-    let asset_list = []
-    var i = 1;
-    while( i <= 10 ){
-      asset_list.push(i+'.geojson')
-      i++
-    }
+    // let asset_list2 = []
+    // var i = 1;
+    // while( i <= 10 ){
+    //   asset_list2.push(i+'.geojson')
+    //   i++
+    // }
 
     jQuery.each(asset_list, function(i,v){
 
@@ -199,7 +199,8 @@ jQuery(document).ready(function($){
 
             jQuery.each(geojson.features, function (i, v) {
               if (typeof jsObject.grid_data.data[v.id] !== 'undefined' ) {
-                geojson.features[i].properties.value = parseInt(jsObject.grid_data.data[v.id])
+                // geojson.features[i].properties.value = parseInt(jsObject.grid_data.data[v.id])
+                geojson.features[i].properties.value = 1
               } else {
                 geojson.features[i].properties.value = 0
               }
@@ -214,7 +215,7 @@ jQuery(document).ready(function($){
               'type': 'line',
               'source': i.toString(),
               'paint': {
-                'line-color': 'grey',
+                'line-color': 'white',
                 'line-width': .5
               }
             });
@@ -283,10 +284,10 @@ jQuery(document).ready(function($){
 
   } /* .preCache */
 
-
+  function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
 
 })
 
-function numberWithCommas(x) {
-  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}
+
