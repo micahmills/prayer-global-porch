@@ -1,15 +1,15 @@
 <?php
 if ( !defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly.
 
-class Prayer_Global_Porch_Stats extends DT_Magic_Url_Base
+class Prayer_Global_Porch_Stats_Previous extends DT_Magic_Url_Base
 {
     public $magic = false;
     public $parts = false;
     public $page_title = 'Global Prayer Map';
-    public $root = 'prayer_app';
-    public $type = 'stats';
+    public $root = 'stats_app';
+    public $type = 'previous';
     public $type_name = 'Global Prayer Stats';
-    public static $token = 'prayer_app';
+    public static $token = 'stats_app_previous';
     public $post_type = 'groups';
 
     private static $_instance = null;
@@ -28,7 +28,6 @@ class Prayer_Global_Porch_Stats extends DT_Magic_Url_Base
 
             $this->magic = new DT_Magic_URL( $this->root );
             $this->parts = $this->magic->parse_url_parts();
-
 
             // register url and access
             add_action( "template_redirect", [ $this, 'theme_redirect' ] );
@@ -77,7 +76,9 @@ class Prayer_Global_Porch_Stats extends DT_Magic_Url_Base
     }
 
     public function body(){
-        require_once( 'body.php' );
+        require_once( trailingslashit( plugin_dir_path(__DIR__) ) . '/assets/nav.php');
+        // @todo add body content
+
     }
 
     /**
@@ -105,8 +106,8 @@ class Prayer_Global_Porch_Stats extends DT_Magic_Url_Base
             return new WP_Error( __METHOD__, "Missing parameters", [ 'status' => 400 ] );
         }
 
-       return true;
+        return true;
     }
 
 }
-Prayer_Global_Porch_Stats::instance();
+Prayer_Global_Porch_Stats_Previous::instance();

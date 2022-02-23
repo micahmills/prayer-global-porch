@@ -1,15 +1,15 @@
 <?php
 if ( !defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly.
 
-class Prayer_Global_Porch_Map_App_Lap extends DT_Magic_Url_Base
+class Prayer_Global_Porch_Stats_Current extends DT_Magic_Url_Base
 {
     public $magic = false;
     public $parts = false;
     public $page_title = 'Global Prayer Map';
-    public $root = 'prayer_app';
-    public $type = 'lap';
-    public $type_name = 'Global Prayer Map';
-    public static $token = 'prayer_app';
+    public $root = 'stats_app';
+    public $type = 'current';
+    public $type_name = 'Global Prayer Stats';
+    public static $token = 'stats_app_current';
     public $post_type = 'groups';
 
     private static $_instance = null;
@@ -52,7 +52,6 @@ class Prayer_Global_Porch_Map_App_Lap extends DT_Magic_Url_Base
 
             add_filter( 'dt_magic_url_base_allowed_css', [ $this, 'dt_magic_url_base_allowed_css' ], 10, 1 );
             add_filter( 'dt_magic_url_base_allowed_js', [ $this, 'dt_magic_url_base_allowed_js' ], 10, 1 );
-//            add_action( 'wp_enqueue_scripts', [ $this, '_wp_enqueue_scripts' ], 100 );
         }
 
         if ( dt_is_rest() ) {
@@ -78,7 +77,9 @@ class Prayer_Global_Porch_Map_App_Lap extends DT_Magic_Url_Base
     }
 
     public function body(){
-        require_once( 'body.php' );
+        require_once( trailingslashit( plugin_dir_path(__DIR__) ) . '/assets/nav.php');
+        // @todo add body content
+
     }
 
     /**
@@ -110,4 +111,4 @@ class Prayer_Global_Porch_Map_App_Lap extends DT_Magic_Url_Base
     }
 
 }
-Prayer_Global_Porch_Map_App_Lap::instance();
+Prayer_Global_Porch_Stats_Current::instance();

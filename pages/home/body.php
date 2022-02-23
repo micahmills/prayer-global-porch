@@ -60,8 +60,8 @@
         </div>
         <div class="row">
             <div class="col-md text-center">
-                <a href="/prayer_app/map/" role="button" class="btn smoothscroll pb_outline-dark btn-xl pb_font-13 p-4 rounded-0 pb_letter-spacing-2">Current Lap Map</a>
-                <a href="/prayer_app/stats/" role="button" class="btn smoothscroll pb_outline-dark btn-xl pb_font-13 p-4 rounded-0 pb_letter-spacing-2">Current Lap Stats</a>
+                <a href="/map_app/current/" role="button" class="btn smoothscroll pb_outline-dark btn-xl pb_font-13 p-4 rounded-0 pb_letter-spacing-2">Current Lap Map</a>
+                <a href="/stats_app/current/" role="button" class="btn smoothscroll pb_outline-dark btn-xl pb_font-13 p-4 rounded-0 pb_letter-spacing-2">Current Lap Stats</a>
             </div>
         </div>
         <div class="row">
@@ -73,7 +73,7 @@
         </div>
         <div class="row">
             <div class="col-md text-center">
-                <a href="/prayer_app/stats/" role="button" class="btn smoothscroll pb_outline-dark btn-xl pb_font-13 p-4 rounded-0 pb_letter-spacing-2">All Previous Stats</a>
+                <a href="/stats_app/previous/" role="button" class="btn smoothscroll pb_outline-dark btn-xl pb_font-13 p-4 rounded-0 pb_letter-spacing-2">All Previous Stats</a>
             </div>
         </div>
     </div>

@@ -35,7 +35,7 @@ class Prayer_Global_Porch_Newest_Lap extends DT_Magic_Url_Base
 
         // @todo add logic to determine the current live lap
 
-        $link = '/prayer_app/lap/' . $lap_id;
+        $link = '/prayer_app/current/' . $lap_id;
         wp_redirect( $link );
     }
 

@@ -1,13 +1,13 @@
 <?php
 if ( !defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly.
 
-class Prayer_Global_Porch_Map extends DT_Magic_Url_Base
+class Prayer_Global_Porch_Map_Current extends DT_Magic_Url_Base
 {
     public $magic = false;
     public $parts = false;
     public $page_title = 'Global Prayer Map';
-    public $root = 'prayer_app';
-    public $type = 'map';
+    public $root = 'map_app';
+    public $type = 'current';
     public $type_name = 'Global Prayer Map';
     public static $token = 'prayer_app_map';
     public $post_type = 'groups';
@@ -95,6 +95,28 @@ class Prayer_Global_Porch_Map extends DT_Magic_Url_Base
                 ],
             ]) ?>][0]
         </script>
+        <style>
+            body {
+                background: white !important;
+            }
+            #initialize-screen {
+                width: 100%;
+                height: 2000px;
+                z-index: 100;
+                background-color: white;
+                position: absolute;
+            }
+            #initialize-spinner-wrapper{
+                position:relative;
+                top:45%;
+            }
+            progress {
+                top: 50%;
+                margin: 0 auto;
+                height:50px;
+                width:300px;
+            }
+        </style>
         <?php
     }
 
@@ -103,7 +125,10 @@ class Prayer_Global_Porch_Map extends DT_Magic_Url_Base
 
     public function body(){
         DT_Mapbox_API::geocoder_scripts();
-        require_once( 'body.php' );
+        ?>
+        <style id="custom-style"></style>
+        <div id="map-content"></div>
+        <?php
     }
 
     public static function _wp_enqueue_scripts(){
@@ -113,7 +138,6 @@ class Prayer_Global_Porch_Map extends DT_Magic_Url_Base
             'jquery',
             'mapbox-gl'
         ], filemtime( plugin_dir_path( __FILE__ ) .'heatmap.js' ), true );
-
     }
 
     /**
@@ -184,4 +208,4 @@ class Prayer_Global_Porch_Map extends DT_Magic_Url_Base
     }
 
 }
-Prayer_Global_Porch_Map::instance();
+Prayer_Global_Porch_Map_Current::instance();

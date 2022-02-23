@@ -74,15 +74,24 @@ class Prayer_Global_Porch {
     }
 
     private function __construct() {
+        require_once( 'redirects/loader.php');
 
+        // home
         require_once( 'pages/home/magic-link.php' );
-        require_once( 'pages/map/magic-link.php' );
-        require_once( 'pages/pray/magic-link.php' );
-        require_once( 'pages/stats/magic-link.php' );
+
+        // map_app
+        require_once( 'pages/map/current.php' );
+
+        // prayer_app
+        require_once( 'pages/pray/current.php' );
+
+        // stats_app
+        require_once( 'pages/stats/current.php' );
+        require_once( 'pages/stats/previous.php' );
+
+        // user
         require_once( 'pages/profile/magic-link.php' );
         require_once( 'pages/subscribe/magic-link.php' );
-
-        require_once( 'redirects/loader.php');
 
         $this->i18n();
     }
