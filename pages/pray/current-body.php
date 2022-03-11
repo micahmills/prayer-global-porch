@@ -1,7 +1,32 @@
-<?php require_once( trailingslashit( plugin_dir_path( __DIR__ ) ) . '/assets/nav.php' ) ?>
+<style>
+    .navbar.prayer_navbar {
+        border-bottom:1px solid lightgrey;
+        box-shadow: 0 1px 10px -2px rgb(0 0 0 / 15%);
+        background:white;
+        height:100px;
+    }
+    section {
+        margin-top:120px;
+    }
+    .btn-group {
+        width: 100%;
+    }
+    #praying-button {
+        width:100%;
+    }
+</style>
 
-<br><br><br>
-<section class="pb_section pb_section_v1 " data-section="states" id="section-stats">
+<nav class="navbar prayer_navbar fixed-top" id="pb-pray-navbar">
+    <div class="container">
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <button type="button" class="btn btn-primary" id="praying-button">Praying...</button>
+            <button type="button" class="btn btn-secondary" id="praying-close-button"><i class="ion-close-circled" style="font-size:2em;"></i></button>
+        </div>
+    </div>
+</nav>
+
+
+<section class="" data-section="states">
     <div class="container">
         <div class="row">
             <div class="col-sm">

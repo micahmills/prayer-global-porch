@@ -164,6 +164,15 @@
                                 ... maybe faster.
                             </p>
                             <p>
+                                The Moravians had one person praying every hour of every day for 100 years. This was roughly 876,000 hours of prayer, or 52,560,000 minutes of prayer for the world. We are humbled by this extraordinary commitment to praying for the world.
+                            </p>
+                            <p>
+
+                            </p>
+                            <p>
+
+                            </p>
+                            <p>
                                 <br>
                             </p>
                         </div>
