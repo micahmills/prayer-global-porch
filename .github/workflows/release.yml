@@ -23,7 +23,7 @@ jobs:
       - name: Build project
         run: |
           mkdir prayer-global-porch
-          cp -r prayer-global-porch.php charts pages redirects support spinner.svg version-control.json LICENSE SECURITY.md prayer-global-porch/
+          cp -r prayer-global-porch.php charts pages post-type redirects support spinner.svg version-control.json LICENSE SECURITY.md prayer-global-porch/
           zip -r prayer-global-porch.zip prayer-global-porch
       - name: Create Release
         id: create_release

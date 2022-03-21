@@ -7,6 +7,7 @@ jQuery(document).ready(function(){
   let praying_panel = jQuery('#praying-panel')
   let decision_panel = jQuery('#decision-panel')
   let question_panel = jQuery('#question-panel')
+  let celebrate_panel = jQuery('#celebrate-panel')
 
   let praying_button = jQuery('#praying_button')
   let button_progress = jQuery('.praying__progress')
@@ -22,7 +23,7 @@ jQuery(document).ready(function(){
   let question_yes_next = jQuery('#question__yes_next')
 
   let percent = 0
-  window.time = 0
+  window.time = 58
   let interval
 
   function prayer_progress_indicator( time_start ) {
@@ -45,18 +46,21 @@ jQuery(document).ready(function(){
     }, 1000);
   }
   function initialize_location() {
+    window.current_content = jsObject.start_content
     window.next_content = jsObject.next_content
-    load_location( jsObject.start_content )
+    load_location()
   }
   initialize_location() // load prayer framework
 
-  function load_location( content ) {
+  function load_location() {
+    let content = window.current_content
     button_text.html('Keep Praying...')
     button_progress.css('width', '0' )
 
     praying_panel.show()
     decision_panel.hide()
     question_panel.hide()
+    celebrate_panel.hide()
 
     div.empty()
     div.append(
@@ -92,7 +96,7 @@ jQuery(document).ready(function(){
       )
     })
 
-    prayer_progress_indicator( 0 )
+    prayer_progress_indicator( window.time )
   }
 
 
@@ -128,7 +132,12 @@ jQuery(document).ready(function(){
     button_text.html('Keep Praying...')
   })
   decision_next.on('click', function( e ) {
-    window.location = 'https://prayer.global/prayer_app/current/'
+    button_text.html('Keep Praying...')
+    button_progress.css('width', '0' )
+    window.time = 0
+    window.current_content = window.next_content
+    load_location()
+    refresh()
   })
 
   question_no.on('click', function( e ) {
@@ -141,44 +150,45 @@ jQuery(document).ready(function(){
     decision_continue.hide();
     question_panel.hide()
     decision_panel.show()
-    load_animation()
+    celebrate()
     log()
   })
   question_yes_next.on('click', function( e ) {
-    load_animation()
+    celebrate()
+    question_panel.hide()
     log()
     let next = setTimeout(
       function()
       {
-        load_next()
-      }, 1000);
+        window.time = 0
+        window.current_content = window.next_content
+        load_location()
+      }, 1500);
   })
 
 
-  function load_animation(){
-    div.empty().html(
-      `<div class="row">
-          <div class="col-sm">
-              <h3 class="mt-0 mb-3 font-weight-normal">Success</h3>
-          </div>
-          <div class="col-sm">
-              <img src="https://via.placeholder.com/500x200" class="img-fluid" alt="photo" />
-          </div>
-      </div><hr>`
-    )
-  }
-  function load_next() {
-    load_location( window.next_content )
+  function celebrate(){
+    div.empty()
+    celebrate_panel.show()
   }
   function log() {
-    window.api_post(0 )
+    window.api_post( 'log', { grid_id: window.current_content.grid_id } )
       .done(function(location) {
         console.log(location)
+        window.current_content = window.next_content
+        window.next_content = location
+      })
+  }
+  function refresh() {
+    window.api_post( 'refresh', { grid_id: window.current_content.grid_id } )
+      .done(function(location) {
+        console.log(location)
+        window.current_content = window.next_content
         window.next_content = location
       })
   }
 
-  window.api_post = ( data ) => {
+  window.api_post = ( action, data ) => {
     return jQuery.ajax({
       type: "POST",
       data: JSON.stringify({ action: 'log', parts: jsObject.parts, data: data }),

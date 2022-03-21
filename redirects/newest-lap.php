@@ -31,11 +31,11 @@ class Prayer_Global_Porch_Newest_Lap extends DT_Magic_Url_Base
     }
 
     public function redirect() {
-        $lap_id = '';
+        $lap_id = uniqid('global_' );
 
         // @todo add logic to determine the current live lap
 
-        $link = '/prayer_app/current/' . $lap_id;
+        $link = '/prayer_app/pray/' . $lap_id;
         wp_redirect( $link );
     }
 

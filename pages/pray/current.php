@@ -7,10 +7,10 @@ class Prayer_Global_Porch_Map_App_Lap extends DT_Magic_Url_Base
     public $parts = false;
     public $page_title = 'Global Prayer Map';
     public $root = 'prayer_app';
-    public $type = 'current';
-    public $type_name = 'Global Prayer Map';
-    public static $token = 'prayer_app_current';
-    public $post_type = 'groups';
+    public $type = 'pray';
+    public $type_name = 'Global Prayer';
+    public static $token = 'prayer_app_pray';
+    public $post_type = 'laps';
 
     private static $_instance = null;
     public static function instance() {
@@ -24,7 +24,7 @@ class Prayer_Global_Porch_Map_App_Lap extends DT_Magic_Url_Base
         parent::__construct();
 
         $url = dt_get_url_path();
-        if ( ( $this->root . '/' . $this->type ) === $url ) {
+        if ( substr( $url, 0, 15 ) === $this->root . '/' . $this->type ) {
 
             $this->magic = new DT_Magic_URL( $this->root );
             $this->parts = $this->magic->parse_url_parts();
@@ -123,13 +123,20 @@ class Prayer_Global_Porch_Map_App_Lap extends DT_Magic_Url_Base
             return new WP_Error( __METHOD__, "Missing parameters", [ 'status' => 400 ] );
         }
 
-        dt_write_log($params);
-
-        return $this->get_new_location();
+        switch( $params['action'] ) {
+            case 'log':
+                // @todo save location record.
+                return $this->get_new_location();
+            case 'refresh':
+                return $this->get_new_location();
+            default:
+                return new WP_Error( __METHOD__, "Incorrect action", [ 'status' => 400 ] );
+        }
     }
 
     public function get_new_location() {
         $content = [
+            'grid_id' => 1234567,
             'location' => [
                 'name' => 'Colorado, United States ' . rand (10,100),
                 'url' => 'https://via.placeholder.com/500x200',
