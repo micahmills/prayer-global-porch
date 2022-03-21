@@ -52,7 +52,6 @@ class Prayer_Global_Porch_Map_App_Lap extends DT_Magic_Url_Base
 
             add_filter( 'dt_magic_url_base_allowed_css', [ $this, 'dt_magic_url_base_allowed_css' ], 10, 1 );
             add_filter( 'dt_magic_url_base_allowed_js', [ $this, 'dt_magic_url_base_allowed_js' ], 10, 1 );
-//            add_action( 'wp_enqueue_scripts', [ $this, '_wp_enqueue_scripts' ], 100 );
         }
 
         if ( dt_is_rest() ) {
@@ -71,6 +70,23 @@ class Prayer_Global_Porch_Map_App_Lap extends DT_Magic_Url_Base
 
     public function header_javascript(){
         require_once( trailingslashit( plugin_dir_path( __DIR__ ) ) . 'assets/header.php' );
+        ?>
+        <script src="<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) ) ?>prayer.js?ver=<?php echo fileatime( trailingslashit( plugin_dir_path( __FILE__ ) ) . 'prayer.js' ) ?>"></script>
+        <script>
+            let jsObject = [<?php echo json_encode([
+                'map_key' => DT_Mapbox_API::get_key(),
+                'ipstack' => DT_Ipstack_API::get_key(),
+                'root' => esc_url_raw( rest_url() ),
+                'nonce' => wp_create_nonce( 'wp_rest' ),
+                'parts' => $this->parts,
+                'translations' => [
+                    'add' => __( 'Add Magic', 'disciple-tools-plugin-starter-template' ),
+                ],
+                'start_content' => $this->get_new_location(),
+                'next_content' => $this->get_new_location(),
+            ]) ?>][0]
+        </script>
+        <?php
     }
 
     public function footer_javascript(){
@@ -94,6 +110,7 @@ class Prayer_Global_Porch_Map_App_Lap extends DT_Magic_Url_Base
                 [
                     'methods'  => WP_REST_Server::CREATABLE,
                     'callback' => [ $this, 'endpoint' ],
+                    'permission_callback' => '__return_true'
                 ],
             ]
         );
@@ -106,8 +123,37 @@ class Prayer_Global_Porch_Map_App_Lap extends DT_Magic_Url_Base
             return new WP_Error( __METHOD__, "Missing parameters", [ 'status' => 400 ] );
         }
 
-        return true;
+        dt_write_log($params);
+
+        return $this->get_new_location();
     }
 
+    public function get_new_location() {
+        $content = [
+            'location' => [
+                'name' => 'Colorado, United States ' . rand (10,100),
+                'url' => 'https://via.placeholder.com/500x200',
+                'description' => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries"
+            ],
+            'sections' => [
+                [
+                    'name' => 'Praise',
+                    'url' => 'https://via.placeholder.com/500x200',
+                    'description' => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries"
+                ],
+                [
+                    'name' => 'Kingdom Come',
+                    'url' => 'https://via.placeholder.com/500x200',
+                    'description' => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries"
+                ],
+                [
+                    'name' => 'Pray the Book of Acts',
+                    'url' => 'https://via.placeholder.com/500x200',
+                    'description' => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries"
+                ]
+            ]
+        ];
+        return $content;
+    }
 }
 Prayer_Global_Porch_Map_App_Lap::instance();

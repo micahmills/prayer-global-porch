@@ -11,7 +11,7 @@
     .btn-group {
         width: 100%;
     }
-    #praying-button {
+    #praying_button {
         width:100%;
         border: none;
         background: darkgrey;
@@ -23,10 +23,10 @@
         overflow: hidden;
         border-radius: 5px 0 0 5px;
     }
-    #praying-close-button {
+    #praying__close_button {
         font-size:2em;
     }
-    .button__progress {
+    .praying__progress {
         position: absolute;
         height: 100%;
         width: 0%;
@@ -36,7 +36,7 @@
         transition: width 0.3s;
         box-shadow: 0 10px 0 -2px rgb(0 0 0 / 15%);
     }
-    .button__text {
+    .praying__text {
         position: relative;
     }
     .container {
@@ -45,158 +45,49 @@
     #decision-panel {
         display: none;
     }
-    .decision-buttons-group .btn  {
+    #question-panel {
+        display: none;
+    }
+    .decision_button_group .btn  {
         width:100%;
+    }
+    .question_button_group .btn  {
+        width:100%;
+    }
+    .question__yes {
+        background:green !important;
     }
 </style>
 
 
 <nav class="navbar prayer_navbar fixed-top" id="pb-pray-navbar">
-    <div class="container">
-        <div class="btn-group" role="group" aria-label="Progress Button">
-            <button type="button" class="btn decision" id="praying-button" data-percent="0" data-seconds="0">
-                <div class="button__progress"></div>
-                <span class="button__text">Keep Praying...</span>
+    <div class="container praying" id="praying-panel">
+        <div class="btn-group praying_button_group" role="group" aria-label="Praying Button">
+            <button type="button" class="btn praying" id="praying_button" data-percent="0" data-seconds="0">
+                <div class="praying__progress"></div>
+                <span class="praying__text"></span>
             </button>
-            <button type="button" class="btn btn-secondary decision" id="praying-close-button"><i class="ion-close-circled"></i></button>
+            <button type="button" class="btn btn-secondary praying" id="praying__close_button"><i class="ion-close-circled"></i></button>
         </div>
     </div>
-    <div class="container" id="decision-panel">
-        <div class="btn-group decision-buttons-group" role="group" aria-label="Progress Button">
-            <button type="button" class="btn btn-secondary" id="decision__home">Home</button>
-            <button type="button" class="btn btn-secondary" id="decision__continue">Continue</button>
-            <button type="button" class="btn btn-secondary" id="decision__next">Next</button>
+    <div class="container question" id="question-panel">
+        Did you pray for this location?
+        <div class="btn-group question_button_group" role="group" aria-label="Praying Button">
+            <button type="button" class="btn btn-secondary question" id="question__no">No</button>
+            <button type="button" class="btn btn-secondary question question__yes" id="question__yes_done">Yes</button>
+            <button type="button" class="btn btn-secondary question question__yes" id="question__yes_next">Yes & Next</button>
+        </div>
+    </div>
+    <div class="container decision" id="decision-panel">
+        <div class="btn-group decision_button_group" role="group" aria-label="Decision Button">
+            <button type="button" class="btn btn-secondary decision" id="decision__home">Home</button>
+            <button type="button" class="btn btn-secondary decision" id="decision__continue">Continue</button>
+            <button type="button" class="btn btn-secondary decision" id="decision__next">Next</button>
         </div>
     </div>
 </nav>
 
-<script>
-    jQuery(document).ready(function(){
-        let button_progress = jQuery('.button__progress')
-        let button_text = jQuery('.button__text')
-        let praying_button = jQuery('#praying-button')
-        let close_button = jQuery('#praying-close-button')
-        let decision_panel = jQuery('#decision-panel')
-        let decision_home = jQuery('#decision__home')
-        let decision_continue = jQuery('#decision__continue')
-        let decision_next = jQuery('#decision__next')
-        let percent = 0
-        let time = 0
-        let interval
-        function prayer_progress_indicator( time_start ) {
-            time = time_start
-            interval = setInterval(function() {
-                if (time <= 62) {
-                    time++
-                    percent = 1.6 * time
-                    if ( percent > 100 ) {
-                        percent = 100
-                    }
-                    button_progress.css('width', percent+'%' )
-                }
-                else {
-                    clearInterval(interval);
-                    button_text.html('Next Location!')
-                }
-            }, 1000);
-        }
-        prayer_progress_indicator( 0 )
-
-
-        praying_button.on('click', function( e ) {
-            console.log( percent )
-            if ( percent < 100 ) {
-                console.log('not finished')
-                decision_panel.show()
-                button_text.html('Praying Paused')
-                clearInterval(interval);
-            } else {
-                console.log( 'finished' )
-            }
-        })
-        close_button.on('click', function( e ) {
-            console.log( percent )
-            if ( percent < 100 ) {
-                console.log('not finished')
-                decision_panel.show()
-                button_text.html('Praying Paused')
-                clearInterval(interval);
-            } else {
-                console.log( 'finished' )
-            }
-        })
-        decision_home.on('click', function( e ) {
-            window.location = 'https://prayer.global'
-        })
-        decision_continue.on('click', function( e ) {
-            decision_panel.hide()
-            prayer_progress_indicator( time )
-            button_text.html('Keep Praying...')
-        })
-        decision_next.on('click', function( e ) {
-            console.log( 'next location' )
-
-        })
-
-    })
-</script>
-
 
 <section class="" data-section="states">
-    <div class="container">
-        <div class="row">
-            <div class="col-sm">
-                <h3 class="mt-0 mb-3 font-weight-normal">Colorado, United States</h3>
-            </div>
-            <div class="col-sm">
-                <img src="https://via.placeholder.com/500x200" class="img-fluid" />
-            </div>
-            <div class="col-sm">
-                <p>
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries
-                </p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm">
-                <h3 class="mt-0 mb-3 font-weight-normal">Praise</h3>
-            </div>
-            <div class="col-sm">
-                <img src="https://via.placeholder.com/500x200" class="img-fluid" />
-            </div>
-            <div class="col-sm">
-                <p>
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries
-                </p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm">
-                <h3 class="mt-0 mb-3 font-weight-normal">Kingdom Come</h3>
-            </div>
-            <div class="col-sm">
-                <img src="https://via.placeholder.com/500x200" class="img-fluid" />
-            </div>
-            <div class="col-sm">
-                <p>
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries
-                </p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm">
-                <h3 class="mt-0 mb-3 font-weight-normal">Pray the Book of Acts</h3>
-            </div>
-            <div class="col-sm">
-                <img src="https://via.placeholder.com/500x200" class="img-fluid" />
-            </div>
-            <div class="col-sm">
-                <p>
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries
-                </p>
-            </div>
-        </div>
-    </div>
+    <div class="container" id="content"></div>
 </section>
-<!-- END section -->
-
