@@ -31,12 +31,11 @@ class Prayer_Global_Porch_Newest_Lap extends DT_Magic_Url_Base
     }
 
     public function redirect() {
-        $lap_id = uniqid('global_' );
-
-        // @todo add logic to determine the current live lap
-
-        $link = '/prayer_app/pray/' . $lap_id;
+        global $wpdb;
+        $newest_key = $wpdb->get_var("SELECT meta_value FROM $wpdb->postmeta WHERE meta_key = 'prayer_app_global_magic_key' ORDER BY post_id DESC");
+        $link = '/prayer_app/global/' . $newest_key;
         wp_redirect( $link );
+        exit;
     }
 
 }

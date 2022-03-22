@@ -84,7 +84,7 @@ class Prayer_Global_Porch {
         require_once( 'pages/map/current.php' );
 
         // prayer_app
-        require_once( 'pages/pray/current.php' );
+        require_once( 'pages/pray/global.php' );
 
         // stats_app
         require_once( 'pages/stats/current.php' );
@@ -119,6 +119,7 @@ class Prayer_Global_Porch {
      * @return void
      */
     public static function activation() {
+        // @todo install
         // add elements here that need to fire on activation
     }
 
@@ -200,7 +201,7 @@ if ( is_admin() ){
 
 
 // Register activation hook.
-//register_activation_hook( __FILE__, [ 'Prayer_Global_Porch', 'activation' ] );
+register_activation_hook( __FILE__, [ 'Prayer_Global_Porch', 'activation' ] );
 //register_deactivation_hook( __FILE__, [ 'Prayer_Global_Porch', 'deactivation' ] );
 
 

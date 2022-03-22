@@ -60,6 +60,9 @@
     .question__yes {
         background:green !important;
     }
+    .celebrate-image {
+
+    }
 </style>
 
 
@@ -77,13 +80,16 @@
         Did you pray for this location?
         <div class="btn-group question_button_group" role="group" aria-label="Praying Button">
             <button type="button" class="btn btn-secondary question" id="question__no">No</button>
-            <button type="button" class="btn btn-secondary question question__yes" id="question__yes_done">Yes</button>
+            <button type="button" class="btn btn-secondary question question__yes" id="question__yes_done">Yes & Done</button>
             <button type="button" class="btn btn-secondary question question__yes" id="question__yes_next">Yes & Next</button>
         </div>
     </div>
-    <div class="container celebrate" id="celebrate-panel">
-        <img src="https://via.placeholder.com/500x400" class="img-fluid" alt="photo" />
+    <div class="container celebrate " id="celebrate-panel">
+        <div class="text-center">
+            <img src="https://via.placeholder.com/500x400" class="img-fluid celebrate-image" alt="photo" />
+        </div>
     </div>
+    <div class="w-100" ></div>
     <div class="container decision" id="decision-panel">
         <div class="btn-group decision_button_group" role="group" aria-label="Decision Button">
             <button type="button" class="btn btn-secondary decision" id="decision__home">Home</button>
@@ -91,10 +97,9 @@
             <button type="button" class="btn btn-secondary decision" id="decision__next">Next</button>
         </div>
     </div>
-
 </nav>
 
 
-<section class="" data-section="states">
+<section>
     <div class="container" id="content"></div>
 </section>

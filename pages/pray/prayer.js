@@ -23,7 +23,7 @@ jQuery(document).ready(function(){
   let question_yes_next = jQuery('#question__yes_next')
 
   let percent = 0
-  window.time = 58
+  window.time = 0
   let interval
 
   function prayer_progress_indicator( time_start ) {
@@ -65,14 +65,12 @@ jQuery(document).ready(function(){
     div.empty()
     div.append(
       `<div class="row">
-          <div class="col-sm">
-              <h3 class="mt-0 mb-3 font-weight-normal">${content.location.name}</h3>
-          </div>
-          <div class="col-sm">
-              <img src="${content.location.url}" class="img-fluid" alt="${content.location.name} photo" />
-          </div>
-          <div class="col-sm">
-              <p>
+          <div class="col">
+              <h3 class="mt-0 mb-3 font-weight-normal text-center">${content.location.name}</h3>
+              <p class="text-md-center">
+                <img src="${content.location.url}" class="img-fluid" alt="${content.location.name} photo" />
+              </p>
+               <p>
                   ${content.location.description}
               </p>
           </div>
@@ -81,13 +79,13 @@ jQuery(document).ready(function(){
     jQuery.each(content.sections, function(i,v) {
       div.append(
         `<div class="row">
-            <div class="col-sm">
+            <div class="col-md">
                 <h3 class="mt-0 mb-3 font-weight-normal">${v.name}</h3>
             </div>
-            <div class="col-sm">
+            <div class="col-md">
                 <img src="${v.url}" class="img-fluid" alt="${v.name} photo" />
             </div>
-            <div class="col-sm">
+            <div class="col-md">
                 <p>
                     ${v.description}
                 </p>
@@ -145,6 +143,7 @@ jQuery(document).ready(function(){
     button_progress.css('width', '0' )
     window.time = 0
     decision_panel.show()
+    decision_continue.show();
   })
   question_yes_done.on('click', function( e ) {
     decision_continue.hide();

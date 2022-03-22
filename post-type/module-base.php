@@ -109,26 +109,25 @@ class Prayer_Global_Laps_Post_Type extends DT_Module_Base {
     public function dt_custom_fields_settings( $fields, $post_type ){
         if ( $post_type === $this->post_type ){
 
-
-
-            /**
-             * @todo configure status appropriate to your post type
-             * @todo modify strings and add elements to default array
-             */
             $fields['status'] = [
                 'name'        => __( 'Status', 'disciple-tools-plugin-starter-template' ),
                 'description' => __( 'Set the current status.', 'disciple-tools-plugin-starter-template' ),
                 'type'        => 'key_select',
                 'default'     => [
+                    'active'   => [
+                        'label' => __( 'Active', 'disciple-tools-plugin-starter-template' ),
+                        'description' => __( 'Is active.', 'disciple-tools-plugin-starter-template' ),
+                        'color' => "#FFA500"
+                    ],
+                    'complete' => [
+                        'label' => __( 'Complete', 'disciple-tools-plugin-starter-template' ),
+                        'description' => __( 'No longer active.', 'disciple-tools-plugin-starter-template' ),
+                        'color' => "#4CAF50"
+                    ],
                     'inactive' => [
                         'label' => __( 'Inactive', 'disciple-tools-plugin-starter-template' ),
                         'description' => __( 'No longer active.', 'disciple-tools-plugin-starter-template' ),
                         'color' => "#F43636"
-                    ],
-                    'active'   => [
-                        'label' => __( 'Active', 'disciple-tools-plugin-starter-template' ),
-                        'description' => __( 'Is active.', 'disciple-tools-plugin-starter-template' ),
-                        'color' => "#4CAF50"
                     ],
                 ],
                 'tile'     => 'status',
@@ -136,15 +135,34 @@ class Prayer_Global_Laps_Post_Type extends DT_Module_Base {
                 "default_color" => "#366184",
                 "show_in_table" => 10,
             ];
-            $fields['assigned_to'] = [
-                'name'        => __( 'Assigned To', 'disciple-tools-plugin-starter-template' ),
-                'description' => __( "Select the main person who is responsible for reporting on this record.", 'disciple-tools-plugin-starter-template' ),
-                'type'        => 'user_select',
-                'default'     => '',
-                'tile' => 'status',
-                'icon' => get_template_directory_uri() . '/dt-assets/images/assigned-to.svg',
-                "show_in_table" => 16,
+            $fields['type'] = [
+                'name'        => __( 'Type', 'disciple-tools-plugin-starter-template' ),
+                'description' => __( 'Type of Lap', 'disciple-tools-plugin-starter-template' ),
+                'type'        => 'key_select',
+                'default'     => [
+                    'global'   => [
+                        'label' => __( 'Global', 'disciple-tools-plugin-starter-template' ),
+                        'description' => __( 'Global Lap', 'disciple-tools-plugin-starter-template' ),
+                    ],
+                    'custom' => [
+                        'label' => __( 'Custom', 'disciple-tools-plugin-starter-template' ),
+                        'description' => __( 'Custom', 'disciple-tools-plugin-starter-template' ),
+                    ]
+                ],
+                'tile'     => 'status',
+                'icon' => get_template_directory_uri() . '/dt-assets/images/nametag.svg',
+                "default_color" => "#366184",
+                "show_in_table" => 10,
             ];
+//            $fields['assigned_to'] = [
+//                'name'        => __( 'Assigned To', 'disciple-tools-plugin-starter-template' ),
+//                'description' => __( "Select the main person who is responsible for reporting on this record.", 'disciple-tools-plugin-starter-template' ),
+//                'type'        => 'user_select',
+//                'default'     => '',
+//                'tile' => 'status',
+//                'icon' => get_template_directory_uri() . '/dt-assets/images/assigned-to.svg',
+//                "show_in_table" => 16,
+//            ];
 
 
 
@@ -167,27 +185,35 @@ class Prayer_Global_Laps_Post_Type extends DT_Module_Base {
                 'tile' => 'details',
                 'icon' => get_template_directory_uri() . '/dt-assets/images/date-end.svg',
             ];
-            $fields["multi_select"] = [
-                'name' => __( 'Multi-Select', 'disciple-tools-plugin-starter-template' ),
-                'description' => __( "Multi Select Field", 'disciple-tools-plugin-starter-template' ),
-                'type' => 'multi_select',
-                'default' => [
-                    'item_1' => [
-                        'label' => __( 'Item 1', 'disciple-tools-plugin-starter-template' ),
-                        'description' => __( 'Item 1.', 'disciple-tools-plugin-starter-template' ),
-                    ],
-                    'item_2' => [
-                        'label' => __( 'Item 2', 'disciple-tools-plugin-starter-template' ),
-                        'description' => __( 'Item 2.', 'disciple-tools-plugin-starter-template' ),
-                    ],
-                    'item_3' => [
-                        'label' => __( 'Item 3', 'disciple-tools-plugin-starter-template' ),
-                        'description' => __( 'Item 3.', 'disciple-tools-plugin-starter-template' ),
-                    ],
-                ],
-                "tile" => "details",
-                "in_create_form" => true,
-                'icon' => get_template_directory_uri() . "/dt-assets/images/languages.svg?v=2",
+//            $fields["multi_select"] = [
+//                'name' => __( 'Multi-Select', 'disciple-tools-plugin-starter-template' ),
+//                'description' => __( "Multi Select Field", 'disciple-tools-plugin-starter-template' ),
+//                'type' => 'multi_select',
+//                'default' => [
+//                    'item_1' => [
+//                        'label' => __( 'Item 1', 'disciple-tools-plugin-starter-template' ),
+//                        'description' => __( 'Item 1.', 'disciple-tools-plugin-starter-template' ),
+//                    ],
+//                    'item_2' => [
+//                        'label' => __( 'Item 2', 'disciple-tools-plugin-starter-template' ),
+//                        'description' => __( 'Item 2.', 'disciple-tools-plugin-starter-template' ),
+//                    ],
+//                    'item_3' => [
+//                        'label' => __( 'Item 3', 'disciple-tools-plugin-starter-template' ),
+//                        'description' => __( 'Item 3.', 'disciple-tools-plugin-starter-template' ),
+//                    ],
+//                ],
+//                "tile" => "details",
+//                "in_create_form" => true,
+//                'icon' => get_template_directory_uri() . "/dt-assets/images/languages.svg?v=2",
+//            ];
+
+            $fields['global_lap_number'] = [
+                'name'        => __( 'Global Lap Number', 'disciple-tools-plugin-starter-template' ),
+                'description' => '',
+                'type'        => 'number',
+                'default'     => '',
+                "hidden" => true,
             ];
 
 
@@ -195,80 +221,80 @@ class Prayer_Global_Laps_Post_Type extends DT_Module_Base {
              * @todo this section adds location support to this post type. remove if not needed.
              * location elements
              */
-            $fields['location_grid'] = [
-                'name'        => __( 'Locations', 'disciple-tools-plugin-starter-template' ),
-                'description' => __( 'The general location where this contact is located.', 'disciple-tools-plugin-starter-template' ),
-                'type'        => 'location',
-                'mapbox'    => false,
-                "in_create_form" => true,
-                "tile" => "details",
-                "icon" => get_template_directory_uri() . "/dt-assets/images/location.svg",
-            ];
-            $fields['location_grid_meta'] = [
-                'name'        => __( 'Locations', 'disciple-tools-plugin-starter-template' ), //system string does not need translation
-                'description' => __( 'The general location where this record is located.', 'disciple-tools-plugin-starter-template' ),
-                'type'        => 'location_meta',
-                "tile"      => "details",
-                'mapbox'    => false,
-                'hidden' => true,
-                "icon" => get_template_directory_uri() . "/dt-assets/images/location.svg?v=2",
-            ];
-            $fields["contact_address"] = [
-                "name" => __( 'Address', 'disciple-tools-plugin-starter-template' ),
-                "icon" => get_template_directory_uri() . "/dt-assets/images/house.svg",
-                "type" => "communication_channel",
-                "tile" => "details",
-                'mapbox'    => false,
-                "customizable" => false
-            ];
-            if ( DT_Mapbox_API::get_key() ){
-                $fields["contact_address"]["custom_display"] = true;
-                $fields["contact_address"]["mapbox"] = true;
-                unset( $fields["contact_address"]["tile"] );
-                $fields["location_grid"]["mapbox"] = true;
-                $fields["location_grid_meta"]["mapbox"] = true;
-                $fields["location_grid"]["hidden"] = true;
-                $fields["location_grid_meta"]["hidden"] = false;
-            }
+//            $fields['location_grid'] = [
+//                'name'        => __( 'Locations', 'disciple-tools-plugin-starter-template' ),
+//                'description' => __( 'The general location where this contact is located.', 'disciple-tools-plugin-starter-template' ),
+//                'type'        => 'location',
+//                'mapbox'    => false,
+//                "in_create_form" => true,
+//                "tile" => "details",
+//                "icon" => get_template_directory_uri() . "/dt-assets/images/location.svg",
+//            ];
+//            $fields['location_grid_meta'] = [
+//                'name'        => __( 'Locations', 'disciple-tools-plugin-starter-template' ), //system string does not need translation
+//                'description' => __( 'The general location where this record is located.', 'disciple-tools-plugin-starter-template' ),
+//                'type'        => 'location_meta',
+//                "tile"      => "details",
+//                'mapbox'    => false,
+//                'hidden' => true,
+//                "icon" => get_template_directory_uri() . "/dt-assets/images/location.svg?v=2",
+//            ];
+//            $fields["contact_address"] = [
+//                "name" => __( 'Address', 'disciple-tools-plugin-starter-template' ),
+//                "icon" => get_template_directory_uri() . "/dt-assets/images/house.svg",
+//                "type" => "communication_channel",
+//                "tile" => "details",
+//                'mapbox'    => false,
+//                "customizable" => false
+//            ];
+//            if ( DT_Mapbox_API::get_key() ){
+//                $fields["contact_address"]["custom_display"] = true;
+//                $fields["contact_address"]["mapbox"] = true;
+//                unset( $fields["contact_address"]["tile"] );
+//                $fields["location_grid"]["mapbox"] = true;
+//                $fields["location_grid_meta"]["mapbox"] = true;
+//                $fields["location_grid"]["hidden"] = true;
+//                $fields["location_grid_meta"]["hidden"] = false;
+//            }
             // end locations
 
             /**
              * @todo this adds generational support to this post type. remove if not needed.
              * generation and peer connection fields
              */
-            $fields["parents"] = [
-                "name" => __( 'Parents', 'disciple-tools-plugin-starter-template' ),
-                'description' => '',
-                "type" => "connection",
-                "post_type" => $this->post_type,
-                "p2p_direction" => "from",
-                "p2p_key" => $this->post_type."_to_".$this->post_type,
-                'tile' => 'connections',
-                'icon' => get_template_directory_uri() . '/dt-assets/images/group-parent.svg',
-                'create-icon' => get_template_directory_uri() . '/dt-assets/images/add-group.svg',
-            ];
-            $fields["peers"] = [
-                "name" => __( 'Peers', 'disciple-tools-plugin-starter-template' ),
-                'description' => '',
-                "type" => "connection",
-                "post_type" => $this->post_type,
-                "p2p_direction" => "any",
-                "p2p_key" => $this->post_type."_to_peers",
-                'tile' => 'connections',
-                'icon' => get_template_directory_uri() . '/dt-assets/images/group-peer.svg',
-                'create-icon' => get_template_directory_uri() . '/dt-assets/images/add-group.svg',
-            ];
-            $fields["children"] = [
-                "name" => __( 'Children', 'disciple-tools-plugin-starter-template' ),
-                'description' => '',
-                "type" => "connection",
-                "post_type" => $this->post_type,
-                "p2p_direction" => "to",
-                "p2p_key" => $this->post_type."_to_".$this->post_type,
-                'tile' => 'connections',
-                'icon' => get_template_directory_uri() . '/dt-assets/images/group-child.svg',
-                'create-icon' => get_template_directory_uri() . '/dt-assets/images/add-group.svg',
-            ];
+//            $fields["parents"] = [
+//                "name" => __( 'Parents', 'disciple-tools-plugin-starter-template' ),
+//                'description' => '',
+//                "type" => "connection",
+//                "post_type" => $this->post_type,
+//                "p2p_direction" => "from",
+//                "p2p_key" => $this->post_type."_to_".$this->post_type,
+//                'tile' => 'connections',
+//                'icon' => get_template_directory_uri() . '/dt-assets/images/group-parent.svg',
+//                'create-icon' => get_template_directory_uri() . '/dt-assets/images/add-group.svg',
+//            ];
+//            $fields["peers"] = [
+//                "name" => __( 'Peers', 'disciple-tools-plugin-starter-template' ),
+//                'description' => '',
+//                "type" => "connection",
+//                "post_type" => $this->post_type,
+//                "p2p_direction" => "any",
+//                "p2p_key" => $this->post_type."_to_peers",
+//                'tile' => 'connections',
+//                'icon' => get_template_directory_uri() . '/dt-assets/images/group-peer.svg',
+//                'create-icon' => get_template_directory_uri() . '/dt-assets/images/add-group.svg',
+//            ];
+//            $fields["children"] = [
+//                "name" => __( 'Children', 'disciple-tools-plugin-starter-template' ),
+//                'description' => '',
+//                "type" => "connection",
+//                "post_type" => $this->post_type,
+//                "p2p_direction" => "to",
+//                "p2p_key" => $this->post_type."_to_".$this->post_type,
+//                'tile' => 'connections',
+//                'icon' => get_template_directory_uri() . '/dt-assets/images/group-child.svg',
+//                'create-icon' => get_template_directory_uri() . '/dt-assets/images/add-group.svg',
+//            ];
             // end generations
 
             /**
@@ -293,16 +319,13 @@ class Prayer_Global_Laps_Post_Type extends DT_Module_Base {
                 "post_type" => "contacts",
                 "p2p_direction" => "to",
                 "p2p_key" => $this->post_type."_to_contacts",
-                "tile" => "status",
+                "tile" => "other",
                 'icon' => get_template_directory_uri() . "/dt-assets/images/group-type.svg",
                 'create-icon' => get_template_directory_uri() . "/dt-assets/images/add-contact.svg",
                 "show_in_table" => 35
             ];
         }
 
-        /**
-         * @todo this adds connection to contacts. remove if not needed.
-         */
         if ( $post_type === "contacts" ){
             $fields[$this->post_type] = [
                 "name" => $this->plural_name,
@@ -318,23 +341,20 @@ class Prayer_Global_Laps_Post_Type extends DT_Module_Base {
             ];
         }
 
-        /**
-         * @todo this adds connection to groups. remove if not needed.
-         */
-        if ( $post_type === "groups" ){
-            $fields[$this->post_type] = [
-                "name" => $this->plural_name,
-                "description" => '',
-                "type" => "connection",
-                "post_type" => $this->post_type,
-                "p2p_direction" => "from",
-                "p2p_key" => $this->post_type."_to_groups",
-                "tile" => "other",
-                'icon' => get_template_directory_uri() . "/dt-assets/images/group-type.svg",
-                'create-icon' => get_template_directory_uri() . "/dt-assets/images/add-group.svg",
-                "show_in_table" => 35
-            ];
-        }
+//        if ( $post_type === "groups" ){
+//            $fields[$this->post_type] = [
+//                "name" => $this->plural_name,
+//                "description" => '',
+//                "type" => "connection",
+//                "post_type" => $this->post_type,
+//                "p2p_direction" => "from",
+//                "p2p_key" => $this->post_type."_to_groups",
+//                "tile" => "other",
+//                'icon' => get_template_directory_uri() . "/dt-assets/images/group-type.svg",
+//                'create-icon' => get_template_directory_uri() . "/dt-assets/images/add-group.svg",
+//                "show_in_table" => 35
+//            ];
+//        }
         return $fields;
     }
 
@@ -344,7 +364,6 @@ class Prayer_Global_Laps_Post_Type extends DT_Module_Base {
      */
     public function dt_details_additional_tiles( $tiles, $post_type = "" ){
         if ( $post_type === $this->post_type ){
-            $tiles["connections"] = [ "label" => __( "Connections", 'disciple-tools-plugin-starter-template' ) ];
             $tiles["other"] = [ "label" => __( "Other", 'disciple-tools-plugin-starter-template' ) ];
         }
         return $tiles;
@@ -357,7 +376,7 @@ class Prayer_Global_Laps_Post_Type extends DT_Module_Base {
      */
     public function dt_details_additional_section( $section, $post_type ){
 
-        if ( $post_type === $this->post_type && $section === "other" ) {
+        if ( $post_type === $this->post_type && $section === "other" && false ) {
             $fields = DT_Posts::get_post_field_settings( $post_type );
             $post = DT_Posts::get_post( $this->post_type, get_the_ID() );
             ?>
@@ -368,7 +387,8 @@ class Prayer_Global_Laps_Post_Type extends DT_Module_Base {
                 <p>Add information or custom fields here</p>
             </div>
 
-        <?php }
+        <?php
+        }
     }
 
     /**
