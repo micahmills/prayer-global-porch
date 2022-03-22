@@ -31,9 +31,9 @@ class Prayer_Global_Porch_Newest_Lap extends DT_Magic_Url_Base
     }
 
     public function redirect() {
-        global $wpdb;
-        $newest_key = $wpdb->get_var("SELECT meta_value FROM $wpdb->postmeta WHERE meta_key = 'prayer_app_global_magic_key' ORDER BY post_id DESC");
-        $link = '/prayer_app/global/' . $newest_key;
+        require_once( trailingslashit( plugin_dir_path(__DIR__) ) . 'pages/assets/utilities.php' );
+        $current_lap = PG_Utilities::get_current_lap();
+        $link = '/prayer_app/global/' . $current_lap['key'];
         wp_redirect( $link );
         exit;
     }

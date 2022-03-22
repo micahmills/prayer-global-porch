@@ -162,7 +162,7 @@ jQuery(document).ready(function(){
         window.time = 0
         window.current_content = window.next_content
         load_location()
-      }, 1500);
+      }, 1200);
   })
 
 

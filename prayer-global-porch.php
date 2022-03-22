@@ -76,6 +76,8 @@ class Prayer_Global_Porch {
     private function __construct() {
         require_once( 'redirects/loader.php' );
         require_once( 'post-type/loader.php' );
+        require_once( 'pages/assets/utilities.php' );
+        require_once( 'support/cron.php' );
 
         // home
         require_once( 'pages/home/magic-link.php' );

@@ -154,15 +154,15 @@ class Prayer_Global_Laps_Post_Type extends DT_Module_Base {
                 "default_color" => "#366184",
                 "show_in_table" => 10,
             ];
-//            $fields['assigned_to'] = [
-//                'name'        => __( 'Assigned To', 'disciple-tools-plugin-starter-template' ),
-//                'description' => __( "Select the main person who is responsible for reporting on this record.", 'disciple-tools-plugin-starter-template' ),
-//                'type'        => 'user_select',
-//                'default'     => '',
-//                'tile' => 'status',
-//                'icon' => get_template_directory_uri() . '/dt-assets/images/assigned-to.svg',
-//                "show_in_table" => 16,
-//            ];
+            $fields['assigned_to'] = [
+                'name'        => __( 'Assigned To', 'disciple-tools-plugin-starter-template' ),
+                'description' => __( "Select the main person who is responsible for reporting on this record.", 'disciple-tools-plugin-starter-template' ),
+                'type'        => 'user_select',
+                'default'     => '',
+                'tile' => 'status',
+                'icon' => get_template_directory_uri() . '/dt-assets/images/assigned-to.svg',
+                "show_in_table" => 16,
+            ];
 
 
 
@@ -211,105 +211,16 @@ class Prayer_Global_Laps_Post_Type extends DT_Module_Base {
             $fields['global_lap_number'] = [
                 'name'        => __( 'Global Lap Number', 'disciple-tools-plugin-starter-template' ),
                 'description' => '',
-                'type'        => 'number',
+                'type'        => 'text',
                 'default'     => '',
                 "hidden" => true,
             ];
-
-
-            /**
-             * @todo this section adds location support to this post type. remove if not needed.
-             * location elements
-             */
-//            $fields['location_grid'] = [
-//                'name'        => __( 'Locations', 'disciple-tools-plugin-starter-template' ),
-//                'description' => __( 'The general location where this contact is located.', 'disciple-tools-plugin-starter-template' ),
-//                'type'        => 'location',
-//                'mapbox'    => false,
-//                "in_create_form" => true,
-//                "tile" => "details",
-//                "icon" => get_template_directory_uri() . "/dt-assets/images/location.svg",
-//            ];
-//            $fields['location_grid_meta'] = [
-//                'name'        => __( 'Locations', 'disciple-tools-plugin-starter-template' ), //system string does not need translation
-//                'description' => __( 'The general location where this record is located.', 'disciple-tools-plugin-starter-template' ),
-//                'type'        => 'location_meta',
-//                "tile"      => "details",
-//                'mapbox'    => false,
-//                'hidden' => true,
-//                "icon" => get_template_directory_uri() . "/dt-assets/images/location.svg?v=2",
-//            ];
-//            $fields["contact_address"] = [
-//                "name" => __( 'Address', 'disciple-tools-plugin-starter-template' ),
-//                "icon" => get_template_directory_uri() . "/dt-assets/images/house.svg",
-//                "type" => "communication_channel",
-//                "tile" => "details",
-//                'mapbox'    => false,
-//                "customizable" => false
-//            ];
-//            if ( DT_Mapbox_API::get_key() ){
-//                $fields["contact_address"]["custom_display"] = true;
-//                $fields["contact_address"]["mapbox"] = true;
-//                unset( $fields["contact_address"]["tile"] );
-//                $fields["location_grid"]["mapbox"] = true;
-//                $fields["location_grid_meta"]["mapbox"] = true;
-//                $fields["location_grid"]["hidden"] = true;
-//                $fields["location_grid_meta"]["hidden"] = false;
-//            }
-            // end locations
-
-            /**
-             * @todo this adds generational support to this post type. remove if not needed.
-             * generation and peer connection fields
-             */
-//            $fields["parents"] = [
-//                "name" => __( 'Parents', 'disciple-tools-plugin-starter-template' ),
-//                'description' => '',
-//                "type" => "connection",
-//                "post_type" => $this->post_type,
-//                "p2p_direction" => "from",
-//                "p2p_key" => $this->post_type."_to_".$this->post_type,
-//                'tile' => 'connections',
-//                'icon' => get_template_directory_uri() . '/dt-assets/images/group-parent.svg',
-//                'create-icon' => get_template_directory_uri() . '/dt-assets/images/add-group.svg',
-//            ];
-//            $fields["peers"] = [
-//                "name" => __( 'Peers', 'disciple-tools-plugin-starter-template' ),
-//                'description' => '',
-//                "type" => "connection",
-//                "post_type" => $this->post_type,
-//                "p2p_direction" => "any",
-//                "p2p_key" => $this->post_type."_to_peers",
-//                'tile' => 'connections',
-//                'icon' => get_template_directory_uri() . '/dt-assets/images/group-peer.svg',
-//                'create-icon' => get_template_directory_uri() . '/dt-assets/images/add-group.svg',
-//            ];
-//            $fields["children"] = [
-//                "name" => __( 'Children', 'disciple-tools-plugin-starter-template' ),
-//                'description' => '',
-//                "type" => "connection",
-//                "post_type" => $this->post_type,
-//                "p2p_direction" => "to",
-//                "p2p_key" => $this->post_type."_to_".$this->post_type,
-//                'tile' => 'connections',
-//                'icon' => get_template_directory_uri() . '/dt-assets/images/group-child.svg',
-//                'create-icon' => get_template_directory_uri() . '/dt-assets/images/add-group.svg',
-//            ];
-            // end generations
-
-            /**
-             * @todo this adds people groups support to this post type. remove if not needed.
-             * Connections to other post types
-             */
-            $fields["peoplegroups"] = [
-                "name" => __( 'People Groups', 'disciple-tools-plugin-starter-template' ),
-                'description' => __( 'The people groups connected to this record.', 'disciple-tools-plugin-starter-template' ),
-                "type" => "connection",
-                "tile" => 'details',
-                "post_type" => "peoplegroups",
-                "p2p_direction" => "to",
-                "p2p_key" => $this->post_type."_to_peoplegroups",
-                'icon' => get_template_directory_uri() . "/dt-assets/images/people-group.svg",
+            $fields['prayer_app_global_magic_key'] = [
+                'name'        => __( 'PrayerApp Magic Link', 'disciple-tools-plugin-starter-template' ),
+                'description' => '',
+                'type'        => 'text',
+                'default'     => dt_create_unique_key(),
+                "hidden" => true,
             ];
 
             $fields['contacts'] = [
@@ -341,27 +252,9 @@ class Prayer_Global_Laps_Post_Type extends DT_Module_Base {
             ];
         }
 
-//        if ( $post_type === "groups" ){
-//            $fields[$this->post_type] = [
-//                "name" => $this->plural_name,
-//                "description" => '',
-//                "type" => "connection",
-//                "post_type" => $this->post_type,
-//                "p2p_direction" => "from",
-//                "p2p_key" => $this->post_type."_to_groups",
-//                "tile" => "other",
-//                'icon' => get_template_directory_uri() . "/dt-assets/images/group-type.svg",
-//                'create-icon' => get_template_directory_uri() . "/dt-assets/images/add-group.svg",
-//                "show_in_table" => 35
-//            ];
-//        }
         return $fields;
     }
 
-    /**
-     * @todo define tiles
-     * @link https://github.com/DiscipleTools/Documentation/blob/master/Theme-Core/field-and-tiles.md
-     */
     public function dt_details_additional_tiles( $tiles, $post_type = "" ){
         if ( $post_type === $this->post_type ){
             $tiles["other"] = [ "label" => __( "Other", 'disciple-tools-plugin-starter-template' ) ];
@@ -369,11 +262,6 @@ class Prayer_Global_Laps_Post_Type extends DT_Module_Base {
         return $tiles;
     }
 
-    /**
-     * @todo define additional section content
-     * Documentation
-     * @link https://github.com/DiscipleTools/Documentation/blob/master/Theme-Core/field-and-tiles.md#add-custom-content
-     */
     public function dt_details_additional_section( $section, $post_type ){
 
         if ( $post_type === $this->post_type && $section === "other" && false ) {
@@ -437,8 +325,17 @@ class Prayer_Global_Laps_Post_Type extends DT_Module_Base {
     public function dt_post_create_fields( $fields, $post_type ){
         if ( $post_type === $this->post_type ){
             $post_fields = DT_Posts::get_post_field_settings( $post_type );
-            if ( isset( $post_fields["status"] ) && !isset( $fields["status"] ) ){
-                $fields["status"] = "active";
+            if ( isset( $post_fields["prayer_app_global_magic_key"] )  ){
+                global $wpdb;
+                $key = substr( $post_fields["prayer_app_global_magic_key"], 0, 6 );
+                $dup = $wpdb->get_var("SELECT COUNT(*) FROM $wpdb->postmeta WHERE meta_key = 'prayer_app_global_magic_key' AND meta_value = %s", $key );
+                if( $dup > 0 ) {
+                    $key = substr( $post_fields["prayer_app_global_magic_key"], 10, 6 );
+                }
+                $post_fields["prayer_app_global_magic_key"] = $key;
+            }
+            if ( isset( $post_fields["status"] ) && empty( $post_fields["status"] )  ){
+                $post_fields["status"] = 'active';
             }
         }
         return $fields;
