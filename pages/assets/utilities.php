@@ -64,61 +64,10 @@ class PG_Utilities {
         return $list;
     }
 
-    public static function get_current_lap() : array {
-        $lap = [
-            'post_id' => 11,
-            'key' => 'a219a36b38e3e7dfc43589330b18bde924d234ed41860d20aa838303732d2d35'
-        ];
+    public static function get_current_global_lap() : array {
+        $lap = get_option('pg_current_global_lap');
         return $lap;
     }
 
-    public static function generate_new_global_prayer_lap() {
-        global $wpdb;
-        // verify previous lap complete
-        $current_prayer_lap_post_id = get_option('pg_current_prayer_lap');
-        if ( ! empty( $current_prayer_lap_post_id ) ) {
-            $total_locations = $wpdb->get_var( $wpdb->prepare(
-                "SELECT COUNT( DISTINCT grid_id) as total_locations
-                        FROM $wpdb->dt_reports
-                        WHERE post_id = %d
-                          AND type = 'prayer_app'
-                          AND subtype = 'global';"
-                , $current_prayer_lap_post_id )
-            );
-            if ( $total_locations < 4770 ) {
-                return $current_prayer_lap_post_id;
-            }
-        }
 
-        // build new lap number
-        $completed_prayer_lap_number = $wpdb->get_var(
-            "SELECT COUNT(*) as laps
-                    FROM $wpdb->posts p
-                    JOIN $wpdb->postmeta pm ON p.ID=pm.post_id AND pm.meta_key = 'type' AND pm.meta_value = 'global'
-                    JOIN $wpdb->postmeta pm2 ON p.ID=pm2.post_id AND pm2.meta_key = 'status' AND pm2.meta_value = 'complete'
-                    WHERE p.post_type = 'laps';"
-        );
-        $next_global_lap_number = $completed_prayer_lap_number + 1;
-
-        $fields = [];
-        $fields['title'] = 'Global #' . $next_global_lap_number;
-        $fields['global_lap_number'] = $next_global_lap_number;
-        $fields['status'] = 'active';
-        $fields['type'] = 'global';
-        $fields['start_date'] = date( 'Y-m-d H:m:s', time() );
-
-        $new_post = DT_Posts::create_post('laps', $fields, false, false );
-        if ( is_wp_error( $new_post ) ) {
-            // @handle error
-            dt_write_log('failed to create');
-            dt_write_log($new_post);
-            exit;
-        }
-
-        update_option('pg_current_prayer_lap', $new_post['ID'], true );
-
-        // @todo set to complete all previous laps??
-
-        return $new_post['ID'];
-    }
 }

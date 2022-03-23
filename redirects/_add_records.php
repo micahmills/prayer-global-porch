@@ -31,8 +31,9 @@ class Prayer_Global_Add extends DT_Magic_Url_Base
     }
 
     public function redirect() {
+        require_once( trailingslashit( plugin_dir_path(__DIR__) ) . 'pages/assets/utilities.php' );
         global $wpdb;
-        $start=1;
+        $start=10;
         if ( isset(  $_GET['start'] ) ) {
             $start = $_GET['start'];
         }
@@ -58,10 +59,13 @@ class Prayer_Global_Add extends DT_Magic_Url_Base
                       AND lg3.admin0_grid_id IN (100050711,100219347,100089589,100074576,100259978,100018514)"
         );
         $inc = 0;
+        $current_lap = PG_Utilities::get_current_global_lap();
+        $post_id = $current_lap['post_id'];
         foreach( $raw_list as $grid_id ) {
             if ( $inc > $start ) {
-                $wpdb->query( "INSERT INTO $wpdb->dt_reports(user_id, post_id, post_type, type, subtype, grid_id)
-                VALUES('2', '11', 'laps', 'prayer_app', 'global', $grid_id);" );
+                $timestamp = time();
+                $wpdb->query( "INSERT INTO $wpdb->dt_reports(user_id, post_id, post_type, type, subtype, grid_id, timestamp)
+                VALUES('2', $post_id, 'laps', 'prayer_app', 'global', $grid_id, $timestamp);" );
             }
             $inc++;
         }

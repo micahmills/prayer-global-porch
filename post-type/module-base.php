@@ -325,15 +325,15 @@ class Prayer_Global_Laps_Post_Type extends DT_Module_Base {
     public function dt_post_create_fields( $fields, $post_type ){
         if ( $post_type === $this->post_type ){
             $post_fields = DT_Posts::get_post_field_settings( $post_type );
-            if ( isset( $post_fields["prayer_app_global_magic_key"] )  ){
-                global $wpdb;
-                $key = substr( $post_fields["prayer_app_global_magic_key"], 0, 6 );
-                $dup = $wpdb->get_var("SELECT COUNT(*) FROM $wpdb->postmeta WHERE meta_key = 'prayer_app_global_magic_key' AND meta_value = %s", $key );
-                if( $dup > 0 ) {
-                    $key = substr( $post_fields["prayer_app_global_magic_key"], 10, 6 );
-                }
-                $post_fields["prayer_app_global_magic_key"] = $key;
-            }
+//            if ( isset( $post_fields["prayer_app_global_magic_key"] )  ){
+//                global $wpdb;
+//                $key = substr( $post_fields["prayer_app_global_magic_key"], 0, 6 );
+//                $dup = $wpdb->get_var("SELECT COUNT(*) FROM $wpdb->postmeta WHERE meta_key = 'prayer_app_global_magic_key' AND meta_value = %s", $key );
+//                if( $dup > 0 ) {
+//                    $key = substr( $post_fields["prayer_app_global_magic_key"], 10, 6 );
+//                }
+//                $post_fields["prayer_app_global_magic_key"] = $key;
+//            }
             if ( isset( $post_fields["status"] ) && empty( $post_fields["status"] )  ){
                 $post_fields["status"] = 'active';
             }

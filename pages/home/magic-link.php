@@ -41,7 +41,7 @@ class Prayer_Global_Porch_Home extends DT_Magic_Url_Base
             // page content
             add_action( 'dt_blank_head', [ $this, '_header' ] );
             add_action( 'dt_blank_footer', [ $this, '_footer' ] );
-            add_action( 'dt_blank_body', [ $this, 'body' ] ); // body for no post key
+            add_action( 'dt_blank_body', [ $this, 'body' ] );
 
             add_filter( 'dt_magic_url_base_allowed_css', [ $this, 'dt_magic_url_base_allowed_css' ], 10, 1 );
             add_filter( 'dt_magic_url_base_allowed_js', [ $this, 'dt_magic_url_base_allowed_js' ], 10, 1 );
@@ -66,6 +66,18 @@ class Prayer_Global_Porch_Home extends DT_Magic_Url_Base
 
     public function body(){
         require_once( 'body.php' );
+    }
+
+    public function total_global_laps(){
+//        global $wpdb;
+//            $total_locations = $wpdb->get_var( $wpdb->prepare(
+//                "SELECT COUNT( DISTINCT grid_id) as total_locations
+//                        FROM $wpdb->dt_reports
+//                        WHERE post_id = %d
+//                          AND type = 'prayer_app'
+//                          AND subtype = 'global';"
+//                , $current_prayer_lap_post_id )
+//            );
     }
 }
 Prayer_Global_Porch_Home::instance();
