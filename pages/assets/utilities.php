@@ -69,5 +69,51 @@ class PG_Utilities {
         return $lap;
     }
 
+    public static function generate_new_global_prayer_lap() {
+        global $wpdb;
+
+        // build new lap number
+        $completed_prayer_lap_number = $wpdb->get_var(
+            "SELECT COUNT(*) as laps
+                    FROM $wpdb->posts p
+                    JOIN $wpdb->postmeta pm ON p.ID=pm.post_id AND pm.meta_key = 'type' AND pm.meta_value = 'global'
+                    JOIN $wpdb->postmeta pm2 ON p.ID=pm2.post_id AND pm2.meta_key = 'status' AND pm2.meta_value IN ('complete', 'active')
+                    WHERE p.post_type = 'laps';"
+        );
+        $next_global_lap_number = $completed_prayer_lap_number + 1;
+
+        // create key
+        $key = substr( md5( rand( 10000, 100000 ).$next_global_lap_number ), 0, 3 ) . substr( md5( rand( 10000, 100000 ).$next_global_lap_number ), 0, 3 );
+
+        $fields = [];
+        $fields['title'] = 'Global #' . $next_global_lap_number;
+        $fields['status'] = 'active';
+        $fields['type'] = 'global';
+        $fields['start_date'] = date( 'Y-m-d H:m:s', time() );
+        $fields['global_lap_number'] = $next_global_lap_number;
+        $fields['prayer_app_global_magic_key'] = $key;
+        $new_post = DT_Posts::create_post('laps', $fields, false, false );
+        if ( is_wp_error( $new_post ) ) {
+            // @handle error
+            dt_write_log('failed to create');
+            dt_write_log($new_post);
+            exit;
+        }
+
+        // update current_lap
+        $previous_lap = PG_Utilities::get_current_global_lap();
+        $lap = [
+            'lap_number' => $next_global_lap_number,
+            'post_id' => $new_post['ID'],
+            'key' => $key
+        ];
+        update_option('pg_current_global_lap', $lap, true );
+
+        // close previous lap
+        DT_Posts::update_post('laps', $previous_lap['post_id'], [ 'status' => 'complete'], false, false );
+
+        return $new_post['ID'];
+    }
+
 
 }

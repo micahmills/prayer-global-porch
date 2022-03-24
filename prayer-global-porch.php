@@ -46,6 +46,7 @@ function prayer_global_porch() {
     if ( !$is_theme_dt ){
         return false;
     }
+    require_once( 'pages/assets/utilities.php' );
     /**
      * Load useful function from the theme
      */
@@ -76,7 +77,6 @@ class Prayer_Global_Porch {
     private function __construct() {
         require_once( 'redirects/loader.php' );
         require_once( 'post-type/loader.php' );
-        require_once( 'pages/assets/utilities.php' );
         require_once( 'support/cron.php' );
 
         // home
@@ -121,8 +121,12 @@ class Prayer_Global_Porch {
      * @return void
      */
     public static function activation() {
-        // @todo install
-        // add elements here that need to fire on activation
+        $lap = [
+            'lap_number' => '0',
+            'post_id' => '0',
+            'key' => '00000'
+        ];
+        update_option('pg_current_global_lap', $lap, true );
     }
 
     /**

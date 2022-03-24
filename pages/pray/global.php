@@ -221,7 +221,7 @@ class Prayer_Global_Laps_Post_Type_Link extends DT_Magic_Url_Base {
         if ( empty( $list_4770 ) ) {
             dt_write_log('Lap Complete');
             // close lap and create new lap.
-            $this->generate_new_global_prayer_lap();
+            PG_Utilities::generate_new_global_prayer_lap();
             wp_redirect( '/newest/lap/' );
             exit;
         }
@@ -235,58 +235,6 @@ class Prayer_Global_Laps_Post_Type_Link extends DT_Magic_Url_Base {
             'sections' => $this->build_sections_array( $grid_id )
         ];
         return $content;
-    }
-
-    public static function generate_new_global_prayer_lap() {
-        dt_write_log(__METHOD__);
-        global $wpdb;
-
-        // build new lap number
-        $completed_prayer_lap_number = $wpdb->get_var(
-            "SELECT COUNT(*) as laps
-                    FROM $wpdb->posts p
-                    JOIN $wpdb->postmeta pm ON p.ID=pm.post_id AND pm.meta_key = 'type' AND pm.meta_value = 'global'
-                    JOIN $wpdb->postmeta pm2 ON p.ID=pm2.post_id AND pm2.meta_key = 'status' AND pm2.meta_value IN ('complete', 'active')
-                    WHERE p.post_type = 'laps';"
-        );
-        $next_global_lap_number = $completed_prayer_lap_number + 1;
-        dt_write_log($completed_prayer_lap_number);
-        dt_write_log($next_global_lap_number);
-
-        // create key
-        $key = substr( md5( rand( 10000, 100000 ).$next_global_lap_number ), 0, 3 ) . substr( md5( rand( 10000, 100000 ).$next_global_lap_number ), 0, 3 );
-        dt_write_log($key);
-
-        $fields = [];
-        $fields['title'] = 'Global #' . $next_global_lap_number;
-        $fields['status'] = 'active';
-        $fields['type'] = 'global';
-        $fields['start_date'] = date( 'Y-m-d H:m:s', time() );
-        $fields['global_lap_number'] = $next_global_lap_number;
-        $fields['prayer_app_global_magic_key'] = $key;
-        $new_post = DT_Posts::create_post('laps', $fields, false, false );
-//        $new_post = DT_Posts::get_post('laps', 11, true, false );
-        if ( is_wp_error( $new_post ) ) {
-            // @handle error
-            dt_write_log('failed to create');
-            dt_write_log($new_post);
-            exit;
-        }
-        dt_write_log($fields);
-
-        // update current_lap
-        $previous_lap = PG_Utilities::get_current_global_lap();
-        $lap = [
-            'lap_number' => $next_global_lap_number,
-            'post_id' => $new_post['ID'],
-            'key' => $key
-        ];
-        update_option('pg_current_global_lap', $lap, true );
-        dt_write_log($lap);
-
-        // @todo add query to change all previous global laps to complete
-
-        return $new_post['ID'];
     }
 
     public function build_location_array( $grid_id ) {

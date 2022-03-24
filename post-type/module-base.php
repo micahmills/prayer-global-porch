@@ -74,7 +74,7 @@ class Prayer_Global_Laps_Post_Type extends DT_Module_Base {
         if ( !isset( $expected_roles["multiplier"] ) ){
             $expected_roles["multiplier"] = [
 
-                "label" => __( 'Multiplier', 'disciple-tools-plugin-starter-template' ),
+                "label" => __( 'Multiplier', 'prayer-global' ),
                 "description" => "Interacts with Contacts and Groups",
                 "permissions" => []
             ];
@@ -101,32 +101,27 @@ class Prayer_Global_Laps_Post_Type extends DT_Module_Base {
         return $expected_roles;
     }
 
-    /**
-     * @todo define fields
-     * Documentation
-     * @link https://github.com/DiscipleTools/Documentation/blob/master/Theme-Core/fields.md
-     */
     public function dt_custom_fields_settings( $fields, $post_type ){
         if ( $post_type === $this->post_type ){
 
             $fields['status'] = [
-                'name'        => __( 'Status', 'disciple-tools-plugin-starter-template' ),
-                'description' => __( 'Set the current status.', 'disciple-tools-plugin-starter-template' ),
+                'name'        => __( 'Status', 'prayer-global' ),
+                'description' => __( 'Set the current status.', 'prayer-global' ),
                 'type'        => 'key_select',
                 'default'     => [
                     'active'   => [
-                        'label' => __( 'Active', 'disciple-tools-plugin-starter-template' ),
-                        'description' => __( 'Is active.', 'disciple-tools-plugin-starter-template' ),
+                        'label' => __( 'Active', 'prayer-global' ),
+                        'description' => __( 'Is active.', 'prayer-global' ),
                         'color' => "#FFA500"
                     ],
                     'complete' => [
-                        'label' => __( 'Complete', 'disciple-tools-plugin-starter-template' ),
-                        'description' => __( 'No longer active.', 'disciple-tools-plugin-starter-template' ),
+                        'label' => __( 'Complete', 'prayer-global' ),
+                        'description' => __( 'No longer active.', 'prayer-global' ),
                         'color' => "#4CAF50"
                     ],
                     'inactive' => [
-                        'label' => __( 'Inactive', 'disciple-tools-plugin-starter-template' ),
-                        'description' => __( 'No longer active.', 'disciple-tools-plugin-starter-template' ),
+                        'label' => __( 'Inactive', 'prayer-global' ),
+                        'description' => __( 'No longer active.', 'prayer-global' ),
                         'color' => "#F43636"
                     ],
                 ],
@@ -136,17 +131,17 @@ class Prayer_Global_Laps_Post_Type extends DT_Module_Base {
                 "show_in_table" => 10,
             ];
             $fields['type'] = [
-                'name'        => __( 'Type', 'disciple-tools-plugin-starter-template' ),
-                'description' => __( 'Type of Lap', 'disciple-tools-plugin-starter-template' ),
+                'name'        => __( 'Type', 'prayer-global' ),
+                'description' => __( 'Type of Lap', 'prayer-global' ),
                 'type'        => 'key_select',
                 'default'     => [
-                    'global'   => [
-                        'label' => __( 'Global', 'disciple-tools-plugin-starter-template' ),
-                        'description' => __( 'Global Lap', 'disciple-tools-plugin-starter-template' ),
-                    ],
                     'custom' => [
-                        'label' => __( 'Custom', 'disciple-tools-plugin-starter-template' ),
-                        'description' => __( 'Custom', 'disciple-tools-plugin-starter-template' ),
+                        'label' => __( 'Custom', 'prayer-global' ),
+                        'description' => __( 'Custom laps', 'prayer-global' ),
+                    ],
+                    'global'   => [
+                        'label' => __( 'Global (Auto)', 'prayer-global' ),
+                        'description' => __( 'Do not manually create! System creates new laps when ready.', 'prayer-global' ),
                     ]
                 ],
                 'tile'     => 'status',
@@ -155,8 +150,8 @@ class Prayer_Global_Laps_Post_Type extends DT_Module_Base {
                 "show_in_table" => 10,
             ];
             $fields['assigned_to'] = [
-                'name'        => __( 'Assigned To', 'disciple-tools-plugin-starter-template' ),
-                'description' => __( "Select the main person who is responsible for reporting on this record.", 'disciple-tools-plugin-starter-template' ),
+                'name'        => __( 'Assigned To', 'prayer-global' ),
+                'description' => __( "Select the main person who is responsible for reporting on this record.", 'prayer-global' ),
                 'type'        => 'user_select',
                 'default'     => '',
                 'tile' => 'status',
@@ -170,7 +165,7 @@ class Prayer_Global_Laps_Post_Type extends DT_Module_Base {
              * Common and recommended fields
              */
             $fields['start_date'] = [
-                'name'        => __( 'Start Date', 'disciple-tools-plugin-starter-template' ),
+                'name'        => __( 'Start Date', 'prayer-global' ),
                 'description' => '',
                 'type'        => 'date',
                 'default'     => time(),
@@ -178,53 +173,32 @@ class Prayer_Global_Laps_Post_Type extends DT_Module_Base {
                 'icon' => get_template_directory_uri() . '/dt-assets/images/date-start.svg',
             ];
             $fields['end_date'] = [
-                'name'        => __( 'End Date', 'disciple-tools-plugin-starter-template' ),
+                'name'        => __( 'End Date', 'prayer-global' ),
                 'description' => '',
                 'type'        => 'date',
                 'default'     => '',
                 'tile' => 'details',
                 'icon' => get_template_directory_uri() . '/dt-assets/images/date-end.svg',
             ];
-//            $fields["multi_select"] = [
-//                'name' => __( 'Multi-Select', 'disciple-tools-plugin-starter-template' ),
-//                'description' => __( "Multi Select Field", 'disciple-tools-plugin-starter-template' ),
-//                'type' => 'multi_select',
-//                'default' => [
-//                    'item_1' => [
-//                        'label' => __( 'Item 1', 'disciple-tools-plugin-starter-template' ),
-//                        'description' => __( 'Item 1.', 'disciple-tools-plugin-starter-template' ),
-//                    ],
-//                    'item_2' => [
-//                        'label' => __( 'Item 2', 'disciple-tools-plugin-starter-template' ),
-//                        'description' => __( 'Item 2.', 'disciple-tools-plugin-starter-template' ),
-//                    ],
-//                    'item_3' => [
-//                        'label' => __( 'Item 3', 'disciple-tools-plugin-starter-template' ),
-//                        'description' => __( 'Item 3.', 'disciple-tools-plugin-starter-template' ),
-//                    ],
-//                ],
-//                "tile" => "details",
-//                "in_create_form" => true,
-//                'icon' => get_template_directory_uri() . "/dt-assets/images/languages.svg?v=2",
-//            ];
 
             $fields['global_lap_number'] = [
-                'name'        => __( 'Global Lap Number', 'disciple-tools-plugin-starter-template' ),
+                'name'        => __( 'Global Lap Number', 'prayer-global' ),
                 'description' => '',
                 'type'        => 'text',
                 'default'     => '',
                 "hidden" => true,
             ];
             $fields['prayer_app_global_magic_key'] = [
-                'name'        => __( 'PrayerApp Magic Link', 'disciple-tools-plugin-starter-template' ),
+                'name'        => __( 'PrayerApp Magic Link', 'prayer-global' ),
                 'description' => '',
                 'type'        => 'text',
-                'default'     => dt_create_unique_key(),
-                "hidden" => true,
+                'default'     => substr( md5( rand( 10000, 100000 ) ), 0, 3 ) . substr( md5( rand( 10000, 100000 ) ), 0, 3 ),
+                'tile' => 'details',
+//                "hidden" => true,
             ];
 
             $fields['contacts'] = [
-                "name" => __( 'Contacts', 'disciple-tools-plugin-starter-template' ),
+                "name" => __( 'Contacts', 'prayer-global' ),
                 "description" => '',
                 "type" => "connection",
                 "post_type" => "contacts",
@@ -257,7 +231,7 @@ class Prayer_Global_Laps_Post_Type extends DT_Module_Base {
 
     public function dt_details_additional_tiles( $tiles, $post_type = "" ){
         if ( $post_type === $this->post_type ){
-            $tiles["other"] = [ "label" => __( "Other", 'disciple-tools-plugin-starter-template' ) ];
+            $tiles["other"] = [ "label" => __( "Other", 'prayer-global' ) ];
         }
         return $tiles;
     }
@@ -269,7 +243,7 @@ class Prayer_Global_Laps_Post_Type extends DT_Module_Base {
             $post = DT_Posts::get_post( $this->post_type, get_the_ID() );
             ?>
             <div class="section-subheader">
-                <?php esc_html_e( "Custom Section Contact", 'disciple-tools-plugin-starter-template' ) ?>
+                <?php esc_html_e( "Custom Section Contact", 'prayer-global' ) ?>
             </div>
             <div>
                 <p>Add information or custom fields here</p>
@@ -324,18 +298,14 @@ class Prayer_Global_Laps_Post_Type extends DT_Module_Base {
     // filter at the start of post creation
     public function dt_post_create_fields( $fields, $post_type ){
         if ( $post_type === $this->post_type ){
-            $post_fields = DT_Posts::get_post_field_settings( $post_type );
-//            if ( isset( $post_fields["prayer_app_global_magic_key"] )  ){
-//                global $wpdb;
-//                $key = substr( $post_fields["prayer_app_global_magic_key"], 0, 6 );
-//                $dup = $wpdb->get_var("SELECT COUNT(*) FROM $wpdb->postmeta WHERE meta_key = 'prayer_app_global_magic_key' AND meta_value = %s", $key );
-//                if( $dup > 0 ) {
-//                    $key = substr( $post_fields["prayer_app_global_magic_key"], 10, 6 );
-//                }
-//                $post_fields["prayer_app_global_magic_key"] = $key;
-//            }
-            if ( isset( $post_fields["status"] ) && empty( $post_fields["status"] )  ){
-                $post_fields["status"] = 'active';
+            if ( ! isset( $fields["status"] ) || empty( $fields["status"] ) ){
+                $fields["status"] = 'active';
+            }
+            if ( ! isset( $fields["prayer_app_global_magic_key"] ) || empty( $fields["prayer_app_global_magic_key"] ) ){
+                $fields["prayer_app_global_magic_key"] = substr( md5( rand( 10000, 100000 ) ), 0, 3 ) . substr( md5( rand( 10000, 100000 ) ), 0, 3 );
+            }
+            if ( ! isset( $fields["start_date"] ) || empty( $fields["start_date"] ) ){
+                $fields["start_date"] = date('Y-m-d H:m:s', time() );
             }
         }
         return $fields;
@@ -345,17 +315,7 @@ class Prayer_Global_Laps_Post_Type extends DT_Module_Base {
     public function dt_post_created( $post_type, $post_id, $initial_fields ){
     }
 
-    //list page filters function
-
-    /**
-     * @todo adjust queries to support list counts
-     * Documentation
-     * @link https://github.com/DiscipleTools/Documentation/blob/master/Theme-Core/list-query.md
-     */
     private static function get_my_status(){
-        /**
-         * @todo adjust query to return count for update needed
-         */
         global $wpdb;
         $post_type = self::post_type();
         $current_user = get_current_user_id();
@@ -435,7 +395,7 @@ class Prayer_Global_Laps_Post_Type extends DT_Module_Base {
 
             $filters["tabs"][] = [
                 "key" => "assigned_to_me",
-                "label" => __( "Assigned to me", 'disciple-tools-plugin-starter-template' ),
+                "label" => __( "Assigned to me", 'prayer-global' ),
                 "count" => $total_my,
                 "order" => 20
             ];
@@ -443,7 +403,7 @@ class Prayer_Global_Laps_Post_Type extends DT_Module_Base {
             $filters["filters"][] = [
                 'ID' => 'my_all',
                 'tab' => 'assigned_to_me',
-                'name' => __( "All", 'disciple-tools-plugin-starter-template' ),
+                'name' => __( "All", 'prayer-global' ),
                 'query' => [
                     'assigned_to' => [ 'me' ],
                     'sort' => 'status'
@@ -500,7 +460,7 @@ class Prayer_Global_Laps_Post_Type extends DT_Module_Base {
                 }
                 $filters["tabs"][] = [
                     "key" => "all",
-                    "label" => __( "All", 'disciple-tools-plugin-starter-template' ),
+                    "label" => __( "All", 'prayer-global' ),
                     "count" => $total_all,
                     "order" => 10
                 ];
@@ -508,7 +468,7 @@ class Prayer_Global_Laps_Post_Type extends DT_Module_Base {
                 $filters["filters"][] = [
                     'ID' => 'all',
                     'tab' => 'all',
-                    'name' => __( "All", 'disciple-tools-plugin-starter-template' ),
+                    'name' => __( "All", 'prayer-global' ),
                     'query' => [
                         'sort' => '-post_date'
                     ],
