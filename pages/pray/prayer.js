@@ -174,6 +174,9 @@ jQuery(document).ready(function(){
     window.api_post( 'log', { grid_id: window.current_content.grid_id } )
       .done(function(location) {
         console.log(location)
+        if ( location === false ) {
+          window.location = '/prayer_app/global/'+jsObject.parts.public_key
+        }
         window.current_content = window.next_content
         window.next_content = location
       })
@@ -182,6 +185,9 @@ jQuery(document).ready(function(){
     window.api_post( 'refresh', { grid_id: window.current_content.grid_id } )
       .done(function(location) {
         console.log(location)
+        if ( location === false ) {
+          window.location = '/prayer_app/global/'+jsObject.parts.public_key
+        }
         window.current_content = window.next_content
         window.next_content = location
       })

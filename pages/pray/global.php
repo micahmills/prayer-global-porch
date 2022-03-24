@@ -42,7 +42,6 @@ class Prayer_Global_Laps_Post_Type_Link extends DT_Magic_Url_Base {
             add_action( 'rest_api_init', [ $this, 'add_endpoints' ] );
         }
 
-
         /**
          * tests if other URL
          */
@@ -132,10 +131,7 @@ class Prayer_Global_Laps_Post_Type_Link extends DT_Magic_Url_Base {
         require_once( 'body.php' );
     }
     public function completed_body(){
-        ?>
-        Completed<br>
-        <a href="/newest/lap">Current Lap</a>
-        <?php
+        require_once( 'completed-body.php' );
     }
 
     /**
@@ -217,16 +213,26 @@ class Prayer_Global_Laps_Post_Type_Link extends DT_Magic_Url_Base {
                 }
             }
         }
+//        dt_write_log($current_lap);
+//        dt_write_log($post_id);
+//        dt_write_log($list_4770);
+//        dt_write_log($list_prayed);
 
         if ( empty( $list_4770 ) ) {
-            dt_write_log('Lap Complete');
-            // close lap and create new lap.
-            PG_Utilities::generate_new_global_prayer_lap();
-            wp_redirect( '/newest/lap/' );
-            exit;
+            if ( dt_is_rest() ) { // signal new lap to rest request
+                return false;
+            } else { // if first load on finished lap, redirect to new lap
+                PG_Utilities::generate_new_global_prayer_lap();
+                wp_redirect( '/prayer_app/global/'.$current_lap['key'] );
+                exit;
+            }
         }
 
-        shuffle( $list_4770 );
+        if ( count( $list_4770 ) > 20 ) { // turn off shuffle for the last few records
+            shuffle( $list_4770 );
+        } else {
+            sort( $list_4770 );
+        }
         $grid_id = $list_4770[0];
 
         $content = [

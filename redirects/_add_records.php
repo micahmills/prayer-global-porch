@@ -33,7 +33,7 @@ class Prayer_Global_Add extends DT_Magic_Url_Base
     public function redirect() {
         require_once( trailingslashit( plugin_dir_path(__DIR__) ) . 'pages/assets/utilities.php' );
         global $wpdb;
-        $start=10;
+        $start=2;
         if ( isset(  $_GET['start'] ) ) {
             $start = $_GET['start'];
         }
