@@ -66,24 +66,37 @@ jQuery(document).ready(function(){
     div.append(
       `<div class="row">
           <div class="col">
-              <h3 class="mt-0 mb-3 font-weight-normal text-center">${content.location.name}</h3>
+              <h3 class="mt-0 mb-3 font-weight-normal text-center">${content.location.full_name}</h3>
               <p class="text-md-center">
-                <img src="${content.location.url}" class="img-fluid" alt="${content.location.name} photo" />
+                <img src="${content.location.url}" class="img-fluid" alt="${content.location.full_name} photo" />
               </p>
-               <p>
+               <p class="text-center">
                   ${content.location.description}
               </p>
           </div>
-      </div><hr>`
+      </div>
+      <div class="row text-center">
+      <div class="col-md-6">
+            <p class="mt-3 mb-0 font-weight-bold">With Jesus</p>
+            <p class="mt-0 mb-0 font-weight-normal">10% percent</p>
+            <p class="mt-0 mb-3 font-weight-normal">2,350</p>
+          </div>
+         <div class="col-md-6">
+            <p class="mt-3 mb-0 font-weight-bold">Without Jesus</p>
+            <p class="mt-0 mb-0 font-weight-normal">90% percent</p>
+            <p class="mt-0 mb-3 font-weight-normal">23,454</p>
+          </div>
+      </div>
+      <hr>`
     )
     jQuery.each(content.sections, function(i,v) {
       div.append(
         `<div class="row">
             <div class="col-md">
-                <h3 class="mt-0 mb-3 font-weight-normal">${v.name}</h3>
+                <h3 class="mt-0 mb-3 font-weight-normal">${v.title}</h3>
             </div>
             <div class="col-md">
-                <img src="${v.url}" class="img-fluid" alt="${v.name} photo" />
+                <img src="${v.url}" class="img-fluid" alt="${v.title} photo" />
             </div>
             <div class="col-md">
                 <p>
@@ -93,6 +106,22 @@ jQuery(document).ready(function(){
         </div>`
       )
     })
+    if ( content.people_groups.length > 0 ) {
+      div.append(
+        `<div class="row">
+            <div class="col-md">
+                <h3 class="mt-0 mb-3 font-weight-normal">People Groups</h3>
+            </div>
+            <div class="col-md">
+                <img src="https://via.placeholder.com/500x200?text=${content.grid_id}" class="img-fluid" alt="People Groups photo" />
+            </div>
+            <div class="col-md"><ul id="pg-list" style="padding-left: 1rem;"></ul></div>
+        </div>`)
+        let pg_list = jQuery('#pg-list')
+        jQuery.each(content.people_groups, function(i,v) {
+          pg_list.append(`<li>${v.name}</li>`)
+        })
+    }
 
     prayer_progress_indicator( window.time )
   }
@@ -175,7 +204,7 @@ jQuery(document).ready(function(){
       .done(function(location) {
         console.log(location)
         if ( location === false ) {
-          window.location = '/prayer_app/global/'+jsObject.parts.public_key
+          window.location = '/prayer_app/'+jsObject.parts.type+'/'+jsObject.parts.public_key
         }
         window.current_content = window.next_content
         window.next_content = location
@@ -186,7 +215,7 @@ jQuery(document).ready(function(){
       .done(function(location) {
         console.log(location)
         if ( location === false ) {
-          window.location = '/prayer_app/global/'+jsObject.parts.public_key
+          window.location = '/prayer_app/'+jsObject.parts.type+'/'+jsObject.parts.public_key
         }
         window.current_content = window.next_content
         window.next_content = location

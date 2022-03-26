@@ -86,7 +86,7 @@
     </div>
     <div class="container celebrate " id="celebrate-panel">
         <div class="text-center">
-            <img src="https://via.placeholder.com/500x400" class="img-fluid celebrate-image" alt="photo" />
+            <img src="https://via.placeholder.com/500x400?text=Celebrate+Animation" class="img-fluid celebrate-image" alt="photo" />
         </div>
     </div>
     <div class="w-100" ></div>

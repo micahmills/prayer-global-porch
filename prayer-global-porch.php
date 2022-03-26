@@ -87,6 +87,7 @@ class Prayer_Global_Porch {
 
         // prayer_app
         require_once( 'pages/pray/global.php' );
+        require_once( 'pages/pray/custom.php' );
 
         // stats_app
         require_once( 'pages/stats/current.php' );

@@ -180,6 +180,20 @@ class Prayer_Global_Laps_Post_Type extends DT_Module_Base {
                 'tile' => 'details',
                 'icon' => get_template_directory_uri() . '/dt-assets/images/date-end.svg',
             ];
+            $fields['start_time'] = [
+                'name'        => __( 'Start time', 'prayer-global' ),
+                'description' => '',
+                'type'        => 'number',
+                'default'     => '',
+                "hidden" => true,
+            ];
+            $fields['end_time'] = [
+                'name'        => __( 'End Time', 'prayer-global' ),
+                'description' => '',
+                'type'        => 'number',
+                'default'     => '',
+                "hidden" => true,
+            ];
 
             $fields['global_lap_number'] = [
                 'name'        => __( 'Global Lap Number', 'prayer-global' ),
@@ -189,12 +203,18 @@ class Prayer_Global_Laps_Post_Type extends DT_Module_Base {
                 "hidden" => true,
             ];
             $fields['prayer_app_global_magic_key'] = [
-                'name'        => __( 'PrayerApp Magic Link', 'prayer-global' ),
+                'name'        => __( 'Global Key', 'prayer-global' ),
                 'description' => '',
                 'type'        => 'text',
                 'default'     => substr( md5( rand( 10000, 100000 ) ), 0, 3 ) . substr( md5( rand( 10000, 100000 ) ), 0, 3 ),
                 'tile' => 'details',
-//                "hidden" => true,
+            ];
+            $fields['prayer_app_custom_magic_key'] = [
+                'name'        => __( 'Custom Key', 'prayer-global' ),
+                'description' => '',
+                'type'        => 'text',
+                'default'     => substr( md5( rand( 10000, 100000 ) ), 0, 3 ) . substr( md5( rand( 10000, 100000 ) ), 0, 3 ),
+                'tile' => 'details',
             ];
 
             $fields['contacts'] = [
@@ -284,9 +304,17 @@ class Prayer_Global_Laps_Post_Type extends DT_Module_Base {
 
     //filter at the start of post update
     public function dt_post_update_fields( $fields, $post_type, $post_id ){
-//        if ( $post_type === $this->post_type ){
-//            // execute your code here
-//        }
+        if ( $post_type === $this->post_type ){
+            $post = DT_Posts::get_post( $this->post_type, $post_id, true, false );
+            if ( isset( $post['type']['key'] ) && 'custom' === $post['type']['key'] ) {
+                if ( isset( $fields["start_date"] ) ){
+                    $fields["start_time"] = $fields["start_date"];
+                }
+                if ( isset( $fields["end_date"] ) ){
+                    $fields["end_time"] = $fields["end_date"];
+                }
+            }
+        }
         return $fields;
     }
 
@@ -304,8 +332,14 @@ class Prayer_Global_Laps_Post_Type extends DT_Module_Base {
             if ( ! isset( $fields["prayer_app_global_magic_key"] ) || empty( $fields["prayer_app_global_magic_key"] ) ){
                 $fields["prayer_app_global_magic_key"] = substr( md5( rand( 10000, 100000 ) ), 0, 3 ) . substr( md5( rand( 10000, 100000 ) ), 0, 3 );
             }
+            if ( ! isset( $fields["prayer_app_custom_magic_key"] ) || empty( $fields["prayer_app_custom_magic_key"] ) ){
+                $fields["prayer_app_custom_magic_key"] = substr( md5( rand( 10000, 100000 ) ), 0, 3 ) . substr( md5( rand( 10000, 100000 ) ), 0, 3 );
+            }
             if ( ! isset( $fields["start_date"] ) || empty( $fields["start_date"] ) ){
                 $fields["start_date"] = date('Y-m-d H:m:s', time() );
+            }
+            if ( ! isset( $fields["start_time"] ) || empty( $fields["start_time"] ) ){
+                $fields["start_time"] = time();
             }
         }
         return $fields;

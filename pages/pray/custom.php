@@ -3,16 +3,16 @@ if ( !defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly.
 
 
 /**
- * Class Prayer_Global_Laps_Post_Type_Link
+ * Class Prayer_Global_Laps_Custom_Link
  */
-class Prayer_Global_Laps_Post_Type_Link extends DT_Magic_Url_Base {
+class Prayer_Global_Laps_Custom_Link extends DT_Magic_Url_Base {
 
     public $magic = false;
 //    public $parts = false;
-    public $page_title = 'Global Lap';
+    public $page_title = 'Custom Lap';
     public $page_description = 'Prayer Laps';
     public $root = "prayer_app";
-    public $type = 'global';
+    public $type = 'custom';
     public $post_type = 'laps';
     private $meta_key = '';
     public $show_bulk_send = false;
@@ -53,20 +53,15 @@ class Prayer_Global_Laps_Post_Type_Link extends DT_Magic_Url_Base {
          * tests magic link parts are registered and have valid elements
          */
         if ( !$this->check_parts_match() ){
-            if ( substr( $url, 0, 17 ) === $this->root . '/' . $this->type ) {
-                wp_redirect( trailingslashit( site_url() ) . 'newest/lap/' ); // @todo change to redirect to most recent
-                exit;
-            }
             wp_redirect( site_url() );
             exit;
         }
 
-        // load if valid url
-        $current_lap = PG_Utilities::get_current_global_lap();
-        if ( (int) $current_lap['post_id'] === (int) $this->parts['post_id'] ) {
-            add_action( 'dt_blank_body', [ $this, 'body' ] );
-        } else {
+        $completed = get_post_meta( $this->parts['post_id'],  'end_time', true );
+        if ( $completed ) {
             add_action( 'dt_blank_body', [ $this, 'completed_body' ] );
+        } else {
+            add_action( 'dt_blank_body', [ $this, 'body' ] );
         }
 
         add_filter( 'dt_magic_url_base_allowed_css', [ $this, 'dt_magic_url_base_allowed_css' ], 10, 1 );
@@ -98,8 +93,8 @@ class Prayer_Global_Laps_Post_Type_Link extends DT_Magic_Url_Base {
     public function header_javascript(){
         require_once( trailingslashit( plugin_dir_path( __DIR__ ) ) . 'assets/header.php' );
 
-        $current_lap = PG_Utilities::get_current_global_lap();
-        if ( (int) $current_lap['post_id'] === (int) $this->parts['post_id'] ) {
+        $completed = get_post_meta( $this->parts['post_id'],  'end_time', true );
+        if ( ! $completed ) {
             ?>
             <script src="<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) ) ?>prayer.js?ver=<?php echo fileatime( trailingslashit( plugin_dir_path( __FILE__ ) ) . 'prayer.js' ) ?>"></script>
             <script>
@@ -113,8 +108,8 @@ class Prayer_Global_Laps_Post_Type_Link extends DT_Magic_Url_Base {
                     'translations' => [
                         'add' => __( 'Add Magic', 'prayer-global' ),
                     ],
-                    'start_content' => PG_Utilities::get_new_global_location(),
-                    'next_content' => PG_Utilities::get_new_global_location(),
+                    'start_content' => PG_Utilities::get_new_custom_location( $this->parts ),
+                    'next_content' => PG_Utilities::get_new_custom_location( $this->parts ),
                 ]) ?>][0]
             </script>
             <?php
@@ -129,8 +124,9 @@ class Prayer_Global_Laps_Post_Type_Link extends DT_Magic_Url_Base {
     public function body(){
         require_once( 'body.php' );
     }
+
     public function completed_body(){
-        require_once( 'completed-body.php' );
+        require_once( 'custom-completed-body.php' );
     }
 
     /**
@@ -163,13 +159,13 @@ class Prayer_Global_Laps_Post_Type_Link extends DT_Magic_Url_Base {
 
         switch( $params['action'] ) {
             case 'log':
-                $result = PG_Utilities::save_log( $params['parts'], $params['data'] );
+                $result = PG_Utilities::save_log( $params['parts'], $params['data'], false );
                 return $result;
             case 'refresh':
-                return PG_Utilities::get_new_global_location();
+                return PG_Utilities::get_new_custom_location( $params['parts']['post_id'] );
             default:
                 return new WP_Error( __METHOD__, "Incorrect action", [ 'status' => 400 ] );
         }
     }
 }
-Prayer_Global_Laps_Post_Type_Link::instance();
+Prayer_Global_Laps_Custom_Link::instance();

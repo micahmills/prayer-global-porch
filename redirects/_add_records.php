@@ -61,11 +61,14 @@ class Prayer_Global_Add extends DT_Magic_Url_Base
         $inc = 0;
         $current_lap = PG_Utilities::get_current_global_lap();
         $post_id = $current_lap['post_id'];
+        if ( isset( $_GET['post_id'] ) ) {
+            $post_id = $_GET['post_id'];
+        }
         foreach( $raw_list as $grid_id ) {
             if ( $inc > $start ) {
                 $timestamp = time();
                 $wpdb->query( "INSERT INTO $wpdb->dt_reports(user_id, post_id, post_type, type, subtype, grid_id, timestamp)
-                VALUES('2', $post_id, 'laps', 'prayer_app', 'global', $grid_id, $timestamp);" );
+                VALUES('2', $post_id, 'laps', 'prayer_app', 'custom', $grid_id, $timestamp);" );
             }
             $inc++;
         }
