@@ -62,13 +62,41 @@ jQuery(document).ready(function(){
     question_panel.hide()
     celebrate_panel.hide()
 
+    let geojson = encodeURIComponent(JSON.stringify({ "type": "FeatureCollection",
+      "features": [
+        { "type": "Feature",
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [
+              [
+                [content.location.bounds.west_longitude, content.location.bounds.north_latitude],
+                [content.location.bounds.west_longitude, content.location.bounds.south_latitude],
+                [content.location.bounds.east_longitude, content.location.bounds.south_latitude],
+                [content.location.bounds.east_longitude, content.location.bounds.north_latitude],
+                [content.location.bounds.west_longitude, content.location.bounds.north_latitude]
+              ]
+            ]
+          },
+          "properties": {
+            "id": content.location.grid_id,
+            "stroke": '#FF0000',
+            'stroke-width': '2',
+            'fill': '#FF0000',
+            'fill-opacity': '0.6'
+          }
+        }
+      ]
+    }))
+    console.log(encodeURIComponent(geojson))
+
     div.empty()
     div.append(
       `<div class="row">
           <div class="col">
               <h3 class="mt-0 mb-3 font-weight-normal text-center">${content.location.full_name}</h3>
               <p class="text-md-center">
-                <img src="${content.location.url}" class="img-fluid" alt="${content.location.full_name} photo" />
+
+               <img style="width:600px; height:400px;" src="https://api.mapbox.com/styles/v1/mapbox/light-v10/static/geojson(${geojson})/[${content.location.c_bounds.west_longitude},${content.location.c_bounds.south_latitude},${content.location.c_bounds.east_longitude},${content.location.c_bounds.north_latitude}]/600x400@2x?padding=5&access_token=pk.eyJ1IjoiY2hyaXNjaGFzbSIsImEiOiJjajZyc2poNmEwZTdqMnFuenB0ODI5dWduIn0.6wKrDTf2exQJY-MY7Q1kRQ" />
               </p>
                <p class="text-center">
                   ${content.location.description}
@@ -76,22 +104,23 @@ jQuery(document).ready(function(){
           </div>
       </div>
       <div class="row text-center">
-      <div class="col-md-6">
-            <p class="mt-3 mb-0 font-weight-bold">With Jesus</p>
-            <p class="mt-0 mb-0 font-weight-normal">10% percent</p>
-            <p class="mt-0 mb-3 font-weight-normal">2,350</p>
-          </div>
-         <div class="col-md-6">
-            <p class="mt-3 mb-0 font-weight-bold">Without Jesus</p>
-            <p class="mt-0 mb-0 font-weight-normal">90% percent</p>
-            <p class="mt-0 mb-3 font-weight-normal">23,454</p>
-          </div>
+        <div class="col-md-6">
+              <p class="mt-3 mb-0 font-weight-bold">With Jesus</p>
+              <p class="mt-0 mb-0 font-weight-normal">10% percent</p>
+              <p class="mt-0 mb-3 font-weight-normal">2,350</p>
+            </div>
+           <div class="col-md-6">
+              <p class="mt-3 mb-0 font-weight-bold">Without Jesus</p>
+              <p class="mt-0 mb-0 font-weight-normal">90% percent</p>
+              <p class="mt-0 mb-3 font-weight-normal">23,454</p>
+            </div>
+        </div>
       </div>
       <hr>`
     )
     jQuery.each(content.sections, function(i,v) {
       div.append(
-        `<div class="row">
+        `<div class="row mb-1">
             <div class="col-md">
                 <h3 class="mt-0 mb-3 font-weight-normal">${v.title}</h3>
             </div>
@@ -108,12 +137,12 @@ jQuery(document).ready(function(){
     })
     if ( content.people_groups.length > 0 ) {
       div.append(
-        `<div class="row">
+        `<div class="row mb-1">
             <div class="col-md">
                 <h3 class="mt-0 mb-3 font-weight-normal">People Groups</h3>
             </div>
             <div class="col-md">
-                <img src="https://via.placeholder.com/500x200?text=${content.grid_id}" class="img-fluid" alt="People Groups photo" />
+                <img src="https://via.placeholder.com/600x200?text=${content.grid_id}" class="img-fluid" alt="People Groups photo" />
             </div>
             <div class="col-md"><ul id="pg-list" style="padding-left: 1rem;"></ul></div>
         </div>`)

@@ -54,7 +54,15 @@ function prayer_global_porch() {
         require_once get_template_directory() . '/dt-core/global-functions.php';
     }
 
-    return Prayer_Global_Porch::instance();
+    Prayer_Global_Porch::instance();
+
+    /**
+     * Use this action fires after the DT_Network_Dashboard plugin has loaded.
+     * Use this to hook expansions to the metrics or snapshot collection.
+     */
+    do_action( 'prayer_global_porch_loaded' );
+
+    return true;
 }
 add_action( 'after_setup_theme', 'prayer_global_porch', 20 );
 
@@ -78,6 +86,7 @@ class Prayer_Global_Porch {
         require_once( 'redirects/loader.php' );
         require_once( 'post-type/loader.php' );
         require_once( 'support/cron.php' );
+        require_once( 'support/config-required-plugins.php' );
 
         // home
         require_once( 'pages/home/magic-link.php' );
@@ -108,7 +117,7 @@ class Prayer_Global_Porch {
         if ( strpos( $plugin_file_name, basename( __FILE__ ) ) ) {
 
             // You can still use `array_unshift()` to add links at the beginning.
-            $links_array[] = '<a href="https://disciple.tools">Disciple.Tools Community</a>';
+            $links_array[] = '<a href="https://pray4movement.org">Pray4Movement</a>';
         }
 
         return $links_array;

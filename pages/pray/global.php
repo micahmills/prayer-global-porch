@@ -130,7 +130,7 @@ class Prayer_Global_Laps_Post_Type_Link extends DT_Magic_Url_Base {
         require_once( 'body.php' );
     }
     public function completed_body(){
-        require_once( 'completed-body.php' );
+        require_once( 'global-completed-body.php' );
     }
 
     /**

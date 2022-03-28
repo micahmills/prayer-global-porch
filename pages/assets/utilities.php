@@ -57,7 +57,49 @@ class PG_Utilities {
         global $wpdb;
 
         // get record and level
-        $grid_record = Disciple_Tools_Mapping_Queries::get_drilldown_by_grid_id( $grid_id );
+        $grid_record = $wpdb->get_row( $wpdb->prepare( "
+            SELECT
+              g.grid_id as id,
+              g.grid_id,
+              g.alt_name as name,
+              g.alt_population as population,
+              g.latitude,
+              g.longitude,
+              g.country_code,
+              g.admin0_code,
+              g.parent_id,
+              g.admin0_grid_id,
+              gc.alt_name as admin0_name,
+              g.admin1_grid_id,
+              ga1.alt_name as admin1_name,
+              g.admin2_grid_id,
+              ga2.alt_name as admin2_name,
+              g.admin3_grid_id,
+              ga3.alt_name as admin3_name,
+              g.admin4_grid_id,
+              ga4.alt_name as admin4_name,
+              g.admin5_grid_id,
+              ga5.alt_name as admin5_name,
+              g.level,
+              g.level_name,
+              g.is_custom_location,
+              g.north_latitude,
+              g.south_latitude,
+              g.east_longitude,
+              g.west_longitude,
+              gc.north_latitude as c_north_latitude,
+              gc.south_latitude as c_south_latitude,
+              gc.east_longitude as c_east_longitude,
+              gc.west_longitude as c_west_longitude
+            FROM $wpdb->dt_location_grid as g
+            LEFT JOIN $wpdb->dt_location_grid as gc ON g.admin0_grid_id=gc.grid_id
+            LEFT JOIN $wpdb->dt_location_grid as ga1 ON g.admin1_grid_id=ga1.grid_id
+            LEFT JOIN $wpdb->dt_location_grid as ga2 ON g.admin2_grid_id=ga2.grid_id
+            LEFT JOIN $wpdb->dt_location_grid as ga3 ON g.admin3_grid_id=ga3.grid_id
+            LEFT JOIN $wpdb->dt_location_grid as ga4 ON g.admin4_grid_id=ga4.grid_id
+            LEFT JOIN $wpdb->dt_location_grid as ga5 ON g.admin5_grid_id=ga5.grid_id
+            WHERE g.grid_id = %s
+        ", $grid_id ), ARRAY_A );
         switch ( $grid_record['level_name'] ) {
             case 'admin1':
                 $full_name = $grid_record['name'] . ', ' . $grid_record['admin0_name'];
@@ -95,23 +137,35 @@ class PG_Utilities {
             'grid_id' => $grid_id,
             'location' => [
                 'full_name' => $full_name,
-                'url' => 'https://via.placeholder.com/500x200?text='.$grid_id,
+                'bounds' => [
+                  'north_latitude' => (float) $grid_record['north_latitude'],
+                  'south_latitude' => (float) $grid_record['south_latitude'],
+                  'east_longitude' => (float) $grid_record['east_longitude'],
+                  'west_longitude' => (float) $grid_record['west_longitude'],
+                ],
+                'c_bounds' => [
+                  'north_latitude' => (float) $grid_record['c_north_latitude'],
+                  'south_latitude' => (float) $grid_record['c_south_latitude'],
+                  'east_longitude' => (float) $grid_record['c_east_longitude'],
+                  'west_longitude' => (float) $grid_record['c_west_longitude'],
+                ],
+                'url' => 'https://via.placeholder.com/600x400?text='.$grid_id,
                 'description' => $description
             ],
             'sections' => [
                 [
                     'title' => 'Praise',
-                    'url' => 'https://via.placeholder.com/500x200?text='.$grid_id,
+                    'url' => 'https://via.placeholder.com/600x400?text='.$grid_id,
                     'description' => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries"
                 ],
                 [
                     'title' => 'Kingdom Come',
-                    'url' => 'https://via.placeholder.com/500x200?text='.$grid_id,
+                    'url' => 'https://via.placeholder.com/600x400?text='.$grid_id,
                     'description' => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries"
                 ],
                 [
                     'title' => 'Pray the Book of Acts',
-                    'url' => 'https://via.placeholder.com/500x200?text='.$grid_id,
+                    'url' => 'https://via.placeholder.com/600x400?text='.$grid_id,
                     'description' => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries"
                 ]
             ],
@@ -310,7 +364,7 @@ class PG_Utilities {
         $public_key = $parts['public_key'];
 
         // get 4770 list
-        $list_4770 = PG_Utilities::query_4770_locations();
+        $global_list_4770 = $list_4770 = PG_Utilities::query_4770_locations();
 
         // subtract prayed places
         $list_prayed = PG_Utilities::query_custom_prayed_list( $post_id );
@@ -340,6 +394,17 @@ class PG_Utilities {
             sort( $list_4770 );
         }
         $grid_id = $list_4770[0];
+
+        // checks global list and finds an id that has not been prayer for by either custom or global.
+        // else it goes with the custom selected grid_id above
+        $global_list_prayed = PG_Utilities::query_global_prayed_list(); // positive list of global locations prayed for
+        if ( ! empty( $global_list_prayed ) && in_array( $grid_id, $global_list_prayed ) /* in_array means the global list has already prayed for this location */ ) {
+            foreach( $list_4770 as $index => $custom_grid_id ) {
+                if ( ! isset( $global_list_prayed[$custom_grid_id] ) ) {
+                    $grid_id = $list_4770[$index];
+                }
+            }
+        }
 
         $content = PG_Utilities::build_location_array( $grid_id );
         return $content;
