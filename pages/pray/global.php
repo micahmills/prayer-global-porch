@@ -113,6 +113,7 @@ class Prayer_Global_Laps_Post_Type_Link extends DT_Magic_Url_Base {
                     'translations' => [
                         'add' => __( 'Add Magic', 'prayer-global' ),
                     ],
+                    'images_url' => prayer_global_image_library_url(),
                     'start_content' => PG_Utilities::get_new_global_location(),
                     'next_content' => PG_Utilities::get_new_global_location(),
                 ]) ?>][0]

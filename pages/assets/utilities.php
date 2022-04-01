@@ -130,7 +130,9 @@ class PG_Utilities {
         } else {
             $admin_title = 'county';
         }
-        $description = "The ".$admin_title." of ".$full_name. " has a population of " . number_format( $grid_record['population'] ) . '.';
+        $description = "The ".$admin_title." of ".$full_name. " has a population of " . number_format( $grid_record['population'] ) . '. We estimate ';
+
+        $locations_url = prayer_global_image_library_url() . 'locations/' . rand(0,2) . '/';
 
         // build array
         $content = [
@@ -149,7 +151,7 @@ class PG_Utilities {
                   'east_longitude' => (float) $grid_record['c_east_longitude'],
                   'west_longitude' => (float) $grid_record['c_west_longitude'],
                 ],
-                'url' => 'https://via.placeholder.com/600x400?text='.$grid_id,
+                'url' => $locations_url.$grid_id.'.png',
                 'description' => $description
             ],
             'sections' => [

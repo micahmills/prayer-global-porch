@@ -62,41 +62,13 @@ jQuery(document).ready(function(){
     question_panel.hide()
     celebrate_panel.hide()
 
-    let geojson = encodeURIComponent(JSON.stringify({ "type": "FeatureCollection",
-      "features": [
-        { "type": "Feature",
-          "geometry": {
-            "type": "Polygon",
-            "coordinates": [
-              [
-                [content.location.bounds.west_longitude, content.location.bounds.north_latitude],
-                [content.location.bounds.west_longitude, content.location.bounds.south_latitude],
-                [content.location.bounds.east_longitude, content.location.bounds.south_latitude],
-                [content.location.bounds.east_longitude, content.location.bounds.north_latitude],
-                [content.location.bounds.west_longitude, content.location.bounds.north_latitude]
-              ]
-            ]
-          },
-          "properties": {
-            "id": content.location.grid_id,
-            "stroke": '#FF0000',
-            'stroke-width': '2',
-            'fill': '#FF0000',
-            'fill-opacity': '0.6'
-          }
-        }
-      ]
-    }))
-    console.log(encodeURIComponent(geojson))
-
     div.empty()
     div.append(
       `<div class="row">
           <div class="col">
               <h3 class="mt-0 mb-3 font-weight-normal text-center">${content.location.full_name}</h3>
               <p class="text-md-center">
-
-               <img style="width:600px; height:400px;" src="https://api.mapbox.com/styles/v1/mapbox/light-v10/static/geojson(${geojson})/[${content.location.c_bounds.west_longitude},${content.location.c_bounds.south_latitude},${content.location.c_bounds.east_longitude},${content.location.c_bounds.north_latitude}]/600x400@2x?padding=5&access_token=pk.eyJ1IjoiY2hyaXNjaGFzbSIsImEiOiJjajZyc2poNmEwZTdqMnFuenB0ODI5dWduIn0.6wKrDTf2exQJY-MY7Q1kRQ" />
+                <img style="width:600px;" src="${content.location.url}" />
               </p>
                <p class="text-center">
                   ${content.location.description}

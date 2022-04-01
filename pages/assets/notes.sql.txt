@@ -148,7 +148,99 @@ FROM (
 ####################################################
 
 
+# facts build
+# _jp_all_countries
+#view
+SELECT lg.grid_id, lg.name, ac.*
+FROM wp_dt_location_grid lg
+LEFT JOIN _jp_all_countries ac ON lg.name=ac.Ctry
+WHERE lg.level = 0;
 
+#insert
+INSERT INTO prayer_global_location_grid_facts(grid_id, meta_key, meta_value)
+SELECT lg.grid_id, 'primary_religion' as meta_key, ac.ReligionPrimary as meta_value
+FROm wp_dt_location_grid lg
+LEFT JOIN _jp_all_countries ac ON lg.name=ac.Ctry
+WHERE lg.level = 0 AND ac.ROG3 IS NOT NULL;
+
+INSERT INTO prayer_global_location_grid_facts(grid_id, meta_key, meta_value)
+SELECT lg.grid_id, 'primary_language' as meta_key, ac.OfficialLang as meta_value
+FROm wp_dt_location_grid lg
+LEFT JOIN _jp_all_countries ac ON lg.name=ac.Ctry
+WHERE lg.level = 0 AND ac.ROG3 IS NOT NULL;
+
+INSERT INTO prayer_global_location_grid_facts(grid_id, meta_key, meta_value)
+SELECT lg.grid_id, 'percent_christianity' as meta_key, ac.PercentChristianity as meta_value
+FROm wp_dt_location_grid lg
+LEFT JOIN _jp_all_countries ac ON lg.name=ac.Ctry
+WHERE lg.level = 0 AND ac.ROG3 IS NOT NULL;
+
+INSERT INTO prayer_global_location_grid_facts(grid_id, meta_key, meta_value)
+SELECT lg.grid_id, 'percent_evangelical' as meta_key, ac.PercentEvangelical as meta_value
+FROm wp_dt_location_grid lg
+LEFT JOIN _jp_all_countries ac ON lg.name=ac.Ctry
+WHERE lg.level = 0 AND ac.ROG3 IS NOT NULL;
+
+INSERT INTO prayer_global_location_grid_facts(grid_id, meta_key, meta_value)
+SELECT lg.grid_id, 'least_reached_people_count' as meta_key, ac.CntPeoplesLR as meta_value
+FROm wp_dt_location_grid lg
+LEFT JOIN _jp_all_countries ac ON lg.name=ac.Ctry
+WHERE lg.level = 0 AND ac.ROG3 IS NOT NULL;
+
+INSERT INTO prayer_global_location_grid_facts(grid_id, meta_key, meta_value)
+SELECT lg.grid_id, 'jp_scale' as meta_key, ac.JPScaleCtry as meta_value
+FROm wp_dt_location_grid lg
+LEFT JOIN _jp_all_countries ac ON lg.name=ac.Ctry
+WHERE lg.level = 0 AND ac.ROG3 IS NOT NULL;
+
+
+
+
+
+# _world_population
+#view
+SELECT lg.grid_id, lg.name, tb.*
+FROM wp_dt_location_grid lg
+JOIN _world_population tb ON lg.country_code=tb.cca2
+WHERE lg.level = 0;
+
+#insert
+INSERT INTO prayer_global_location_grid_facts(grid_id, meta_key, meta_value)
+SELECT lg.grid_id, 'population' as meta_key, tb.pop2022 as meta_value
+FROM wp_dt_location_grid lg
+JOIN _world_population tb ON lg.country_code=tb.cca2
+WHERE lg.level = 0;
+
+INSERT INTO prayer_global_location_grid_facts(grid_id, meta_key, meta_value)
+SELECT lg.grid_id, 'population_2022' as meta_key, tb.pop2022 as meta_value
+FROM wp_dt_location_grid lg
+JOIN _world_population tb ON lg.country_code=tb.cca2
+WHERE lg.level = 0;
+
+INSERT INTO prayer_global_location_grid_facts(grid_id, meta_key, meta_value)
+SELECT lg.grid_id, 'population_1970' as meta_key, tb.pop1970 as meta_value
+FROM wp_dt_location_grid lg
+JOIN _world_population tb ON lg.country_code=tb.cca2
+WHERE lg.level = 0;
+
+INSERT INTO prayer_global_location_grid_facts(grid_id, meta_key, meta_value)
+SELECT lg.grid_id, 'country_growth_rate' as meta_key, tb.GrowthRate as meta_value
+FROM wp_dt_location_grid lg
+JOIN _world_population tb ON lg.country_code=tb.cca2
+WHERE lg.level = 0;
+
+INSERT INTO prayer_global_location_grid_facts(grid_id, meta_key, meta_value)
+SELECT lg.grid_id, 'percent_of_world_population' as meta_key, tb.WorldPercentage as meta_value
+FROM wp_dt_location_grid lg
+JOIN _world_population tb ON lg.country_code=tb.cca2
+WHERE lg.level = 0;
+
+
+INSERT INTO prayer_global_location_grid_facts(grid_id, meta_key, meta_value)
+SELECT lg.grid_id, 'evangelicals' as meta_key, ROUND( population * ( pg.meta_value * .01 ), 0 ) as meta_value
+FROM prayer_global_location_grid_facts pg
+LEFT JOIN wp_dt_location_grid lg ON lg.admin0_grid_id=pg.grid_id
+WHERE pg.meta_key = 'percent_evangelical' AND lg.level <= 2;
 
 
 
