@@ -1,2 +1,3 @@
 vendor/*
 composer.lock
+support/build/connect_params.json
