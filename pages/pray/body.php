@@ -26,6 +26,9 @@
     #praying__close_button {
         font-size:2em;
     }
+    #praying__open_options {
+        font-size:2em;
+    }
     .praying__progress {
         position: absolute;
         height: 100%;
@@ -63,9 +66,20 @@
     .celebrate-image {
 
     }
+    .pace-wrapper {
+        width: 100%;
+    }
+    .btn-primary,
+    .btn-primary:hover,
+    .btn-primary:active,
+    .btn-primary:visited,
+    .btn-primary:focus {
+        background-color: green;
+        border-color: white;
+    }
 </style>
 
-
+<!-- navigation & widget -->
 <nav class="navbar prayer_navbar fixed-top" id="pb-pray-navbar">
     <div class="container praying" id="praying-panel">
         <div class="btn-group praying_button_group" role="group" aria-label="Praying Button">
@@ -74,6 +88,7 @@
                 <span class="praying__text"></span>
             </button>
             <button type="button" class="btn btn-secondary praying" id="praying__close_button"><i class="ion-close-circled"></i></button>
+            <button type="button" class="btn btn-secondary settings" id="praying__open_options" data-toggle="modal" data-target="#option_filter"><i class="ion-android-options"></i></button>
         </div>
     </div>
     <div class="container question" id="question-panel">
@@ -99,7 +114,36 @@
     </div>
 </nav>
 
+<!-- Modal -->
+<div class="modal fade" id="option_filter" tabindex="-1" role="dialog" aria-labelledby="option_filter_label" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Options</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Adjust your prayer pace. Spend longer on each location.<br>
+                <div class="btn-group-vertical pace-wrapper">
+                    <button type="button" class="btn btn-secondary pace" id="pace__1" value="1">1 Minute</button>
+                    <button type="button" class="btn btn-outline-secondary pace" id="pace__2" value="2">2 Minutes</button>
+                    <button type="button" class="btn btn-outline-secondary pace" id="pace__3" value="3">3 Minutes</button>
+                    <button type="button" class="btn btn-outline-secondary pace" id="pace__5" value="5">5 Minutes</button>
+                    <button type="button" class="btn btn-outline-secondary pace" id="pace__10" value="10">10 Minutes</button>
+                    <button type="button" class="btn btn-outline-secondary pace" id="pace__15" value="15">15 Minutes</button>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+<!--                <button type="button" class="btn btn-primary" id="pace__save_changes">Save changes</button>-->
+            </div>
+        </div>
+    </div>
+</div>
 
+<!-- content section -->
 <section>
     <div class="container" id="content"></div>
 </section>

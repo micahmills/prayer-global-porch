@@ -83,6 +83,9 @@ class Prayer_Global_Porch {
     }
 
     private function __construct() {
+        global $wpdb;
+        $wpdb->location_grid_facts = 'location_grid_facts';
+
         require_once( 'redirects/loader.php' );
         require_once( 'post-type/loader.php' );
         require_once( 'support/cron.php' );
@@ -137,6 +140,8 @@ class Prayer_Global_Porch {
             'key' => '00000'
         ];
         update_option('pg_current_global_lap', $lap, true );
+
+
     }
 
     /**

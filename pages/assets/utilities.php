@@ -90,7 +90,8 @@ class PG_Utilities {
               gc.north_latitude as c_north_latitude,
               gc.south_latitude as c_south_latitude,
               gc.east_longitude as c_east_longitude,
-              gc.west_longitude as c_west_longitude
+              gc.west_longitude as c_west_longitude,
+              lgf.*
             FROM $wpdb->dt_location_grid as g
             LEFT JOIN $wpdb->dt_location_grid as gc ON g.admin0_grid_id=gc.grid_id
             LEFT JOIN $wpdb->dt_location_grid as ga1 ON g.admin1_grid_id=ga1.grid_id
@@ -98,6 +99,7 @@ class PG_Utilities {
             LEFT JOIN $wpdb->dt_location_grid as ga3 ON g.admin3_grid_id=ga3.grid_id
             LEFT JOIN $wpdb->dt_location_grid as ga4 ON g.admin4_grid_id=ga4.grid_id
             LEFT JOIN $wpdb->dt_location_grid as ga5 ON g.admin5_grid_id=ga5.grid_id
+            LEFT JOIN $wpdb->location_grid_facts as lgf ON g.grid_id=lgf.grid_id
             WHERE g.grid_id = %s
         ", $grid_id ), ARRAY_A );
         switch ( $grid_record['level_name'] ) {
@@ -156,16 +158,9 @@ class PG_Utilities {
                 'url' => $locations_url.$grid_id.'.png',
                 'stats' => [ // all numbers are estimated
                     'population' => number_format( intval( $population ) ),
-                    'population_percent_of_country' => number_format( 0 ),
-                    'believers' => number_format( intval( $population * .05 ) ),
-                    'cultural_christians' => number_format( intval( $population * .10 ) ),
-                    'non_christians' => number_format( intval( $population * .85 ) ),
-                    'born_to_non_christians' => number_format( intval( $population - ( $population / 15 ) ) ), // last 100 hours
-                    'born_to_cultural_christians' => number_format( intval( $population - ( $population / 80 ) ) ), // last 100 hours
-                    'born_to_believers' => number_format( intval( $population - ( $population / 5 ) ) ), // last 100 hours
-                    'died_as_non_christians' => number_format( intval( $population - ( $population / 15 ) ) ), // last 100 hours
-                    'died_as_cultural_christians' => number_format( intval( $population - ( $population / 80 ) ) ), // last 100 hours
-                    'died_as_believers' => number_format( intval( $population - ( $population / 5 ) ) ), // last 100 hours
+                    'believers' => number_format( intval( $grid_record['believers'] ) ),
+                    'christian_adherants' => number_format( intval( $grid_record['christian_adherants'] ) ),
+                    'non_christians' => number_format( intval( $grid_record['non_christians'] ) ),
                 ]
             ],
             'sections' => [
@@ -174,16 +169,30 @@ class PG_Utilities {
                     'url' => 'https://via.placeholder.com/600x400?text='.$grid_id,
                     'description' => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries"
                 ],
+//                [
+//                    'title' => 'Kingdom Come',
+//                    'url' => 'https://via.placeholder.com/600x400?text='.$grid_id,
+//                    'description' => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries"
+//                ],
+//                [
+//                    'title' => 'Pray the Book of Acts',
+//                    'url' => 'https://via.placeholder.com/600x400?text='.$grid_id,
+//                    'description' => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries"
+//                ]
+            ],
+            'cities' => [
                 [
-                    'title' => 'Kingdom Come',
-                    'url' => 'https://via.placeholder.com/600x400?text='.$grid_id,
-                    'description' => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries"
+                    'name' => 'City name',
+                    'population' => number_format( intval( '123456' ) )
                 ],
                 [
-                    'title' => 'Pray the Book of Acts',
-                    'url' => 'https://via.placeholder.com/600x400?text='.$grid_id,
-                    'description' => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries"
-                ]
+                    'name' => 'City name',
+                    'population' => number_format( intval( '123456' ) )
+                ],
+                [
+                    'name' => 'City name',
+                    'population' => number_format( intval( '123456' ) )
+                ],
             ],
             'people_groups' => [
                 [
@@ -223,7 +232,7 @@ class PG_Utilities {
                         'progress' => '0',
                     ]
                 ],
-            ]
+            ],
         ];
 
         return $content;
@@ -241,7 +250,7 @@ class PG_Utilities {
             'type' => $parts['root'],
             'subtype' => $parts['type'],
             'payload' => null,
-            'value' => 1,
+            'value' => $data['grid_id'] ?? 1,
             'grid_id' => $data['grid_id'],
         ];
         if ( is_user_logged_in() ) {
