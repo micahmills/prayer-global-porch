@@ -157,37 +157,37 @@ LEFT JOIN _jp_all_countries ac ON lg.name=ac.Ctry
 WHERE lg.level = 0;
 
 #insert
-INSERT INTO prayer_global_location_grid_facts(grid_id, meta_key, meta_value)
+INSERT INTO location_grid_facts(grid_id, meta_key, meta_value)
 SELECT lg.grid_id, 'primary_religion' as meta_key, ac.ReligionPrimary as meta_value
 FROm wp_dt_location_grid lg
 LEFT JOIN _jp_all_countries ac ON lg.name=ac.Ctry
 WHERE lg.level = 0 AND ac.ROG3 IS NOT NULL;
 
-INSERT INTO prayer_global_location_grid_facts(grid_id, meta_key, meta_value)
+INSERT INTO location_grid_facts(grid_id, meta_key, meta_value)
 SELECT lg.grid_id, 'primary_language' as meta_key, ac.OfficialLang as meta_value
 FROm wp_dt_location_grid lg
 LEFT JOIN _jp_all_countries ac ON lg.name=ac.Ctry
 WHERE lg.level = 0 AND ac.ROG3 IS NOT NULL;
 
-INSERT INTO prayer_global_location_grid_facts(grid_id, meta_key, meta_value)
+INSERT INTO location_grid_facts(grid_id, meta_key, meta_value)
 SELECT lg.grid_id, 'percent_christianity' as meta_key, ac.PercentChristianity as meta_value
 FROm wp_dt_location_grid lg
 LEFT JOIN _jp_all_countries ac ON lg.name=ac.Ctry
 WHERE lg.level = 0 AND ac.ROG3 IS NOT NULL;
 
-INSERT INTO prayer_global_location_grid_facts(grid_id, meta_key, meta_value)
+INSERT INTO location_grid_facts(grid_id, meta_key, meta_value)
 SELECT lg.grid_id, 'percent_evangelical' as meta_key, ac.PercentEvangelical as meta_value
 FROm wp_dt_location_grid lg
 LEFT JOIN _jp_all_countries ac ON lg.name=ac.Ctry
 WHERE lg.level = 0 AND ac.ROG3 IS NOT NULL;
 
-INSERT INTO prayer_global_location_grid_facts(grid_id, meta_key, meta_value)
+INSERT INTO location_grid_facts(grid_id, meta_key, meta_value)
 SELECT lg.grid_id, 'least_reached_people_count' as meta_key, ac.CntPeoplesLR as meta_value
 FROm wp_dt_location_grid lg
 LEFT JOIN _jp_all_countries ac ON lg.name=ac.Ctry
 WHERE lg.level = 0 AND ac.ROG3 IS NOT NULL;
 
-INSERT INTO prayer_global_location_grid_facts(grid_id, meta_key, meta_value)
+INSERT INTO location_grid_facts(grid_id, meta_key, meta_value)
 SELECT lg.grid_id, 'jp_scale' as meta_key, ac.JPScaleCtry as meta_value
 FROm wp_dt_location_grid lg
 LEFT JOIN _jp_all_countries ac ON lg.name=ac.Ctry
@@ -205,42 +205,176 @@ JOIN _world_population tb ON lg.country_code=tb.cca2
 WHERE lg.level = 0;
 
 #insert
-INSERT INTO prayer_global_location_grid_facts(grid_id, meta_key, meta_value)
+INSERT INTO location_grid_facts(grid_id, meta_key, meta_value)
 SELECT lg.grid_id, 'population' as meta_key, tb.pop2022 as meta_value
 FROM wp_dt_location_grid lg
 JOIN _world_population tb ON lg.country_code=tb.cca2
 WHERE lg.level = 0;
 
-INSERT INTO prayer_global_location_grid_facts(grid_id, meta_key, meta_value)
+INSERT INTO location_grid_facts(grid_id, meta_key, meta_value)
 SELECT lg.grid_id, 'population_2022' as meta_key, tb.pop2022 as meta_value
 FROM wp_dt_location_grid lg
 JOIN _world_population tb ON lg.country_code=tb.cca2
 WHERE lg.level = 0;
 
-INSERT INTO prayer_global_location_grid_facts(grid_id, meta_key, meta_value)
+INSERT INTO location_grid_facts(grid_id, meta_key, meta_value)
 SELECT lg.grid_id, 'population_1970' as meta_key, tb.pop1970 as meta_value
 FROM wp_dt_location_grid lg
 JOIN _world_population tb ON lg.country_code=tb.cca2
 WHERE lg.level = 0;
 
-INSERT INTO prayer_global_location_grid_facts(grid_id, meta_key, meta_value)
+INSERT INTO location_grid_facts(grid_id, meta_key, meta_value)
 SELECT lg.grid_id, 'country_growth_rate' as meta_key, tb.GrowthRate as meta_value
 FROM wp_dt_location_grid lg
 JOIN _world_population tb ON lg.country_code=tb.cca2
 WHERE lg.level = 0;
 
-INSERT INTO prayer_global_location_grid_facts(grid_id, meta_key, meta_value)
+INSERT INTO location_grid_facts(grid_id, meta_key, meta_value)
 SELECT lg.grid_id, 'percent_of_world_population' as meta_key, tb.WorldPercentage as meta_value
 FROM wp_dt_location_grid lg
 JOIN _world_population tb ON lg.country_code=tb.cca2
 WHERE lg.level = 0;
 
 
-INSERT INTO prayer_global_location_grid_facts(grid_id, meta_key, meta_value)
+INSERT INTO location_grid_facts(grid_id, meta_key, meta_value)
 SELECT lg.grid_id, 'evangelicals' as meta_key, ROUND( population * ( pg.meta_value * .01 ), 0 ) as meta_value
-FROM prayer_global_location_grid_facts pg
+FROM location_grid_facts pg
 LEFT JOIN wp_dt_location_grid lg ON lg.admin0_grid_id=pg.grid_id
 WHERE pg.meta_key = 'percent_evangelical' AND lg.level <= 2;
+
+
+# birth rate
+INSERT INTO location_grid_facts(grid_id, meta_key, meta_value)
+SELECT lg.grid_id, 'birth_rate' as meta_key, ac.birthRate as meta_value
+FROM wp_dt_location_grid lg
+LEFT JOIN _births ac ON lg.name=ac.country
+WHERE lg.level = 0;
+
+
+# all meta fields
+
+SELECT lg.grid_id, lg.name, a0.grid_id as admin0_grid_id, a0.name as admin0,
+lg.population,
+a.meta_value as birth_rate,
+b.meta_value as death_rate,
+bb.meta_value as growth_rate,
+c.meta_value as believers,
+d.meta_value as christian_adherant,
+e.meta_value as non_christians,
+f.meta_value as primary_language,
+g.meta_value as primary_religion,
+h.meta_value as percent_believers,
+i.meta_value as percent_christian_adherant,
+j.meta_value as percent_non_believers,
+k.meta_value as percent_non_christian_adherant
+FROM wp_dt_location_grid lg
+JOIN _location_grid_4770 lg4 ON lg4.grid_id=lg.grid_id
+LEFT JOIN wp_dt_location_grid a0 ON lg.admin0_grid_id=a0.grid_id
+LEFT JOIN location_grid_facts a ON a.grid_id=lg.grid_id AND a.meta_key = 'birth_rate'
+LEFT JOIN location_grid_facts b ON b.grid_id=lg.grid_id AND b.meta_key = 'death_rate'
+LEFT JOIN location_grid_facts bb ON bb.grid_id=lg.grid_id AND bb.meta_key = 'growth_rate'
+LEFT JOIN location_grid_facts c ON c.grid_id=lg.grid_id AND c.meta_key = 'believers'
+LEFT JOIN location_grid_facts d ON d.grid_id=lg.grid_id AND d.meta_key = 'christian_adherants'
+LEFT JOIN location_grid_facts e ON e.grid_id=lg.grid_id AND e.meta_key = 'non_christians'
+LEFT JOIN location_grid_facts f ON f.grid_id=lg.grid_id AND f.meta_key = 'primary_language'
+LEFT JOIN location_grid_facts g ON g.grid_id=lg.grid_id AND g.meta_key = 'primary_religions'
+LEFT JOIN location_grid_facts h ON h.grid_id=lg.grid_id AND h.meta_key = 'percent_believers'
+LEFT JOIN location_grid_facts i ON i.grid_id=lg.grid_id AND i.meta_key = 'percent_christian_adherant'
+LEFT JOIN location_grid_facts j ON j.grid_id=lg.grid_id AND j.meta_key = 'percent_non_believer'
+LEFT JOIN location_grid_facts k ON k.grid_id=lg.grid_id AND k.meta_key = 'percent_non_christian_adherant';
+
+
+
+SELECT lg.grid_id, lg.name, lg.grid_id as admin0_grid_id, lg.name as admin0,
+lg.population,
+a.meta_value as birth_rate,
+b.meta_value as death_rate,
+bb.meta_value as growth_rate,
+c.meta_value as believers,
+d.meta_value as christian_adherant,
+e.meta_value as non_christians,
+f.meta_value as primary_language,
+g.meta_value as primary_religion,
+h.meta_value as percent_believers,
+i.meta_value as percent_christian_adherant,
+j.meta_value as percent_non_believers,
+k.meta_value as percent_non_christian_adherant
+FROM wp_dt_location_grid lg
+LEFT JOIN wp_dt_location_grid a0 ON lg.admin0_grid_id=a0.grid_id
+LEFT JOIN location_grid_facts a ON a.grid_id=lg.grid_id AND a.meta_key = 'birth_rate'
+LEFT JOIN location_grid_facts b ON b.grid_id=lg.grid_id AND b.meta_key = 'death_rate'
+LEFT JOIN location_grid_facts bb ON bb.grid_id=lg.grid_id AND bb.meta_key = 'growth_rate'
+LEFT JOIN location_grid_facts c ON c.grid_id=lg.grid_id AND c.meta_key = 'believers'
+LEFT JOIN location_grid_facts d ON d.grid_id=lg.grid_id AND d.meta_key = 'christian_adherants'
+LEFT JOIN location_grid_facts e ON e.grid_id=lg.grid_id AND e.meta_key = 'non_christians'
+LEFT JOIN location_grid_facts f ON f.grid_id=lg.grid_id AND f.meta_key = 'primary_language'
+LEFT JOIN location_grid_facts g ON g.grid_id=lg.grid_id AND g.meta_key = 'primary_religions'
+LEFT JOIN location_grid_facts h ON h.grid_id=lg.grid_id AND h.meta_key = 'percent_believers'
+LEFT JOIN location_grid_facts i ON i.grid_id=lg.grid_id AND i.meta_key = 'percent_christian_adherant'
+LEFT JOIN location_grid_facts j ON j.grid_id=lg.grid_id AND j.meta_key = 'percent_non_believer'
+LEFT JOIN location_grid_facts k ON k.grid_id=lg.grid_id AND k.meta_key = 'percent_non_christian_adherant'
+WHERE lg.level = 0;
+
+
+
+# insert framework to table
+INSERT INTO prayer_global_facts(grid_id, admin0_grid_id)
+SELECT lg.grid_id, lg.admin0_grid_id
+FROM wp_dt_location_grid lg
+WHERE lg.level = 0;
+INSERT IGNORE INTO prayer_global_facts(grid_id, admin0_grid_id)
+SELECT
+    lg1.grid_id, lg1.admin0_grid_id
+FROM wp_dt_location_grid lg1
+WHERE lg1.level = 0
+  AND lg1.grid_id NOT IN ( SELECT lg11.admin0_grid_id FROM wp_dt_location_grid lg11 WHERE lg11.level = 1 AND lg11.admin0_grid_id = lg1.grid_id )
+  AND lg1.admin0_grid_id NOT IN (100050711,100219347,100089589,100074576,100259978,100018514)
+UNION ALL
+SELECT
+    lg2.grid_id, lg2.admin0_grid_id
+FROM wp_dt_location_grid lg2
+WHERE lg2.level = 1
+  AND lg2.admin0_grid_id NOT IN (100050711,100219347,100089589,100074576,100259978,100018514)
+UNION ALL
+SELECT
+    lg3.grid_id, lg3.admin0_grid_id
+FROM wp_dt_location_grid lg3
+WHERE lg3.level = 2
+  AND lg3.admin0_grid_id IN (100050711,100219347,100089589,100074576,100259978,100018514);
+
+
+
+
+  UPDATE location_grid_facts a
+  LEFT JOIN (SELECT lg.grid_id, lg.name, lg.grid_id as admin0_grid_id, lg.name as admin0,
+  lg.population,
+  a.meta_value as birth_rate,
+  b.meta_value as death_rate,
+  bb.meta_value as growth_rate,
+  ROUND( lg.population * ( h.meta_value * .01 ) ) as believers,
+  ROUND( lg.population * ( i.meta_value - h.meta_value ) * .01 ) as christian_adherant,
+  ROUND( lg.population * ( 100 - h.meta_value - (i.meta_value - h.meta_value) ) * .01 ) as non_christians,
+  f.meta_value as primary_language,
+  g.meta_value as primary_religion,
+  h.meta_value as percent_believers,
+  i.meta_value - h.meta_value as percent_christian_adherant,
+  ( 100 - h.meta_value - (i.meta_value - h.meta_value) ) as percent_non_christians
+  FROM wp_dt_location_grid lg
+  LEFT JOIN wp_dt_location_grid a0 ON lg.admin0_grid_id=a0.grid_id
+  LEFT JOIN prayer_global_grid_facts a ON a.grid_id=lg.grid_id AND a.meta_key = 'birth_rate'
+  LEFT JOIN prayer_global_grid_facts b ON b.grid_id=lg.grid_id AND b.meta_key = 'death_rate'
+  LEFT JOIN prayer_global_grid_facts bb ON bb.grid_id=lg.grid_id AND bb.meta_key = 'growth_rate'
+  LEFT JOIN prayer_global_grid_facts c ON c.grid_id=lg.grid_id AND c.meta_key = 'believers'
+  LEFT JOIN prayer_global_grid_facts d ON d.grid_id=lg.grid_id AND d.meta_key = 'christian_adherants'
+  LEFT JOIN prayer_global_grid_facts e ON e.grid_id=lg.grid_id AND e.meta_key = 'non_christians'
+  LEFT JOIN prayer_global_grid_facts f ON f.grid_id=lg.grid_id AND f.meta_key = 'primary_language'
+  LEFT JOIN prayer_global_grid_facts g ON g.grid_id=lg.grid_id AND g.meta_key = 'primary_religion'
+  LEFT JOIN prayer_global_grid_facts h ON h.grid_id=lg.grid_id AND h.meta_key = 'percent_believers'
+  LEFT JOIN prayer_global_grid_facts i ON i.grid_id=lg.grid_id AND i.meta_key = 'percent_christian_adherant'
+  LEFT JOIN prayer_global_grid_facts j ON j.grid_id=lg.grid_id AND j.meta_key = 'percent_non_believer'
+  WHERE lg.level = 0) b ON a.grid_id = b.grid_id
+  SET a.christian_adherants = b.christian_adherant
+  WHERE b.christian_adherant IS NOT NULL;
 
 
 

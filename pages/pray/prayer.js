@@ -54,6 +54,8 @@ jQuery(document).ready(function(){
 
   function load_location() {
     let content = window.current_content
+    let location = content.location
+    console.log(window.current_content)
     button_text.html('Keep Praying...')
     button_progress.css('width', '0' )
 
@@ -66,26 +68,33 @@ jQuery(document).ready(function(){
     div.append(
       `<div class="row">
           <div class="col">
-              <h3 class="mt-0 mb-3 font-weight-normal text-center">${content.location.full_name}</h3>
+              <h3 class="mt-0 mb-3 font-weight-normal text-center">${location.full_name}</h3>
               <p class="text-md-center">
-                <img style="width:600px;" src="${content.location.url}" />
+                <img style="width:600px;" src="${location.url}" />
               </p>
                <p class="text-center">
-                  ${content.location.description}
+                  The ${location.admin_level_name} of ${location.full_name} has a population of <strong>${location.stats.population}</strong>.
+                  We estimate ${location.name} has ${location.stats.believers} believers, ${location.stats.cultural_christians} cultural Christians, and ${location.stats.non_christians} without faith in Jesus.
               </p>
           </div>
       </div>
       <div class="row text-center">
-        <div class="col-md-6">
+        <div class="col-md">
               <p class="mt-3 mb-0 font-weight-bold">With Jesus</p>
-              <p class="mt-0 mb-0 font-weight-normal">10% percent</p>
-              <p class="mt-0 mb-3 font-weight-normal">2,350</p>
+              <p class="mt-0 mb-3 font-weight-normal">${location.stats.cultural_christians}</p>
             </div>
-           <div class="col-md-6">
+           <div class="col-md">
               <p class="mt-3 mb-0 font-weight-bold">Without Jesus</p>
-              <p class="mt-0 mb-0 font-weight-normal">90% percent</p>
-              <p class="mt-0 mb-3 font-weight-normal">23,454</p>
-            </div>
+              <p class="mt-0 mb-3 font-weight-normal">${location.stats.non_christians}</p>
+           </div>
+           <div class="col-md">
+              <p class="mt-3 mb-0 font-weight-bold">Born without gospel</p>
+              <p class="mt-0 mb-3 font-weight-normal">${location.stats.non_christians}</p>
+           </div>
+           <div class="col-md">
+              <p class="mt-3 mb-0 font-weight-bold">Died without gospel</p>
+              <p class="mt-0 mb-3 font-weight-normal">${location.stats.non_christians}</p>
+           </div>
         </div>
       </div>
       <hr>`
@@ -114,7 +123,7 @@ jQuery(document).ready(function(){
                 <h3 class="mt-0 mb-3 font-weight-normal">People Groups</h3>
             </div>
             <div class="col-md">
-                <img src="https://via.placeholder.com/600x200?text=${content.grid_id}" class="img-fluid" alt="People Groups photo" />
+                <img src="https://via.placeholder.com/600x400?text=${content.grid_id}" class="img-fluid" alt="People Groups photo" />
             </div>
             <div class="col-md"><ul id="pg-list" style="padding-left: 1rem;"></ul></div>
         </div>`)
@@ -123,6 +132,8 @@ jQuery(document).ready(function(){
           pg_list.append(`<li>${v.name}</li>`)
         })
     }
+
+    div.append(`<div class="row text-center"><div class="col">${content.grid_id}</</div>`)
 
     prayer_progress_indicator( window.time )
   }

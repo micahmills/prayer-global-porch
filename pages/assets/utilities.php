@@ -124,21 +124,23 @@ class PG_Utilities {
 
         // create the description
         if ( 'admin1' === $grid_record['level_name'] ) {
-            $admin_title = 'state';
+            $admin_level_title = 'state';
         } else if ( 'admin0' === $grid_record['level_name'] ) {
-            $admin_title = 'country';
+            $admin_level_title = 'country';
         } else {
-            $admin_title = 'county';
+            $admin_level_title = 'county';
         }
-        $description = "The ".$admin_title." of ".$full_name. " has a population of " . number_format( $grid_record['population'] ) . '. We estimate ';
 
         $locations_url = prayer_global_image_library_url() . 'locations/' . rand(0,2) . '/';
+        $population = $grid_record['population'];
 
         // build array
         $content = [
             'grid_id' => $grid_id,
             'location' => [
+                'name' => $grid_record['name'],
                 'full_name' => $full_name,
+                'admin_level_name' => $admin_level_title,
                 'bounds' => [
                   'north_latitude' => (float) $grid_record['north_latitude'],
                   'south_latitude' => (float) $grid_record['south_latitude'],
@@ -152,7 +154,19 @@ class PG_Utilities {
                   'west_longitude' => (float) $grid_record['c_west_longitude'],
                 ],
                 'url' => $locations_url.$grid_id.'.png',
-                'description' => $description
+                'stats' => [ // all numbers are estimated
+                    'population' => number_format( intval( $population ) ),
+                    'population_percent_of_country' => number_format( 0 ),
+                    'believers' => number_format( intval( $population * .05 ) ),
+                    'cultural_christians' => number_format( intval( $population * .10 ) ),
+                    'non_christians' => number_format( intval( $population * .85 ) ),
+                    'born_to_non_christians' => number_format( intval( $population - ( $population / 15 ) ) ), // last 100 hours
+                    'born_to_cultural_christians' => number_format( intval( $population - ( $population / 80 ) ) ), // last 100 hours
+                    'born_to_believers' => number_format( intval( $population - ( $population / 5 ) ) ), // last 100 hours
+                    'died_as_non_christians' => number_format( intval( $population - ( $population / 15 ) ) ), // last 100 hours
+                    'died_as_cultural_christians' => number_format( intval( $population - ( $population / 80 ) ) ), // last 100 hours
+                    'died_as_believers' => number_format( intval( $population - ( $population / 5 ) ) ), // last 100 hours
+                ]
             ],
             'sections' => [
                 [
