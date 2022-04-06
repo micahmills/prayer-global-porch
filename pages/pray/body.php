@@ -1,4 +1,7 @@
 <style>
+    body {
+        color: black;
+    }
     .navbar.prayer_navbar {
         border-bottom:1px solid lightgrey;
         box-shadow: 0 1px 10px -2px rgb(0 0 0 / 15%);
@@ -76,6 +79,55 @@
     .btn-primary:focus {
         background-color: green;
         border-color: white;
+    }
+    .progress-bar-success {
+        background-color: red;
+        border-color: white;
+    }
+    .progress-bar-warning {
+        background-color: orange;
+        border-color: white;
+    }
+    .progress-bar-danger {
+        background-color: green;
+        border-color: white;
+    }
+    .green {
+        color: green;
+    }
+    .red {
+        color: red;
+    }
+    .orange {
+        color: orange;
+    }
+
+    .pie {
+        --w:150px;
+
+        width: var(--w);
+        aspect-ratio: 1;
+        position: relative;
+        display: inline-grid;
+        place-content: center;
+        margin: 5px;
+        font-size: 25px;
+        font-weight: bold;
+        font-family: sans-serif;
+    }
+    .pie:before {
+        content: "";
+        position: absolute;
+        border-radius: 50%;
+        inset: 0;
+        background: conic-gradient(var(--c) calc(var(--p)*1%),#F6F6F6 0);
+        -webkit-mask:radial-gradient(farthest-side,#0000 calc(99% - var(--b)),#000 calc(100% - var(--b)));
+        mask:radial-gradient(farthest-side,#0000 calc(99% - var(--b)),#000 calc(100% - var(--b)));
+    }
+    .chartdiv {
+        width: 100%;
+        height: 500px;
+        max-width: 100%;
     }
 </style>
 

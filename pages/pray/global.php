@@ -101,6 +101,11 @@ class Prayer_Global_Laps_Post_Type_Link extends DT_Magic_Url_Base {
         $current_lap = PG_Utilities::get_current_global_lap();
         if ( (int) $current_lap['post_id'] === (int) $this->parts['post_id'] ) {
             ?>
+            <!-- Resources -->
+            <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+            <script src="https://cdn.amcharts.com/lib/5/map.js"></script>
+            <script src="https://cdn.amcharts.com/lib/5/geodata/worldLow.js"></script>
+            <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
             <script src="<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) ) ?>prayer.js?ver=<?php echo fileatime( trailingslashit( plugin_dir_path( __FILE__ ) ) . 'prayer.js' ) ?>"></script>
             <script>
                 let jsObject = [<?php echo json_encode([

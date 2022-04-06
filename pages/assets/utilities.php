@@ -68,6 +68,7 @@ class PG_Utilities {
               g.country_code,
               g.admin0_code,
               g.parent_id,
+              p.name as parent_name,
               g.admin0_grid_id,
               gc.alt_name as admin0_name,
               g.admin1_grid_id,
@@ -91,6 +92,7 @@ class PG_Utilities {
               gc.south_latitude as c_south_latitude,
               gc.east_longitude as c_east_longitude,
               gc.west_longitude as c_west_longitude,
+              (SELECT count(pl.grid_id) FROM $wpdb->dt_location_grid pl WHERE pl.parent_id = g.parent_id) as peer_locations,
               lgf.*
             FROM $wpdb->dt_location_grid as g
             LEFT JOIN $wpdb->dt_location_grid as gc ON g.admin0_grid_id=gc.grid_id
@@ -99,6 +101,7 @@ class PG_Utilities {
             LEFT JOIN $wpdb->dt_location_grid as ga3 ON g.admin3_grid_id=ga3.grid_id
             LEFT JOIN $wpdb->dt_location_grid as ga4 ON g.admin4_grid_id=ga4.grid_id
             LEFT JOIN $wpdb->dt_location_grid as ga5 ON g.admin5_grid_id=ga5.grid_id
+            LEFT JOIN $wpdb->dt_location_grid as p ON g.parent_id=p.grid_id
             LEFT JOIN $wpdb->location_grid_facts as lgf ON g.grid_id=lgf.grid_id
             WHERE g.grid_id = %s
         ", $grid_id ), ARRAY_A );
@@ -126,14 +129,17 @@ class PG_Utilities {
 
         // create the description
         if ( 'admin1' === $grid_record['level_name'] ) {
-            $admin_level_title = 'state';
+            $admin_level_name = 'state';
+            $admin_level_name_plural = 'states';
         } else if ( 'admin0' === $grid_record['level_name'] ) {
-            $admin_level_title = 'country';
+            $admin_level_name = 'country';
+            $admin_level_name_plural = 'countries';
         } else {
-            $admin_level_title = 'county';
+            $admin_level_name = 'county';
+            $admin_level_name_plural = 'counties';
         }
 
-        $locations_url = prayer_global_image_library_url() . 'locations/' . rand(0,2) . '/';
+        $locations_url = prayer_global_image_library_url() . 'locations/' . rand(0,1) . '/';
         $population = $grid_record['population'];
 
         // build array
@@ -142,7 +148,13 @@ class PG_Utilities {
             'location' => [
                 'name' => $grid_record['name'],
                 'full_name' => $full_name,
-                'admin_level_name' => $admin_level_title,
+                'admin0_name' => $grid_record['admin0_name'],
+                'parent_name' => $grid_record['parent_name'],
+                'admin_level_name' => $admin_level_name,
+                'admin_level_name_plural' => $admin_level_name_plural,
+                'peer_locations' => $grid_record['peer_locations'],
+                'longitude' => (float) $grid_record['longitude'],
+                'latitude' => (float) $grid_record['latitude'],
                 'bounds' => [
                   'north_latitude' => (float) $grid_record['north_latitude'],
                   'south_latitude' => (float) $grid_record['south_latitude'],
@@ -158,9 +170,36 @@ class PG_Utilities {
                 'url' => $locations_url.$grid_id.'.png',
                 'stats' => [ // all numbers are estimated
                     'population' => number_format( intval( $population ) ),
+
+                    'birth_rate' => (float) $grid_record['birth_rate'],
+                    'death_rate' => (float) $grid_record['death_rate'],
+                    'growth_rate' => (float) $grid_record['growth_rate'],
+
+                    'population_growth_status' => self::pace_calculator( 'population_growth_status', $grid_record ),
+                    'primary_language' => $grid_record['primary_language'],
+                    'primary_religion' => $grid_record['primary_religion'],
+
                     'believers' => number_format( intval( $grid_record['believers'] ) ),
                     'christian_adherants' => number_format( intval( $grid_record['christian_adherants'] ) ),
                     'non_christians' => number_format( intval( $grid_record['non_christians'] ) ),
+
+                    'percent_believers' => round( (float) $grid_record['percent_believers'], 2),
+                    'percent_christian_adherants' => round( (float) $grid_record['percent_christian_adherants'], 2 ),
+                    'percent_non_christians' => round( (float) $grid_record['percent_non_christians'], 2 ),
+
+                    'births_without_jesus_last_hour' => self::pace_calculator( 'births_without_jesus_last_hour', $grid_record ),
+                    'births_without_jesus_last_100' => self::pace_calculator( 'births_without_jesus_last_100', $grid_record ),
+                    'births_without_jesus_last_week' => self::pace_calculator( 'births_without_jesus_last_week', $grid_record ),
+                    'births_without_jesus_last_month' => self::pace_calculator( 'births_without_jesus_last_month', $grid_record ),
+
+                    'deaths_without_jesus_last_hour' => self::pace_calculator( 'deaths_without_jesus_last_hour', $grid_record ),
+                    'deaths_without_jesus_last_100' => self::pace_calculator( 'deaths_without_jesus_last_100', $grid_record ),
+                    'deaths_without_jesus_last_week' => self::pace_calculator( 'deaths_without_jesus_last_week', $grid_record ),
+                    'deaths_without_jesus_last_month' => self::pace_calculator( 'deaths_without_jesus_last_month', $grid_record ),
+
+                    'births_without_jesus_per_second' => self::pace_calculator( 'births_without_jesus_per_second', $grid_record ),
+                    'deaths_without_jesus_per_second' => self::pace_calculator( 'deaths_without_jesus_per_second', $grid_record ),
+
                 ]
             ],
             'sections' => [
@@ -236,6 +275,74 @@ class PG_Utilities {
         ];
 
         return $content;
+    }
+
+    public static function pace_calculator( $type, $grid_record ) {
+        $return_value = 0;
+        $population = $grid_record['population'];
+        $birth_rate = $grid_record['birth_rate'];
+        $death_rate = $grid_record['death_rate'];
+        $believers = $grid_record['believers'];
+        $christian_adherants = $grid_record['christian_adherants'];
+        $non_christians = $grid_record['non_christians'];
+        $not_believers = $non_christians + $christian_adherants;
+
+
+        switch( $type ) {
+            case 'births_without_jesus_last_hour':
+                $return_value = ( $birth_rate * ( $not_believers / 1000 ) ) / 365 / 24 ;
+                break;
+            case 'births_without_jesus_last_100':
+                $return_value = ( $birth_rate * ( $not_believers / 1000 ) ) / 365 / 24 * 100 ;
+                break;
+            case 'births_without_jesus_last_week':
+                $return_value = ( $birth_rate * ( $not_believers / 1000 ) ) / 365 * 7 ;
+                break;
+            case 'births_without_jesus_last_month':
+                $return_value = ( $birth_rate * ( $not_believers / 1000 ) ) / 365 * 30 ;
+                break;
+
+            case 'deaths_without_jesus_last_hour':
+                $return_value = ( $death_rate * ( $not_believers / 1000 ) ) / 365 / 24 ;
+                break;
+            case 'deaths_without_jesus_last_100':
+                $return_value = ( $death_rate * ( $not_believers / 1000 ) ) / 365 / 24 * 100 ;
+                break;
+            case 'deaths_without_jesus_last_week':
+                $return_value = ( $death_rate * ( $not_believers / 1000 ) ) / 365 * 7;
+                break;
+            case 'deaths_without_jesus_last_month':
+                $return_value =  ( $death_rate * ( $not_believers / 1000 ) ) / 365 * 30 ;
+                break;
+
+            case 'births_without_jesus_per_second':
+                $return_value =  ( $birth_rate * ( $not_believers / 1000 ) ) / 365 / 24 / 60 / 60; // per second
+                break;
+            case 'deaths_without_jesus_per_second':
+                $return_value =  ( $death_rate * ( $not_believers / 1000 ) ) / 365 / 24 / 60 / 60; // per second
+                break;
+            case 'population_growth_status':
+                if ( $grid_record['growth_rate'] >= 1.3 ) {
+                    $return_value = 'Fastest Growth in the World';
+                } else if ( $grid_record['growth_rate'] >= 1.2 ) {
+                    $return_value = 'Extreme Growth';
+                } else if ( $grid_record['growth_rate'] >= 1.1 ) {
+                    $return_value = 'Significant Growth';
+                } else if ( $grid_record['growth_rate'] >= 1.0 ) {
+                    $return_value = 'Stable, but with slight growth';
+                } else if ( $grid_record['growth_rate'] >= .99 ) {
+                    $return_value = 'Stable, but in slight decline';
+                } else if ( $grid_record['growth_rate'] >= .96 ) {
+                    $return_value = 'Extreme Decline';
+                } else {
+                    $return_value = 'Fastest Decline in the World';
+                }
+                return $return_value;
+            default:
+                break;
+        }
+
+        return number_format( intval( $return_value ) );
     }
 
     public static function save_log( $parts, $data, $is_global = true ) {
