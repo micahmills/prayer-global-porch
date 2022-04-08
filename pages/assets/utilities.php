@@ -105,6 +105,21 @@ class PG_Utilities {
             LEFT JOIN $wpdb->location_grid_facts as lgf ON g.grid_id=lgf.grid_id
             WHERE g.grid_id = %s
         ", $grid_id ), ARRAY_A );
+
+        // build people groups list
+        $people_groups = $wpdb->get_results($wpdb->prepare( "
+            SELECT lgpg.name, FORMAT(lgpg.population, 0) as population
+                FROM $wpdb->location_grid_people_groups lgpg
+                WHERE
+                    lgpg.longitude < %d AND /* east */
+                    lgpg.longitude >  %d AND /* west */
+                    lgpg.latitude < %d AND /* north */
+                    lgpg.latitude > %d AND /* south */
+                    lgpg.admin0_grid_id = %d
+                LIMIT 8
+        ", $grid_record['east_longitude'], $grid_record['west_longitude'], $grid_record['north_latitude'], $grid_record['south_latitude'], $grid_record['admin0_grid_id'] ), ARRAY_A );
+
+        // build full name
         switch ( $grid_record['level_name'] ) {
             case 'admin1':
                 $full_name = $grid_record['name'] . ', ' . $grid_record['admin0_name'];
@@ -127,7 +142,7 @@ class PG_Utilities {
                 break;
         }
 
-        // create the description
+        // build the description
         if ( 'admin1' === $grid_record['level_name'] ) {
             $admin_level_name = 'state';
             $admin_level_name_plural = 'states';
@@ -233,45 +248,7 @@ class PG_Utilities {
                     'population' => number_format( intval( '123456' ) )
                 ],
             ],
-            'people_groups' => [
-                [
-                    'name' => 'Afrikaner',
-                    'rop3' => '100093',
-                    'meta' => [
-                        'people_cluster' => 'Germanic',
-                        'population_all_countries' => '4,683,100',
-                        'number_of_countries' => '15',
-                        'largest_religion' => 'Christian',
-                        'progress' => '5',
-                    ]
-                ],
-                [
-                    'name' => 'Abai Sungai',
-                    'rop3' => '10120',
-                    'meta' => [
-                        'people_cluster' => 'Borneo-Kalimantan',
-                        'population_all_countries' => '1,500',
-                        'percent_christian' => '0.00',
-                        'percent_evangelical' => '0.00',
-                        'largest_religion' => 'Muslim',
-                        'main_language' => 'Abai Sungai',
-                        'progress' => '0',
-                    ]
-                ],
-                [
-                    'name' => 'Amat',
-                    'rop3' => '10120',
-                    'meta' => [
-                        'people_cluster' => 'South Asia Hindu - other',
-                        'population_all_countries' => '316,000',
-                        'percent_christian' => '0.00',
-                        'percent_evangelical' => '0.00',
-                        'largest_religion' => 'Hinduism',
-                        'main_language' => 'Abai Sungai',
-                        'progress' => '0',
-                    ]
-                ],
-            ],
+            'people_groups' => $people_groups,
         ];
 
         return $content;

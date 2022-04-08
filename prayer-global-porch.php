@@ -85,6 +85,7 @@ class Prayer_Global_Porch {
     private function __construct() {
         global $wpdb;
         $wpdb->location_grid_facts = 'location_grid_facts';
+        $wpdb->location_grid_people_groups = 'location_grid_people_groups';
 
         require_once( 'redirects/loader.php' );
         require_once( 'post-type/loader.php' );

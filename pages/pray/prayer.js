@@ -132,7 +132,7 @@ jQuery(document).ready(function(){
         </div>`)
         let pg_list = jQuery('#pg-list')
         jQuery.each(content.people_groups, function(i,v) {
-          pg_list.append(`<li>${v.name}</li>`)
+          pg_list.append(`<li>${v.name} (${v.population})</li>`)
         })
     }
 
