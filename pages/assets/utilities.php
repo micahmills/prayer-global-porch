@@ -88,6 +88,10 @@ class PG_Utilities {
               g.south_latitude,
               g.east_longitude,
               g.west_longitude,
+              p.north_latitude as p_north_latitude,
+              p.south_latitude as p_south_latitude,
+              p.east_longitude as p_east_longitude,
+              p.west_longitude as p_west_longitude,
               gc.north_latitude as c_north_latitude,
               gc.south_latitude as c_south_latitude,
               gc.east_longitude as c_east_longitude,
@@ -108,7 +112,7 @@ class PG_Utilities {
 
         // build people groups list
         $people_groups = $wpdb->get_results($wpdb->prepare( "
-            SELECT lgpg.name, FORMAT(lgpg.population, 0) as population
+            SELECT lgpg.*, FORMAT(lgpg.population, 0) as population
                 FROM $wpdb->location_grid_people_groups lgpg
                 WHERE
                     lgpg.longitude < %d AND /* east */
@@ -116,8 +120,23 @@ class PG_Utilities {
                     lgpg.latitude < %d AND /* north */
                     lgpg.latitude > %d AND /* south */
                     lgpg.admin0_grid_id = %d
+                ORDER BY lgpg.population DESC
                 LIMIT 8
         ", $grid_record['east_longitude'], $grid_record['west_longitude'], $grid_record['north_latitude'], $grid_record['south_latitude'], $grid_record['admin0_grid_id'] ), ARRAY_A );
+        if ( empty( $people_groups ) ) {
+            $people_groups = $wpdb->get_results($wpdb->prepare( "
+                SELECT lgpg.*, FORMAT(lgpg.population, 0) as population
+                    FROM $wpdb->location_grid_people_groups lgpg
+                    WHERE
+                        lgpg.longitude < %d AND /* east */
+                        lgpg.longitude >  %d AND /* west */
+                        lgpg.latitude < %d AND /* north */
+                        lgpg.latitude > %d AND /* south */
+                        lgpg.admin0_grid_id = %d
+                    ORDER BY lgpg.population DESC
+                    LIMIT 8
+            ", $grid_record['p_east_longitude'], $grid_record['p_west_longitude'], $grid_record['p_north_latitude'], $grid_record['p_south_latitude'], $grid_record['admin0_grid_id'] ), ARRAY_A );
+        }
 
         // build full name
         switch ( $grid_record['level_name'] ) {
