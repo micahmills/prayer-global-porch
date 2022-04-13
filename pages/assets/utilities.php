@@ -138,6 +138,21 @@ class PG_Utilities {
             ", $grid_record['p_east_longitude'], $grid_record['p_west_longitude'], $grid_record['p_north_latitude'], $grid_record['p_south_latitude'], $grid_record['admin0_grid_id'] ), ARRAY_A );
         }
 
+        // cities
+        $cities = $wpdb->get_results($wpdb->prepare( "
+            SELECT lgpg.name, FORMAT(lgpg.population, 0) as population
+                FROM $wpdb->location_grid_cities lgpg
+                WHERE
+                    lgpg.longitude < %d AND /* east */
+                    lgpg.longitude >  %d AND /* west */
+                    lgpg.latitude < %d AND /* north */
+                    lgpg.latitude > %d AND /* south */
+                    lgpg.admin0_grid_id = %d
+                ORDER BY lgpg.population DESC
+                LIMIT 5
+        ", $grid_record['east_longitude'], $grid_record['west_longitude'], $grid_record['north_latitude'], $grid_record['south_latitude'], $grid_record['admin0_grid_id'] ), ARRAY_A );
+
+
         // build full name
         switch ( $grid_record['level_name'] ) {
             case 'admin1':
@@ -173,7 +188,6 @@ class PG_Utilities {
             $admin_level_name_plural = 'counties';
         }
 
-        $locations_url = prayer_global_image_library_url() . 'locations/' . rand(0,1) . '/';
         $population = $grid_record['population'];
 
         // build array
@@ -201,7 +215,6 @@ class PG_Utilities {
                   'east_longitude' => (float) $grid_record['c_east_longitude'],
                   'west_longitude' => (float) $grid_record['c_west_longitude'],
                 ],
-                'url' => $locations_url.$grid_id.'.png',
                 'stats' => [ // all numbers are estimated
                     'population' => number_format( intval( $population ) ),
 
@@ -231,44 +244,30 @@ class PG_Utilities {
                     'deaths_without_jesus_last_week' => self::pace_calculator( 'deaths_without_jesus_last_week', $grid_record ),
                     'deaths_without_jesus_last_month' => self::pace_calculator( 'deaths_without_jesus_last_month', $grid_record ),
 
-                    'births_without_jesus_per_second' => self::pace_calculator( 'births_without_jesus_per_second', $grid_record ),
-                    'deaths_without_jesus_per_second' => self::pace_calculator( 'deaths_without_jesus_per_second', $grid_record ),
-
                 ]
             ],
             'sections' => [
                 [
                     'title' => 'Praise',
-                    'url' => 'https://via.placeholder.com/600x400?text='.$grid_id,
-                    'description' => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries"
+                    'url' => 'https://via.placeholder.com/600x400?text='.urlencode( str_replace( ' ', '-', $grid_record['name'] ) ),
+                    'description' => "Praise God, everybody! Applaud God, all people! His love has taken over our lives; God’s faithful ways are eternal. Hallelujah! Praise God, everybody!"
                 ],
-//                [
-//                    'title' => 'Kingdom Come',
-//                    'url' => 'https://via.placeholder.com/600x400?text='.$grid_id,
-//                    'description' => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries"
-//                ],
-//                [
-//                    'title' => 'Pray the Book of Acts',
-//                    'url' => 'https://via.placeholder.com/600x400?text='.$grid_id,
-//                    'description' => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries"
-//                ]
+                [
+                    'title' => 'Kingdom Come',
+                    'url' => 'https://via.placeholder.com/600x400?text='.urlencode( str_replace( ' ', '-', $grid_record['name'] ) ),
+                    'description' => "Praise God, everybody! Applaud God, all people! His love has taken over our lives; God’s faithful ways are eternal. Hallelujah! Praise God, everybody!"
+                ],
+                [
+                    'title' => 'Pray the Book of Acts',
+                    'url' => 'https://via.placeholder.com/600x400?text='.urlencode( str_replace( ' ', '-', $grid_record['name'] ) ),
+                    'description' => "Praise God, everybody! Applaud God, all people! His love has taken over our lives; God’s faithful ways are eternal. Hallelujah! Praise God, everybody!"
+                ]
             ],
-            'cities' => [
-                [
-                    'name' => 'City name',
-                    'population' => number_format( intval( '123456' ) )
-                ],
-                [
-                    'name' => 'City name',
-                    'population' => number_format( intval( '123456' ) )
-                ],
-                [
-                    'name' => 'City name',
-                    'population' => number_format( intval( '123456' ) )
-                ],
-            ],
+            'cities' => $cities,
             'people_groups' => $people_groups,
         ];
+
+        $content['statements'] = self::create_statements( $content );
 
         return $content;
     }
@@ -311,12 +310,6 @@ class PG_Utilities {
                 $return_value =  ( $death_rate * ( $not_believers / 1000 ) ) / 365 * 30 ;
                 break;
 
-            case 'births_without_jesus_per_second':
-                $return_value =  ( $birth_rate * ( $not_believers / 1000 ) ) / 365 / 24 / 60 / 60; // per second
-                break;
-            case 'deaths_without_jesus_per_second':
-                $return_value =  ( $death_rate * ( $not_believers / 1000 ) ) / 365 / 24 / 60 / 60; // per second
-                break;
             case 'population_growth_status':
                 if ( $grid_record['growth_rate'] >= 1.3 ) {
                     $return_value = 'Fastest Growth in the World';
@@ -341,6 +334,28 @@ class PG_Utilities {
         return number_format( intval( $return_value ) );
     }
 
+    public static function create_statements( $content ) {
+        $statements = [];
+        $location = $content['location'];
+        $stats = $content['location']['stats'];
+
+        $statements[] = "Pray for the awakening of the ".$stats['christian_adherants']." cultural Christians in ".$location['full_name'].", who have some knowledge of Jesus but may not have made him Lord and Savior of their life.";
+        $statements[] = "Pray for the ".$stats['believers']." believers in ".$location['full_name']." to have boldness and speak courageously to their ".$stats['non_christians']." neighbors who do not know Jesus.";
+        $statements[] = "Thank God for the ".$stats['believers']." believers in ".$location['full_name'].". Pray they seek him in prayer and obedience to His Word.";
+        $statements[] = "Pray that the ".$stats['christian_adherants']." cultural Christians in ".$location['full_name']." read their Bible, obey it, and share it with their neighbors.";
+        $statements[] = "Pray that the ".$stats['christian_adherants']." cultural Christians in ".$location['full_name']." would have a transformational encounter with the powerful, risen person of Jesus today.";
+
+        // small believing church with large non_christian population
+        if ( $stats['percent_believers'] < 2 && $stats['percent_non_christians'] > 50 ) {
+            $statements[] = "Pray for the small, outnumbered church in ".$location['full_name'].", that they would be giving the Spirit of Samson to reach the ".$stats['non_christians'] . " neighbors around them.";
+        }
+
+        // dominant cultural christian country
+        // @todo
+
+        return $statements;
+    }
+
     public static function save_log( $parts, $data, $is_global = true ) {
 
         if ( !isset( $parts['post_id'], $parts['root'], $parts['type'], $data['grid_id'] ) ) {
@@ -353,7 +368,7 @@ class PG_Utilities {
             'type' => $parts['root'],
             'subtype' => $parts['type'],
             'payload' => null,
-            'value' => $data['grid_id'] ?? 1,
+            'value' => $data['pace'] ?? 1,
             'grid_id' => $data['grid_id'],
         ];
         if ( is_user_logged_in() ) {

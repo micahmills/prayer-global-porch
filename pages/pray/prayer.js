@@ -71,21 +71,29 @@ jQuery(document).ready(function(){
     question_panel.hide()
     celebrate_panel.hide()
 
+    jQuery('#location-name').html(location.full_name)
+
     div.empty()
+    // location maps
     div.append(
       `<div class="row">
           <div class="col">
-              <h3 class="mt-0 mb-3 font-weight-normal text-center">${location.full_name}</h3>
               <p class="text-md-center" id="location-map"></p>
-               <p class="text-center">
-                  The ${location.admin_level_name} of <strong>${location.full_name}</strong> has a population of <strong>${location.stats.population}</strong>. It is 1 of ${content.location.peer_locations} ${content.location.admin_level_name_plural} in ${content.location.parent_name}.<br>
-                  We estimate ${location.name} has ${location.stats.believers} people who might know Jesus, ${location.stats.christian_adherants} people who might know about Jesus culturally, and ${location.stats.non_christians} people who do not know Jesus.
-              </p>
+              <p class="text-md-center">The ${location.admin_level_name} of <strong>${location.full_name}</strong> has a population of <strong>${location.stats.population}</strong> and is 1 of ${location.peer_locations} ${location.admin_level_name_plural} in ${location.parent_name}. We estimate ${location.name} has ${location.stats.believers} people who might know Jesus, ${location.stats.christian_adherants} people who might know about Jesus culturally, and ${location.stats.non_christians} people who do not know Jesus.</p>
           </div>
-      </div>
-      <div class="row text-center" id="counters"></div>
-      <hr>`
+      </div><hr>`
     )
+    // statements
+    if ( content.statements.length > 0 ) {
+      div.append(`<div class="row" id="statements-list"></div>`)
+      let statements_list = jQuery('#statements-list')
+      jQuery.each(content.statements, function(i,v) {
+        statements_list.append(`<div class="col-12 mb-3 text-center one-em"><div style="max-width:600px;margin:0 auto;">${v}</div></div>`)
+      })
+    }
+    // counters
+    div.append(`<div class="row text-center" id="counters"></div><hr>`)
+    // sections
     jQuery.each(content.sections, function(i,v) {
       div.append(
         `<div class="row mb-1">
@@ -103,6 +111,7 @@ jQuery(document).ready(function(){
         </div>`
       )
     })
+    // cities
     if ( content.cities.length > 0 ) {
       div.append(
         `<div class="row mb-1">
@@ -119,6 +128,7 @@ jQuery(document).ready(function(){
         cities_list.append(`<li>${v.name} (pop ${v.population})</li>`)
       })
     }
+    // people groups
     if ( content.people_groups.length > 0 ) {
       div.append(
         `<div class="row mb-1">
@@ -139,11 +149,21 @@ jQuery(document).ready(function(){
     div.append(`<div class="row text-center"><div class="col">${content.grid_id}</</div>`)
 
     // process counters
-    add_counters()
+    add_statements()
     add_map()
+    add_counters()
 
 
     prayer_progress_indicator( window.time )
+  }
+  function add_statements(){
+    let statements_div = jQuery('#prayer-statements')
+    let content = window.current_content
+    let stats = content.location.stats
+
+    statements_div.append(`
+      We estimate ${location.name} has ${stats.believers} people who might know Jesus, ${stats.christian_adherants} people who might know about Jesus culturally, and ${stats.non_christians} people who do not know Jesus.
+    `)
   }
   function add_counters(){
     let counter_div = jQuery('#counters')
@@ -151,140 +171,54 @@ jQuery(document).ready(function(){
     let stats = content.location.stats
     let i = 0
 
-      // location
+    // divider
     counter_div.append(`
-      <div class="col-md-3">
-        <p class="mt-3 mb-0 font-weight-bold">Population</p>
-        <p class="mt-0 mb-3 font-weight-normal">${stats.population}</p>
+      <div class="col-md-12">
+        <hr>
       </div>
     `)
 
+    // circle charts
     counter_div.append(`
-      <div class="col-md-3">
-        <p class="mt-3 mb-0 font-weight-bold">Population Growth</p>
-        <p class="mt-0 mb-3 font-weight-normal">${stats.population_growth_status}</p>
-      </div>
-    `)
-    counter_div.append(`
-      <div class="col-md-3">
-        <p class="mt-3 mb-0 font-weight-bold">Language</p>
-        <p class="mt-0 mb-3 font-weight-normal">${stats.primary_language}</p>
-      </div>
-    `)
-    counter_div.append(`
-      <div class="col-md-3">
-        <p class="mt-3 mb-0 font-weight-bold">Dominant Religion</p>
-        <p class="mt-0 mb-3 font-weight-normal">${stats.primary_religion}</p>
-      </div>
-    `)
-    counter_div.append(`
-      <div class="col-md-3">
-        <p class="mt-3 mb-0 font-weight-bold">Position</p>
-        <p class="mt-0 mb-3 font-weight-normal">1 of ${content.location.peer_locations} ${content.location.admin_level_name_plural} in ${content.location.parent_name}</p>
-      </div>
-    `)
-
-    // Faith
-    counter_div.append(`
-      <div class="col-md-3">
-        <p class="mt-3 mb-0 font-weight-bold">Don't Know Jesus</p>
-        <p class="mt-0 mb-3 font-weight-normal">${stats.non_christians}</p>
-      </div>
-    `)
-    counter_div.append(`
-      <div class="col-md-3">
-        <p class="mt-3 mb-0 font-weight-bold">Know About Jesus</p>
-        <p class="mt-0 mb-3 font-weight-normal">${stats.christian_adherants}</p>
-      </div>
-    `)
-    counter_div.append(`
-      <div class="col-md-3">
-        <p class="mt-3 mb-0 font-weight-bold">Know Jesus</p>
-        <p class="mt-0 mb-3 font-weight-normal">${stats.believers}</p>
-      </div>
-    `)
-
-    // Deaths
-    counter_div.append(`
-      <div class="col-md-3">
-        <p class="mt-3 mb-0 font-weight-bold">Deaths without Jesus (This Hour)</p>
-        <p class="mt-0 mb-3 font-weight-normal grow">${stats.deaths_without_jesus_last_hour}</p>
-      </div>
-    `)
-    counter_div.append(`
-      <div class="col-md-3">
-        <p class="mt-3 mb-0 font-weight-bold">Deaths without Jesus (Last 100 Hours)</p>
-        <p class="mt-0 mb-3 font-weight-normal grow">${stats.deaths_without_jesus_last_100}</p>
-      </div>
-    `)
-    counter_div.append(`
-      <div class="col-md-3">
-        <p class="mt-3 mb-0 font-weight-bold">Deaths without Jesus (This Week)</p>
-        <p class="mt-0 mb-3 font-weight-normal grow">${stats.deaths_without_jesus_last_week}</p>
-      </div>
-    `)
-    counter_div.append(`
-      <div class="col-md-3">
-        <p class="mt-3 mb-0 font-weight-bold">Deaths without Jesus (Last Month)</p>
-        <p class="mt-0 mb-3 font-weight-normal grow">${stats.deaths_without_jesus_last_month}</p>
-      </div>
-    `)
-
-    // Births
-    counter_div.append(`
-      <div class="col-md-3">
-        <p class="mt-3 mb-0 font-weight-bold">Births without Jesus (This Hour)</p>
-        <p class="mt-0 mb-3 font-weight-normal grow">${stats.births_without_jesus_last_hour}</p>
-      </div>
-    `)
-    counter_div.append(`
-      <div class="col-md-3">
-        <p class="mt-3 mb-0 font-weight-bold">Births without Jesus (Last 100 Hours)</p>
-        <p class="mt-0 mb-3 font-weight-normal grow">${stats.births_without_jesus_last_100}</p>
-      </div>
-    `)
-    counter_div.append(`
-      <div class="col-md-3">
-        <p class="mt-3 mb-0 font-weight-bold">Births without Jesus (This Week)</p>
-        <p class="mt-0 mb-3 font-weight-normal grow">${stats.births_without_jesus_last_week}</p>
-      </div>
-    `)
-    counter_div.append(`
-      <div class="col-md-3">
-        <p class="mt-3 mb-0 font-weight-bold">Births without Jesus (Last Month)</p>
-        <p class="mt-0 mb-3 font-weight-normal grow">${stats.births_without_jesus_last_month}</p>
-      </div>
-    `)
-
-    let pop_growth_icon = 'ion-android-arrow-up green'
-    if ( stats.growth_rate <= 1 ) {
-      pop_growth_icon = 'ion-android-arrow-down red'
-    }
-    counter_div.append(`
-      <div class="col-md-3">
-        <p class="mt-3 mb-0 font-weight-bold">Population Growth</p>
-        <i class="${pop_growth_icon}" style="font-size:6em;"></i>
-      </div>
-    `)
-
-    counter_div.append(`
-      <div class="col-md-3">
+      <div class="col-md-4">
         <p class="mt-3 mb-0 font-weight-bold">Non Christians</p>
         <div class="pie" style="--p:${stats.percent_non_christians};--b:10px;--c:red;">${stats.percent_non_christians}%</div>
       </div>
     `)
     counter_div.append(`
-      <div class="col-md-3">
+      <div class="col-md-4">
         <p class="mt-3 mb-0 font-weight-bold">Cultural Christians</p>
         <div class="pie" style="--p:${stats.percent_christian_adherants};--b:10px;--c:orange;">${stats.percent_christian_adherants}%</div>
       </div>
     `)
     counter_div.append(`
-      <div class="col-md-3">
+      <div class="col-md-4">
         <p class="mt-3 mb-0 font-weight-bold">Believers</p>
         <div class="pie" style="--p:${stats.percent_believers};--b:10px;--c:green;">${stats.percent_believers}%</div>
       </div>
     `)
+
+    // Faith
+    counter_div.append(`
+      <div class="col-md-4">
+        <p class="mt-3 mb-0 font-weight-bold">Don't Know Jesus</p>
+        <p class="mt-0 mb-3 font-weight-normal three-em">${stats.non_christians}</p>
+      </div>
+    `)
+    counter_div.append(`
+      <div class="col-md-4">
+        <p class="mt-3 mb-0 font-weight-bold">Know About Jesus</p>
+        <p class="mt-0 mb-3 font-weight-normal three-em">${stats.christian_adherants}</p>
+      </div>
+    `)
+    counter_div.append(`
+      <div class="col-md-4">
+        <p class="mt-3 mb-0 font-weight-bold">Know Jesus</p>
+        <p class="mt-0 mb-3 font-weight-normal three-em">${stats.believers}</p>
+      </div>
+    `)
+
+    // bar chart
     counter_div.append(`
       <div class="col-md-12">
         <p class="mt-3 mb-0 font-weight-bold">Know Jesus Personally</p>
@@ -304,7 +238,7 @@ jQuery(document).ready(function(){
       </div>
     `)
 
-    // bodies count
+    // 100 bodies percent count
     let bodies = ''
     i = 0
     while ( i < stats.percent_non_christians ) {
@@ -322,37 +256,327 @@ jQuery(document).ready(function(){
       i++;
     }
     counter_div.append(`
+      <div class="col-md-3"></div>
       <div class="col-md-3">
         <p class="mt-3 mb-0 font-weight-bold">Know Jesus Personally</p>
         <p class="mt-0 mb-3 font-weight-normal grow">
           ${bodies}
         </p>
       </div>
+      <div class="col-md-3"></div>
     `)
     // end bodies
 
+    // divider
+    counter_div.append(`
+      <div class="col-md-12">
+        <hr>
+      </div>
+    `)
+
+      // demographics
+    counter_div.append(`
+      <div class="col-md-4">
+        <p class="mt-3 mb-0 font-weight-bold">Population</p>
+        <p class="mt-0 mb-3 font-weight-normal three-em">${stats.population}</p>
+      </div>
+    `)
+    counter_div.append(`
+      <div class="col-md-4">
+        <p class="mt-3 mb-0 font-weight-bold">Population Growth</p>
+        <p class="mt-0 mb-3 font-weight-normal two-em">${stats.population_growth_status}</p>
+      </div>
+    `)
+    let pop_growth_icon = 'ion-android-arrow-up green'
+    if ( stats.growth_rate <= 1 ) {
+      pop_growth_icon = 'ion-android-arrow-down red'
+    }
+    counter_div.append(`
+      <div class="col-md-4">
+        <p class="mt-3 mb-0 font-weight-bold">Population Growth</p>
+        <i class="${pop_growth_icon} six-em"></i>
+      </div>
+    `)
+    counter_div.append(`
+      <div class="col-md-4">
+        <p class="mt-3 mb-0 font-weight-bold">Language</p>
+        <p class="mt-0 mb-3 font-weight-normal two-em">${stats.primary_language}</p>
+      </div>
+    `)
+    counter_div.append(`
+      <div class="col-md-4">
+        <p class="mt-3 mb-0 font-weight-bold">Dominant Religion</p>
+        <p class="mt-0 mb-3 font-weight-normal two-em">${stats.primary_religion}</p>
+      </div>
+    `)
+    counter_div.append(`
+      <div class="col-md-4">
+        <p class="mt-3 mb-0 font-weight-bold">Position</p>
+        <p class="mt-0 mb-3 font-weight-normal two-em">1 of ${content.location.peer_locations} ${content.location.admin_level_name_plural} <br>in ${content.location.parent_name}</p>
+      </div>
+    `)
+
+
+
+    // divider
+    counter_div.append(`
+      <div class="col-md-12">
+        <hr>
+      </div>
+    `)
+
+
+    let death_icons = ['ion-ios-contact-outline','ion-ios-contact','ion-woman', 'ion-man', 'ion-ios-body', 'ion-person','ion-ios-person','ion-sad']
+    let death_icon = death_icons[Math.floor(Math.random() * death_icons.length)]
+
+    let birth_icons = ['ion-social-reddit','ion-social-reddit', 'ion-home', 'ion-ios-heart', 'ion-ios-home']
+    let birth_icon = birth_icons[Math.floor(Math.random() * birth_icons.length)]
+
+    // Deaths
+    let deaths_next_hour = parseFloat(stats.deaths_without_jesus_last_hour.replace(/,/g, ''))
+    if ( deaths_next_hour < 200 && deaths_next_hour > 0 ) {
+      deaths_next_hour = ''
+      i = 0
+      while ( i < stats.deaths_without_jesus_last_hour ) {
+        deaths_next_hour += '<i class="'+death_icon+' red three-em"></i>';
+        i++;
+      }
+      counter_div.append(`
+      <div class="col-md-12">
+        <p class="mt-3 mb-0 font-weight-bold">Dying without Jesus in an hour</p>
+        <p class="mt-0 mb-3 font-weight-normal grow">
+          ${deaths_next_hour}
+        </p>
+      </div>
+    `)
+    }
+    let deaths_next_100 = parseFloat(stats.deaths_without_jesus_last_100.replace(/,/g, ''))
+    if ( deaths_next_100 < 400 && deaths_next_100 > 0 ) {
+      deaths_next_100 = ''
+      i = 0
+      while ( i < stats.deaths_without_jesus_last_100 ) {
+        deaths_next_100 += '<i class="'+death_icon+' red two-em"></i>';
+        i++;
+      }
+      counter_div.append(`
+      <div class="col-md-12">
+        <p class="mt-3 mb-0 font-weight-bold">Dying without Jesus in the next 100 hours</p>
+        <p class="mt-0 mb-3 font-weight-normal grow">
+          ${deaths_next_100}
+        </p>
+      </div>
+    `)
+    }
+    let deaths_next_week = parseFloat(stats.deaths_without_jesus_last_week.replace(/,/g, ''))
+    if ( deaths_next_week < 400 && deaths_next_week > 0 ) {
+      deaths_next_week = ''
+      i = 0
+      while ( i < stats.deaths_without_jesus_last_week ) {
+        deaths_next_week += '<i class="'+death_icon+' red two-em"></i>';
+        i++;
+      }
+      counter_div.append(`
+      <div class="col-md-12">
+        <p class="mt-3 mb-0 font-weight-bold">Dying without Jesus next week</p>
+        <p class="mt-0 mb-3 font-weight-normal grow">
+          ${deaths_next_week}
+        </p>
+      </div>
+    `)
+    }
+    let deaths_next_month = parseFloat(stats.deaths_without_jesus_last_month.replace(/,/g, ''))
+    if ( deaths_next_month < 1000 && deaths_next_month > 0 ) {
+      deaths_next_month = ''
+      i = 0
+      while ( i < stats.deaths_without_jesus_last_month ) {
+        deaths_next_month += '<i class="'+death_icon+' red one-em"></i>';
+        i++;
+      }
+      counter_div.append(`
+      <div class="col-md-12">
+        <p class="mt-3 mb-0 font-weight-bold">Dying without Jesus next month</p>
+        <p class="mt-0 mb-3 font-weight-normal grow">
+          ${deaths_next_month}
+        </p>
+      </div>
+    `)
+    }
+    // numbers
+    if ( stats.deaths_without_jesus_last_hour !== '0' ) {
+      counter_div.append(`
+      <div class="col-md-3">
+        <p class="mt-3 mb-0 font-weight-bold">Dying without Jesus in an hour</p>
+        <p class="mt-0 mb-3 font-weight-normal three-em">${stats.deaths_without_jesus_last_hour}</p>
+      </div>
+    `)
+    }
+    if ( stats.deaths_without_jesus_last_100 !== '0' ) {
+      counter_div.append(`
+      <div class="col-md-3">
+        <p class="mt-3 mb-0 font-weight-bold">Dying without Jesus in the next 100 hours</p>
+        <p class="mt-0 mb-3 font-weight-normal three-em">${stats.deaths_without_jesus_last_100}</p>
+      </div>
+    `)
+    }
+    if ( stats.deaths_without_jesus_last_week !== '0' ) {
+      counter_div.append(`
+      <div class="col-md-3">
+        <p class="mt-3 mb-0 font-weight-bold">Dying without Jesus next week</p>
+        <p class="mt-0 mb-3 font-weight-normal three-em">${stats.deaths_without_jesus_last_week}</p>
+      </div>
+    `)
+    }
+    if ( stats.deaths_without_jesus_last_month !== '0' ) {
+      counter_div.append(`
+      <div class="col-md-3">
+        <p class="mt-3 mb-0 font-weight-bold">Dying without Jesus in the next month</p>
+        <p class="mt-0 mb-3 font-weight-normal three-em">${stats.deaths_without_jesus_last_month}</p>
+      </div>
+    `)
+    }
+
+
+
+    // divider
+    counter_div.append(`
+      <div class="col-md-12">
+        <hr>
+      </div>
+    `)
+
+
+
+
+    // Births
+
+    let births_without_jesus_last_hour = parseFloat(stats.births_without_jesus_last_hour.replace(/,/g, ''))
+    if ( births_without_jesus_last_hour < 300 && births_without_jesus_last_hour > 0 ) {
+      births_without_jesus_last_hour = ''
+      i = 0
+      while ( i < stats.births_without_jesus_last_hour ) {
+        births_without_jesus_last_hour += '<i class="'+birth_icon+' red three-em"></i>';
+        i++;
+      }
+      counter_div.append(`
+      <div class="col-md-12">
+        <p class="mt-3 mb-0 font-weight-bold">Births to families without Jesus in the last hour</p>
+        <p class="mt-0 mb-3 font-weight-normal grow">
+          ${births_without_jesus_last_hour}
+        </p>
+      </div>
+    `)
+    }
+    let births_without_jesus_last_100 = parseFloat(stats.births_without_jesus_last_100.replace(/,/g, ''))
+    if ( births_without_jesus_last_100 < 300 && births_without_jesus_last_100 > 0 ) {
+      births_without_jesus_last_100 = ''
+      i = 0
+      while ( i < stats.births_without_jesus_last_100 ) {
+        births_without_jesus_last_100 += '<i class="'+birth_icon+' red three-em"></i>';
+        i++;
+      }
+      counter_div.append(`
+      <div class="col-md-12">
+        <p class="mt-3 mb-0 font-weight-bold">Births to families without Jesus in the last 100 hours</p>
+        <p class="mt-0 mb-3 font-weight-normal grow">
+          ${births_without_jesus_last_100}
+        </p>
+      </div>
+    `)
+    }
+    let births_without_jesus_last_week = parseFloat(stats.births_without_jesus_last_week.replace(/,/g, ''))
+    if ( births_without_jesus_last_week < 300 && births_without_jesus_last_week > 0 ) {
+      births_without_jesus_last_week = ''
+      i = 0
+      while ( i < stats.births_without_jesus_last_week ) {
+        births_without_jesus_last_week += '<i class="'+birth_icon+' red two-em"></i>';
+        i++;
+      }
+      counter_div.append(`
+      <div class="col-md-12">
+        <p class="mt-3 mb-0 font-weight-bold">Births to families without Jesus in the last week</p>
+        <p class="mt-0 mb-3 font-weight-normal grow">
+          ${births_without_jesus_last_week}
+        </p>
+      </div>
+    `)
+    }
+    let births_without_jesus_last_month = parseFloat(stats.births_without_jesus_last_month.replace(/,/g, ''))
+    if ( births_without_jesus_last_month < 1000 && births_without_jesus_last_month > 0 ) {
+      births_without_jesus_last_month = ''
+      i = 0
+      while ( i < stats.births_without_jesus_last_month ) {
+        births_without_jesus_last_month += '<i class="'+birth_icon+' red two-em"></i>';
+        i++;
+      }
+      counter_div.append(`
+      <div class="col-md-12">
+        <p class="mt-3 mb-0 font-weight-bold">Births to families without Jesus in the last month</p>
+        <p class="mt-0 mb-3 font-weight-normal grow">
+          ${births_without_jesus_last_month}
+        </p>
+      </div>
+    `)
+    }
+    // numbers
+    if ( stats.births_without_jesus_last_hour !== '0' ) {
+      counter_div.append(`
+      <div class="col-md-3">
+        <p class="mt-3 mb-0 font-weight-bold">Births to families without Jesus this hour</p>
+        <p class="mt-0 mb-3 font-weight-normal three-em">${stats.births_without_jesus_last_hour}</p>
+      </div>
+    `)
+    }
+    if ( stats.births_without_jesus_last_100 !== '0' ) {
+      counter_div.append(`
+      <div class="col-md-3">
+        <p class="mt-3 mb-0 font-weight-bold">Births to families without Jesus in the last 100 hours</p>
+        <p class="mt-0 mb-3 font-weight-normal three-em">${stats.births_without_jesus_last_100}</p>
+      </div>
+    `)
+    }
+    if ( stats.births_without_jesus_last_week !== '0' ) {
+      counter_div.append(`
+      <div class="col-md-3">
+        <p class="mt-3 mb-0 font-weight-bold">Births to families without Jesus last week</p>
+        <p class="mt-0 mb-3 font-weight-normal three-em">${stats.births_without_jesus_last_week}</p>
+      </div>
+    `)
+    }
+    if ( stats.births_without_jesus_last_month !== '0' ) {
+      counter_div.append(`
+      <div class="col-md-3">
+        <p class="mt-3 mb-0 font-weight-bold">Births to families without Jesus last month</p>
+        <p class="mt-0 mb-3 font-weight-normal three-em">${stats.births_without_jesus_last_month}</p>
+      </div>
+    `)
+    }
+    // end births
+
   }
   function add_map() {
-    rotating_globe()
-    zoom_globe()
-    wide_globe()
-    let location_map = jQuery('#location-map')
-    location_map.append(`<img style="width:600px;" class="img-fluid" src="${jsObject.images_url + 'locations/0/' + window.current_content.grid_id + '.png' }" /><br>`)
-    location_map.append(`<img style="width:600px;" class="img-fluid" src="${jsObject.images_url + 'locations/1/' + window.current_content.grid_id + '.png' }" /><br>`)
-    location_map.append(`<img style="width:600px;" class="img-fluid" src="${jsObject.images_url + 'locations/2/' + window.current_content.grid_id + '.png' }" /><br>`)
-    return
+    // @todo listing all maps
 
-    let rand = Math.floor(Math.random() * 3)
-    rand = 0
-    if ( 0 === rand ) {
-      rotating_globe()
-    } else if ( 1 === rand ) {
-      location_map.html(`<img style="width:600px;" class="img-fluid" src="${window.current_content.location.url}" />`)
-    } else if ( 2 === rand ) {
-      zoom_globe()
-    } else if ( 3 === rand ) {
-      wide_globe()
-    }
+    wide_globe()
+    zoom_globe()
+    rotating_globe()
+
+    // let location_map = jQuery('#location-map')
+    // location_map.append(`<img style="width:600px;padding:.5em;" class="img-fluid" src="${jsObject.images_url + 'locations/0/' + window.current_content.grid_id + '.png' }" /><br>`)
+    // location_map.append(`<img style="width:600px;padding:.5em;" class="img-fluid" src="${jsObject.images_url + 'locations/1/' + window.current_content.grid_id + '.png' }" /><br>`)
+
+    // return
+
+    // let rand = Math.floor(Math.random() * 3)
+    // rand = 0
+    // if ( 0 === rand ) {
+    //   rotating_globe()
+    // } else if ( 1 === rand ) {
+    //   location_map.html(`<img style="width:600px;" class="img-fluid" src="${window.current_content.location.url}" />`)
+    // } else if ( 2 === rand ) {
+    //   zoom_globe()
+    // } else if ( 3 === rand ) {
+    //   wide_globe()
+    // }
   }
   function wide_globe(){
     jQuery('#location-map').append(`<div class="chartdiv" id="wide_globe"></div>`)
@@ -372,7 +596,8 @@ jQuery(document).ready(function(){
         paddingBottom: 20,
         paddingTop: 20,
         paddingLeft: 20,
-        paddingRight: 20
+        paddingRight: 20,
+        wheelY: 'none'
       }));
 
       var polygonSeries = chart.series.push(am5map.MapPolygonSeries.new(root, {
@@ -401,7 +626,6 @@ jQuery(document).ready(function(){
 
       var graticuleSeries = chart.series.push(am5map.GraticuleSeries.new(root, {}));
       graticuleSeries.mapLines.template.setAll({ strokeOpacity: 0.1, stroke: root.interfaceColors.get("alternativeBackground") })
-
 
       chart.animate({
         key: "rotationX",
@@ -442,6 +666,9 @@ jQuery(document).ready(function(){
         });
       });
 
+      chart.seriesContainer.draggable = false;
+      chart.seriesContainer.resizable = false;
+
     }); // end am5.ready()
   }
   function rotating_globe(){
@@ -462,7 +689,8 @@ jQuery(document).ready(function(){
         paddingBottom: 20,
         paddingTop: 20,
         paddingLeft: 20,
-        paddingRight: 20
+        paddingRight: 20,
+        wheelY: 'none'
       }));
 
       var polygonSeries = chart.series.push(am5map.MapPolygonSeries.new(root, {
@@ -556,7 +784,8 @@ jQuery(document).ready(function(){
         paddingLeft: 20,
         paddingRight: 20,
         homeZoomLevel: 3.5,
-        homeGeoPoint: { longitude: content.location.longitude, latitude: content.location.latitude }
+        homeGeoPoint: { longitude: content.location.longitude, latitude: content.location.latitude },
+        wheelY: 'none'
       }));
 
       var polygonSeries = chart.series.push(am5map.MapPolygonSeries.new(root, {

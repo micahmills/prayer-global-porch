@@ -2,6 +2,9 @@
     body {
         color: black;
     }
+    .bold {
+        font-weight:900;
+    }
     .navbar.prayer_navbar {
         border-bottom:1px solid lightgrey;
         box-shadow: 0 1px 10px -2px rgb(0 0 0 / 15%);
@@ -9,7 +12,7 @@
         /*height:100px;*/
     }
     section {
-        margin-top:120px;
+        margin-top:147px;
     }
     .btn-group {
         width: 100%;
@@ -129,6 +132,25 @@
         height: 500px;
         max-width: 100%;
     }
+    .six-em {
+        font-size: 6em !important;
+        line-height: .5em;
+    }
+    .three-em {
+        font-size: 3em !important;
+    }
+    .two-em {
+        font-size: 2em !important;
+    }
+    .one-em {
+        font-size: 1.5em !important;
+    }
+    nav {
+        padding-bottom: 0 !important;
+    }
+    #location-name {
+        width:100%;
+    }
 </style>
 
 <!-- navigation & widget -->
@@ -163,6 +185,9 @@
             <button type="button" class="btn btn-secondary decision" id="decision__continue">Continue</button>
             <button type="button" class="btn btn-secondary decision" id="decision__next">Next</button>
         </div>
+    </div>
+    <div class="container">
+        <h3 class="mt-3 font-weight-normal text-center" id="location-name"></h3>
     </div>
 </nav>
 

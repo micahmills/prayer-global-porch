@@ -85,12 +85,17 @@ class Prayer_Global_Porch {
     private function __construct() {
         global $wpdb;
         $wpdb->location_grid_facts = 'location_grid_facts';
+        $wpdb->location_grid_cities = 'location_grid_cities';
         $wpdb->location_grid_people_groups = 'location_grid_people_groups';
+
+        if ( is_admin() ) {
+            require_once( 'support/admin.php' );
+        }
 
         require_once( 'redirects/loader.php' );
         require_once( 'post-type/loader.php' );
         require_once( 'support/cron.php' );
-        require_once( 'support/config-required-plugins.php' );
+//        require_once( 'support/config-required-plugins.php' );
 
         // home
         require_once( 'pages/home/magic-link.php' );
@@ -290,6 +295,55 @@ add_action( 'plugins_loaded', function (){
         }
     }
 } );
+
+
+function prayer_global_fields() {
+    $defaults = [
+        'image_asset_url' => [
+            'label' => 'Image Asset URL',
+            'description' => 'Add root site URl. {root_site_url}/location-grid-images/v1/...',
+            'value' => site_url(),
+            'type' => 'text',
+        ],
+
+    ];
+
+    $defaults = apply_filters( 'prayer_global_fields', $defaults );
+
+    $saved_fields = get_option( 'prayer_global_fields', [] );
+
+    return prayer_global_recursive_parse_args( $saved_fields, $defaults );
+}
+
+function prayer_global_image_url() {
+    $fields = prayer_global_fields();
+    return trailingslashit( $fields['image_asset_url']['value'] ) . 'location-grid-images/v1/';
+}
+function prayer_global_image_json_url() {
+    $fields = prayer_global_fields();
+    return trailingslashit( $fields['image_asset_url']['value'] ) . 'location-grid-images/v1/v1.json';
+}
+function prayer_global_image_json() {
+    return get_option('location_grid_images_json' );
+}
+
+
+function prayer_global_recursive_parse_args( $args, $defaults ) {
+    $new_args = (array) $defaults;
+
+    foreach ( $args ?: [] as $key => $value ) {
+        if ( is_array( $value ) && isset( $new_args[ $key ] ) ) {
+            $new_args[ $key ] = prayer_global_recursive_parse_args( $value, $new_args[ $key ] );
+        }
+        elseif ( $key !== "default" ){
+            $new_args[ $key ] = $value;
+        }
+    }
+
+    return $new_args;
+}
+
+
 
 
 
