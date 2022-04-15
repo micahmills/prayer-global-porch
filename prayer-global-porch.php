@@ -305,6 +305,12 @@ function prayer_global_fields() {
             'value' => site_url(),
             'type' => 'text',
         ],
+        'scripture_api_bible' => [
+            'label' => 'Scripture API Bible API',
+            'description' => 'API token to access https://scripture.api.bible',
+            'value' => '',
+            'type' => 'text',
+        ],
 
     ];
 
@@ -323,8 +329,12 @@ function prayer_global_image_json_url() {
     $fields = prayer_global_fields();
     return trailingslashit( $fields['image_asset_url']['value'] ) . 'location-grid-images/v1/v1.json';
 }
-function prayer_global_image_json() {
-    return get_option('location_grid_images_json' );
+function prayer_global_image_json( $grid_id = null ) {
+    $image_list = get_option('location_grid_images_json' );
+    if ( is_null( $grid_id ) ) {
+        return $image_list;
+    }
+    return $image_list[$grid_id] ?? [];
 }
 
 

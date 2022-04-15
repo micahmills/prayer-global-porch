@@ -79,18 +79,10 @@ jQuery(document).ready(function(){
       `<div class="row">
           <div class="col">
               <p class="text-md-center" id="location-map"></p>
-              <p class="text-md-center">The ${location.admin_level_name} of <strong>${location.full_name}</strong> has a population of <strong>${location.stats.population}</strong> and is 1 of ${location.peer_locations} ${location.admin_level_name_plural} in ${location.parent_name}. We estimate ${location.name} has ${location.stats.believers} people who might know Jesus, ${location.stats.christian_adherants} people who might know about Jesus culturally, and ${location.stats.non_christians} people who do not know Jesus.</p>
+              <p class="text-md-center">The ${location.admin_level_name} of <strong>${location.full_name}</strong> has a population of <strong>${location.stats.population}</strong> and is 1 of ${location.peer_locations} ${location.admin_level_name_plural} in ${location.parent_name}. We estimate ${location.name} has ${location.stats.believers} people who might know Jesus, ${location.stats.christian_adherents} people who might know about Jesus culturally, and ${location.stats.non_christians} people who do not know Jesus.</p>
           </div>
       </div><hr>`
     )
-    // statements
-    if ( content.statements.length > 0 ) {
-      div.append(`<div class="row" id="statements-list"></div>`)
-      let statements_list = jQuery('#statements-list')
-      jQuery.each(content.statements, function(i,v) {
-        statements_list.append(`<div class="col-12 mb-3 text-center one-em"><div style="max-width:600px;margin:0 auto;">${v}</div></div>`)
-      })
-    }
     // counters
     div.append(`<div class="row text-center" id="counters"></div><hr>`)
     // sections
@@ -149,22 +141,12 @@ jQuery(document).ready(function(){
     div.append(`<div class="row text-center"><div class="col">${content.grid_id}</</div>`)
 
     // process counters
-    add_statements()
     add_map()
     add_counters()
 
-
     prayer_progress_indicator( window.time )
   }
-  function add_statements(){
-    let statements_div = jQuery('#prayer-statements')
-    let content = window.current_content
-    let stats = content.location.stats
 
-    statements_div.append(`
-      We estimate ${location.name} has ${stats.believers} people who might know Jesus, ${stats.christian_adherants} people who might know about Jesus culturally, and ${stats.non_christians} people who do not know Jesus.
-    `)
-  }
   function add_counters(){
     let counter_div = jQuery('#counters')
     let content = window.current_content
@@ -188,7 +170,7 @@ jQuery(document).ready(function(){
     counter_div.append(`
       <div class="col-md-4">
         <p class="mt-3 mb-0 font-weight-bold">Cultural Christians</p>
-        <div class="pie" style="--p:${stats.percent_christian_adherants};--b:10px;--c:orange;">${stats.percent_christian_adherants}%</div>
+        <div class="pie" style="--p:${stats.percent_christian_adherents};--b:10px;--c:orange;">${stats.percent_christian_adherents}%</div>
       </div>
     `)
     counter_div.append(`
@@ -208,7 +190,7 @@ jQuery(document).ready(function(){
     counter_div.append(`
       <div class="col-md-4">
         <p class="mt-3 mb-0 font-weight-bold">Know About Jesus</p>
-        <p class="mt-0 mb-3 font-weight-normal three-em">${stats.christian_adherants}</p>
+        <p class="mt-0 mb-3 font-weight-normal three-em">${stats.christian_adherents}</p>
       </div>
     `)
     counter_div.append(`
@@ -227,7 +209,7 @@ jQuery(document).ready(function(){
             <div class="progress-bar progress-bar-success" role="progressbar" style="width:${stats.percent_non_christians}%">
               Don't Know
             </div>
-            <div class="progress-bar progress-bar-warning" role="progressbar" style="width:${stats.percent_christian_adherants}%">
+            <div class="progress-bar progress-bar-warning" role="progressbar" style="width:${stats.percent_christian_adherents}%">
               Know About
             </div>
             <div class="progress-bar progress-bar-danger" role="progressbar" style="width:${stats.percent_believers}%">
@@ -242,28 +224,28 @@ jQuery(document).ready(function(){
     let bodies = ''
     i = 0
     while ( i < stats.percent_non_christians ) {
-      bodies += '<i class="ion-ios-body red"></i>';
+      bodies += '<i class="ion-ios-body red two-em"></i>';
       i++;
     }
     i = 0
-    while ( i < stats.percent_christian_adherants ) {
-      bodies += '<i class="ion-ios-body orange"></i>';
+    while ( i < stats.percent_christian_adherents ) {
+      bodies += '<i class="ion-ios-body orange two-em"></i>';
       i++;
     }
     i = 0
     while ( i < stats.percent_believers ) {
-      bodies += '<i class="ion-ios-body green"></i>';
+      bodies += '<i class="ion-ios-body green two-em"></i>';
       i++;
     }
     counter_div.append(`
-      <div class="col-md-3"></div>
-      <div class="col-md-3">
+      <div class="col-md-2"></div>
+      <div class="col-md-8">
         <p class="mt-3 mb-0 font-weight-bold">Know Jesus Personally</p>
         <p class="mt-0 mb-3 font-weight-normal grow">
           ${bodies}
         </p>
       </div>
-      <div class="col-md-3"></div>
+      <div class="col-md-2"></div>
     `)
     // end bodies
 

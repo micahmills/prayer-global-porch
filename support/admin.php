@@ -168,7 +168,9 @@ class Prayer_Global_Tab_General {
             <table class="widefat striped">
                 <thead>
                     <tr>
-                        <th colspan="3">Images Mirror</th>
+                        <th style="width:10%;">Images Mirror</th>
+                        <th style="width:60%;"></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -182,7 +184,7 @@ class Prayer_Global_Tab_General {
                                 <?php echo esc_html( $field['label'] ); ?>
                             </td>
                             <td>
-                                <input type="text" name="list[<?php echo esc_html( $key ); ?>]" id="<?php echo esc_html( $key ); ?>" value="<?php echo esc_html( $field['value'] ); ?>" placeholder="<?php echo esc_html( $field['label'] ); ?>"/>
+                                <input type="text" style="width:100%;" name="list[<?php echo esc_html( $key ); ?>]" id="<?php echo esc_html( $key ); ?>" value="<?php echo esc_html( $field['value'] ); ?>" placeholder="<?php echo esc_html( $field['label'] ); ?>"/>
                             </td>
                             <td style="vertical-align: middle;">
                                 <?php echo esc_html( $field['description'] ); ?>
@@ -194,7 +196,7 @@ class Prayer_Global_Tab_General {
                                 <?php echo esc_html( $field['label'] ); ?>
                             </td>
                             <td>
-                                <textarea name="list[<?php echo esc_html( $key ); ?>]" id="<?php echo esc_html( $key ); ?>" placeholder="<?php echo esc_html( $field['label'] ); ?>"><?php echo wp_kses( $field['value'], $allowed_tags ); ?></textarea>
+                                <textarea name="list[<?php echo esc_html( $key ); ?>]" style="width:100%;" id="<?php echo esc_html( $key ); ?>" placeholder="<?php echo esc_html( $field['label'] ); ?>"><?php echo wp_kses( $field['value'], $allowed_tags ); ?></textarea>
                             </td>
                             <td style="vertical-align: middle;">
                                 <?php echo esc_html( $field['description'] ); ?>
@@ -222,7 +224,7 @@ class Prayer_Global_Tab_General {
         $location_grid_images_version = get_option('location_grid_images_version');
 
         if ( isset( $_POST['pg_build_settings_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['pg_build_settings_nonce'] ) ), 'pg_build_settings' ) ) {
-            update_option('location_grid_images_json', $json );
+            update_option('location_grid_images_json', $json, true );
             update_option('location_grid_images_version', $json['version']);
             $location_grid_images_version = get_option('location_grid_images_version');
         }

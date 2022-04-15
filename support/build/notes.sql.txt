@@ -274,7 +274,7 @@ LEFT JOIN location_grid_facts a ON a.grid_id=lg.grid_id AND a.meta_key = 'birth_
 LEFT JOIN location_grid_facts b ON b.grid_id=lg.grid_id AND b.meta_key = 'death_rate'
 LEFT JOIN location_grid_facts bb ON bb.grid_id=lg.grid_id AND bb.meta_key = 'growth_rate'
 LEFT JOIN location_grid_facts c ON c.grid_id=lg.grid_id AND c.meta_key = 'believers'
-LEFT JOIN location_grid_facts d ON d.grid_id=lg.grid_id AND d.meta_key = 'christian_adherants'
+LEFT JOIN location_grid_facts d ON d.grid_id=lg.grid_id AND d.meta_key = 'christian_adherents'
 LEFT JOIN location_grid_facts e ON e.grid_id=lg.grid_id AND e.meta_key = 'non_christians'
 LEFT JOIN location_grid_facts f ON f.grid_id=lg.grid_id AND f.meta_key = 'primary_language'
 LEFT JOIN location_grid_facts g ON g.grid_id=lg.grid_id AND g.meta_key = 'primary_religions'
@@ -305,7 +305,7 @@ LEFT JOIN location_grid_facts a ON a.grid_id=lg.grid_id AND a.meta_key = 'birth_
 LEFT JOIN location_grid_facts b ON b.grid_id=lg.grid_id AND b.meta_key = 'death_rate'
 LEFT JOIN location_grid_facts bb ON bb.grid_id=lg.grid_id AND bb.meta_key = 'growth_rate'
 LEFT JOIN location_grid_facts c ON c.grid_id=lg.grid_id AND c.meta_key = 'believers'
-LEFT JOIN location_grid_facts d ON d.grid_id=lg.grid_id AND d.meta_key = 'christian_adherants'
+LEFT JOIN location_grid_facts d ON d.grid_id=lg.grid_id AND d.meta_key = 'christian_adherents'
 LEFT JOIN location_grid_facts e ON e.grid_id=lg.grid_id AND e.meta_key = 'non_christians'
 LEFT JOIN location_grid_facts f ON f.grid_id=lg.grid_id AND f.meta_key = 'primary_language'
 LEFT JOIN location_grid_facts g ON g.grid_id=lg.grid_id AND g.meta_key = 'primary_religions'
@@ -365,7 +365,7 @@ WHERE lg3.level = 2
   LEFT JOIN prayer_global_grid_facts b ON b.grid_id=lg.grid_id AND b.meta_key = 'death_rate'
   LEFT JOIN prayer_global_grid_facts bb ON bb.grid_id=lg.grid_id AND bb.meta_key = 'growth_rate'
   LEFT JOIN prayer_global_grid_facts c ON c.grid_id=lg.grid_id AND c.meta_key = 'believers'
-  LEFT JOIN prayer_global_grid_facts d ON d.grid_id=lg.grid_id AND d.meta_key = 'christian_adherants'
+  LEFT JOIN prayer_global_grid_facts d ON d.grid_id=lg.grid_id AND d.meta_key = 'christian_adherents'
   LEFT JOIN prayer_global_grid_facts e ON e.grid_id=lg.grid_id AND e.meta_key = 'non_christians'
   LEFT JOIN prayer_global_grid_facts f ON f.grid_id=lg.grid_id AND f.meta_key = 'primary_language'
   LEFT JOIN prayer_global_grid_facts g ON g.grid_id=lg.grid_id AND g.meta_key = 'primary_religion'
@@ -373,7 +373,7 @@ WHERE lg3.level = 2
   LEFT JOIN prayer_global_grid_facts i ON i.grid_id=lg.grid_id AND i.meta_key = 'percent_christian_adherant'
   LEFT JOIN prayer_global_grid_facts j ON j.grid_id=lg.grid_id AND j.meta_key = 'percent_non_believer'
   WHERE lg.level = 0) b ON a.grid_id = b.grid_id
-  SET a.christian_adherants = b.christian_adherant
+  SET a.christian_adherents = b.christian_adherant
   WHERE b.christian_adherant IS NOT NULL;
 
 

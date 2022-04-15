@@ -29,10 +29,10 @@ print 'BEGIN' . PHP_EOL;
  * => growth_rate
  *
  * percent_believers
- * percent_christian_adherants
+ * percent_christian_adherents
  * => percent_non_christian
  * => believers
- * => christian_adherants
+ * => christian_adherents
  * => non_christians
  */
 // create growth rate
@@ -51,7 +51,7 @@ if ( $con->affected_rows < 0 ) {
 $pnc = mysqli_query( $con,
     "
         UPDATE location_grid_facts lgf
-        SET lgf.percent_non_christians = ROUND( 100 - lgf.percent_believers - lgf.percent_christian_adherants, 5)
+        SET lgf.percent_non_christians = ROUND( 100 - lgf.percent_believers - lgf.percent_christian_adherents, 5)
         WHERE lgf.level = 0;
         " );
 print 'pnc:' . $con->affected_rows . PHP_EOL;
@@ -72,12 +72,12 @@ if ( $con->affected_rows < 0 ) {
     print_r( $con );
 }
 
-// create christian_adherants
+// create christian_adherents
 $ca = mysqli_query( $con,
     "
         UPDATE location_grid_facts lgf
         JOIN wp_dt_location_grid lg ON lg.grid_id=lgf.grid_id
-        SET lgf.christian_adherants = IF( lg.population > 0, ROUND( lg.population * ( lgf.percent_christian_adherants * .01), 0 ), 0 )
+        SET lgf.christian_adherents = IF( lg.population > 0, ROUND( lg.population * ( lgf.percent_christian_adherents * .01), 0 ), 0 )
         WHERE lgf.level = 0
         " );
 print 'ca:' . $con->affected_rows . PHP_EOL;
@@ -99,7 +99,7 @@ if ( $con->affected_rows < 0 ) {
 }
 
 // update all children
-// copy growth_rate, death_rate, official language, official religion, percent_believers, percent_christian_adherants
+// copy growth_rate, death_rate, official language, official religion, percent_believers, percent_christian_adherents
 $sub = mysqli_query( $con,
     "
         UPDATE location_grid_facts lgf
@@ -110,12 +110,12 @@ $sub = mysqli_query( $con,
             lgf.death_rate = lgf2.death_rate,
             lgf.growth_rate = lgf2.growth_rate,
             lgf.believers = IF( lg.population, ROUND( lg.population * ( lgf2.percent_believers * .01 ) ), 0 ),
-            lgf.christian_adherants = IF( lg.population, ROUND( lg.population * ( lgf2.percent_christian_adherants * .01 ) ), 0 ),
+            lgf.christian_adherents = IF( lg.population, ROUND( lg.population * ( lgf2.percent_christian_adherents * .01 ) ), 0 ),
             lgf.non_christians = IF( lg.population, ROUND( lg.population * ( lgf2.percent_non_christians * .01 ) ), 0 ),
             lgf.primary_language = lgf2.primary_language,
             lgf.primary_religion = lgf2.primary_religion,
             lgf.percent_believers = lgf2.percent_believers,
-            lgf.percent_christian_adherants = lgf2.percent_christian_adherants,
+            lgf.percent_christian_adherents = lgf2.percent_christian_adherents,
             lgf.percent_non_christians = lgf2.percent_non_christians
         WHERE lgf.level != 0;
         " );
