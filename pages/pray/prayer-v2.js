@@ -25,6 +25,8 @@ jQuery(document).ready(function(){
   let pace_open_options = jQuery('#option_filter')
   let pace_buttons = jQuery('.pace')
 
+  let i
+
   let interval
   let percent = 0
   window.time = 0
@@ -548,6 +550,15 @@ jQuery(document).ready(function(){
       case 'percent_2_circles':
         _template_percent_2_circles( block.data )
         break;
+      case '100_bodies_chart':
+        _template_100_bodies_chart( block.data )
+        break;
+      case '100_bodies_3_chart':
+        _template_100_bodies_3_chart( block.data )
+        break;
+      case 'population_change_icon_block':
+        _template_population_change_icon_block( block.data )
+        break;
       default:
         break;
     }
@@ -557,24 +568,24 @@ jQuery(document).ready(function(){
       `<div class="w-100"><hr></div>
        <div class="row">
           <div class="col text-center ">
-             <p class="mt-3 mb-3 font-weight-normal one-em">${data.label}</p>
+             <p class="mt-3 mb-3 font-weight-normal one-em">${data.section_label}</p>
           </div>
       </div>
       <div class="row text-center justify-content-center">
           <div class="col-md-2">
-            <p class="mt-3 mb-0 font-weight-bold">${data.circle1_label}</p>
-            <div class="pie" style="--p:${data.circle1_percent};--b:10px;--c:red;">${data.circle1_percent}%</div>
-            <p class="mt-3 mb-0 font-weight-normal one-em">${data.circle1_population}</p>
+            <p class="mt-3 mb-0 font-weight-bold">${data.label_1}</p>
+            <div class="pie" style="--p:${data.percent_1};--b:10px;--c:red;">${data.percent_1}%</div>
+            <p class="mt-3 mb-0 font-weight-normal one-em">${data.population_1}</p>
           </div>
           <div class="col-md-2">
-            <p class="mt-3 mb-0 font-weight-bold">${data.circle2_label}</p>
-            <div class="pie" style="--p:${data.circle2_percent};--b:10px;--c:orange;">${data.circle2_percent}%</div>
-            <p class="mt-3 mb-0 font-weight-normal one-em">${data.circle2_population}</p>
+            <p class="mt-3 mb-0 font-weight-bold">${data.label_2}</p>
+            <div class="pie" style="--p:${data.percent_2};--b:10px;--c:orange;">${data.percent_2}%</div>
+            <p class="mt-3 mb-0 font-weight-normal one-em">${data.population_2}</p>
           </div>
           <div class="col-md-2">
-            <p class="mt-3 mb-0 font-weight-bold">${data.circle3_label}</p>
-            <div class="pie" style="--p:${data.circle3_percent};--b:10px;--c:green;">${data.circle3_percent}%</div>
-            <p class="mt-3 mb-0 font-weight-normal one-em">${data.circle3_population}</p>
+            <p class="mt-3 mb-0 font-weight-bold">${data.label_3}</p>
+            <div class="pie" style="--p:${data.percent_3};--b:10px;--c:green;">${data.percent_3}%</div>
+            <p class="mt-3 mb-0 font-weight-normal one-em">${data.population_3}</p>
           </div>
       </div>
       <div class="row text-center justify-content-center">
@@ -589,19 +600,19 @@ jQuery(document).ready(function(){
       `<div class="w-100"><hr></div>
       <div class="row">
           <div class="col text-center ">
-             <p class="mt-3 mb-3 font-weight-normal one-em">${data.label}</p>
+             <p class="mt-3 mb-3 font-weight-normal one-em">${data.section_label}</p>
           </div>
       </div>
       <div class="row text-center justify-content-center">
           <div class="col-md-2">
-            <p class="mt-3 mb-0 font-weight-bold">${data.circle1_label}</p>
-            <div class="pie" style="--p:${data.circle1_percent};--b:10px;--c:red;">${data.circle1_percent}%</div>
-            <p class="mt-3 mb-0 font-weight-normal one-em">${data.circle1_population}</p>
+            <p class="mt-3 mb-0 font-weight-bold">${data.label_1}</p>
+            <div class="pie" style="--p:${data.percent_1};--b:10px;--c:red;">${data.percent_1}%</div>
+            <p class="mt-3 mb-0 font-weight-normal one-em">${data.population_1}</p>
           </div>
           <div class="col-md-2">
-            <p class="mt-3 mb-0 font-weight-bold">${data.circle2_label}</p>
-            <div class="pie" style="--p:${data.circle2_percent};--b:10px;--c:orange;">${data.circle2_percent}%</div>
-            <p class="mt-3 mb-0 font-weight-normal one-em">${data.circle2_population}</p>
+            <p class="mt-3 mb-0 font-weight-bold">${data.label_2}</p>
+            <div class="pie" style="--p:${data.percent_2};--b:10px;--c:orange;">${data.percent_2}%</div>
+            <p class="mt-3 mb-0 font-weight-normal one-em">${data.population_2}</p>
           </div>
       </div>
       <div class="row text-center justify-content-center">
@@ -616,21 +627,21 @@ jQuery(document).ready(function(){
       `<div class="w-100"><hr></div>
       <div class="row">
           <div class="col text-center ">
-             <p class="mt-3 mb-3 font-weight-normal one-em">${data.label}</p>
+             <p class="mt-3 mb-3 font-weight-normal one-em">${data.section_label}</p>
           </div>
       </div>
       <div class="row text-center">
           <div class="col-md-12">
             <p class="mt-0 mb-3 font-weight-normal grow">
               <div class="progress">
-                <div class="progress-bar progress-bar-success" role="progressbar" style="width:${data.bar1_percent}%">
-                  ${data.bar1_label}
+                <div class="progress-bar progress-bar-success" role="progressbar" style="width:${data.percent_1}%">
+                  ${data.label_1}
                 </div>
-                <div class="progress-bar progress-bar-warning" role="progressbar" style="width:${data.bar2_percent}%">
-                  ${data.bar2_label}
+                <div class="progress-bar progress-bar-warning" role="progressbar" style="width:${data.percent_2}%">
+                  ${data.label_2}
                 </div>
-                <div class="progress-bar progress-bar-danger" role="progressbar" style="width:${data.bar3_percent}%">
-                 ${data.bar3_label}
+                <div class="progress-bar progress-bar-danger" role="progressbar" style="width:${data.percent_3}%">
+                 ${data.label_3}
                 </div>
               </div>
             </p>
@@ -643,5 +654,155 @@ jQuery(document).ready(function(){
       </div>`
     )
   }
+  function _template_100_bodies_chart( data ) {
+    let bodies = ''
+    let i = 0
+    i = 0
+    while ( i < data.percent_1 ) {
+      bodies += '<i class="ion-ios-body red two-em"></i>';
+      i++;
+    }
+    i = 0
+    while ( i < data.percent_2 ) {
+      bodies += '<i class="ion-ios-body orange two-em"></i>';
+      i++;
+    }
+    i = 0
+    while ( i < data.percent_3 ) {
+      bodies += '<i class="ion-ios-body green two-em"></i>';
+      i++;
+    }
+    div.append(
+      `<div class="w-100"><hr></div>
+      <div class="row">
+          <div class="col text-center ">
+             <p class="mt-3 mb-3 font-weight-normal one-em">${data.section_label}</p>
+          </div>
+      </div>
+      <div class="row text-center justify-content-center">
+        <div class="col-md-8">
+            <p class="mt-0 mb-3 font-weight-normal grow">
+              ${bodies}
+            </p>
+        </div>
+      </div>
+      <div class="row text-center justify-content-center">
+        <div class="col-md-8">
+           <p class="mt-3 mb-3 font-weight-normal one-em">${data.prayer}</p>
+        </div>
+      </div>`
+    )
+  }
+  function _template_100_bodies_3_chart( data ) {
+    let bodies_1 = ''
+    let bodies_2 = ''
+    let bodies_3 = ''
+    i = 0
+    while ( i < data.percent_1 ) {
+      bodies_1 += '<i class="ion-ios-body red two-em"></i>';
+      i++;
+    }
+    i = 0
+    while ( i < data.percent_2 ) {
+      bodies_2 += '<i class="ion-ios-body orange two-em"></i>';
+      i++;
+    }
+    i = 0
+    while ( i < data.percent_3 ) {
+      bodies_3 += '<i class="ion-ios-body green two-em"></i>';
+      i++;
+    }
+    div.append(
+      `<div class="w-100"><hr></div>
+      <div class="row">
+          <div class="col text-center ">
+             <p class="mt-3 mb-3 font-weight-normal one-em">${data.section_label}</p>
+          </div>
+      </div>
+      <div class="row text-center justify-content-center">
+          <div class="col-md-3 col-sm">
+            <p class="mt-3 mb-0 font-weight-bold">${data.label_1}</p>
+            <p class="mt-0 mb-3 font-weight-normal">
+              ${bodies_1}
+            </p>
+          </div>
+          <div class="col-md-3 col-sm">
+            <p class="mt-3 mb-0 font-weight-bold">${data.label_2}</p>
+            <p class="mt-0 mb-3 font-weight-normal">
+              ${bodies_2}
+            </p>
+          </div>
+          <div class="col-md-3 col-sm">
+            <p class="mt-3 mb-0 font-weight-bold">${data.label_3}</p>
+            <p class="mt-0 mb-3 font-weight-normal">
+              ${bodies_3}
+            </p>
+          </div>
+      </div>
+      <div class="row text-center justify-content-center">
+        <div class="col-md-8">
+           <p class="mt-3 mb-3 font-weight-normal one-em">${data.prayer}</p>
+        </div>
+      </div>`
+    )
+  }
+  function _template_population_change_icon_block( data ) {
+    if( data.count === '0' || data.count.length > 3 ) {
+      return
+    }
+
+    // icon types
+    let icons = ''
+    if ( 'deaths' === data.type ) {
+      icons = ['ion-ios-contact-outline','ion-ios-contact','ion-woman', 'ion-man', 'ion-ios-body', 'ion-person','ion-ios-person','ion-sad']
+    } else {
+      icons = ['ion-social-reddit','ion-social-reddit', 'ion-home', 'ion-ios-heart', 'ion-ios-home']
+    }
+    let icon = icons[Math.floor(Math.random() * icons.length)]
+
+    // icon color
+    let icon_color = 'red'
+    if ( 'christian_adherents' === data.group ) {
+      icon_color = 'orange'
+    }
+    if ( 'believers' === data.group ) {
+      icon_color = 'orange'
+    }
+
+    // icon size
+    let icon_size = 'three-em'
+    if ( 2 === data.size ) {
+      icon_size = 'two-em'
+    }
+
+    // build icon list
+    let icon_list = ''
+    i = 0
+    while ( i < data.count ) {
+      icon_list += '<i class="'+icon+' '+icon_color+' '+icon_size+'"></i>';
+      i++;
+    }
+    div.append(
+      `<div class="row">
+          <div class="col text-center ">
+            <hr>
+             <p class="mt-3 mb-3 font-weight-normal one-em">${data.section_label}</p>
+          </div>
+      </div>
+      <div class="row text-center justify-content-center">
+          <div class="col-md-8 col-sm">
+            <p class="mt-0 mb-1 font-weight-normal icon-block">
+              ${icon_list} (${data.count})
+            </p>
+          </div>
+      </div>
+      <div class="row text-center justify-content-center">
+        <div class="col-md-8">
+           <p class="mt-3 mb-3 font-weight-normal one-em">${data.prayer}</p>
+        </div>
+      </div>`
+    )
+  }
+
 
 })
