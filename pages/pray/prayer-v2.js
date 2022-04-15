@@ -541,6 +541,9 @@ jQuery(document).ready(function(){
   function get_template( block ) {
     let content = window.current_content
     switch(block.type) {
+      case '4_fact_blocks':
+        _template_4_fact_blocks( block.data )
+        break;
       case 'percent_3_circles':
         _template_percent_3_circles( block.data )
         break;
@@ -794,6 +797,39 @@ jQuery(document).ready(function(){
             <p class="mt-0 mb-1 font-weight-normal icon-block">
               ${icon_list} (${data.count})
             </p>
+          </div>
+      </div>
+      <div class="row text-center justify-content-center">
+        <div class="col-md-8">
+           <p class="mt-3 mb-3 font-weight-normal one-em">${data.prayer}</p>
+        </div>
+      </div>`
+    )
+  }
+  function _template_4_fact_blocks( data ) {
+    div.append(
+      `<div class="w-100"><hr></div>
+       <div class="row">
+          <div class="col text-center ">
+             <p class="mt-3 mb-3 font-weight-normal one-em">${data.section_label}</p>
+          </div>
+      </div>
+      <div class="row text-center">
+          <div class="col-md-3 col-sm-6">
+            <p class="mt-3 mb-0 font-weight-bold">${data.label_1}</p>
+            <p class="mt-0 mb-3 font-weight-normal ${data.size_1}">${data.value_1}</p>
+          </div>
+          <div class="col-md-3 col-sm-6">
+            <p class="mt-3 mb-0 font-weight-bold">${data.label_2}</p>
+            <p class="mt-0 mb-3 font-weight-normal ${data.size_2}">${data.value_2}</p>
+          </div>
+          <div class="col-md-3 col-sm-6">
+            <p class="mt-3 mb-0 font-weight-bold">${data.label_3}</p>
+            <p class="mt-0 mb-3 font-weight-normal ${data.size_3}">${data.value_3}</p>
+          </div>
+          <div class="col-md-3 col-sm-6">
+            <p class="mt-3 mb-0 font-weight-bold">${data.label_4}</p>
+            <p class="mt-0 mb-3 font-weight-normal ${data.size_4}">${data.value_4}</p>
           </div>
       </div>
       <div class="row text-center justify-content-center">

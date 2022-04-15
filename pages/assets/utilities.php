@@ -61,6 +61,29 @@ class PG_Utilities {
 
         // build full stack
         $stack['list'] = [];
+
+        $stack['list'][] = [
+            'type' => '4_fact_blocks',
+            'data' => [
+                'section_label' => 'Demographics',
+                'label_1' => 'Population',
+                'value_1' => $stack['location']['population'],
+                'size_1' => 'three-em',
+                'label_2' => 'Population Growth',
+                'value_2' => $stack['location']['population_growth_status'],
+                'size_2' => 'two-em',
+                'label_3' => 'Dominant Religion',
+                'value_3' => $stack['location']['primary_religion'],
+                'size_3' => 'two-em',
+                'label_4' => 'Language',
+                'value_4' => $stack['location']['primary_language'],
+                'size_4' => 'two-em',
+                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' nominal neighbors around them.'
+            ]
+        ];
+
+
+
         $stack['list'][] = [
             'type' => 'percent_3_circles',
             'data' => [
@@ -329,6 +352,8 @@ class PG_Utilities {
                 'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' nominal neighbors around them.'
             ]
         ];
+
+
 
 
 
