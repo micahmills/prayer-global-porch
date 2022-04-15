@@ -5,6 +5,9 @@
     .bold {
         font-weight:900;
     }
+    .icon-block {
+        line-height:1.1;
+    }
     .navbar.prayer_navbar {
         border-bottom:1px solid lightgrey;
         box-shadow: 0 1px 10px -2px rgb(0 0 0 / 15%);
@@ -132,6 +135,24 @@
         height: 500px;
         max-width: 100%;
     }
+    .chartdiv.wide_globe {
+        height: 300px;
+    }
+    @media (min-width: 768px) {
+        .chartdiv.wide_globe {
+            height: 500px;
+        }
+    }
+    .chartdiv.zoom_globe {
+        height: 300px;
+        padding-top:10px;
+    }
+    @media (min-width: 768px) {
+        .chartdiv.zoom_globe {
+            height: 500px;
+        }
+    }
+
     .six-em {
         font-size: 6em !important;
         line-height: .5em;

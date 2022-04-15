@@ -81,7 +81,7 @@ jQuery(document).ready(function(){
               <p class="text-md-center" id="location-map"></p>
               <p class="text-md-center">The ${location.admin_level_name} of <strong>${location.full_name}</strong> has a population of <strong>${location.stats.population}</strong> and is 1 of ${location.peer_locations} ${location.admin_level_name_plural} in ${location.parent_name}. We estimate ${location.name} has ${location.stats.believers} people who might know Jesus, ${location.stats.christian_adherents} people who might know about Jesus culturally, and ${location.stats.non_christians} people who do not know Jesus.</p>
           </div>
-      </div><hr>`
+      </div>`
     )
     // counters
     div.append(`<div class="row text-center" id="counters"></div><hr>`)
@@ -316,6 +316,9 @@ jQuery(document).ready(function(){
 
     // Deaths
     let deaths_next_hour = parseFloat(stats.deaths_without_jesus_last_hour.replace(/,/g, ''))
+    let deaths_next_month = parseFloat(stats.deaths_without_jesus_last_month.replace(/,/g, ''))
+    let deaths_next_week = parseFloat(stats.deaths_without_jesus_last_week.replace(/,/g, ''))
+    let deaths_next_100 = parseFloat(stats.deaths_without_jesus_last_100.replace(/,/g, ''))
     if ( deaths_next_hour < 200 && deaths_next_hour > 0 ) {
       deaths_next_hour = ''
       i = 0
@@ -326,14 +329,14 @@ jQuery(document).ready(function(){
       counter_div.append(`
       <div class="col-md-12">
         <p class="mt-3 mb-0 font-weight-bold">Dying without Jesus in an hour</p>
-        <p class="mt-0 mb-3 font-weight-normal grow">
+        <p class="mt-0 mb-1 font-weight-normal icon-block">
           ${deaths_next_hour}
         </p>
+        <p class="mt-0 mb-3 font-weight-normal three-em">${stats.deaths_without_jesus_last_hour}</p>
       </div>
     `)
     }
-    let deaths_next_100 = parseFloat(stats.deaths_without_jesus_last_100.replace(/,/g, ''))
-    if ( deaths_next_100 < 400 && deaths_next_100 > 0 ) {
+    else if ( deaths_next_100 < 400 && deaths_next_100 > 0 ) {
       deaths_next_100 = ''
       i = 0
       while ( i < stats.deaths_without_jesus_last_100 ) {
@@ -343,14 +346,14 @@ jQuery(document).ready(function(){
       counter_div.append(`
       <div class="col-md-12">
         <p class="mt-3 mb-0 font-weight-bold">Dying without Jesus in the next 100 hours</p>
-        <p class="mt-0 mb-3 font-weight-normal grow">
+        <p class="mt-0 mb-1 font-weight-normal icon-block">
           ${deaths_next_100}
         </p>
+        <p class="mt-0 mb-3 font-weight-normal three-em">${stats.deaths_without_jesus_last_100}</p>
       </div>
     `)
     }
-    let deaths_next_week = parseFloat(stats.deaths_without_jesus_last_week.replace(/,/g, ''))
-    if ( deaths_next_week < 400 && deaths_next_week > 0 ) {
+    else if ( deaths_next_week < 400 && deaths_next_week > 0 ) {
       deaths_next_week = ''
       i = 0
       while ( i < stats.deaths_without_jesus_last_week ) {
@@ -360,14 +363,14 @@ jQuery(document).ready(function(){
       counter_div.append(`
       <div class="col-md-12">
         <p class="mt-3 mb-0 font-weight-bold">Dying without Jesus next week</p>
-        <p class="mt-0 mb-3 font-weight-normal grow">
+        <p class="mt-0 mb-1 font-weight-normal icon-block">
           ${deaths_next_week}
         </p>
+        <p class="mt-0 mb-3 font-weight-normal three-em">${stats.deaths_without_jesus_last_week}</p>
       </div>
     `)
     }
-    let deaths_next_month = parseFloat(stats.deaths_without_jesus_last_month.replace(/,/g, ''))
-    if ( deaths_next_month < 1000 && deaths_next_month > 0 ) {
+    else if ( deaths_next_month < 1000 && deaths_next_month > 0 ) {
       deaths_next_month = ''
       i = 0
       while ( i < stats.deaths_without_jesus_last_month ) {
@@ -377,45 +380,14 @@ jQuery(document).ready(function(){
       counter_div.append(`
       <div class="col-md-12">
         <p class="mt-3 mb-0 font-weight-bold">Dying without Jesus next month</p>
-        <p class="mt-0 mb-3 font-weight-normal grow">
+        <p class="mt-0 mb-1 font-weight-normal icon-block">
           ${deaths_next_month}
         </p>
-      </div>
-    `)
-    }
-    // numbers
-    if ( stats.deaths_without_jesus_last_hour !== '0' ) {
-      counter_div.append(`
-      <div class="col-md-3">
-        <p class="mt-3 mb-0 font-weight-bold">Dying without Jesus in an hour</p>
-        <p class="mt-0 mb-3 font-weight-normal three-em">${stats.deaths_without_jesus_last_hour}</p>
-      </div>
-    `)
-    }
-    if ( stats.deaths_without_jesus_last_100 !== '0' ) {
-      counter_div.append(`
-      <div class="col-md-3">
-        <p class="mt-3 mb-0 font-weight-bold">Dying without Jesus in the next 100 hours</p>
-        <p class="mt-0 mb-3 font-weight-normal three-em">${stats.deaths_without_jesus_last_100}</p>
-      </div>
-    `)
-    }
-    if ( stats.deaths_without_jesus_last_week !== '0' ) {
-      counter_div.append(`
-      <div class="col-md-3">
-        <p class="mt-3 mb-0 font-weight-bold">Dying without Jesus next week</p>
-        <p class="mt-0 mb-3 font-weight-normal three-em">${stats.deaths_without_jesus_last_week}</p>
-      </div>
-    `)
-    }
-    if ( stats.deaths_without_jesus_last_month !== '0' ) {
-      counter_div.append(`
-      <div class="col-md-3">
-        <p class="mt-3 mb-0 font-weight-bold">Dying without Jesus in the next month</p>
         <p class="mt-0 mb-3 font-weight-normal three-em">${stats.deaths_without_jesus_last_month}</p>
       </div>
     `)
     }
+
 
 
 
@@ -432,6 +404,9 @@ jQuery(document).ready(function(){
     // Births
 
     let births_without_jesus_last_hour = parseFloat(stats.births_without_jesus_last_hour.replace(/,/g, ''))
+    let births_without_jesus_last_100 = parseFloat(stats.births_without_jesus_last_100.replace(/,/g, ''))
+    let births_without_jesus_last_week = parseFloat(stats.births_without_jesus_last_week.replace(/,/g, ''))
+    let births_without_jesus_last_month = parseFloat(stats.births_without_jesus_last_month.replace(/,/g, ''))
     if ( births_without_jesus_last_hour < 300 && births_without_jesus_last_hour > 0 ) {
       births_without_jesus_last_hour = ''
       i = 0
@@ -441,15 +416,15 @@ jQuery(document).ready(function(){
       }
       counter_div.append(`
       <div class="col-md-12">
-        <p class="mt-3 mb-0 font-weight-bold">Births to families without Jesus in the last hour</p>
-        <p class="mt-0 mb-3 font-weight-normal grow">
+        <p class="mt-3 mb-0 font-weight-bold">Births to families without Jesus less than an hour ago</p>
+        <p class="mt-0 mb-1 font-weight-normal icon-block">
           ${births_without_jesus_last_hour}
         </p>
+        <p class="mt-0 mb-3 font-weight-normal three-em">${stats.births_without_jesus_last_hour}</p>
       </div>
     `)
     }
-    let births_without_jesus_last_100 = parseFloat(stats.births_without_jesus_last_100.replace(/,/g, ''))
-    if ( births_without_jesus_last_100 < 300 && births_without_jesus_last_100 > 0 ) {
+    else if ( births_without_jesus_last_100 < 300 && births_without_jesus_last_100 > 0 ) {
       births_without_jesus_last_100 = ''
       i = 0
       while ( i < stats.births_without_jesus_last_100 ) {
@@ -459,14 +434,14 @@ jQuery(document).ready(function(){
       counter_div.append(`
       <div class="col-md-12">
         <p class="mt-3 mb-0 font-weight-bold">Births to families without Jesus in the last 100 hours</p>
-        <p class="mt-0 mb-3 font-weight-normal grow">
+        <p class="mt-0 mb-1 font-weight-normal icon-block">
           ${births_without_jesus_last_100}
         </p>
+        <p class="mt-0 mb-3 font-weight-normal three-em">${stats.births_without_jesus_last_100}</p>
       </div>
     `)
     }
-    let births_without_jesus_last_week = parseFloat(stats.births_without_jesus_last_week.replace(/,/g, ''))
-    if ( births_without_jesus_last_week < 300 && births_without_jesus_last_week > 0 ) {
+    else if ( births_without_jesus_last_week < 300 && births_without_jesus_last_week > 0 ) {
       births_without_jesus_last_week = ''
       i = 0
       while ( i < stats.births_without_jesus_last_week ) {
@@ -475,15 +450,15 @@ jQuery(document).ready(function(){
       }
       counter_div.append(`
       <div class="col-md-12">
-        <p class="mt-3 mb-0 font-weight-bold">Births to families without Jesus in the last week</p>
-        <p class="mt-0 mb-3 font-weight-normal grow">
+        <p class="mt-3 mb-0 font-weight-bold">Births to families without Jesus less than a week ago</p>
+        <p class="mt-0 mb-1 font-weight-normal icon-block">
           ${births_without_jesus_last_week}
         </p>
+        <p class="mt-0 mb-3 font-weight-normal three-em">${stats.births_without_jesus_last_week}</p>
       </div>
     `)
     }
-    let births_without_jesus_last_month = parseFloat(stats.births_without_jesus_last_month.replace(/,/g, ''))
-    if ( births_without_jesus_last_month < 1000 && births_without_jesus_last_month > 0 ) {
+    else if ( births_without_jesus_last_month < 1000 && births_without_jesus_last_month > 0 ) {
       births_without_jesus_last_month = ''
       i = 0
       while ( i < stats.births_without_jesus_last_month ) {
@@ -492,55 +467,21 @@ jQuery(document).ready(function(){
       }
       counter_div.append(`
       <div class="col-md-12">
-        <p class="mt-3 mb-0 font-weight-bold">Births to families without Jesus in the last month</p>
-        <p class="mt-0 mb-3 font-weight-normal grow">
+        <p class="mt-3 mb-0 font-weight-bold">Births to families without Jesus less than a month ago</p>
+        <p class="mt-0 mb-1 font-weight-normal icon-block">
           ${births_without_jesus_last_month}
         </p>
-      </div>
-    `)
-    }
-    // numbers
-    if ( stats.births_without_jesus_last_hour !== '0' ) {
-      counter_div.append(`
-      <div class="col-md-3">
-        <p class="mt-3 mb-0 font-weight-bold">Births to families without Jesus this hour</p>
-        <p class="mt-0 mb-3 font-weight-normal three-em">${stats.births_without_jesus_last_hour}</p>
-      </div>
-    `)
-    }
-    if ( stats.births_without_jesus_last_100 !== '0' ) {
-      counter_div.append(`
-      <div class="col-md-3">
-        <p class="mt-3 mb-0 font-weight-bold">Births to families without Jesus in the last 100 hours</p>
-        <p class="mt-0 mb-3 font-weight-normal three-em">${stats.births_without_jesus_last_100}</p>
-      </div>
-    `)
-    }
-    if ( stats.births_without_jesus_last_week !== '0' ) {
-      counter_div.append(`
-      <div class="col-md-3">
-        <p class="mt-3 mb-0 font-weight-bold">Births to families without Jesus last week</p>
-        <p class="mt-0 mb-3 font-weight-normal three-em">${stats.births_without_jesus_last_week}</p>
-      </div>
-    `)
-    }
-    if ( stats.births_without_jesus_last_month !== '0' ) {
-      counter_div.append(`
-      <div class="col-md-3">
-        <p class="mt-3 mb-0 font-weight-bold">Births to families without Jesus last month</p>
         <p class="mt-0 mb-3 font-weight-normal three-em">${stats.births_without_jesus_last_month}</p>
       </div>
     `)
     }
-    // end births
-
   }
   function add_map() {
     // @todo listing all maps
 
     wide_globe()
-    zoom_globe()
-    rotating_globe()
+    // zoom_globe()
+    // rotating_globe()
 
     // let location_map = jQuery('#location-map')
     // location_map.append(`<img style="width:600px;padding:.5em;" class="img-fluid" src="${jsObject.images_url + 'locations/0/' + window.current_content.grid_id + '.png' }" /><br>`)

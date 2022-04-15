@@ -106,7 +106,7 @@ class Prayer_Global_Laps_Post_Type_Link extends DT_Magic_Url_Base {
             <script src="https://cdn.amcharts.com/lib/5/map.js"></script>
             <script src="https://cdn.amcharts.com/lib/5/geodata/worldLow.js"></script>
             <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
-            <script src="<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) ) ?>prayer.js?ver=<?php echo fileatime( trailingslashit( plugin_dir_path( __FILE__ ) ) . 'prayer.js' ) ?>"></script>
+            <script src="<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) ) ?>prayer-v2.js?ver=<?php echo fileatime( trailingslashit( plugin_dir_path( __FILE__ ) ) . 'prayer-v2.js' ) ?>"></script>
             <script>
                 let jsObject = [<?php echo json_encode([
                     'map_key' => DT_Mapbox_API::get_key(),
@@ -125,7 +125,6 @@ class Prayer_Global_Laps_Post_Type_Link extends DT_Magic_Url_Base {
             </script>
             <?php
         }
-
     }
 
     public function footer_javascript(){
