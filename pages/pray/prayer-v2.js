@@ -63,7 +63,7 @@ jQuery(document).ready(function(){
       `<div class="row">
           <div class="col">
               <p class="text-md-center" id="location-map"></p>
-              <p class="text-md-center">The ${content.location.admin_level_name} of <strong>${content.location.full_name}</strong> has a population of <strong>${content.location.population}</strong> and is 1 of ${content.location.peer_locations} ${content.location.admin_level_name_plural} in ${content.location.parent_name}. We estimate ${content.location.name} has ${content.location.believers} people who might know Jesus, ${content.location.christian_adherents} people who might know about Jesus culturally, and ${content.location.non_christians} people who do not know Jesus.</p>
+              <p class="text-md-center">The ${content.location.admin_level_name} of <strong>${content.location.full_name}</strong> has a population of <strong>${content.location.population}</strong> and is 1 of ${content.location.peer_locations} ${content.location.admin_level_name_plural} in ${content.location.parent_name}. We estimate ${content.location.name} has <strong>${content.location.believers}</strong> people who might know Jesus, <strong>${content.location.christian_adherents}</strong> people who might know about Jesus culturally, and <strong>${content.location.non_christians}</strong> people who do not know Jesus.</p>
           </div>
       </div>`
     )
@@ -75,7 +75,7 @@ jQuery(document).ready(function(){
     })
 
     // FOOTER
-    div.append(`<div class="row text-center"><div class="col"><hr>Location ID: ${content.grid_id}</</div>`)
+    div.append(`<div class="row text-center"><div class="col"><hr>Location ID: ${content.location.grid_id}</</div>`)
 
     prayer_progress_indicator( window.time ) // SETS THE PRAYER PROGRESS WIDGET
   }
@@ -213,7 +213,7 @@ jQuery(document).ready(function(){
     }); // end am5.ready()
   }
   function rotating_globe(){
-    jQuery('#location-map').append(`<div class="chartdiv" id="rotating_globe"></div>`)
+    jQuery('#location-map').append(`<div class="chartdiv rotating_globe" id="rotating_globe"></div>`)
     let content = window.current_content
     // https://www.amcharts.com/demos/rotating-globe/
     am5.ready(function() {
@@ -517,7 +517,6 @@ jQuery(document).ready(function(){
         window.next_content = location
       })
   }
-
   window.api_post = ( action, data ) => {
     return jQuery.ajax({
       type: "POST",
@@ -538,37 +537,111 @@ jQuery(document).ready(function(){
    * TEMPLATE LOADER
    */
   function get_template( block ) {
+    let content = window.current_content
     switch(block.type) {
-      case 'counter':
-        _template_counter( block.data )
+      case 'percent_3_circles':
+        _template_percent_3_circles( block.data )
         break;
-      // @todo
+      case 'percent_3_bar':
+        _template_percent_3_bar( block.data )
+        break;
+      case 'percent_2_circles':
+        _template_percent_2_circles( block.data )
+        break;
       default:
-        sample_template(block_name)
         break;
     }
   }
-  function _template_counter( data ) {
+  function _template_percent_3_circles( data ) {
     div.append(
-      `<div class="row">
-          <div class="col-md-12">
-              <hr>
-              <h3 class="mt-3 font-weight-normal text-center">${data.label}</h3>
-              <p class="mt-3 mb-3 font-weight-normal">${data.value}</p>
-              <p class="mt-3 mb-3 font-weight-normal">${data.prayer}</p>
+      `<div class="w-100"><hr></div>
+       <div class="row">
+          <div class="col text-center ">
+             <p class="mt-3 mb-3 font-weight-normal one-em">${data.label}</p>
           </div>
+      </div>
+      <div class="row text-center justify-content-center">
+          <div class="col-md-2">
+            <p class="mt-3 mb-0 font-weight-bold">${data.circle1_label}</p>
+            <div class="pie" style="--p:${data.circle1_percent};--b:10px;--c:red;">${data.circle1_percent}%</div>
+            <p class="mt-3 mb-0 font-weight-normal one-em">${data.circle1_population}</p>
+          </div>
+          <div class="col-md-2">
+            <p class="mt-3 mb-0 font-weight-bold">${data.circle2_label}</p>
+            <div class="pie" style="--p:${data.circle2_percent};--b:10px;--c:orange;">${data.circle2_percent}%</div>
+            <p class="mt-3 mb-0 font-weight-normal one-em">${data.circle2_population}</p>
+          </div>
+          <div class="col-md-2">
+            <p class="mt-3 mb-0 font-weight-bold">${data.circle3_label}</p>
+            <div class="pie" style="--p:${data.circle3_percent};--b:10px;--c:green;">${data.circle3_percent}%</div>
+            <p class="mt-3 mb-0 font-weight-normal one-em">${data.circle3_population}</p>
+          </div>
+      </div>
+      <div class="row text-center justify-content-center">
+        <div class="col-md-8">
+           <p class="mt-3 mb-3 font-weight-normal one-em">${data.prayer}</p>
+        </div>
       </div>`
     )
   }
-  function sample_template(name){
+  function _template_percent_2_circles( data ) {
     div.append(
-      `<div class="row">
-          <div class="col-md-12">
-              <hr>
-              <h3 class="mt-3 font-weight-normal text-center">${name}</h3>
-              <p class="mt-3 mb-3 font-weight-normal"></p>
+      `<div class="w-100"><hr></div>
+      <div class="row">
+          <div class="col text-center ">
+             <p class="mt-3 mb-3 font-weight-normal one-em">${data.label}</p>
           </div>
+      </div>
+      <div class="row text-center justify-content-center">
+          <div class="col-md-2">
+            <p class="mt-3 mb-0 font-weight-bold">${data.circle1_label}</p>
+            <div class="pie" style="--p:${data.circle1_percent};--b:10px;--c:red;">${data.circle1_percent}%</div>
+            <p class="mt-3 mb-0 font-weight-normal one-em">${data.circle1_population}</p>
+          </div>
+          <div class="col-md-2">
+            <p class="mt-3 mb-0 font-weight-bold">${data.circle2_label}</p>
+            <div class="pie" style="--p:${data.circle2_percent};--b:10px;--c:orange;">${data.circle2_percent}%</div>
+            <p class="mt-3 mb-0 font-weight-normal one-em">${data.circle2_population}</p>
+          </div>
+      </div>
+      <div class="row text-center justify-content-center">
+        <div class="col-md-8">
+           <p class="mt-3 mb-3 font-weight-normal one-em">${data.prayer}</p>
+        </div>
       </div>`
     )
   }
+  function _template_percent_3_bar( data ) {
+    div.append(
+      `<div class="w-100"><hr></div>
+      <div class="row">
+          <div class="col text-center ">
+             <p class="mt-3 mb-3 font-weight-normal one-em">${data.label}</p>
+          </div>
+      </div>
+      <div class="row text-center">
+          <div class="col-md-12">
+            <p class="mt-0 mb-3 font-weight-normal grow">
+              <div class="progress">
+                <div class="progress-bar progress-bar-success" role="progressbar" style="width:${data.bar1_percent}%">
+                  ${data.bar1_label}
+                </div>
+                <div class="progress-bar progress-bar-warning" role="progressbar" style="width:${data.bar2_percent}%">
+                  ${data.bar2_label}
+                </div>
+                <div class="progress-bar progress-bar-danger" role="progressbar" style="width:${data.bar3_percent}%">
+                 ${data.bar3_label}
+                </div>
+              </div>
+            </p>
+          </div>
+      </div>
+      <div class="row text-center justify-content-center">
+        <div class="col-md-8">
+           <p class="mt-3 mb-3 font-weight-normal one-em">${data.prayer}</p>
+        </div>
+      </div>`
+    )
+  }
+
 })

@@ -62,14 +62,65 @@ class PG_Utilities {
         // build full stack
         $stack['list'] = [];
         $stack['list'][] = [
-            'type' => 'counter',
+            'type' => 'percent_3_circles',
             'data' => [
-                'label' => 'Label for the field',
-                'value' => 100,
-                'values' => [],
-                'prayer' => 'Lord please help this group for this reason.'
+                'label' => 'Faith Status',
+                'circle1_label' => "Don't Know Jesus",
+                'circle1_percent' => $stack['location']['percent_non_christians'],
+                'circle1_population' => $stack['location']['non_christians'],
+                'circle2_label' => 'Know About Jesus',
+                'circle2_percent' => $stack['location']['percent_christian_adherents'],
+                'circle2_population' => $stack['location']['christian_adherents'],
+                'circle3_label' => 'Know Jesus',
+                'circle3_percent' => $stack['location']['percent_believers'],
+                'circle3_population' => $stack['location']['believers'],
+                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' lost neighbors around them.'
             ]
         ];
+        $stack['list'][] = [
+            'type' => 'percent_2_circles',
+            'data' => [
+                'label' => 'Faith Status',
+                'circle1_label' => "Don't Know Jesus",
+                'circle1_percent' => $stack['location']['percent_non_christians'],
+                'circle1_population' => $stack['location']['non_christians'],
+                'circle2_label' => 'Know Jesus',
+                'circle2_percent' => $stack['location']['percent_believers'],
+                'circle2_population' => $stack['location']['believers'],
+                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' lost neighbors around them.'
+            ]
+        ];
+        $stack['list'][] = [
+            'type' => 'percent_2_circles',
+            'data' => [
+                'label' => 'Faith Status',
+                'circle1_label' => "Know About Jesus",
+                'circle1_percent' => $stack['location']['percent_christian_adherents'],
+                'circle1_population' => $stack['location']['christian_adherents'],
+                'circle2_label' => 'Know Jesus',
+                'circle2_percent' => $stack['location']['percent_believers'],
+                'circle2_population' => $stack['location']['believers'],
+                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to encourage the '.$stack['location']['christian_adherents'].' neighbors who might know the name of Jesus but have not found a personal, transformative relationship with him.'
+            ]
+        ];
+        $stack['list'][] = [
+            'type' => 'percent_3_bar',
+            'data' => [
+                'label' => 'Know Jesus Personally',
+                'bar1_label' => "Don't",
+                'bar1_percent' => $stack['location']['percent_non_christians'],
+                'bar1_population' => $stack['location']['non_christians'],
+                'bar2_label' => 'Know About',
+                'bar2_percent' => $stack['location']['percent_christian_adherents'],
+                'bar2_population' => $stack['location']['christian_adherents'],
+                'bar3_label' => 'Know',
+                'bar3_percent' => $stack['location']['percent_believers'],
+                'bar3_population' => $stack['location']['believers'],
+                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' lost neighbors around them.'
+            ]
+        ];
+
+
         $stack['list'][] = [
             'type' => 'counter',
             'data' => [

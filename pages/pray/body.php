@@ -86,15 +86,25 @@
         background-color: green;
         border-color: white;
     }
+    .progress-bar {
+        height:4em;
+        line-height: 4em;
+    }
     .progress-bar-success {
+        height:4em;
+        line-height: 4em;
         background-color: red;
         border-color: white;
     }
     .progress-bar-warning {
+        height:4em;
+        line-height: 4em;
         background-color: orange;
         border-color: white;
     }
     .progress-bar-danger {
+        height:4em;
+        line-height: 4em;
         background-color: green;
         border-color: white;
     }
@@ -149,6 +159,14 @@
     }
     @media (min-width: 768px) {
         .chartdiv.zoom_globe {
+            height: 500px;
+        }
+    }
+    .chartdiv.rotating_globe {
+        height: 400px;
+    }
+    @media (min-width: 768px) {
+        .chartdiv.rotating_globe {
             height: 500px;
         }
     }
