@@ -53,16 +53,352 @@ class PG_Utilities {
         return $list;
     }
 
-    public static function build_location_array( $grid_id ) {
+    public static function build_location_stack( $grid_id ) {
+        // get queries
+        $stack = self::_stack_query( $grid_id );
+//        dt_write_log($query);
+        // 'location' => $grid_record,
+        // 'cities' => $cities,
+        // 'people_groups' => $people_groups
+
+
+        // build full stack
+        $stack['list'] = [];
+
+//        $stack['list'][] = [
+//            'type' => '4_fact_blocks',
+//            'data' => [
+//                'section_label' => 'Demographics',
+//                'label_1' => 'Population',
+//                'value_1' => $stack['location']['population'],
+//                'size_1' => 'three-em',
+//                'label_2' => 'Population Growth',
+//                'value_2' => $stack['location']['population_growth_status'],
+//                'size_2' => 'two-em',
+//                'label_3' => 'Dominant Religion',
+//                'value_3' => $stack['location']['primary_religion'],
+//                'size_3' => 'two-em',
+//                'label_4' => 'Language',
+//                'value_4' => $stack['location']['primary_language'],
+//                'size_4' => 'two-em',
+//                'prayer' => ''
+//            ]
+//        ];
+//
+//
+//
+//        $stack['list'][] = [
+//            'type' => 'percent_3_circles',
+//            'data' => [
+//                'section_label' => 'Faith Status',
+//                'label_1' => "Don't Know Jesus",
+//                'percent_1' => $stack['location']['percent_non_christians'],
+//                'population_1' => $stack['location']['non_christians'],
+//                'label_2' => 'Know About Jesus',
+//                'percent_2' => $stack['location']['percent_christian_adherents'],
+//                'population_2' => $stack['location']['christian_adherents'],
+//                'label_3' => 'Know Jesus',
+//                'percent_3' => $stack['location']['percent_believers'],
+//                'population_3' => $stack['location']['believers'],
+//                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' lost neighbors around them.'
+//            ]
+//        ];
+//        $stack['list'][] = [
+//            'type' => 'percent_2_circles',
+//            'data' => [
+//                'section_label' => 'Faith Status',
+//                'label_1' => "Don't Know Jesus",
+//                'percent_1' => $stack['location']['percent_non_christians'],
+//                'population_1' => $stack['location']['non_christians'],
+//                'label_2' => 'Know Jesus',
+//                'percent_2' => $stack['location']['percent_believers'],
+//                'population_2' => $stack['location']['believers'],
+//                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' lost neighbors around them.'
+//            ]
+//        ];
+//        $stack['list'][] = [
+//            'type' => 'percent_2_circles',
+//            'data' => [
+//                'section_label' => 'Faith Status',
+//                'label_1' => "Know About Jesus",
+//                'percent_1' => $stack['location']['percent_christian_adherents'],
+//                'population_1' => $stack['location']['christian_adherents'],
+//                'label_2' => 'Know Jesus',
+//                'percent_2' => $stack['location']['percent_believers'],
+//                'population_2' => $stack['location']['believers'],
+//                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to encourage the '.$stack['location']['christian_adherents'].' neighbors who might know the name of Jesus but have not found a personal, transformative relationship with him.'
+//            ]
+//        ];
+//        $stack['list'][] = [
+//            'type' => 'percent_3_bar',
+//            'data' => [
+//                'section_label' => 'Knowing Jesus',
+//                'label_1' => "Don't",
+//                'percent_1' => $stack['location']['percent_non_christians'],
+//                'population_1' => $stack['location']['non_christians'],
+//                'label_2' => 'Know About',
+//                'percent_2' => $stack['location']['percent_christian_adherents'],
+//                'population_2' => $stack['location']['christian_adherents'],
+//                'label_3' => 'Know',
+//                'percent_3' => $stack['location']['percent_believers'],
+//                'population_3' => $stack['location']['believers'],
+//                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' lost neighbors around them.'
+//            ]
+//        ];
+//        $stack['list'][] = [
+//            'type' => '100_bodies_chart',
+//            'data' => [
+//                'section_label' => 'Knowing Jesus',
+//                'percent_1' => $stack['location']['percent_non_christians'],
+//                'percent_2' => $stack['location']['percent_christian_adherents'],
+//                'percent_3' => $stack['location']['percent_believers'],
+//                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' lost neighbors around them.'
+//            ]
+//        ];
+//        $stack['list'][] = [
+//            'type' => '100_bodies_3_chart',
+//            'data' => [
+//                'section_label' => 'Knowing Jesus',
+//                'label_1' => "Don't know Jesus",
+//                'percent_1' => $stack['location']['percent_non_christians'],
+//                'label_2' => "Know about Jesus",
+//                'percent_2' => $stack['location']['percent_christian_adherents'],
+//                'label_3' => "Know Jesus",
+//                'percent_3' => $stack['location']['percent_believers'],
+//                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' lost neighbors around them.'
+//            ]
+//        ];
+//
+//
+//        // deaths non christians
+//        $stack['list'][] = [
+//            'type' => 'population_change_icon_block',
+//            'data' => [
+//                'section_label' => 'Dying without Jesus in the next hour',
+//                'count' => $stack['location']['deaths_non_christians_next_hour'],
+//                'group' => 'non_christians',
+//                'type' => 'deaths',
+//                'size' => ( $stack['location']['deaths_non_christians_next_hour'] > 400 ) ? 2 : 3,
+//                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' lost neighbors around them.'
+//            ]
+//        ];
+//        $stack['list'][] = [
+//            'type' => 'population_change_icon_block',
+//            'data' => [
+//                'section_label' => 'Dying without Jesus in the next 100 hours',
+//                'count' => $stack['location']['deaths_non_christians_next_100'],
+//                'group' => 'non_christians',
+//                'type' => 'deaths',
+//                'size' => ( $stack['location']['deaths_non_christians_next_100'] > 400 ) ? 2 : 3,
+//                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' lost neighbors around them.'
+//            ]
+//        ];
+//        $stack['list'][] = [
+//            'type' => 'population_change_icon_block',
+//            'data' => [
+//                'section_label' => 'Dying without Jesus in the next week',
+//                'count' => $stack['location']['deaths_non_christians_next_week'],
+//                'group' => 'non_christians',
+//                'type' => 'deaths',
+//                'size' => ( $stack['location']['deaths_non_christians_next_week'] > 400 ) ? 2 : 3,
+//                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' lost neighbors around them.'
+//            ]
+//        ];
+//        $stack['list'][] = [
+//            'type' => 'population_change_icon_block',
+//            'data' => [
+//                'section_label' => 'Dying without Jesus in the next month',
+//                'count' => $stack['location']['deaths_non_christians_next_month'],
+//                'group' => 'non_christians',
+//                'type' => 'deaths',
+//                'size' => ( $stack['location']['deaths_non_christians_next_month'] > 400 ) ? 2 : 3,
+//                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' lost neighbors around them.'
+//            ]
+//        ];
+//
+//
+//        // births non christians
+//        $stack['list'][] = [
+//            'type' => 'population_change_icon_block',
+//            'data' => [
+//                'section_label' => 'Born to a family without Jesus in the next hour',
+//                'count' => $stack['location']['births_non_christians_last_hour'],
+//                'group' => 'non_christians',
+//                'type' => 'births',
+//                'size' => ( $stack['location']['births_non_christians_last_hour'] > 400 ) ? 2 : 3,
+//                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' lost neighbors around them.'
+//            ]
+//        ];
+//        $stack['list'][] = [
+//            'type' => 'population_change_icon_block',
+//            'data' => [
+//                'section_label' => 'Born to a family without Jesus in the next 100 hours',
+//                'count' => $stack['location']['births_non_christians_last_100'],
+//                'group' => 'non_christians',
+//                'type' => 'births',
+//                'size' => ( $stack['location']['births_non_christians_last_100'] > 400 ) ? 2 : 3,
+//                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' lost neighbors around them.'
+//            ]
+//        ];
+//        $stack['list'][] = [
+//            'type' => 'population_change_icon_block',
+//            'data' => [
+//                'section_label' => 'Born to a family without Jesus in the next week',
+//                'count' => $stack['location']['births_non_christians_last_week'],
+//                'group' => 'non_christians',
+//                'type' => 'births',
+//                'size' => ( $stack['location']['births_non_christians_last_week'] > 400 ) ? 2 : 3,
+//                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' lost neighbors around them.'
+//            ]
+//        ];
+//        $stack['list'][] = [
+//            'type' => 'population_change_icon_block',
+//            'data' => [
+//                'section_label' => 'Born to a family without Jesus in the next month',
+//                'count' => $stack['location']['births_non_christians_last_month'],
+//                'group' => 'non_christians',
+//                'type' => 'births',
+//                'size' => ( $stack['location']['births_non_christians_last_month'] > 400 ) ? 2 : 3,
+//                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' lost neighbors around them.'
+//            ]
+//        ];
+//
+//
+//        // deaths christian adherents
+//        $stack['list'][] = [
+//            'type' => 'population_change_icon_block',
+//            'data' => [
+//                'section_label' => 'Dying in the next hour',
+//                'count' => $stack['location']['deaths_christian_adherents_next_hour'],
+//                'group' => 'christian_adherents',
+//                'type' => 'deaths',
+//                'size' => ( $stack['location']['deaths_christian_adherents_next_hour'] > 400 ) ? 2 : 3,
+//                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['christian_adherents'].' nominal neighbors around them.'
+//            ]
+//        ];
+//        $stack['list'][] = [
+//            'type' => 'population_change_icon_block',
+//            'data' => [
+//                'section_label' => 'Dying in the next 100 hours',
+//                'count' => $stack['location']['deaths_christian_adherents_next_100'],
+//                'group' => 'christian_adherents',
+//                'type' => 'deaths',
+//                'size' => ( $stack['location']['deaths_christian_adherents_next_100'] > 400 ) ? 2 : 3,
+//                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['christian_adherents'].' nominal neighbors around them.'
+//            ]
+//        ];
+//        $stack['list'][] = [
+//            'type' => 'population_change_icon_block',
+//            'data' => [
+//                'section_label' => 'Dying in the next week',
+//                'count' => $stack['location']['deaths_christian_adherents_next_week'],
+//                'group' => 'christian_adherents',
+//                'type' => 'deaths',
+//                'size' => ( $stack['location']['deaths_christian_adherents_next_week'] > 400 ) ? 2 : 3,
+//                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['christian_adherents'].' nominal neighbors around them.'
+//            ]
+//        ];
+//        $stack['list'][] = [
+//            'type' => 'population_change_icon_block',
+//            'data' => [
+//                'section_label' => 'Dying in the next month',
+//                'count' => $stack['location']['deaths_christian_adherents_next_month'],
+//                'group' => 'christian_adherents',
+//                'type' => 'deaths',
+//                'size' => ( $stack['location']['deaths_christian_adherents_next_month'] > 400 ) ? 2 : 3,
+//                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['christian_adherents'].' nominal neighbors around them.'
+//            ]
+//        ];
+//
+//        // births christian adherents
+//        $stack['list'][] = [
+//            'type' => 'population_change_icon_block',
+//            'data' => [
+//                'section_label' => 'Born in the next hour',
+//                'count' => $stack['location']['births_christian_adherents_last_hour'],
+//                'group' => 'christian_adherents',
+//                'type' => 'births',
+//                'size' => ( $stack['location']['births_christian_adherents_last_hour'] > 400 ) ? 2 : 3,
+//                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' nominal neighbors around them.'
+//            ]
+//        ];
+//        $stack['list'][] = [
+//            'type' => 'population_change_icon_block',
+//            'data' => [
+//                'section_label' => 'Born in the next 100 hours',
+//                'count' => $stack['location']['births_christian_adherents_last_100'],
+//                'group' => 'christian_adherents',
+//                'type' => 'births',
+//                'size' => ( $stack['location']['births_christian_adherents_last_100'] > 400 ) ? 2 : 3,
+//                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' nominal neighbors around them.'
+//            ]
+//        ];
+//        $stack['list'][] = [
+//            'type' => 'population_change_icon_block',
+//            'data' => [
+//                'section_label' => 'Born in the next week',
+//                'count' => $stack['location']['births_christian_adherents_last_week'],
+//                'group' => 'christian_adherents',
+//                'type' => 'births',
+//                'size' => ( $stack['location']['births_christian_adherents_last_week'] > 400 ) ? 2 : 3,
+//                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' nominal neighbors around them.'
+//            ]
+//        ];
+//        $stack['list'][] = [
+//            'type' => 'population_change_icon_block',
+//            'data' => [
+//                'section_label' => 'Born in the next month',
+//                'count' => $stack['location']['births_christian_adherents_last_month'],
+//                'group' => 'christian_adherents',
+//                'type' => 'births',
+//                'size' => ( $stack['location']['births_christian_adherents_last_month'] > 400 ) ? 2 : 3,
+//                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' nominal neighbors around them.'
+//            ]
+//        ];
+
+        // @todo photo prompt
+        // @todo cities prompt
+        $stack['list'][] = [
+            'type' => 'bullet_list_2_column',
+            'data' => [
+                'section_label' => 'Top Cities',
+                'values' => $stack['cities'],
+                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' nominal neighbors around them.'
+            ]
+        ];
+
+
+        // @todo people groups prompt
+        $stack['list'][] = [
+            'type' => 'bullet_list_2_column',
+            'data' => [
+                'section_label' => 'People Groups',
+                'values' => $stack['people_groups'],
+                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' nominal neighbors around them.'
+            ]
+        ];
+
+
+
+
+
+
+
+        // @todo  prioritize limit number of items
+
+        dt_write_log($stack);
+        return $stack;
+    }
+
+    public static function _stack_query( $grid_id ) {
         global $wpdb;
 
         // get record and level
         $grid_record = $wpdb->get_row( $wpdb->prepare( "
             SELECT
-              g.grid_id as id,
               g.grid_id,
-              g.alt_name as name,
-              g.alt_population as population,
+              g.name,
+              g.population,
               g.latitude,
               g.longitude,
               g.country_code,
@@ -70,20 +406,19 @@ class PG_Utilities {
               g.parent_id,
               p.name as parent_name,
               g.admin0_grid_id,
-              gc.alt_name as admin0_name,
+              gc.name as admin0_name,
               g.admin1_grid_id,
-              ga1.alt_name as admin1_name,
+              ga1.name as admin1_name,
               g.admin2_grid_id,
-              ga2.alt_name as admin2_name,
+              ga2.name as admin2_name,
               g.admin3_grid_id,
-              ga3.alt_name as admin3_name,
+              ga3.name as admin3_name,
               g.admin4_grid_id,
-              ga4.alt_name as admin4_name,
+              ga4.name as admin4_name,
               g.admin5_grid_id,
-              ga5.alt_name as admin5_name,
+              ga5.name as admin5_name,
               g.level,
               g.level_name,
-              g.is_custom_location,
               g.north_latitude,
               g.south_latitude,
               g.east_longitude,
@@ -97,7 +432,17 @@ class PG_Utilities {
               gc.east_longitude as c_east_longitude,
               gc.west_longitude as c_west_longitude,
               (SELECT count(pl.grid_id) FROM $wpdb->dt_location_grid pl WHERE pl.parent_id = g.parent_id) as peer_locations,
-              lgf.*
+              lgf.birth_rate,
+              lgf.death_rate,
+              lgf.growth_rate,
+              lgf.believers,
+              lgf.christian_adherents,
+              lgf.non_christians,
+              lgf.primary_language,
+              lgf.primary_religion,
+              lgf.percent_believers,
+              lgf.percent_christian_adherents,
+              lgf.percent_non_christians
             FROM $wpdb->dt_location_grid as g
             LEFT JOIN $wpdb->dt_location_grid as gc ON g.admin0_grid_id=gc.grid_id
             LEFT JOIN $wpdb->dt_location_grid as ga1 ON g.admin1_grid_id=ga1.grid_id
@@ -109,49 +454,6 @@ class PG_Utilities {
             LEFT JOIN $wpdb->location_grid_facts as lgf ON g.grid_id=lgf.grid_id
             WHERE g.grid_id = %s
         ", $grid_id ), ARRAY_A );
-
-        // build people groups list
-        $people_groups = $wpdb->get_results($wpdb->prepare( "
-            SELECT lgpg.*, FORMAT(lgpg.population, 0) as population, 'current' as query_level
-                FROM $wpdb->location_grid_people_groups lgpg
-                WHERE
-                    lgpg.longitude < %d AND /* east */
-                    lgpg.longitude >  %d AND /* west */
-                    lgpg.latitude < %d AND /* north */
-                    lgpg.latitude > %d AND /* south */
-                    lgpg.admin0_grid_id = %d
-                ORDER BY lgpg.population DESC
-                LIMIT 5
-        ", $grid_record['east_longitude'], $grid_record['west_longitude'], $grid_record['north_latitude'], $grid_record['south_latitude'], $grid_record['admin0_grid_id'] ), ARRAY_A );
-        if ( empty( $people_groups ) ) {
-            $people_groups = $wpdb->get_results($wpdb->prepare( "
-                SELECT lgpg.*, FORMAT(lgpg.population, 0) as population, 'parent' as query_level
-                    FROM $wpdb->location_grid_people_groups lgpg
-                    WHERE
-                        lgpg.longitude < %d AND /* east */
-                        lgpg.longitude >  %d AND /* west */
-                        lgpg.latitude < %d AND /* north */
-                        lgpg.latitude > %d AND /* south */
-                        lgpg.admin0_grid_id = %d
-                    ORDER BY lgpg.population DESC
-                    LIMIT 5
-            ", $grid_record['p_east_longitude'], $grid_record['p_west_longitude'], $grid_record['p_north_latitude'], $grid_record['p_south_latitude'], $grid_record['admin0_grid_id'] ), ARRAY_A );
-        }
-
-        // cities
-        $cities = $wpdb->get_results($wpdb->prepare( "
-            SELECT lgpg.name, FORMAT(lgpg.population, 0) as population
-                FROM $wpdb->location_grid_cities lgpg
-                WHERE
-                    lgpg.longitude < %d AND /* east */
-                    lgpg.longitude >  %d AND /* west */
-                    lgpg.latitude < %d AND /* north */
-                    lgpg.latitude > %d AND /* south */
-                    lgpg.admin0_grid_id = %d
-                ORDER BY lgpg.population DESC
-                LIMIT 5
-        ", $grid_record['east_longitude'], $grid_record['west_longitude'], $grid_record['north_latitude'], $grid_record['south_latitude'], $grid_record['admin0_grid_id'] ), ARRAY_A );
-
 
         // build full name
         switch ( $grid_record['level_name'] ) {
@@ -175,6 +477,7 @@ class PG_Utilities {
                 $full_name = $grid_record['name'];
                 break;
         }
+        $grid_record = array_merge($grid_record, [ 'full_name' => $full_name ] );
 
         // build the description
         if ( 'admin1' === $grid_record['level_name'] ) {
@@ -187,112 +490,192 @@ class PG_Utilities {
             $admin_level_name = 'county';
             $admin_level_name_plural = 'counties';
         }
+        $grid_record = array_merge($grid_record, [ 'admin_level_name' => $admin_level_name, 'admin_level_name_plural' => $admin_level_name_plural ] );
 
-        $population = $grid_record['population'];
-        $image_list = prayer_global_image_json();
 
-        // build array
-        $content = [
-            'grid_id' => $grid_id,
-            'location' => [
-                'grid_id' => $grid_id,
-                'name' => $grid_record['name'],
-                'full_name' => $full_name,
-                'admin0_name' => $grid_record['admin0_name'],
-                'parent_name' => $grid_record['parent_name'],
-                'admin_level_name' => $admin_level_name,
-                'admin_level_name_plural' => $admin_level_name_plural,
-                'peer_locations' => $grid_record['peer_locations'],
-                'longitude' => (float) $grid_record['longitude'],
-                'latitude' => (float) $grid_record['latitude'],
-                'bounds' => [
-                  'north_latitude' => (float) $grid_record['north_latitude'],
-                  'south_latitude' => (float) $grid_record['south_latitude'],
-                  'east_longitude' => (float) $grid_record['east_longitude'],
-                  'west_longitude' => (float) $grid_record['west_longitude'],
-                ],
-                'c_bounds' => [
-                  'north_latitude' => (float) $grid_record['c_north_latitude'],
-                  'south_latitude' => (float) $grid_record['c_south_latitude'],
-                  'east_longitude' => (float) $grid_record['c_east_longitude'],
-                  'west_longitude' => (float) $grid_record['c_west_longitude'],
-                ],
-                'stats' => [ // all numbers are estimated
-                    'population' => number_format( intval( $population ) ),
+        // format
+        $grid_record['longitude'] = (float) $grid_record['longitude'];
+        $grid_record['latitude'] = (float) $grid_record['latitude'];
+        $grid_record['north_latitude'] = (float) $grid_record['north_latitude'];
+        $grid_record['south_latitude'] = (float) $grid_record['south_latitude'];
+        $grid_record['east_longitude'] = (float) $grid_record['east_longitude'];
+        $grid_record['west_longitude'] = (float) $grid_record['west_longitude'];
+        $grid_record['p_north_latitude'] = (float) $grid_record['p_north_latitude'];
+        $grid_record['p_south_latitude'] = (float) $grid_record['p_south_latitude'];
+        $grid_record['p_east_longitude'] = (float) $grid_record['p_east_longitude'];
+        $grid_record['p_west_longitude'] = (float) $grid_record['p_west_longitude'];
+        $grid_record['c_north_latitude'] = (float) $grid_record['c_north_latitude'];
+        $grid_record['c_south_latitude'] = (float) $grid_record['c_south_latitude'];
+        $grid_record['c_east_longitude'] = (float) $grid_record['c_east_longitude'];
+        $grid_record['c_west_longitude'] = (float) $grid_record['c_west_longitude'];
+        $grid_record['birth_rate'] = (float) $grid_record['birth_rate'];
+        $grid_record['death_rate'] = (float) $grid_record['death_rate'];
+        $grid_record['growth_rate'] = (float) $grid_record['growth_rate'];
+        $grid_record['population_int'] = (int) $grid_record['population'];
+        $grid_record['population'] = number_format( intval( $grid_record['population'] ) );
+        $grid_record['believers_int'] = (int) $grid_record['believers'];
+        $grid_record['believers'] = number_format( intval( $grid_record['believers'] ) );
+        $grid_record['christian_adherents_int'] = (int) $grid_record['christian_adherents'];
+        $grid_record['christian_adherents'] = number_format( intval( $grid_record['christian_adherents'] ) );
+        $grid_record['non_christians_int'] = (int) $grid_record['non_christians'];
+        $grid_record['non_christians'] = number_format( intval( $grid_record['non_christians'] ) );
+        $grid_record['percent_believers_full'] = (float) $grid_record['percent_believers'];
+        $grid_record['percent_believers'] = round( (float) $grid_record['percent_believers'], 2);
+        $grid_record['percent_christian_adherents_full'] = (float) $grid_record['percent_christian_adherents'];
+        $grid_record['percent_christian_adherents'] = round( (float) $grid_record['percent_christian_adherents'], 2 );
+        $grid_record['percent_non_christians_full'] = (float) $grid_record['percent_non_christians'];
+        $grid_record['percent_non_christians'] = round( (float) $grid_record['percent_non_christians'], 2 );
 
-                    'birth_rate' => (float) $grid_record['birth_rate'],
-                    'death_rate' => (float) $grid_record['death_rate'],
-                    'growth_rate' => (float) $grid_record['growth_rate'],
+        // process pace
+        $grid_record['population_growth_status'] = self::_get_pace( 'population_growth_status', $grid_record );
 
-                    'population_growth_status' => self::get_pace( 'population_growth_status', $grid_record ),
-                    'primary_language' => $grid_record['primary_language'],
-                    'primary_religion' => $grid_record['primary_religion'],
+        $grid_record['deaths_non_christians_next_hour'] = self::_get_pace( 'deaths_non_christians_next_hour', $grid_record );
+        $grid_record['deaths_non_christians_next_100'] = self::_get_pace( 'deaths_non_christians_next_100', $grid_record );
+        $grid_record['deaths_non_christians_next_week'] = self::_get_pace( 'deaths_non_christians_next_week', $grid_record );
+        $grid_record['deaths_non_christians_next_month'] = self::_get_pace( 'deaths_non_christians_next_month', $grid_record );
+        $grid_record['deaths_non_christians_next_year'] = self::_get_pace( 'deaths_non_christians_next_year', $grid_record );
 
-                    'believers' => number_format( intval( $grid_record['believers'] ) ),
-                    'christian_adherents' => number_format( intval( $grid_record['christian_adherents'] ) ),
-                    'non_christians' => number_format( intval( $grid_record['non_christians'] ) ),
+        $grid_record['births_non_christians_last_hour'] = self::_get_pace( 'births_non_christians_last_hour', $grid_record );
+        $grid_record['births_non_christians_last_100'] = self::_get_pace( 'births_non_christians_last_100', $grid_record );
+        $grid_record['births_non_christians_last_week'] = self::_get_pace( 'births_non_christians_last_week', $grid_record );
+        $grid_record['births_non_christians_last_month'] = self::_get_pace( 'births_non_christians_last_month', $grid_record );
+        $grid_record['births_non_christians_last_year'] = self::_get_pace( 'births_non_christians_last_year', $grid_record );
 
-                    'percent_believers' => round( (float) $grid_record['percent_believers'], 2),
-                    'percent_christian_adherents' => round( (float) $grid_record['percent_christian_adherents'], 2 ),
-                    'percent_non_christians' => round( (float) $grid_record['percent_non_christians'], 2 ),
+        $grid_record['deaths_christian_adherents_next_hour'] = self::_get_pace( 'deaths_christian_adherents_next_hour', $grid_record );
+        $grid_record['deaths_christian_adherents_next_100'] = self::_get_pace( 'deaths_christian_adherents_next_100', $grid_record );
+        $grid_record['deaths_christian_adherents_next_week'] = self::_get_pace( 'deaths_christian_adherents_next_week', $grid_record );
+        $grid_record['deaths_christian_adherents_next_month'] = self::_get_pace( 'deaths_christian_adherents_next_month', $grid_record );
+        $grid_record['deaths_christian_adherents_next_year'] = self::_get_pace( 'deaths_christian_adherents_next_year', $grid_record );
 
-                    'births_without_jesus_last_hour' => self::get_pace( 'births_without_jesus_last_hour', $grid_record ),
-                    'births_without_jesus_last_100' => self::get_pace( 'births_without_jesus_last_100', $grid_record ),
-                    'births_without_jesus_last_week' => self::get_pace( 'births_without_jesus_last_week', $grid_record ),
-                    'births_without_jesus_last_month' => self::get_pace( 'births_without_jesus_last_month', $grid_record ),
+        $grid_record['births_christian_adherents_last_hour'] = self::_get_pace( 'births_christian_adherents_last_hour', $grid_record );
+        $grid_record['births_christian_adherents_last_100'] = self::_get_pace( 'births_christian_adherents_last_100', $grid_record );
+        $grid_record['births_christian_adherents_last_week'] = self::_get_pace( 'births_christian_adherents_last_week', $grid_record );
+        $grid_record['births_christian_adherents_last_month'] = self::_get_pace( 'births_christian_adherents_last_month', $grid_record );
+        $grid_record['births_christian_adherents_last_year'] = self::_get_pace( 'births_christian_adherents_last_year', $grid_record );
 
-                    'deaths_without_jesus_last_hour' => self::get_pace( 'deaths_without_jesus_last_hour', $grid_record ),
-                    'deaths_without_jesus_last_100' => self::get_pace( 'deaths_without_jesus_last_100', $grid_record ),
-                    'deaths_without_jesus_last_week' => self::get_pace( 'deaths_without_jesus_last_week', $grid_record ),
-                    'deaths_without_jesus_last_month' => self::get_pace( 'deaths_without_jesus_last_month', $grid_record ),
 
-                ]
-            ],
+        // build people groups list
+        $people_groups = $wpdb->get_results($wpdb->prepare( "
+            SELECT lgpg.*, FORMAT(lgpg.population, 0) as population, 'current' as query_level
+                FROM $wpdb->location_grid_people_groups lgpg
+                WHERE
+                    lgpg.longitude < %d AND /* east */
+                    lgpg.longitude >  %d AND /* west */
+                    lgpg.latitude < %d AND /* north */
+                    lgpg.latitude > %d AND /* south */
+                    lgpg.admin0_grid_id = %d
+                ORDER BY lgpg.LeastReached DESC, lgpg.population DESC
+                LIMIT 5
+        ", $grid_record['east_longitude'], $grid_record['west_longitude'], $grid_record['north_latitude'], $grid_record['south_latitude'], $grid_record['admin0_grid_id'] ), ARRAY_A );
+        if ( empty( $people_groups ) ) {
+            $people_groups = $wpdb->get_results($wpdb->prepare( "
+                SELECT lgpg.*, FORMAT(lgpg.population, 0) as population, 'parent' as query_level
+                    FROM $wpdb->location_grid_people_groups lgpg
+                    WHERE
+                        lgpg.longitude < %d AND /* east */
+                        lgpg.longitude >  %d AND /* west */
+                        lgpg.latitude < %d AND /* north */
+                        lgpg.latitude > %d AND /* south */
+                        lgpg.admin0_grid_id = %d
+                    ORDER BY lgpg.LeastReached DESC, lgpg.population DESC
+                    LIMIT 5
+            ", $grid_record['p_east_longitude'], $grid_record['p_west_longitude'], $grid_record['p_north_latitude'], $grid_record['p_south_latitude'], $grid_record['admin0_grid_id'] ), ARRAY_A );
+        }
+
+        // cities
+        $cities = $wpdb->get_results($wpdb->prepare( "
+            SELECT lgpg.*, FORMAT(lgpg.population, 0) as population
+                FROM $wpdb->location_grid_cities lgpg
+                WHERE
+                    lgpg.longitude < %d AND /* east */
+                    lgpg.longitude >  %d AND /* west */
+                    lgpg.latitude < %d AND /* north */
+                    lgpg.latitude > %d AND /* south */
+                    lgpg.admin0_grid_id = %d
+                ORDER BY lgpg.population DESC
+                LIMIT 5
+        ", $grid_record['east_longitude'], $grid_record['west_longitude'], $grid_record['north_latitude'], $grid_record['south_latitude'], $grid_record['admin0_grid_id'] ), ARRAY_A );
+
+
+        return [
+            'location' => $grid_record,
             'cities' => $cities,
-            'people_groups' => $people_groups,
+            'people_groups' => $people_groups
         ];
-
-        $content['sections'] = self::get_sections( $content );
-
-        return $content;
     }
 
-    public static function get_pace( $type, $grid_record ) {
+    public static function _get_pace( $type, $grid_record ) {
         $return_value = 0;
-        $population = $grid_record['population'];
         $birth_rate = $grid_record['birth_rate'];
         $death_rate = $grid_record['death_rate'];
-        $believers = $grid_record['believers'];
-        $christian_adherents = $grid_record['christian_adherents'];
-        $non_christians = $grid_record['non_christians'];
+        $believers = $grid_record['believers_int'];
+        $christian_adherents = $grid_record['christian_adherents_int'];
+        $non_christians = $grid_record['non_christians_int'];
         $not_believers = $non_christians + $christian_adherents;
 
-
         switch( $type ) {
-            case 'births_without_jesus_last_hour':
+            case 'births_non_christians_last_hour':
                 $return_value = ( $birth_rate * ( $not_believers / 1000 ) ) / 365 / 24 ;
                 break;
-            case 'births_without_jesus_last_100':
+            case 'births_non_christians_last_100':
                 $return_value = ( $birth_rate * ( $not_believers / 1000 ) ) / 365 / 24 * 100 ;
                 break;
-            case 'births_without_jesus_last_week':
+            case 'births_non_christians_last_week':
                 $return_value = ( $birth_rate * ( $not_believers / 1000 ) ) / 365 * 7 ;
                 break;
-            case 'births_without_jesus_last_month':
+            case 'births_non_christians_last_month':
                 $return_value = ( $birth_rate * ( $not_believers / 1000 ) ) / 365 * 30 ;
                 break;
+            case 'births_non_christians_last_year':
+                $return_value = ( $birth_rate * ( $not_believers / 1000 ) );
+                break;
 
-            case 'deaths_without_jesus_last_hour':
+            case 'deaths_non_christians_next_hour':
                 $return_value = ( $death_rate * ( $not_believers / 1000 ) ) / 365 / 24 ;
                 break;
-            case 'deaths_without_jesus_last_100':
+            case 'deaths_non_christians_next_100':
                 $return_value = ( $death_rate * ( $not_believers / 1000 ) ) / 365 / 24 * 100 ;
                 break;
-            case 'deaths_without_jesus_last_week':
+            case 'deaths_non_christians_next_week':
                 $return_value = ( $death_rate * ( $not_believers / 1000 ) ) / 365 * 7;
                 break;
-            case 'deaths_without_jesus_last_month':
+            case 'deaths_non_christians_next_month':
                 $return_value =  ( $death_rate * ( $not_believers / 1000 ) ) / 365 * 30 ;
+                break;
+            case 'deaths_non_christians_next_year':
+                $return_value =  ( $death_rate * ( $not_believers / 1000 ) );
+                break;
+
+            case 'births_christian_adherents_last_hour':
+                $return_value = ( $birth_rate * ( $christian_adherents / 1000 ) ) / 365 / 24 ;
+                break;
+            case 'births_christian_adherents_last_100':
+                $return_value = ( $birth_rate * ( $christian_adherents / 1000 ) ) / 365 / 24 * 100 ;
+                break;
+            case 'births_christian_adherents_last_week':
+                $return_value = ( $birth_rate * ( $christian_adherents / 1000 ) ) / 365 * 7 ;
+                break;
+            case 'births_christian_adherents_last_month':
+                $return_value = ( $birth_rate * ( $christian_adherents / 1000 ) ) / 365 * 30 ;
+                break;
+            case 'births_christian_adherents_last_year':
+                $return_value = ( $birth_rate * ( $christian_adherents / 1000 ) );
+                break;
+
+            case 'deaths_christian_adherents_next_hour':
+                $return_value = ( $death_rate * ( $christian_adherents / 1000 ) ) / 365 / 24 ;
+                break;
+            case 'deaths_christian_adherents_next_100':
+                $return_value = ( $death_rate * ( $christian_adherents / 1000 ) ) / 365 / 24 * 100 ;
+                break;
+            case 'deaths_christian_adherents_next_week':
+                $return_value = ( $death_rate * ( $christian_adherents / 1000 ) ) / 365 * 7;
+                break;
+            case 'deaths_christian_adherents_next_month':
+                $return_value =  ( $death_rate * ( $christian_adherents / 1000 ) ) / 365 * 30 ;
+                break;
+            case 'deaths_christian_adherents_next_year':
+                $return_value =  ( $death_rate * ( $christian_adherents / 1000 ) );
                 break;
 
             case 'population_growth_status':
@@ -319,240 +702,6 @@ class PG_Utilities {
         return number_format( intval( $return_value ) );
     }
 
-    public static function get_sections( $content ) {
-        $sections = [];
-        $sections = array_merge( $sections, self::get_priorities( $content ) ); // priorities
-        $sections = array_merge( $sections, self::get_sets( $content ) );
-
-        return $sections;
-    }
-
-    public static function get_priorities( $content ) {
-        $statements = [];
-        $full_name = $content['location']['full_name'];
-        $non_christians_count = $content['location']['stats']['non_christians'];
-        $christian_adherents_count = $content['location']['stats']['christian_adherents'];
-        $believers_count = $content['location']['stats']['believers'];
-
-        // FOR MINORITY CHURCH <2%
-        if ( $content['location']['stats']['percent_believers'] < 2 && $content['location']['stats']['percent_non_christians'] > 50 ) {
-            $statements[] = [
-                'title' => "Severely Small Church",
-                'url' => 'https://via.placeholder.com/600x400/008000/FFFFFF?text='.$content['grid_id'],
-                'description' => "Pray for the small, outnumbered church in ".$full_name.", that they would be giving the Spirit of Samson to reach the ".$non_christians_count . " neighbors around them.",
-
-            ];
-        }
-
-        // least reached
-        if ( ! empty( $content['people_groups'] ) ) {
-            foreach( $content['people_groups'] as $group ){
-                if ( $group['LeastReached'] === 'Y' && 'query_level' === 'current' ){
-                    $statements[] = [
-                        'title' => 'Unreached People Group',
-                        'url' => 'https://via.placeholder.com/600x400/008000/FFFFFF?text='.$content['grid_id'],
-                        'description' => "The ".$group['name']." people are an unreached people group and are known to live in ".$full_name.". They desperately need bold church planters to come in from the outside and share the gospel.",
-                    ];
-                    break;
-                }
-            }
-        }
-
-        return $statements;
-    }
-    public static function get_statements( $content ) {
-        $statements = [];
-        $location = $content['location'];
-        $stats = $content['location']['stats'];
-
-        // FOR NON BELIEVERS
-        // FOR CHRISTIAN ADHERENTS
-        // FOR BELIEVERS
-        // FOR MINORITY CHURCH
-        // FOR MAJORITY ISLAM
-        // FOR MAJORITY BUDDHISM
-        // FOR MAJORITY HINDUISM
-        // FOR MAJORITY NON-RELIGIOUS
-        // FOR MAJORITY CHRISTIAN ADHERENT
-
-
-        // FOR NON BELIEVERS
-        $statements[] = "Pray for the ".$stats['non_christians']." people in ".$location['full_name']." who are far from God. Pray God would give them, at least, one chance to hear the gospel of Jesus before they die.";
-
-
-        // FOR CHRISTIAN ADHERENTS
-        $statements[] = "Pray that the ".$stats['christian_adherents']." cultural Christians in ".$location['full_name']." would have a transformational encounter with Jesus today.";
-        $statements[] = "Pray that the ".$stats['christian_adherents']." cultural Christians in ".$location['full_name']." would read their Bible, obey it, and share it with their neighbors.";
-
-
-        // FOR BELIEVERS
-        $statements[] = "Pray for the ".$stats['believers']." believers in ".$location['full_name']." to have boldness and speak courageously to their ".$stats['non_christians']." neighbors who do not know Jesus.";
-        $statements[] = "Thank God for the ".$stats['believers']." believers in ".$location['full_name'].". Pray they seek him in prayer and obedience to His Word.";
-
-
-        // FOR MINORITY CHURCH <2%
-        if ( $stats['percent_believers'] < 2 && $stats['percent_non_christians'] > 50 ) {
-            $statements[] = "Pray for the small, outnumbered church in ".$location['full_name'].", that they would be giving the Spirit of Samson to reach the ".$stats['non_christians'] . " neighbors around them.";
-        }
-
-        // FOR MAJORITY CHRISTIAN ADHERENT
-        if ( $stats['percent_christian_adherents'] > 50 ) {
-            $statements[] = "Lord, we pray that the ".$stats['christian_adherents']." people in ".$location['full_name']." who only know about you as an idea or belief would experience a disruption from you. Take them, Lord, from awareness to a relationship with you.";
-        }
-
-        // FOR MAJORITY ISLAM
-        if ( $stats['primary_religion'] === 'Islam' ) {
-            $statements[] = "Pray for the small, outnumbered church in ".$location['full_name']." among their numerous Muslim neighbors.";
-        }
-
-        // FOR MAJORITY BUDDHISM
-        if ( $stats['primary_religion'] === 'Buddhism' ) {
-            $statements[] = "Pray for the small, outnumbered church in ".$location['full_name']." among their numerous Buddhist neighbors.";
-        }
-
-        // FOR MAJORITY HINDUISM
-        if ( $stats['primary_religion'] === 'Hinduism' ) {
-            $statements[] = "Pray for the small, outnumbered church in ".$location['full_name']." among their numerous Hindu neighbors.";
-        }
-
-        // FOR MAJORITY NON-RELIGIOUS
-        if ( $stats['primary_religion'] === 'Non-Religious' ) {
-            $statements[] = "Lord, we pray for the non-religious people of ".$location['full_name'].". Please, disrupt their illusions of the world where your ever present power, life, and care are credited to good luck and nature.";
-        }
-
-
-        return $statements;
-    }
-
-    public static function get_sets( $content ) {
-        $sets = [
-            [
-                [
-                    'title' => "Don't know Jesus",
-                    'url' => 'https://via.placeholder.com/600x400/008000/FFFFFF?text='.$content['grid_id'],
-                    'description' => self::_get_set_descriptions( $content, 'non_christians' ),
-
-                ],
-                [
-                    'title' => "Might know about Jesus",
-                    'url' => 'https://via.placeholder.com/600x400/008000/FFFFFF?text='.$content['grid_id'],
-                    'description' => self::_get_set_descriptions( $content, 'christian_adherents' ),
-                ],
-                [
-                    'title' => "Know Jesus",
-                    'url' => 'https://via.placeholder.com/600x400/008000/FFFFFF?text='.$content['grid_id'],
-                    'description' => self::_get_set_descriptions( $content, 'believers' ),
-                ]
-            ],
-            [
-                [
-                    'title' => "The Non-Christian",
-                    'url' => 'https://via.placeholder.com/600x400/008000/FFFFFF?text='.$content['grid_id'],
-                    'description' => self::_get_set_descriptions( $content, 'non_christians' ),
-
-                ],
-                [
-                    'title' => "The Cultural Christian",
-                    'url' => 'https://via.placeholder.com/600x400/008000/FFFFFF?text='.$content['grid_id'],
-                    'description' => self::_get_set_descriptions( $content, 'christian_adherents' ),
-                ],
-                [
-                    'title' => "The Disciple",
-                    'url' => 'https://via.placeholder.com/600x400/008000/FFFFFF?text='.$content['grid_id'],
-                    'description' => self::_get_set_descriptions( $content, 'believers' ),
-                ]
-            ],
-            [
-                [
-                    'title' => "Far from Jesus",
-                    'url' => 'https://via.placeholder.com/600x400/008000/FFFFFF?text='.$content['grid_id'],
-                    'description' => self::_get_set_descriptions( $content, 'non_christians' ),
-
-                ],
-                [
-                    'title' => "Close to Jesus",
-                    'url' => 'https://via.placeholder.com/600x400/008000/FFFFFF?text='.$content['grid_id'],
-                    'description' => self::_get_set_descriptions( $content, 'christian_adherents' ),
-                ],
-                [
-                    'title' => "With Jesus",
-                    'url' => 'https://via.placeholder.com/600x400/008000/FFFFFF?text='.$content['grid_id'],
-                    'description' => self::_get_set_descriptions( $content, 'believers' ),
-                ]
-            ]
-        ];
-
-        return $sets[rand(0, count($sets)-1 )];
-    }
-
-
-    public static function _get_set_descriptions( $content, $type ) {
-
-        // vars
-        $full_name = $content['location']['full_name'];
-        $non_christians_count = $content['location']['stats']['non_christians'];
-        $christian_adherents_count = $content['location']['stats']['christian_adherents'];
-        $believers_count = $content['location']['stats']['believers'];
-
-        // prayers
-        $description = [
-            'non_christians' => [
-                "Pray for the ".$non_christians_count." people in ".$full_name." who are far from God. Pray God would give them, at least, one chance to hear the gospel of Jesus before they die.",
-                "Pray for the ".$non_christians_count." people in ".$full_name." who are far from God. Pray God would give them, at least, one chance to hear the gospel of Jesus before they die.",
-            ],
-            'christian_adherents' => [
-                "Pray that the ".$christian_adherents_count." cultural Christians in ".$full_name." would have a transformational encounter with Jesus today.",
-                "Pray that the ".$christian_adherents_count." cultural Christians in ".$full_name." would read their Bible, obey it, and share it with their neighbors.",
-            ],
-            'believers' => [
-                "Pray for the ".$believers_count." believers in ".$full_name." to have boldness and speak courageously to their ".$stats['non_christians']." neighbors who do not know Jesus.",
-                "Thank God for the ".$believers_count." believers in ".$full_name.". Pray they seek him in prayer and obedience to His Word.",
-            ]
-        ];
-
-        return $description[$type][rand(0, count($description[$type])-1 )]; // random selection
-    }
-
-    public static function get_primary_religion_section( $content ){
-        // 'https://via.placeholder.com/600x400?text='.$content['grid_id']
-
-        $descriptions = [
-            "Pray for the ".$content['location']['stats']['non_christians']." people in ".$content['location']['full_name']." who are far from God. Pray God would give them, at least, one chance to hear the gospel of Jesus before they die.",
-            "Pray for the ".$content['location']['stats']['non_christians']." people in ".$content['location']['full_name']." who are far from God. Pray God would give them, at least, one chance to hear the gospel of Jesus before they die.",
-        ];
-
-        $images_array = prayer_global_image_json($content['grid_id']);
-        $urls = [
-            prayer_global_image_url() .$content['location']['grid_id']. '/maps/' . $images_array['maps'][0],
-            prayer_global_image_url() .$content['location']['grid_id']. '/maps/' . $images_array['maps'][1],
-            'https://via.placeholder.com/600x400?text='.$content['grid_id']
-        ];
-
-        $titles = [
-            "Who don't know Jesus",
-            "Non-Christians",
-            "Those Far from God",
-        ];
-
-
-        $sections = [
-            'title' => $titles[rand(0, count($titles)-1 )],
-            'url' => $urls[rand(0, count($urls)-1 )],
-            'description' => $descriptions[rand(0, count($descriptions)-1 )]
-        ];
-        return $descriptions[rand(0, count($descriptions)-1 )];
-    }
-
-
-
-    public static function get_image( $content ) {
-        $images_array = prayer_global_image_json($content['grid_id']);
-        $urls = [
-            prayer_global_image_url() .$content['location']['grid_id']. '/maps/' . $images_array['maps'][0],
-            prayer_global_image_url() .$content['location']['grid_id']. '/maps/' . $images_array['maps'][1],
-            'https://via.placeholder.com/600x400/008000/FFFFFF?text='.$content['grid_id']
-        ];
-    }
 
     public static function save_log( $parts, $data, $is_global = true ) {
 
@@ -617,7 +766,7 @@ class PG_Utilities {
         }
         $grid_id = $list_4770[0];
 
-        $content = PG_Utilities::build_location_array( $grid_id );
+        $content = PG_Utilities::build_location_stack( $grid_id );
         return $content;
     }
 
@@ -747,7 +896,7 @@ class PG_Utilities {
             }
         }
 
-        $content = PG_Utilities::build_location_array( $grid_id );
+        $content = PG_Utilities::build_location_stack( $grid_id );
         return $content;
     }
 

@@ -5,6 +5,9 @@
     .bold {
         font-weight:900;
     }
+    .icon-block {
+        line-height:1.1;
+    }
     .navbar.prayer_navbar {
         border-bottom:1px solid lightgrey;
         box-shadow: 0 1px 10px -2px rgb(0 0 0 / 15%);
@@ -83,15 +86,25 @@
         background-color: green;
         border-color: white;
     }
+    .progress-bar {
+        height:4em;
+        line-height: 4em;
+    }
     .progress-bar-success {
+        height:4em;
+        line-height: 4em;
         background-color: red;
         border-color: white;
     }
     .progress-bar-warning {
+        height:4em;
+        line-height: 4em;
         background-color: orange;
         border-color: white;
     }
     .progress-bar-danger {
+        height:4em;
+        line-height: 4em;
         background-color: green;
         border-color: white;
     }
@@ -132,6 +145,32 @@
         height: 500px;
         max-width: 100%;
     }
+    .chartdiv.wide_globe {
+        height: 300px;
+    }
+    @media (min-width: 768px) {
+        .chartdiv.wide_globe {
+            height: 500px;
+        }
+    }
+    .chartdiv.zoom_globe {
+        height: 300px;
+        padding-top:10px;
+    }
+    @media (min-width: 768px) {
+        .chartdiv.zoom_globe {
+            height: 500px;
+        }
+    }
+    .chartdiv.rotating_globe {
+        height: 400px;
+    }
+    @media (min-width: 768px) {
+        .chartdiv.rotating_globe {
+            height: 500px;
+        }
+    }
+
     .six-em {
         font-size: 6em !important;
         line-height: .5em;

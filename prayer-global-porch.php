@@ -95,6 +95,7 @@ class Prayer_Global_Porch {
         require_once( 'redirects/loader.php' );
         require_once( 'post-type/loader.php' );
         require_once( 'support/cron.php' );
+        require_once( 'post-type/verses-post-type.php' );
 //        require_once( 'support/config-required-plugins.php' );
 
         // home

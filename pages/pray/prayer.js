@@ -24,14 +24,63 @@ jQuery(document).ready(function(){
 
   let pace_open_options = jQuery('#option_filter')
   let pace_buttons = jQuery('.pace')
-  let pace_save = jQuery('#pace__save_changes')
 
+  let i
+
+  let interval
   let percent = 0
   window.time = 0
   window.seconds = 60
   window.pace = 1
 
-  let interval
+  /**
+   * INITIALIZE
+   */
+  function initialize_location() {
+    window.current_content = jsObject.start_content
+    window.next_content = jsObject.next_content
+    load_location()
+  }
+  initialize_location() // initialize prayer framework
+
+  /**
+   * FRAMEWORK LOADERS
+   */
+  function load_location() {
+    let content = window.current_content
+    console.log(window.current_content)
+    button_text.html('Keep Praying...')
+    button_progress.css('width', '0' )
+
+    praying_panel.show()
+    decision_panel.hide()
+    question_panel.hide()
+    celebrate_panel.hide()
+
+    jQuery('#location-name').html(content.location.full_name)
+    div.empty()
+
+    // MAP
+    div.append(
+      `<div class="row">
+          <div class="col">
+              <p class="text-md-center" id="location-map"></p>
+              <p class="text-md-center">The ${content.location.admin_level_name} of <strong>${content.location.full_name}</strong> has a population of <strong>${content.location.population}</strong> and is 1 of ${content.location.peer_locations} ${content.location.admin_level_name_plural} in ${content.location.parent_name}. We estimate ${content.location.name} has <strong>${content.location.believers}</strong> people who might know Jesus, <strong>${content.location.christian_adherents}</strong> people who might know about Jesus culturally, and <strong>${content.location.non_christians}</strong> people who do not know Jesus.</p>
+          </div>
+      </div>`
+    )
+    // add_map()
+
+    // LOOP STACK
+    jQuery.each(content.list, function(i,block) {
+      get_template( block )
+    })
+
+    // FOOTER
+    div.append(`<div class="row text-center"><div class="col"><hr>Location ID: ${content.location.grid_id}</</div>`)
+
+    prayer_progress_indicator( window.time ) // SETS THE PRAYER PROGRESS WIDGET
+  }
 
   function prayer_progress_indicator( time_start ) {
     window.time = time_start
@@ -52,516 +101,28 @@ jQuery(document).ready(function(){
       }
     }, 1000);
   }
-  function initialize_location() {
-    window.current_content = jsObject.start_content
-    window.next_content = jsObject.next_content
-    load_location()
-  }
-  initialize_location() // load prayer framework
 
-  function load_location() {
-    let content = window.current_content
-    let location = content.location
-    console.log(window.current_content)
-    button_text.html('Keep Praying...')
-    button_progress.css('width', '0' )
-
-    praying_panel.show()
-    decision_panel.hide()
-    question_panel.hide()
-    celebrate_panel.hide()
-
-    jQuery('#location-name').html(location.full_name)
-
-    div.empty()
-    // location maps
-    div.append(
-      `<div class="row">
-          <div class="col">
-              <p class="text-md-center" id="location-map"></p>
-              <p class="text-md-center">The ${location.admin_level_name} of <strong>${location.full_name}</strong> has a population of <strong>${location.stats.population}</strong> and is 1 of ${location.peer_locations} ${location.admin_level_name_plural} in ${location.parent_name}. We estimate ${location.name} has ${location.stats.believers} people who might know Jesus, ${location.stats.christian_adherents} people who might know about Jesus culturally, and ${location.stats.non_christians} people who do not know Jesus.</p>
-          </div>
-      </div><hr>`
-    )
-    // counters
-    div.append(`<div class="row text-center" id="counters"></div><hr>`)
-    // sections
-    jQuery.each(content.sections, function(i,v) {
-      div.append(
-        `<div class="row mb-1">
-            <div class="col-md">
-                <h3 class="mt-0 mb-3 font-weight-normal">${v.title}</h3>
-            </div>
-            <div class="col-md">
-                <img src="${v.url}" class="img-fluid" alt="${v.title} photo" />
-            </div>
-            <div class="col-md">
-                <p>
-                    ${v.description}
-                </p>
-            </div>
-        </div>`
-      )
-    })
-    // cities
-    if ( content.cities.length > 0 ) {
-      div.append(
-        `<div class="row mb-1">
-            <div class="col-md">
-                <h3 class="mt-0 mb-3 font-weight-normal">Cities</h3>
-            </div>
-            <div class="col-md">
-                <img src="https://via.placeholder.com/600x400?text=${content.grid_id}" class="img-fluid" alt="People Groups photo" />
-            </div>
-            <div class="col-md"><ul id="cities-list" style="padding-left: 1rem;"></ul></div>
-        </div>`)
-      let cities_list = jQuery('#cities-list')
-      jQuery.each(content.cities, function(i,v) {
-        cities_list.append(`<li>${v.name} (pop ${v.population})</li>`)
-      })
-    }
-    // people groups
-    if ( content.people_groups.length > 0 ) {
-      div.append(
-        `<div class="row mb-1">
-            <div class="col-md">
-                <h3 class="mt-0 mb-3 font-weight-normal">People Groups</h3>
-            </div>
-            <div class="col-md">
-                <img src="https://via.placeholder.com/600x400?text=${content.grid_id}" class="img-fluid" alt="People Groups photo" />
-            </div>
-            <div class="col-md"><ul id="pg-list" style="padding-left: 1rem;"></ul></div>
-        </div>`)
-        let pg_list = jQuery('#pg-list')
-        jQuery.each(content.people_groups, function(i,v) {
-          pg_list.append(`<li>${v.name} (${v.AffinityBloc} who speak ${v.PrimaryLanguageName})</li>`)
-        })
-    }
-
-    div.append(`<div class="row text-center"><div class="col">${content.grid_id}</</div>`)
-
-    // process counters
-    add_map()
-    add_counters()
-
-    prayer_progress_indicator( window.time )
-  }
-
-  function add_counters(){
-    let counter_div = jQuery('#counters')
-    let content = window.current_content
-    let stats = content.location.stats
-    let i = 0
-
-    // divider
-    counter_div.append(`
-      <div class="col-md-12">
-        <hr>
-      </div>
-    `)
-
-    // circle charts
-    counter_div.append(`
-      <div class="col-md-4">
-        <p class="mt-3 mb-0 font-weight-bold">Non Christians</p>
-        <div class="pie" style="--p:${stats.percent_non_christians};--b:10px;--c:red;">${stats.percent_non_christians}%</div>
-      </div>
-    `)
-    counter_div.append(`
-      <div class="col-md-4">
-        <p class="mt-3 mb-0 font-weight-bold">Cultural Christians</p>
-        <div class="pie" style="--p:${stats.percent_christian_adherents};--b:10px;--c:orange;">${stats.percent_christian_adherents}%</div>
-      </div>
-    `)
-    counter_div.append(`
-      <div class="col-md-4">
-        <p class="mt-3 mb-0 font-weight-bold">Believers</p>
-        <div class="pie" style="--p:${stats.percent_believers};--b:10px;--c:green;">${stats.percent_believers}%</div>
-      </div>
-    `)
-
-    // Faith
-    counter_div.append(`
-      <div class="col-md-4">
-        <p class="mt-3 mb-0 font-weight-bold">Don't Know Jesus</p>
-        <p class="mt-0 mb-3 font-weight-normal three-em">${stats.non_christians}</p>
-      </div>
-    `)
-    counter_div.append(`
-      <div class="col-md-4">
-        <p class="mt-3 mb-0 font-weight-bold">Know About Jesus</p>
-        <p class="mt-0 mb-3 font-weight-normal three-em">${stats.christian_adherents}</p>
-      </div>
-    `)
-    counter_div.append(`
-      <div class="col-md-4">
-        <p class="mt-3 mb-0 font-weight-bold">Know Jesus</p>
-        <p class="mt-0 mb-3 font-weight-normal three-em">${stats.believers}</p>
-      </div>
-    `)
-
-    // bar chart
-    counter_div.append(`
-      <div class="col-md-12">
-        <p class="mt-3 mb-0 font-weight-bold">Know Jesus Personally</p>
-        <p class="mt-0 mb-3 font-weight-normal grow">
-          <div class="progress">
-            <div class="progress-bar progress-bar-success" role="progressbar" style="width:${stats.percent_non_christians}%">
-              Don't Know
-            </div>
-            <div class="progress-bar progress-bar-warning" role="progressbar" style="width:${stats.percent_christian_adherents}%">
-              Know About
-            </div>
-            <div class="progress-bar progress-bar-danger" role="progressbar" style="width:${stats.percent_believers}%">
-              Know
-            </div>
-          </div>
-        </p>
-      </div>
-    `)
-
-    // 100 bodies percent count
-    let bodies = ''
-    i = 0
-    while ( i < stats.percent_non_christians ) {
-      bodies += '<i class="ion-ios-body red two-em"></i>';
-      i++;
-    }
-    i = 0
-    while ( i < stats.percent_christian_adherents ) {
-      bodies += '<i class="ion-ios-body orange two-em"></i>';
-      i++;
-    }
-    i = 0
-    while ( i < stats.percent_believers ) {
-      bodies += '<i class="ion-ios-body green two-em"></i>';
-      i++;
-    }
-    counter_div.append(`
-      <div class="col-md-2"></div>
-      <div class="col-md-8">
-        <p class="mt-3 mb-0 font-weight-bold">Know Jesus Personally</p>
-        <p class="mt-0 mb-3 font-weight-normal grow">
-          ${bodies}
-        </p>
-      </div>
-      <div class="col-md-2"></div>
-    `)
-    // end bodies
-
-    // divider
-    counter_div.append(`
-      <div class="col-md-12">
-        <hr>
-      </div>
-    `)
-
-      // demographics
-    counter_div.append(`
-      <div class="col-md-4">
-        <p class="mt-3 mb-0 font-weight-bold">Population</p>
-        <p class="mt-0 mb-3 font-weight-normal three-em">${stats.population}</p>
-      </div>
-    `)
-    counter_div.append(`
-      <div class="col-md-4">
-        <p class="mt-3 mb-0 font-weight-bold">Population Growth</p>
-        <p class="mt-0 mb-3 font-weight-normal two-em">${stats.population_growth_status}</p>
-      </div>
-    `)
-    let pop_growth_icon = 'ion-android-arrow-up green'
-    if ( stats.growth_rate <= 1 ) {
-      pop_growth_icon = 'ion-android-arrow-down red'
-    }
-    counter_div.append(`
-      <div class="col-md-4">
-        <p class="mt-3 mb-0 font-weight-bold">Population Growth</p>
-        <i class="${pop_growth_icon} six-em"></i>
-      </div>
-    `)
-    counter_div.append(`
-      <div class="col-md-4">
-        <p class="mt-3 mb-0 font-weight-bold">Language</p>
-        <p class="mt-0 mb-3 font-weight-normal two-em">${stats.primary_language}</p>
-      </div>
-    `)
-    counter_div.append(`
-      <div class="col-md-4">
-        <p class="mt-3 mb-0 font-weight-bold">Dominant Religion</p>
-        <p class="mt-0 mb-3 font-weight-normal two-em">${stats.primary_religion}</p>
-      </div>
-    `)
-    counter_div.append(`
-      <div class="col-md-4">
-        <p class="mt-3 mb-0 font-weight-bold">Position</p>
-        <p class="mt-0 mb-3 font-weight-normal two-em">1 of ${content.location.peer_locations} ${content.location.admin_level_name_plural} <br>in ${content.location.parent_name}</p>
-      </div>
-    `)
-
-
-
-    // divider
-    counter_div.append(`
-      <div class="col-md-12">
-        <hr>
-      </div>
-    `)
-
-
-    let death_icons = ['ion-ios-contact-outline','ion-ios-contact','ion-woman', 'ion-man', 'ion-ios-body', 'ion-person','ion-ios-person','ion-sad']
-    let death_icon = death_icons[Math.floor(Math.random() * death_icons.length)]
-
-    let birth_icons = ['ion-social-reddit','ion-social-reddit', 'ion-home', 'ion-ios-heart', 'ion-ios-home']
-    let birth_icon = birth_icons[Math.floor(Math.random() * birth_icons.length)]
-
-    // Deaths
-    let deaths_next_hour = parseFloat(stats.deaths_without_jesus_last_hour.replace(/,/g, ''))
-    if ( deaths_next_hour < 200 && deaths_next_hour > 0 ) {
-      deaths_next_hour = ''
-      i = 0
-      while ( i < stats.deaths_without_jesus_last_hour ) {
-        deaths_next_hour += '<i class="'+death_icon+' red three-em"></i>';
-        i++;
-      }
-      counter_div.append(`
-      <div class="col-md-12">
-        <p class="mt-3 mb-0 font-weight-bold">Dying without Jesus in an hour</p>
-        <p class="mt-0 mb-3 font-weight-normal grow">
-          ${deaths_next_hour}
-        </p>
-      </div>
-    `)
-    }
-    let deaths_next_100 = parseFloat(stats.deaths_without_jesus_last_100.replace(/,/g, ''))
-    if ( deaths_next_100 < 400 && deaths_next_100 > 0 ) {
-      deaths_next_100 = ''
-      i = 0
-      while ( i < stats.deaths_without_jesus_last_100 ) {
-        deaths_next_100 += '<i class="'+death_icon+' red two-em"></i>';
-        i++;
-      }
-      counter_div.append(`
-      <div class="col-md-12">
-        <p class="mt-3 mb-0 font-weight-bold">Dying without Jesus in the next 100 hours</p>
-        <p class="mt-0 mb-3 font-weight-normal grow">
-          ${deaths_next_100}
-        </p>
-      </div>
-    `)
-    }
-    let deaths_next_week = parseFloat(stats.deaths_without_jesus_last_week.replace(/,/g, ''))
-    if ( deaths_next_week < 400 && deaths_next_week > 0 ) {
-      deaths_next_week = ''
-      i = 0
-      while ( i < stats.deaths_without_jesus_last_week ) {
-        deaths_next_week += '<i class="'+death_icon+' red two-em"></i>';
-        i++;
-      }
-      counter_div.append(`
-      <div class="col-md-12">
-        <p class="mt-3 mb-0 font-weight-bold">Dying without Jesus next week</p>
-        <p class="mt-0 mb-3 font-weight-normal grow">
-          ${deaths_next_week}
-        </p>
-      </div>
-    `)
-    }
-    let deaths_next_month = parseFloat(stats.deaths_without_jesus_last_month.replace(/,/g, ''))
-    if ( deaths_next_month < 1000 && deaths_next_month > 0 ) {
-      deaths_next_month = ''
-      i = 0
-      while ( i < stats.deaths_without_jesus_last_month ) {
-        deaths_next_month += '<i class="'+death_icon+' red one-em"></i>';
-        i++;
-      }
-      counter_div.append(`
-      <div class="col-md-12">
-        <p class="mt-3 mb-0 font-weight-bold">Dying without Jesus next month</p>
-        <p class="mt-0 mb-3 font-weight-normal grow">
-          ${deaths_next_month}
-        </p>
-      </div>
-    `)
-    }
-    // numbers
-    if ( stats.deaths_without_jesus_last_hour !== '0' ) {
-      counter_div.append(`
-      <div class="col-md-3">
-        <p class="mt-3 mb-0 font-weight-bold">Dying without Jesus in an hour</p>
-        <p class="mt-0 mb-3 font-weight-normal three-em">${stats.deaths_without_jesus_last_hour}</p>
-      </div>
-    `)
-    }
-    if ( stats.deaths_without_jesus_last_100 !== '0' ) {
-      counter_div.append(`
-      <div class="col-md-3">
-        <p class="mt-3 mb-0 font-weight-bold">Dying without Jesus in the next 100 hours</p>
-        <p class="mt-0 mb-3 font-weight-normal three-em">${stats.deaths_without_jesus_last_100}</p>
-      </div>
-    `)
-    }
-    if ( stats.deaths_without_jesus_last_week !== '0' ) {
-      counter_div.append(`
-      <div class="col-md-3">
-        <p class="mt-3 mb-0 font-weight-bold">Dying without Jesus next week</p>
-        <p class="mt-0 mb-3 font-weight-normal three-em">${stats.deaths_without_jesus_last_week}</p>
-      </div>
-    `)
-    }
-    if ( stats.deaths_without_jesus_last_month !== '0' ) {
-      counter_div.append(`
-      <div class="col-md-3">
-        <p class="mt-3 mb-0 font-weight-bold">Dying without Jesus in the next month</p>
-        <p class="mt-0 mb-3 font-weight-normal three-em">${stats.deaths_without_jesus_last_month}</p>
-      </div>
-    `)
-    }
-
-
-
-    // divider
-    counter_div.append(`
-      <div class="col-md-12">
-        <hr>
-      </div>
-    `)
-
-
-
-
-    // Births
-
-    let births_without_jesus_last_hour = parseFloat(stats.births_without_jesus_last_hour.replace(/,/g, ''))
-    if ( births_without_jesus_last_hour < 300 && births_without_jesus_last_hour > 0 ) {
-      births_without_jesus_last_hour = ''
-      i = 0
-      while ( i < stats.births_without_jesus_last_hour ) {
-        births_without_jesus_last_hour += '<i class="'+birth_icon+' red three-em"></i>';
-        i++;
-      }
-      counter_div.append(`
-      <div class="col-md-12">
-        <p class="mt-3 mb-0 font-weight-bold">Births to families without Jesus in the last hour</p>
-        <p class="mt-0 mb-3 font-weight-normal grow">
-          ${births_without_jesus_last_hour}
-        </p>
-      </div>
-    `)
-    }
-    let births_without_jesus_last_100 = parseFloat(stats.births_without_jesus_last_100.replace(/,/g, ''))
-    if ( births_without_jesus_last_100 < 300 && births_without_jesus_last_100 > 0 ) {
-      births_without_jesus_last_100 = ''
-      i = 0
-      while ( i < stats.births_without_jesus_last_100 ) {
-        births_without_jesus_last_100 += '<i class="'+birth_icon+' red three-em"></i>';
-        i++;
-      }
-      counter_div.append(`
-      <div class="col-md-12">
-        <p class="mt-3 mb-0 font-weight-bold">Births to families without Jesus in the last 100 hours</p>
-        <p class="mt-0 mb-3 font-weight-normal grow">
-          ${births_without_jesus_last_100}
-        </p>
-      </div>
-    `)
-    }
-    let births_without_jesus_last_week = parseFloat(stats.births_without_jesus_last_week.replace(/,/g, ''))
-    if ( births_without_jesus_last_week < 300 && births_without_jesus_last_week > 0 ) {
-      births_without_jesus_last_week = ''
-      i = 0
-      while ( i < stats.births_without_jesus_last_week ) {
-        births_without_jesus_last_week += '<i class="'+birth_icon+' red two-em"></i>';
-        i++;
-      }
-      counter_div.append(`
-      <div class="col-md-12">
-        <p class="mt-3 mb-0 font-weight-bold">Births to families without Jesus in the last week</p>
-        <p class="mt-0 mb-3 font-weight-normal grow">
-          ${births_without_jesus_last_week}
-        </p>
-      </div>
-    `)
-    }
-    let births_without_jesus_last_month = parseFloat(stats.births_without_jesus_last_month.replace(/,/g, ''))
-    if ( births_without_jesus_last_month < 1000 && births_without_jesus_last_month > 0 ) {
-      births_without_jesus_last_month = ''
-      i = 0
-      while ( i < stats.births_without_jesus_last_month ) {
-        births_without_jesus_last_month += '<i class="'+birth_icon+' red two-em"></i>';
-        i++;
-      }
-      counter_div.append(`
-      <div class="col-md-12">
-        <p class="mt-3 mb-0 font-weight-bold">Births to families without Jesus in the last month</p>
-        <p class="mt-0 mb-3 font-weight-normal grow">
-          ${births_without_jesus_last_month}
-        </p>
-      </div>
-    `)
-    }
-    // numbers
-    if ( stats.births_without_jesus_last_hour !== '0' ) {
-      counter_div.append(`
-      <div class="col-md-3">
-        <p class="mt-3 mb-0 font-weight-bold">Births to families without Jesus this hour</p>
-        <p class="mt-0 mb-3 font-weight-normal three-em">${stats.births_without_jesus_last_hour}</p>
-      </div>
-    `)
-    }
-    if ( stats.births_without_jesus_last_100 !== '0' ) {
-      counter_div.append(`
-      <div class="col-md-3">
-        <p class="mt-3 mb-0 font-weight-bold">Births to families without Jesus in the last 100 hours</p>
-        <p class="mt-0 mb-3 font-weight-normal three-em">${stats.births_without_jesus_last_100}</p>
-      </div>
-    `)
-    }
-    if ( stats.births_without_jesus_last_week !== '0' ) {
-      counter_div.append(`
-      <div class="col-md-3">
-        <p class="mt-3 mb-0 font-weight-bold">Births to families without Jesus last week</p>
-        <p class="mt-0 mb-3 font-weight-normal three-em">${stats.births_without_jesus_last_week}</p>
-      </div>
-    `)
-    }
-    if ( stats.births_without_jesus_last_month !== '0' ) {
-      counter_div.append(`
-      <div class="col-md-3">
-        <p class="mt-3 mb-0 font-weight-bold">Births to families without Jesus last month</p>
-        <p class="mt-0 mb-3 font-weight-normal three-em">${stats.births_without_jesus_last_month}</p>
-      </div>
-    `)
-    }
-    // end births
-
-  }
+  /**
+   * BLOCK TEMPLATES
+   */
   function add_map() {
-    // @todo listing all maps
-
-    wide_globe()
-    zoom_globe()
-    rotating_globe()
-
-    // let location_map = jQuery('#location-map')
-    // location_map.append(`<img style="width:600px;padding:.5em;" class="img-fluid" src="${jsObject.images_url + 'locations/0/' + window.current_content.grid_id + '.png' }" /><br>`)
-    // location_map.append(`<img style="width:600px;padding:.5em;" class="img-fluid" src="${jsObject.images_url + 'locations/1/' + window.current_content.grid_id + '.png' }" /><br>`)
-
-    // return
-
-    // let rand = Math.floor(Math.random() * 3)
-    // rand = 0
-    // if ( 0 === rand ) {
-    //   rotating_globe()
-    // } else if ( 1 === rand ) {
-    //   location_map.html(`<img style="width:600px;" class="img-fluid" src="${window.current_content.location.url}" />`)
-    // } else if ( 2 === rand ) {
-    //   zoom_globe()
-    // } else if ( 3 === rand ) {
-    //   wide_globe()
-    // }
+    let rand_select = Math.floor(Math.random() * 3)
+    switch( rand_select ) {
+      case 0:
+        wide_globe()
+        break;
+      case 1:
+        // @todo islands don't look good with this map
+        zoom_globe()
+        break;
+      case 2:
+        // @todo the green dot doesn't show up in the front for asia countries
+        rotating_globe()
+        break;
+    }
   }
   function wide_globe(){
-    jQuery('#location-map').append(`<div class="chartdiv" id="wide_globe"></div>`)
+    jQuery('#location-map').append(`<div class="chartdiv wide_globe" id="wide_globe"></div>`)
     let content = window.current_content
     // https://www.amcharts.com/demos/rotating-globe/
     am5.ready(function() {
@@ -654,7 +215,7 @@ jQuery(document).ready(function(){
     }); // end am5.ready()
   }
   function rotating_globe(){
-    jQuery('#location-map').append(`<div class="chartdiv" id="rotating_globe"></div>`)
+    jQuery('#location-map').append(`<div class="chartdiv rotating_globe" id="rotating_globe"></div>`)
     let content = window.current_content
     // https://www.amcharts.com/demos/rotating-globe/
     am5.ready(function() {
@@ -746,7 +307,7 @@ jQuery(document).ready(function(){
     }); // end am5.ready()
   }
   function zoom_globe(){
-    jQuery('#location-map').append(`<div class="chartdiv" id="zoom_globe"></div>`)
+    jQuery('#location-map').append(`<div class="chartdiv zoom_globe" id="zoom_globe"></div>`)
     let content = window.current_content
     // https://www.amcharts.com/demos/rotating-globe/
     am5.ready(function() {
@@ -783,6 +344,19 @@ jQuery(document).ready(function(){
       polygonSeries.mapPolygons.template.states.create("hover", {
         fill: root.interfaceColors.get("primaryButtonHover")
       });
+
+      var backgroundSeries = chart.series.push(am5map.MapPolygonSeries.new(root, {}));
+      backgroundSeries.mapPolygons.template.setAll({
+        fill: root.interfaceColors.get("alternativeBackground"),
+        fillOpacity: 0.1,
+        strokeOpacity: 0
+      });
+      backgroundSeries.data.push({
+        geometry: am5map.getGeoRectangle(90, 180, -90, -180)
+      });
+
+      var graticuleSeries = chart.series.push(am5map.GraticuleSeries.new(root, {}));
+      graticuleSeries.mapLines.template.setAll({ strokeOpacity: 0.1, stroke: root.interfaceColors.get("alternativeBackground") })
 
       chart.appear(1000, 100);
 
@@ -824,7 +398,7 @@ jQuery(document).ready(function(){
 
 
   /**
-   *  Listeners
+   *  LISTENERS FOR CLICKS
    */
   praying_button.on('click', function( e ) {
     if ( percent < 100 ) {
@@ -862,7 +436,6 @@ jQuery(document).ready(function(){
     load_location()
     refresh()
   })
-
   question_no.on('click', function( e ) {
     button_text.html('Keep Praying...')
     button_progress.css('width', '0' )
@@ -889,7 +462,6 @@ jQuery(document).ready(function(){
         load_location()
       }, 1200);
   })
-
   pace_buttons.on('click', function(e) {
     pace_buttons.removeClass('btn-secondary').addClass('btn-outline-secondary')
     jQuery('#'+e.currentTarget.id).removeClass('btn-outline-secondary').addClass('btn-secondary')
@@ -914,10 +486,17 @@ jQuery(document).ready(function(){
   })
 
 
+  /**
+   * CELEBRATE FUNCTION
+   */
   function celebrate(){
     div.empty()
     celebrate_panel.show()
   }
+
+  /**
+   * API HANDLERS
+   */
   function log() {
     window.api_post( 'log', { grid_id: window.current_content.grid_id, pace: window.pace } )
       .done(function(location) {
@@ -940,7 +519,6 @@ jQuery(document).ready(function(){
         window.next_content = location
       })
   }
-
   window.api_post = ( action, data ) => {
     return jQuery.ajax({
       type: "POST",
@@ -955,5 +533,329 @@ jQuery(document).ready(function(){
       .fail(function(e) {
         console.log(e)
       })
+  }
+
+  /**
+   * TEMPLATE LOADER
+   */
+  function get_template( block ) {
+    let content = window.current_content
+    switch(block.type) {
+      case '4_fact_blocks':
+        _template_4_fact_blocks( block.data )
+        break;
+      case 'percent_3_circles':
+        _template_percent_3_circles( block.data )
+        break;
+      case 'percent_3_bar':
+        _template_percent_3_bar( block.data )
+        break;
+      case 'percent_2_circles':
+        _template_percent_2_circles( block.data )
+        break;
+      case '100_bodies_chart':
+        _template_100_bodies_chart( block.data )
+        break;
+      case '100_bodies_3_chart':
+        _template_100_bodies_3_chart( block.data )
+        break;
+      case 'population_change_icon_block':
+        _template_population_change_icon_block( block.data )
+        break;
+      case 'bullet_list_2_column':
+        _template_bullet_list_2_column( block.data )
+        break;
+      default:
+        break;
+    }
+  }
+  function _template_percent_3_circles( data ) {
+    div.append(
+      `<div class="w-100"><hr></div>
+       <div class="row">
+          <div class="col text-center ">
+             <p class="mt-3 mb-3 font-weight-normal one-em">${data.section_label}</p>
+          </div>
+      </div>
+      <div class="row text-center justify-content-center">
+          <div class="col-md-2">
+            <p class="mt-3 mb-0 font-weight-bold">${data.label_1}</p>
+            <div class="pie" style="--p:${data.percent_1};--b:10px;--c:red;">${data.percent_1}%</div>
+            <p class="mt-3 mb-0 font-weight-normal one-em">${data.population_1}</p>
+          </div>
+          <div class="col-md-2">
+            <p class="mt-3 mb-0 font-weight-bold">${data.label_2}</p>
+            <div class="pie" style="--p:${data.percent_2};--b:10px;--c:orange;">${data.percent_2}%</div>
+            <p class="mt-3 mb-0 font-weight-normal one-em">${data.population_2}</p>
+          </div>
+          <div class="col-md-2">
+            <p class="mt-3 mb-0 font-weight-bold">${data.label_3}</p>
+            <div class="pie" style="--p:${data.percent_3};--b:10px;--c:green;">${data.percent_3}%</div>
+            <p class="mt-3 mb-0 font-weight-normal one-em">${data.population_3}</p>
+          </div>
+      </div>
+      <div class="row text-center justify-content-center">
+        <div class="col-md-8">
+           <p class="mt-3 mb-3 font-weight-normal one-em">${data.prayer}</p>
+        </div>
+      </div>`
+    )
+  }
+  function _template_percent_2_circles( data ) {
+    div.append(
+      `<div class="w-100"><hr></div>
+      <div class="row">
+          <div class="col text-center ">
+             <p class="mt-3 mb-3 font-weight-normal one-em">${data.section_label}</p>
+          </div>
+      </div>
+      <div class="row text-center justify-content-center">
+          <div class="col-md-2">
+            <p class="mt-3 mb-0 font-weight-bold">${data.label_1}</p>
+            <div class="pie" style="--p:${data.percent_1};--b:10px;--c:red;">${data.percent_1}%</div>
+            <p class="mt-3 mb-0 font-weight-normal one-em">${data.population_1}</p>
+          </div>
+          <div class="col-md-2">
+            <p class="mt-3 mb-0 font-weight-bold">${data.label_2}</p>
+            <div class="pie" style="--p:${data.percent_2};--b:10px;--c:orange;">${data.percent_2}%</div>
+            <p class="mt-3 mb-0 font-weight-normal one-em">${data.population_2}</p>
+          </div>
+      </div>
+      <div class="row text-center justify-content-center">
+        <div class="col-md-8">
+           <p class="mt-3 mb-3 font-weight-normal one-em">${data.prayer}</p>
+        </div>
+      </div>`
+    )
+  }
+  function _template_percent_3_bar( data ) {
+    div.append(
+      `<div class="w-100"><hr></div>
+      <div class="row">
+          <div class="col text-center ">
+             <p class="mt-3 mb-3 font-weight-normal one-em">${data.section_label}</p>
+          </div>
+      </div>
+      <div class="row text-center">
+          <div class="col-md-12">
+            <p class="mt-0 mb-3 font-weight-normal grow">
+              <div class="progress">
+                <div class="progress-bar progress-bar-success" role="progressbar" style="width:${data.percent_1}%">
+                  ${data.label_1}
+                </div>
+                <div class="progress-bar progress-bar-warning" role="progressbar" style="width:${data.percent_2}%">
+                  ${data.label_2}
+                </div>
+                <div class="progress-bar progress-bar-danger" role="progressbar" style="width:${data.percent_3}%">
+                 ${data.label_3}
+                </div>
+              </div>
+            </p>
+          </div>
+      </div>
+      <div class="row text-center justify-content-center">
+        <div class="col-md-8">
+           <p class="mt-3 mb-3 font-weight-normal one-em">${data.prayer}</p>
+        </div>
+      </div>`
+    )
+  }
+  function _template_100_bodies_chart( data ) {
+    let bodies = ''
+    let i = 0
+    i = 0
+    while ( i < data.percent_1 ) {
+      bodies += '<i class="ion-ios-body red two-em"></i>';
+      i++;
+    }
+    i = 0
+    while ( i < data.percent_2 ) {
+      bodies += '<i class="ion-ios-body orange two-em"></i>';
+      i++;
+    }
+    i = 0
+    while ( i < data.percent_3 ) {
+      bodies += '<i class="ion-ios-body green two-em"></i>';
+      i++;
+    }
+    div.append(
+      `<div class="w-100"><hr></div>
+      <div class="row">
+          <div class="col text-center ">
+             <p class="mt-3 mb-3 font-weight-normal one-em">${data.section_label}</p>
+          </div>
+      </div>
+      <div class="row text-center justify-content-center">
+        <div class="col-md-8">
+            <p class="mt-0 mb-3 font-weight-normal grow">
+              ${bodies}
+            </p>
+        </div>
+      </div>
+      <div class="row text-center justify-content-center">
+        <div class="col-md-8">
+           <p class="mt-3 mb-3 font-weight-normal one-em">${data.prayer}</p>
+        </div>
+      </div>`
+    )
+  }
+  function _template_100_bodies_3_chart( data ) {
+    let bodies_1 = ''
+    let bodies_2 = ''
+    let bodies_3 = ''
+    i = 0
+    while ( i < data.percent_1 ) {
+      bodies_1 += '<i class="ion-ios-body red two-em"></i>';
+      i++;
+    }
+    i = 0
+    while ( i < data.percent_2 ) {
+      bodies_2 += '<i class="ion-ios-body orange two-em"></i>';
+      i++;
+    }
+    i = 0
+    while ( i < data.percent_3 ) {
+      bodies_3 += '<i class="ion-ios-body green two-em"></i>';
+      i++;
+    }
+    div.append(
+      `<div class="w-100"><hr></div>
+      <div class="row">
+          <div class="col text-center ">
+             <p class="mt-3 mb-3 font-weight-normal one-em">${data.section_label}</p>
+          </div>
+      </div>
+      <div class="row text-center justify-content-center">
+          <div class="col-md-3 col-sm">
+            <p class="mt-3 mb-0 font-weight-bold">${data.label_1}</p>
+            <p class="mt-0 mb-3 font-weight-normal">
+              ${bodies_1}
+            </p>
+          </div>
+          <div class="col-md-3 col-sm">
+            <p class="mt-3 mb-0 font-weight-bold">${data.label_2}</p>
+            <p class="mt-0 mb-3 font-weight-normal">
+              ${bodies_2}
+            </p>
+          </div>
+          <div class="col-md-3 col-sm">
+            <p class="mt-3 mb-0 font-weight-bold">${data.label_3}</p>
+            <p class="mt-0 mb-3 font-weight-normal">
+              ${bodies_3}
+            </p>
+          </div>
+      </div>
+      <div class="row text-center justify-content-center">
+        <div class="col-md-8">
+           <p class="mt-3 mb-3 font-weight-normal one-em">${data.prayer}</p>
+        </div>
+      </div>`
+    )
+  }
+  function _template_population_change_icon_block( data ) {
+    if( data.count === '0' || data.count.length > 3 ) {
+      return
+    }
+
+    // icon types
+    let icons = ''
+    if ( 'deaths' === data.type ) {
+      icons = ['ion-ios-contact-outline','ion-ios-contact','ion-woman', 'ion-man', 'ion-ios-body', 'ion-person','ion-ios-person','ion-sad']
+    } else {
+      icons = ['ion-social-reddit','ion-social-reddit', 'ion-home', 'ion-ios-heart', 'ion-ios-home']
+    }
+    let icon = icons[Math.floor(Math.random() * icons.length)]
+
+    // icon color
+    let icon_color = 'red'
+    if ( 'christian_adherents' === data.group ) {
+      icon_color = 'orange'
+    }
+    if ( 'believers' === data.group ) {
+      icon_color = 'orange'
+    }
+
+    // icon size
+    let icon_size = 'three-em'
+    if ( 2 === data.size ) {
+      icon_size = 'two-em'
+    }
+
+    // build icon list
+    let icon_list = ''
+    i = 0
+    while ( i < data.count ) {
+      icon_list += '<i class="'+icon+' '+icon_color+' '+icon_size+'"></i>';
+      i++;
+    }
+    div.append(
+      `<div class="row">
+          <div class="col text-center ">
+            <hr>
+             <p class="mt-3 mb-3 font-weight-normal one-em">${data.section_label}</p>
+          </div>
+      </div>
+      <div class="row text-center justify-content-center">
+          <div class="col-md-8 col-sm">
+            <p class="mt-0 mb-1 font-weight-normal icon-block">
+              ${icon_list} (${data.count})
+            </p>
+          </div>
+      </div>
+      <div class="row text-center justify-content-center">
+        <div class="col-md-8">
+           <p class="mt-3 mb-3 font-weight-normal one-em">${data.prayer}</p>
+        </div>
+      </div>`
+    )
+  }
+  function _template_4_fact_blocks( data ) {
+    div.append(
+      `<div class="w-100"><hr></div>
+       <div class="row">
+          <div class="col text-center ">
+             <p class="mt-3 mb-3 font-weight-normal one-em">${data.section_label}</p>
+          </div>
+      </div>
+      <div class="row text-center">
+          <div class="col-md-3 col-sm-6">
+            <p class="mt-3 mb-0 font-weight-bold">${data.label_1}</p>
+            <p class="mt-0 mb-3 font-weight-normal ${data.size_1}">${data.value_1}</p>
+          </div>
+          <div class="col-md-3 col-sm-6">
+            <p class="mt-3 mb-0 font-weight-bold">${data.label_2}</p>
+            <p class="mt-0 mb-3 font-weight-normal ${data.size_2}">${data.value_2}</p>
+          </div>
+          <div class="col-md-3 col-sm-6">
+            <p class="mt-3 mb-0 font-weight-bold">${data.label_3}</p>
+            <p class="mt-0 mb-3 font-weight-normal ${data.size_3}">${data.value_3}</p>
+          </div>
+          <div class="col-md-3 col-sm-6">
+            <p class="mt-3 mb-0 font-weight-bold">${data.label_4}</p>
+            <p class="mt-0 mb-3 font-weight-normal ${data.size_4}">${data.value_4}</p>
+          </div>
+      </div>
+      <div class="row text-center justify-content-center">
+        <div class="col-md-8">
+           <p class="mt-3 mb-3 font-weight-normal one-em">${data.prayer}</p>
+        </div>
+      </div>`
+    )
+  }
+  function _template_bullet_list_2_column( data ) {
+    if ( data.values.length > 0 ) {
+      let values_list = ''
+      jQuery.each(data.values, function(i,v) {
+        values_list += '<li>'+v.name+' (pop '+v.population+')</li>'
+      })
+      div.append(
+        `<div class="w-100"><hr></div>
+        <div class="row mb-1">
+            <div class="col-md-6" style="background:green;color:white;height:200px;">
+                <span >${data.section_label}</span>
+            </div>
+            <div class="col-md-6"><ul style="padding-left: 1rem;">${values_list}</ul></div>
+        </div>`)
+    }
   }
 })

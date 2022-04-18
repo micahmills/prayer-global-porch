@@ -125,7 +125,6 @@ class Prayer_Global_Laps_Post_Type_Link extends DT_Magic_Url_Base {
             </script>
             <?php
         }
-
     }
 
     public function footer_javascript(){
