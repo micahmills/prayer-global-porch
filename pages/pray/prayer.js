@@ -565,6 +565,12 @@ jQuery(document).ready(function(){
       case 'bullet_list_2_column':
         _template_bullet_list_2_column( block.data )
         break;
+      case 'fact_block':
+        _template_fact_block( block.data )
+        break;
+      case 'content_block':
+        _template_content_block( block.data )
+        break;
       default:
         break;
     }
@@ -578,17 +584,17 @@ jQuery(document).ready(function(){
           </div>
       </div>
       <div class="row text-center justify-content-center">
-          <div class="col-md-2">
+          <div class="col-md-3 col-lg-2">
             <p class="mt-3 mb-0 font-weight-bold">${data.label_1}</p>
             <div class="pie" style="--p:${data.percent_1};--b:10px;--c:red;">${data.percent_1}%</div>
             <p class="mt-3 mb-0 font-weight-normal one-em">${data.population_1}</p>
           </div>
-          <div class="col-md-2">
+          <div class="col-md-3 col-lg-2">
             <p class="mt-3 mb-0 font-weight-bold">${data.label_2}</p>
             <div class="pie" style="--p:${data.percent_2};--b:10px;--c:orange;">${data.percent_2}%</div>
             <p class="mt-3 mb-0 font-weight-normal one-em">${data.population_2}</p>
           </div>
-          <div class="col-md-2">
+          <div class="col-md-3 col-lg-2">
             <p class="mt-3 mb-0 font-weight-bold">${data.label_3}</p>
             <div class="pie" style="--p:${data.percent_3};--b:10px;--c:green;">${data.percent_3}%</div>
             <p class="mt-3 mb-0 font-weight-normal one-em">${data.population_3}</p>
@@ -610,12 +616,12 @@ jQuery(document).ready(function(){
           </div>
       </div>
       <div class="row text-center justify-content-center">
-          <div class="col-md-2">
+          <div class="col-md-3 col-lg-2">
             <p class="mt-3 mb-0 font-weight-bold">${data.label_1}</p>
             <div class="pie" style="--p:${data.percent_1};--b:10px;--c:red;">${data.percent_1}%</div>
             <p class="mt-3 mb-0 font-weight-normal one-em">${data.population_1}</p>
           </div>
-          <div class="col-md-2">
+          <div class="col-md-3 col-lg-2">
             <p class="mt-3 mb-0 font-weight-bold">${data.label_2}</p>
             <div class="pie" style="--p:${data.percent_2};--b:10px;--c:orange;">${data.percent_2}%</div>
             <p class="mt-3 mb-0 font-weight-normal one-em">${data.population_2}</p>
@@ -638,7 +644,7 @@ jQuery(document).ready(function(){
       </div>
       <div class="row text-center">
           <div class="col-md-12">
-            <p class="mt-0 mb-3 font-weight-normal grow">
+            <p class="mt-0 mb-3 font-weight-normal">
               <div class="progress">
                 <div class="progress-bar progress-bar-success" role="progressbar" style="width:${data.percent_1}%">
                   ${data.label_1}
@@ -760,7 +766,7 @@ jQuery(document).ready(function(){
     // icon types
     let icons = ''
     if ( 'deaths' === data.type ) {
-      icons = ['ion-ios-contact-outline','ion-ios-contact','ion-woman', 'ion-man', 'ion-ios-body', 'ion-person','ion-ios-person','ion-sad']
+      icons = ['ion-ios-contact-outline', 'ion-android-sad','ion-ios-contact','ion-woman', 'ion-man', 'ion-ios-body', 'ion-person','ion-ios-person','ion-sad']
     } else {
       icons = ['ion-social-reddit','ion-social-reddit', 'ion-home', 'ion-ios-heart', 'ion-ios-home']
     }
@@ -846,16 +852,80 @@ jQuery(document).ready(function(){
     if ( data.values.length > 0 ) {
       let values_list = ''
       jQuery.each(data.values, function(i,v) {
-        values_list += '<li>'+v.name+' (pop '+v.population+')</li>'
+        values_list += '<li>'+v+'</li>'
       })
       div.append(
         `<div class="w-100"><hr></div>
         <div class="row mb-1">
-            <div class="col-md-6" style="background:green;color:white;height:200px;">
+            <div class="col-md-6 mb-3" style="background:green;color:white;height:200px;">
                 <span >${data.section_label}</span>
             </div>
             <div class="col-md-6"><ul style="padding-left: 1rem;">${values_list}</ul></div>
-        </div>`)
+        </div>
+        <div class="row text-center justify-content-center">
+          <div class="col-md-8">
+             <p class="mt-3 mb-3 font-weight-normal one-em">${data.prayer}</p>
+          </div>
+      </div>`)
     }
+  }
+  function _template_fact_block( data ) {
+    let icon = ''
+    if ( typeof data.icon !== 'undefined' ) {
+      let iclass = 'ion-android-warning'
+      if ( data.icon ) {
+        iclass = data.icon
+      }
+      let icolor = 'red'
+      if ( data.color ) {
+        icolor = data.color
+      }
+      icon = '<p class="mt-3 mb-3 font-weight-bold six-em"><i class="'+iclass+' '+icolor+'"></i></p>'
+    }
+    div.append(
+      `<div class="w-100"><hr></div>
+      <div class="row">
+          <div class="col text-center ">
+             <p class="mt-3 mb-3 font-weight-bold two-em">${data.section_label}</p>${icon}
+          </div>
+      </div>
+      <div class="row text-center justify-content-center">
+        <div class="col-md-8">
+            <p class="mt-3 mb-3 font-weight-normal one-em">${data.description}</p>
+        </div>
+    </div>
+      <div class="row text-center justify-content-center">
+        <div class="col-md-8">
+           <p class="mt-3 mb-3 font-weight-normal one-em">${data.prayer}</p>
+        </div>
+    </div>`)
+  }
+
+  function _template_content_block( data ) {
+    let icon = ''
+    if ( typeof data.icon !== 'undefined' ) {
+      let iclass = 'ion-android-warning'
+      if ( data.icon ) {
+        iclass = data.icon
+      }
+      let icolor = 'red'
+      if ( data.color ) {
+        icolor = data.color
+      }
+      icon = '<p class="mt-3 mb-3 font-weight-bold six-em"><i class="'+iclass+' '+icolor+'"></i></p>'
+    }
+    div.append(
+      `<div class="w-100"><hr></div>
+      <div class="row">
+          <div class="col text-center ">
+             <p class="mt-3 mb-3 font-weight-bold two-em">${data.section_label}</p>
+            ${icon}
+          </div>
+      </div>
+      <div class="row text-center justify-content-center">
+        <div class="col-md-8">
+           <p class="mt-3 mb-3 font-weight-normal one-em">${data.content}</p>
+        </div>
+    </div>`)
   }
 })
