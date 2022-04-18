@@ -57,301 +57,328 @@ class PG_Utilities {
         // get queries
         $stack = self::_stack_query( $grid_id );
 //        dt_write_log($query);
+        // 'location' => $grid_record,
+        // 'cities' => $cities,
+        // 'people_groups' => $people_groups
 
 
         // build full stack
         $stack['list'] = [];
 
+//        $stack['list'][] = [
+//            'type' => '4_fact_blocks',
+//            'data' => [
+//                'section_label' => 'Demographics',
+//                'label_1' => 'Population',
+//                'value_1' => $stack['location']['population'],
+//                'size_1' => 'three-em',
+//                'label_2' => 'Population Growth',
+//                'value_2' => $stack['location']['population_growth_status'],
+//                'size_2' => 'two-em',
+//                'label_3' => 'Dominant Religion',
+//                'value_3' => $stack['location']['primary_religion'],
+//                'size_3' => 'two-em',
+//                'label_4' => 'Language',
+//                'value_4' => $stack['location']['primary_language'],
+//                'size_4' => 'two-em',
+//                'prayer' => ''
+//            ]
+//        ];
+//
+//
+//
+//        $stack['list'][] = [
+//            'type' => 'percent_3_circles',
+//            'data' => [
+//                'section_label' => 'Faith Status',
+//                'label_1' => "Don't Know Jesus",
+//                'percent_1' => $stack['location']['percent_non_christians'],
+//                'population_1' => $stack['location']['non_christians'],
+//                'label_2' => 'Know About Jesus',
+//                'percent_2' => $stack['location']['percent_christian_adherents'],
+//                'population_2' => $stack['location']['christian_adherents'],
+//                'label_3' => 'Know Jesus',
+//                'percent_3' => $stack['location']['percent_believers'],
+//                'population_3' => $stack['location']['believers'],
+//                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' lost neighbors around them.'
+//            ]
+//        ];
+//        $stack['list'][] = [
+//            'type' => 'percent_2_circles',
+//            'data' => [
+//                'section_label' => 'Faith Status',
+//                'label_1' => "Don't Know Jesus",
+//                'percent_1' => $stack['location']['percent_non_christians'],
+//                'population_1' => $stack['location']['non_christians'],
+//                'label_2' => 'Know Jesus',
+//                'percent_2' => $stack['location']['percent_believers'],
+//                'population_2' => $stack['location']['believers'],
+//                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' lost neighbors around them.'
+//            ]
+//        ];
+//        $stack['list'][] = [
+//            'type' => 'percent_2_circles',
+//            'data' => [
+//                'section_label' => 'Faith Status',
+//                'label_1' => "Know About Jesus",
+//                'percent_1' => $stack['location']['percent_christian_adherents'],
+//                'population_1' => $stack['location']['christian_adherents'],
+//                'label_2' => 'Know Jesus',
+//                'percent_2' => $stack['location']['percent_believers'],
+//                'population_2' => $stack['location']['believers'],
+//                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to encourage the '.$stack['location']['christian_adherents'].' neighbors who might know the name of Jesus but have not found a personal, transformative relationship with him.'
+//            ]
+//        ];
+//        $stack['list'][] = [
+//            'type' => 'percent_3_bar',
+//            'data' => [
+//                'section_label' => 'Knowing Jesus',
+//                'label_1' => "Don't",
+//                'percent_1' => $stack['location']['percent_non_christians'],
+//                'population_1' => $stack['location']['non_christians'],
+//                'label_2' => 'Know About',
+//                'percent_2' => $stack['location']['percent_christian_adherents'],
+//                'population_2' => $stack['location']['christian_adherents'],
+//                'label_3' => 'Know',
+//                'percent_3' => $stack['location']['percent_believers'],
+//                'population_3' => $stack['location']['believers'],
+//                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' lost neighbors around them.'
+//            ]
+//        ];
+//        $stack['list'][] = [
+//            'type' => '100_bodies_chart',
+//            'data' => [
+//                'section_label' => 'Knowing Jesus',
+//                'percent_1' => $stack['location']['percent_non_christians'],
+//                'percent_2' => $stack['location']['percent_christian_adherents'],
+//                'percent_3' => $stack['location']['percent_believers'],
+//                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' lost neighbors around them.'
+//            ]
+//        ];
+//        $stack['list'][] = [
+//            'type' => '100_bodies_3_chart',
+//            'data' => [
+//                'section_label' => 'Knowing Jesus',
+//                'label_1' => "Don't know Jesus",
+//                'percent_1' => $stack['location']['percent_non_christians'],
+//                'label_2' => "Know about Jesus",
+//                'percent_2' => $stack['location']['percent_christian_adherents'],
+//                'label_3' => "Know Jesus",
+//                'percent_3' => $stack['location']['percent_believers'],
+//                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' lost neighbors around them.'
+//            ]
+//        ];
+//
+//
+//        // deaths non christians
+//        $stack['list'][] = [
+//            'type' => 'population_change_icon_block',
+//            'data' => [
+//                'section_label' => 'Dying without Jesus in the next hour',
+//                'count' => $stack['location']['deaths_non_christians_next_hour'],
+//                'group' => 'non_christians',
+//                'type' => 'deaths',
+//                'size' => ( $stack['location']['deaths_non_christians_next_hour'] > 400 ) ? 2 : 3,
+//                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' lost neighbors around them.'
+//            ]
+//        ];
+//        $stack['list'][] = [
+//            'type' => 'population_change_icon_block',
+//            'data' => [
+//                'section_label' => 'Dying without Jesus in the next 100 hours',
+//                'count' => $stack['location']['deaths_non_christians_next_100'],
+//                'group' => 'non_christians',
+//                'type' => 'deaths',
+//                'size' => ( $stack['location']['deaths_non_christians_next_100'] > 400 ) ? 2 : 3,
+//                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' lost neighbors around them.'
+//            ]
+//        ];
+//        $stack['list'][] = [
+//            'type' => 'population_change_icon_block',
+//            'data' => [
+//                'section_label' => 'Dying without Jesus in the next week',
+//                'count' => $stack['location']['deaths_non_christians_next_week'],
+//                'group' => 'non_christians',
+//                'type' => 'deaths',
+//                'size' => ( $stack['location']['deaths_non_christians_next_week'] > 400 ) ? 2 : 3,
+//                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' lost neighbors around them.'
+//            ]
+//        ];
+//        $stack['list'][] = [
+//            'type' => 'population_change_icon_block',
+//            'data' => [
+//                'section_label' => 'Dying without Jesus in the next month',
+//                'count' => $stack['location']['deaths_non_christians_next_month'],
+//                'group' => 'non_christians',
+//                'type' => 'deaths',
+//                'size' => ( $stack['location']['deaths_non_christians_next_month'] > 400 ) ? 2 : 3,
+//                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' lost neighbors around them.'
+//            ]
+//        ];
+//
+//
+//        // births non christians
+//        $stack['list'][] = [
+//            'type' => 'population_change_icon_block',
+//            'data' => [
+//                'section_label' => 'Born to a family without Jesus in the next hour',
+//                'count' => $stack['location']['births_non_christians_last_hour'],
+//                'group' => 'non_christians',
+//                'type' => 'births',
+//                'size' => ( $stack['location']['births_non_christians_last_hour'] > 400 ) ? 2 : 3,
+//                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' lost neighbors around them.'
+//            ]
+//        ];
+//        $stack['list'][] = [
+//            'type' => 'population_change_icon_block',
+//            'data' => [
+//                'section_label' => 'Born to a family without Jesus in the next 100 hours',
+//                'count' => $stack['location']['births_non_christians_last_100'],
+//                'group' => 'non_christians',
+//                'type' => 'births',
+//                'size' => ( $stack['location']['births_non_christians_last_100'] > 400 ) ? 2 : 3,
+//                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' lost neighbors around them.'
+//            ]
+//        ];
+//        $stack['list'][] = [
+//            'type' => 'population_change_icon_block',
+//            'data' => [
+//                'section_label' => 'Born to a family without Jesus in the next week',
+//                'count' => $stack['location']['births_non_christians_last_week'],
+//                'group' => 'non_christians',
+//                'type' => 'births',
+//                'size' => ( $stack['location']['births_non_christians_last_week'] > 400 ) ? 2 : 3,
+//                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' lost neighbors around them.'
+//            ]
+//        ];
+//        $stack['list'][] = [
+//            'type' => 'population_change_icon_block',
+//            'data' => [
+//                'section_label' => 'Born to a family without Jesus in the next month',
+//                'count' => $stack['location']['births_non_christians_last_month'],
+//                'group' => 'non_christians',
+//                'type' => 'births',
+//                'size' => ( $stack['location']['births_non_christians_last_month'] > 400 ) ? 2 : 3,
+//                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' lost neighbors around them.'
+//            ]
+//        ];
+//
+//
+//        // deaths christian adherents
+//        $stack['list'][] = [
+//            'type' => 'population_change_icon_block',
+//            'data' => [
+//                'section_label' => 'Dying in the next hour',
+//                'count' => $stack['location']['deaths_christian_adherents_next_hour'],
+//                'group' => 'christian_adherents',
+//                'type' => 'deaths',
+//                'size' => ( $stack['location']['deaths_christian_adherents_next_hour'] > 400 ) ? 2 : 3,
+//                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['christian_adherents'].' nominal neighbors around them.'
+//            ]
+//        ];
+//        $stack['list'][] = [
+//            'type' => 'population_change_icon_block',
+//            'data' => [
+//                'section_label' => 'Dying in the next 100 hours',
+//                'count' => $stack['location']['deaths_christian_adherents_next_100'],
+//                'group' => 'christian_adherents',
+//                'type' => 'deaths',
+//                'size' => ( $stack['location']['deaths_christian_adherents_next_100'] > 400 ) ? 2 : 3,
+//                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['christian_adherents'].' nominal neighbors around them.'
+//            ]
+//        ];
+//        $stack['list'][] = [
+//            'type' => 'population_change_icon_block',
+//            'data' => [
+//                'section_label' => 'Dying in the next week',
+//                'count' => $stack['location']['deaths_christian_adherents_next_week'],
+//                'group' => 'christian_adherents',
+//                'type' => 'deaths',
+//                'size' => ( $stack['location']['deaths_christian_adherents_next_week'] > 400 ) ? 2 : 3,
+//                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['christian_adherents'].' nominal neighbors around them.'
+//            ]
+//        ];
+//        $stack['list'][] = [
+//            'type' => 'population_change_icon_block',
+//            'data' => [
+//                'section_label' => 'Dying in the next month',
+//                'count' => $stack['location']['deaths_christian_adherents_next_month'],
+//                'group' => 'christian_adherents',
+//                'type' => 'deaths',
+//                'size' => ( $stack['location']['deaths_christian_adherents_next_month'] > 400 ) ? 2 : 3,
+//                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['christian_adherents'].' nominal neighbors around them.'
+//            ]
+//        ];
+//
+//        // births christian adherents
+//        $stack['list'][] = [
+//            'type' => 'population_change_icon_block',
+//            'data' => [
+//                'section_label' => 'Born in the next hour',
+//                'count' => $stack['location']['births_christian_adherents_last_hour'],
+//                'group' => 'christian_adherents',
+//                'type' => 'births',
+//                'size' => ( $stack['location']['births_christian_adherents_last_hour'] > 400 ) ? 2 : 3,
+//                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' nominal neighbors around them.'
+//            ]
+//        ];
+//        $stack['list'][] = [
+//            'type' => 'population_change_icon_block',
+//            'data' => [
+//                'section_label' => 'Born in the next 100 hours',
+//                'count' => $stack['location']['births_christian_adherents_last_100'],
+//                'group' => 'christian_adherents',
+//                'type' => 'births',
+//                'size' => ( $stack['location']['births_christian_adherents_last_100'] > 400 ) ? 2 : 3,
+//                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' nominal neighbors around them.'
+//            ]
+//        ];
+//        $stack['list'][] = [
+//            'type' => 'population_change_icon_block',
+//            'data' => [
+//                'section_label' => 'Born in the next week',
+//                'count' => $stack['location']['births_christian_adherents_last_week'],
+//                'group' => 'christian_adherents',
+//                'type' => 'births',
+//                'size' => ( $stack['location']['births_christian_adherents_last_week'] > 400 ) ? 2 : 3,
+//                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' nominal neighbors around them.'
+//            ]
+//        ];
+//        $stack['list'][] = [
+//            'type' => 'population_change_icon_block',
+//            'data' => [
+//                'section_label' => 'Born in the next month',
+//                'count' => $stack['location']['births_christian_adherents_last_month'],
+//                'group' => 'christian_adherents',
+//                'type' => 'births',
+//                'size' => ( $stack['location']['births_christian_adherents_last_month'] > 400 ) ? 2 : 3,
+//                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' nominal neighbors around them.'
+//            ]
+//        ];
+
+        // @todo photo prompt
+        // @todo cities prompt
         $stack['list'][] = [
-            'type' => '4_fact_blocks',
+            'type' => 'bullet_list_2_column',
             'data' => [
-                'section_label' => 'Demographics',
-                'label_1' => 'Population',
-                'value_1' => $stack['location']['population'],
-                'size_1' => 'three-em',
-                'label_2' => 'Population Growth',
-                'value_2' => $stack['location']['population_growth_status'],
-                'size_2' => 'two-em',
-                'label_3' => 'Dominant Religion',
-                'value_3' => $stack['location']['primary_religion'],
-                'size_3' => 'two-em',
-                'label_4' => 'Language',
-                'value_4' => $stack['location']['primary_language'],
-                'size_4' => 'two-em',
+                'section_label' => 'Top Cities',
+                'values' => $stack['cities'],
                 'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' nominal neighbors around them.'
             ]
         ];
 
 
-
+        // @todo people groups prompt
         $stack['list'][] = [
-            'type' => 'percent_3_circles',
+            'type' => 'bullet_list_2_column',
             'data' => [
-                'section_label' => 'Faith Status',
-                'label_1' => "Don't Know Jesus",
-                'percent_1' => $stack['location']['percent_non_christians'],
-                'population_1' => $stack['location']['non_christians'],
-                'label_2' => 'Know About Jesus',
-                'percent_2' => $stack['location']['percent_christian_adherents'],
-                'population_2' => $stack['location']['christian_adherents'],
-                'label_3' => 'Know Jesus',
-                'percent_3' => $stack['location']['percent_believers'],
-                'population_3' => $stack['location']['believers'],
-                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' lost neighbors around them.'
-            ]
-        ];
-        $stack['list'][] = [
-            'type' => 'percent_2_circles',
-            'data' => [
-                'section_label' => 'Faith Status',
-                'label_1' => "Don't Know Jesus",
-                'percent_1' => $stack['location']['percent_non_christians'],
-                'population_1' => $stack['location']['non_christians'],
-                'label_2' => 'Know Jesus',
-                'percent_2' => $stack['location']['percent_believers'],
-                'population_2' => $stack['location']['believers'],
-                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' lost neighbors around them.'
-            ]
-        ];
-        $stack['list'][] = [
-            'type' => 'percent_2_circles',
-            'data' => [
-                'section_label' => 'Faith Status',
-                'label_1' => "Know About Jesus",
-                'percent_1' => $stack['location']['percent_christian_adherents'],
-                'population_1' => $stack['location']['christian_adherents'],
-                'label_2' => 'Know Jesus',
-                'percent_2' => $stack['location']['percent_believers'],
-                'population_2' => $stack['location']['believers'],
-                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to encourage the '.$stack['location']['christian_adherents'].' neighbors who might know the name of Jesus but have not found a personal, transformative relationship with him.'
-            ]
-        ];
-        $stack['list'][] = [
-            'type' => 'percent_3_bar',
-            'data' => [
-                'section_label' => 'Knowing Jesus',
-                'label_1' => "Don't",
-                'percent_1' => $stack['location']['percent_non_christians'],
-                'population_1' => $stack['location']['non_christians'],
-                'label_2' => 'Know About',
-                'percent_2' => $stack['location']['percent_christian_adherents'],
-                'population_2' => $stack['location']['christian_adherents'],
-                'label_3' => 'Know',
-                'percent_3' => $stack['location']['percent_believers'],
-                'population_3' => $stack['location']['believers'],
-                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' lost neighbors around them.'
-            ]
-        ];
-        $stack['list'][] = [
-            'type' => '100_bodies_chart',
-            'data' => [
-                'section_label' => 'Knowing Jesus',
-                'percent_1' => $stack['location']['percent_non_christians'],
-                'percent_2' => $stack['location']['percent_christian_adherents'],
-                'percent_3' => $stack['location']['percent_believers'],
-                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' lost neighbors around them.'
-            ]
-        ];
-        $stack['list'][] = [
-            'type' => '100_bodies_3_chart',
-            'data' => [
-                'section_label' => 'Knowing Jesus',
-                'label_1' => "Don't know Jesus",
-                'percent_1' => $stack['location']['percent_non_christians'],
-                'label_2' => "Know about Jesus",
-                'percent_2' => $stack['location']['percent_christian_adherents'],
-                'label_3' => "Know Jesus",
-                'percent_3' => $stack['location']['percent_believers'],
-                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' lost neighbors around them.'
-            ]
-        ];
-
-
-        // deaths non christians
-        $stack['list'][] = [
-            'type' => 'population_change_icon_block',
-            'data' => [
-                'section_label' => 'Dying without Jesus in the next hour',
-                'count' => $stack['location']['deaths_non_christians_next_hour'],
-                'group' => 'non_christians',
-                'type' => 'deaths',
-                'size' => ( $stack['location']['deaths_non_christians_next_hour'] > 400 ) ? 2 : 3,
-                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' lost neighbors around them.'
-            ]
-        ];
-        $stack['list'][] = [
-            'type' => 'population_change_icon_block',
-            'data' => [
-                'section_label' => 'Dying without Jesus in the next 100 hours',
-                'count' => $stack['location']['deaths_non_christians_next_100'],
-                'group' => 'non_christians',
-                'type' => 'deaths',
-                'size' => ( $stack['location']['deaths_non_christians_next_100'] > 400 ) ? 2 : 3,
-                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' lost neighbors around them.'
-            ]
-        ];
-        $stack['list'][] = [
-            'type' => 'population_change_icon_block',
-            'data' => [
-                'section_label' => 'Dying without Jesus in the next week',
-                'count' => $stack['location']['deaths_non_christians_next_week'],
-                'group' => 'non_christians',
-                'type' => 'deaths',
-                'size' => ( $stack['location']['deaths_non_christians_next_week'] > 400 ) ? 2 : 3,
-                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' lost neighbors around them.'
-            ]
-        ];
-        $stack['list'][] = [
-            'type' => 'population_change_icon_block',
-            'data' => [
-                'section_label' => 'Dying without Jesus in the next month',
-                'count' => $stack['location']['deaths_non_christians_next_month'],
-                'group' => 'non_christians',
-                'type' => 'deaths',
-                'size' => ( $stack['location']['deaths_non_christians_next_month'] > 400 ) ? 2 : 3,
-                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' lost neighbors around them.'
-            ]
-        ];
-
-
-        // births non christians
-        $stack['list'][] = [
-            'type' => 'population_change_icon_block',
-            'data' => [
-                'section_label' => 'Born to a family without Jesus in the next hour',
-                'count' => $stack['location']['births_non_christians_last_hour'],
-                'group' => 'non_christians',
-                'type' => 'births',
-                'size' => ( $stack['location']['births_non_christians_last_hour'] > 400 ) ? 2 : 3,
-                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' lost neighbors around them.'
-            ]
-        ];
-        $stack['list'][] = [
-            'type' => 'population_change_icon_block',
-            'data' => [
-                'section_label' => 'Born to a family without Jesus in the next 100 hours',
-                'count' => $stack['location']['births_non_christians_last_100'],
-                'group' => 'non_christians',
-                'type' => 'births',
-                'size' => ( $stack['location']['births_non_christians_last_100'] > 400 ) ? 2 : 3,
-                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' lost neighbors around them.'
-            ]
-        ];
-        $stack['list'][] = [
-            'type' => 'population_change_icon_block',
-            'data' => [
-                'section_label' => 'Born to a family without Jesus in the next week',
-                'count' => $stack['location']['births_non_christians_last_week'],
-                'group' => 'non_christians',
-                'type' => 'births',
-                'size' => ( $stack['location']['births_non_christians_last_week'] > 400 ) ? 2 : 3,
-                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' lost neighbors around them.'
-            ]
-        ];
-        $stack['list'][] = [
-            'type' => 'population_change_icon_block',
-            'data' => [
-                'section_label' => 'Born to a family without Jesus in the next month',
-                'count' => $stack['location']['births_non_christians_last_month'],
-                'group' => 'non_christians',
-                'type' => 'births',
-                'size' => ( $stack['location']['births_non_christians_last_month'] > 400 ) ? 2 : 3,
-                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' lost neighbors around them.'
-            ]
-        ];
-
-
-        // deaths christian adherents
-        $stack['list'][] = [
-            'type' => 'population_change_icon_block',
-            'data' => [
-                'section_label' => 'Dying in the next hour',
-                'count' => $stack['location']['deaths_christian_adherents_next_hour'],
-                'group' => 'christian_adherents',
-                'type' => 'deaths',
-                'size' => ( $stack['location']['deaths_christian_adherents_next_hour'] > 400 ) ? 2 : 3,
-                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['christian_adherents'].' nominal neighbors around them.'
-            ]
-        ];
-        $stack['list'][] = [
-            'type' => 'population_change_icon_block',
-            'data' => [
-                'section_label' => 'Dying in the next 100 hours',
-                'count' => $stack['location']['deaths_christian_adherents_next_100'],
-                'group' => 'christian_adherents',
-                'type' => 'deaths',
-                'size' => ( $stack['location']['deaths_christian_adherents_next_100'] > 400 ) ? 2 : 3,
-                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['christian_adherents'].' nominal neighbors around them.'
-            ]
-        ];
-        $stack['list'][] = [
-            'type' => 'population_change_icon_block',
-            'data' => [
-                'section_label' => 'Dying in the next week',
-                'count' => $stack['location']['deaths_christian_adherents_next_week'],
-                'group' => 'christian_adherents',
-                'type' => 'deaths',
-                'size' => ( $stack['location']['deaths_christian_adherents_next_week'] > 400 ) ? 2 : 3,
-                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['christian_adherents'].' nominal neighbors around them.'
-            ]
-        ];
-        $stack['list'][] = [
-            'type' => 'population_change_icon_block',
-            'data' => [
-                'section_label' => 'Dying in the next month',
-                'count' => $stack['location']['deaths_christian_adherents_next_month'],
-                'group' => 'christian_adherents',
-                'type' => 'deaths',
-                'size' => ( $stack['location']['deaths_christian_adherents_next_month'] > 400 ) ? 2 : 3,
-                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['christian_adherents'].' nominal neighbors around them.'
-            ]
-        ];
-
-        // births christian adherents
-        $stack['list'][] = [
-            'type' => 'population_change_icon_block',
-            'data' => [
-                'section_label' => 'Born in the next hour',
-                'count' => $stack['location']['births_christian_adherents_last_hour'],
-                'group' => 'christian_adherents',
-                'type' => 'births',
-                'size' => ( $stack['location']['births_christian_adherents_last_hour'] > 400 ) ? 2 : 3,
+                'section_label' => 'People Groups',
+                'values' => $stack['people_groups'],
                 'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' nominal neighbors around them.'
             ]
         ];
-        $stack['list'][] = [
-            'type' => 'population_change_icon_block',
-            'data' => [
-                'section_label' => 'Born in the next 100 hours',
-                'count' => $stack['location']['births_christian_adherents_last_100'],
-                'group' => 'christian_adherents',
-                'type' => 'births',
-                'size' => ( $stack['location']['births_christian_adherents_last_100'] > 400 ) ? 2 : 3,
-                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' nominal neighbors around them.'
-            ]
-        ];
-        $stack['list'][] = [
-            'type' => 'population_change_icon_block',
-            'data' => [
-                'section_label' => 'Born in the next week',
-                'count' => $stack['location']['births_christian_adherents_last_week'],
-                'group' => 'christian_adherents',
-                'type' => 'births',
-                'size' => ( $stack['location']['births_christian_adherents_last_week'] > 400 ) ? 2 : 3,
-                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' nominal neighbors around them.'
-            ]
-        ];
-        $stack['list'][] = [
-            'type' => 'population_change_icon_block',
-            'data' => [
-                'section_label' => 'Born in the next month',
-                'count' => $stack['location']['births_christian_adherents_last_month'],
-                'group' => 'christian_adherents',
-                'type' => 'births',
-                'size' => ( $stack['location']['births_christian_adherents_last_month'] > 400 ) ? 2 : 3,
-                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' nominal neighbors around them.'
-            ]
-        ];
+
+
 
 
 
