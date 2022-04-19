@@ -81,6 +81,7 @@ class PG_Utilities {
                 'label_4' => 'Language',
                 'value_4' => $stack['location']['primary_language'],
                 'size_4' => 'two-em',
+                'summary' => 'The '.$stack['location']['admin_level_name'].' of <strong>'.$stack['location']['full_name'].'</strong> has a population of <strong>'.$stack['location']['population'].'</strong> and is 1 of '.$stack['location']['peer_locations'].' '.$stack['location']['admin_level_name_plural'].' in '.$stack['location']['parent_name'].'. We estimate '.$stack['location']['name'].' has <strong>'.$stack['location']['believers'].'</strong> people who might know Jesus, <strong>'.$stack['location']['christian_adherents'].'</strong> people who might know about Jesus culturally, and <strong>'.$stack['location']['non_christians'].'</strong> people who do not know Jesus.',
                 'prayer' => ''
             ]
         ];
@@ -100,7 +101,8 @@ class PG_Utilities {
                 'label_3' => 'Know Jesus',
                 'percent_3' => $stack['location']['percent_believers'],
                 'population_3' => $stack['location']['believers'],
-                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' lost neighbors around them.'
+                'summary' => 'The '.$stack['location']['admin_level_name'].' of <strong>'.$stack['location']['full_name'].'</strong> has a population of <strong>'.$stack['location']['population'].'</strong> and is 1 of '.$stack['location']['peer_locations'].' '.$stack['location']['admin_level_name_plural'].' in '.$stack['location']['parent_name'].'. We estimate '.$stack['location']['name'].' has <strong>'.$stack['location']['believers'].'</strong> people who might know Jesus, <strong>'.$stack['location']['christian_adherents'].'</strong> people who might know about Jesus culturally, and <strong>'.$stack['location']['non_christians'].'</strong> people who do not know Jesus.',
+                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' lost neighbors around them.',
             ]
         ];
         $stack['list'][] = [
@@ -110,10 +112,12 @@ class PG_Utilities {
                 'label_1' => "Don't Know Jesus",
                 'percent_1' => $stack['location']['percent_non_christians'],
                 'population_1' => $stack['location']['non_christians'],
+                'color_1' => 'red',
                 'label_2' => 'Know Jesus',
                 'percent_2' => $stack['location']['percent_believers'],
                 'population_2' => $stack['location']['believers'],
-                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' lost neighbors around them.'
+                'summary' => 'The '.$stack['location']['admin_level_name'].' of <strong>'.$stack['location']['full_name'].'</strong> has a population of <strong>'.$stack['location']['population'].'</strong> and is 1 of '.$stack['location']['peer_locations'].' '.$stack['location']['admin_level_name_plural'].' in '.$stack['location']['parent_name'].'. We estimate '.$stack['location']['name'].' has <strong>'.$stack['location']['believers'].'</strong> people who might know Jesus, <strong>'.$stack['location']['christian_adherents'].'</strong> people who might know about Jesus culturally, and <strong>'.$stack['location']['non_christians'].'</strong> people who do not know Jesus.',
+                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' lost neighbors around them.',
             ]
         ];
         $stack['list'][] = [
@@ -123,16 +127,18 @@ class PG_Utilities {
                 'label_1' => "Know About Jesus",
                 'percent_1' => $stack['location']['percent_christian_adherents'],
                 'population_1' => $stack['location']['christian_adherents'],
+                'color_1' => 'orange',
                 'label_2' => 'Know Jesus',
                 'percent_2' => $stack['location']['percent_believers'],
                 'population_2' => $stack['location']['believers'],
-                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to encourage the '.$stack['location']['christian_adherents'].' neighbors who might know the name of Jesus but have not found a personal, transformative relationship with him.'
+                'summary' => 'The '.$stack['location']['admin_level_name'].' of <strong>'.$stack['location']['full_name'].'</strong> has a population of <strong>'.$stack['location']['population'].'</strong> and is 1 of '.$stack['location']['peer_locations'].' '.$stack['location']['admin_level_name_plural'].' in '.$stack['location']['parent_name'].'. We estimate '.$stack['location']['name'].' has <strong>'.$stack['location']['believers'].'</strong> people who might know Jesus, <strong>'.$stack['location']['christian_adherents'].'</strong> people who might know about Jesus culturally, and <strong>'.$stack['location']['non_christians'].'</strong> people who do not know Jesus.',
+                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' lost neighbors around them.',
             ]
         ];
         $stack['list'][] = [
             'type' => 'percent_3_bar',
             'data' => [
-                'section_label' => 'Knowing Jesus',
+                'section_label' => 'Faith Status',
                 'label_1' => "Don't",
                 'percent_1' => $stack['location']['percent_non_christians'],
                 'population_1' => $stack['location']['non_christians'],
@@ -142,30 +148,33 @@ class PG_Utilities {
                 'label_3' => 'Know',
                 'percent_3' => $stack['location']['percent_believers'],
                 'population_3' => $stack['location']['believers'],
-                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' lost neighbors around them.'
+                'summary' => 'The '.$stack['location']['admin_level_name'].' of <strong>'.$stack['location']['full_name'].'</strong> has a population of <strong>'.$stack['location']['population'].'</strong> and is 1 of '.$stack['location']['peer_locations'].' '.$stack['location']['admin_level_name_plural'].' in '.$stack['location']['parent_name'].'. We estimate '.$stack['location']['name'].' has <strong>'.$stack['location']['believers'].'</strong> people who might know Jesus, <strong>'.$stack['location']['christian_adherents'].'</strong> people who might know about Jesus culturally, and <strong>'.$stack['location']['non_christians'].'</strong> people who do not know Jesus.',
+                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' lost neighbors around them.',
             ]
         ];
         $stack['list'][] = [
             'type' => '100_bodies_chart',
             'data' => [
-                'section_label' => 'Knowing Jesus',
+                'section_label' => 'Faith Status',
                 'percent_1' => $stack['location']['percent_non_christians'],
                 'percent_2' => $stack['location']['percent_christian_adherents'],
                 'percent_3' => $stack['location']['percent_believers'],
-                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' lost neighbors around them.'
+                'summary' => 'The '.$stack['location']['admin_level_name'].' of <strong>'.$stack['location']['full_name'].'</strong> has a population of <strong>'.$stack['location']['population'].'</strong> and is 1 of '.$stack['location']['peer_locations'].' '.$stack['location']['admin_level_name_plural'].' in '.$stack['location']['parent_name'].'. We estimate '.$stack['location']['name'].' has <strong>'.$stack['location']['believers'].'</strong> people who might know Jesus, <strong>'.$stack['location']['christian_adherents'].'</strong> people who might know about Jesus culturally, and <strong>'.$stack['location']['non_christians'].'</strong> people who do not know Jesus.',
+                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' lost neighbors around them.',
             ]
         ];
         $stack['list'][] = [
             'type' => '100_bodies_3_chart',
             'data' => [
-                'section_label' => 'Knowing Jesus',
+                'section_label' => 'Faith Status',
                 'label_1' => "Don't know Jesus",
                 'percent_1' => $stack['location']['percent_non_christians'],
                 'label_2' => "Know about Jesus",
                 'percent_2' => $stack['location']['percent_christian_adherents'],
                 'label_3' => "Know Jesus",
                 'percent_3' => $stack['location']['percent_believers'],
-                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' lost neighbors around them.'
+                'summary' => 'The '.$stack['location']['admin_level_name'].' of <strong>'.$stack['location']['full_name'].'</strong> has a population of <strong>'.$stack['location']['population'].'</strong> and is 1 of '.$stack['location']['peer_locations'].' '.$stack['location']['admin_level_name_plural'].' in '.$stack['location']['parent_name'].'. We estimate '.$stack['location']['name'].' has <strong>'.$stack['location']['believers'].'</strong> people who might know Jesus, <strong>'.$stack['location']['christian_adherents'].'</strong> people who might know about Jesus culturally, and <strong>'.$stack['location']['non_christians'].'</strong> people who do not know Jesus.',
+                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' lost neighbors around them.',
             ]
         ];
 

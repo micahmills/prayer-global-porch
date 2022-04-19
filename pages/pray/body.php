@@ -190,6 +190,24 @@
     #location-name {
         width:100%;
     }
+    .btn {
+        cursor: pointer;
+    }
+    #map-wrapper, #map-content, #mabox-map {
+        height:300px;
+        padding-top:10px;
+    }
+    @media (min-width: 768px) {
+        #map-wrapper, #map-content, #mabox-map {
+            height: 500px;
+        }
+    }
+    #style-menu {
+         position: absolute;
+         background: #efefef;
+         padding: 10px;
+         font-family: 'Open Sans', sans-serif;
+     }
 </style>
 
 <!-- navigation & widget -->
@@ -225,6 +243,7 @@
             <button type="button" class="btn btn-secondary decision" id="decision__next">Next</button>
         </div>
     </div>
+    <div class="w-100" ></div>
     <div class="container">
         <h3 class="mt-3 font-weight-normal text-center" id="location-name"></h3>
     </div>
@@ -253,7 +272,6 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-<!--                <button type="button" class="btn btn-primary" id="pace__save_changes">Save changes</button>-->
             </div>
         </div>
     </div>
@@ -261,5 +279,14 @@
 
 <!-- content section -->
 <section>
+    <div class="container" id="map">
+        <div class="row">
+            <div class="col">
+                <p class="text-md-center" id="location-map"></p>
+                <p class="text-md-center"><button type="button" class="btn btn-link btn-sm" id="show_borders">show borders</button></p>
+            </div>
+        </div>
+        <div class="w-100"><hr></div>
+    </div>
     <div class="container" id="content"></div>
 </section>

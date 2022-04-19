@@ -110,6 +110,7 @@ class Prayer_Global_Laps_Post_Type_Link extends DT_Magic_Url_Base {
             <script>
                 let jsObject = [<?php echo json_encode([
                     'map_key' => DT_Mapbox_API::get_key(),
+                    'mirror_url' => dt_get_location_grid_mirror( true ),
                     'ipstack' => DT_Ipstack_API::get_key(),
                     'root' => esc_url_raw( rest_url() ),
                     'nonce' => wp_create_nonce( 'wp_rest' ),
@@ -123,6 +124,8 @@ class Prayer_Global_Laps_Post_Type_Link extends DT_Magic_Url_Base {
                     'next_content' => PG_Utilities::get_new_global_location(),
                 ]) ?>][0]
             </script>
+            <script type="text/javascript" src="<?php echo DT_Mapbox_API::$mapbox_gl_js ?>"></script>
+            <link rel="stylesheet" href="<?php echo DT_Mapbox_API::$mapbox_gl_css ?>" type="text/css" media="all">
             <?php
         }
     }
@@ -132,6 +135,7 @@ class Prayer_Global_Laps_Post_Type_Link extends DT_Magic_Url_Base {
     }
 
     public function body(){
+        DT_Mapbox_API::geocoder_scripts();
         require_once( 'body.php' );
     }
     public function completed_body(){

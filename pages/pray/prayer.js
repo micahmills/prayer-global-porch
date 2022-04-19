@@ -25,6 +25,8 @@ jQuery(document).ready(function(){
   let pace_open_options = jQuery('#option_filter')
   let pace_buttons = jQuery('.pace')
 
+  let location_show_borders = jQuery('#show_borders')
+
   let i
 
   let interval
@@ -60,16 +62,8 @@ jQuery(document).ready(function(){
     jQuery('#location-name').html(content.location.full_name)
     div.empty()
 
-    // MAP
-    div.append(
-      `<div class="row">
-          <div class="col">
-              <p class="text-md-center" id="location-map"></p>
-              <p class="text-md-center">The ${content.location.admin_level_name} of <strong>${content.location.full_name}</strong> has a population of <strong>${content.location.population}</strong> and is 1 of ${content.location.peer_locations} ${content.location.admin_level_name_plural} in ${content.location.parent_name}. We estimate ${content.location.name} has <strong>${content.location.believers}</strong> people who might know Jesus, <strong>${content.location.christian_adherents}</strong> people who might know about Jesus culturally, and <strong>${content.location.non_christians}</strong> people who do not know Jesus.</p>
-          </div>
-      </div>`
-    )
-    // add_map()
+    location_show_borders.show()
+    add_map()
 
     // LOOP STACK
     jQuery.each(content.list, function(i,block) {
@@ -122,7 +116,7 @@ jQuery(document).ready(function(){
     }
   }
   function wide_globe(){
-    jQuery('#location-map').append(`<div class="chartdiv wide_globe" id="wide_globe"></div>`)
+    jQuery('#location-map').html(`<div class="chartdiv wide_globe" id="wide_globe"></div>`)
     let content = window.current_content
     // https://www.amcharts.com/demos/rotating-globe/
     am5.ready(function() {
@@ -215,7 +209,7 @@ jQuery(document).ready(function(){
     }); // end am5.ready()
   }
   function rotating_globe(){
-    jQuery('#location-map').append(`<div class="chartdiv rotating_globe" id="rotating_globe"></div>`)
+    jQuery('#location-map').html(`<div class="chartdiv rotating_globe" id="rotating_globe"></div>`)
     let content = window.current_content
     // https://www.amcharts.com/demos/rotating-globe/
     am5.ready(function() {
@@ -307,7 +301,7 @@ jQuery(document).ready(function(){
     }); // end am5.ready()
   }
   function zoom_globe(){
-    jQuery('#location-map').append(`<div class="chartdiv zoom_globe" id="zoom_globe"></div>`)
+    jQuery('#location-map').html(`<div class="chartdiv zoom_globe" id="zoom_globe"></div>`)
     let content = window.current_content
     // https://www.amcharts.com/demos/rotating-globe/
     am5.ready(function() {
@@ -394,6 +388,129 @@ jQuery(document).ready(function(){
       });
 
     }); // end am5.ready()
+  }
+  function mapbox_border_map() {
+    let content = jQuery('#location-map')
+    let grid_row = window.current_content.location
+    console.log(grid_row)
+
+    content.empty().html(`
+        <div id="map-wrapper"><div id='mabox-map'></div>
+          <div id="style-menu">
+          <input id="dt" type="radio" name="rtoggle" value="discipletools/cl1qp8vuf002l15ngm5a7up59" checked="checked">
+          <label for="dt">light</label>
+          <input id="satellite-v9" type="radio" name="rtoggle" value="mapbox/satellite-v9">
+          <label for="satellite-v9">satellite</label>
+          <input id="streets-v11" type="radio" name="rtoggle" value="mapbox/streets-v11">
+          <label for="streets-v11">streets</label>
+          <input id="outdoors-v11" type="radio" name="rtoggle" value="mapbox/outdoors-v11">
+          <label for="outdoors-v11">outdoors</label>
+          </div></div>`)
+    jQuery('#style-menu input').on('change', function(e){
+      console.log(e.target.value)
+      window.load_map_with_style( e.target.value )
+    })
+
+    window.load_map_with_style = ( style ) => {
+      let center = [grid_row.longitude, grid_row.latitude]
+      mapboxgl.accessToken = jsObject.map_key;
+      let map = new mapboxgl.Map({
+        container: 'mabox-map',
+        style: 'mapbox://styles/'+style,
+        center: center,
+        minZoom: 0,
+        zoom: 1
+      });
+      map.dragRotate.disable();
+      map.touchZoomRotate.disableRotation();
+      map.addControl(new mapboxgl.NavigationControl());
+
+      map.on('load', function() {
+
+        jQuery.ajax({
+          url: jsObject.mirror_url + 'collection/'+grid_row.parent_id+'.geojson',
+          dataType: 'json',
+          data: null,
+          cache: true,
+          beforeSend: function (xhr) {
+            if (xhr.overrideMimeType) {
+              xhr.overrideMimeType("application/json");
+            }
+          }
+        })
+          .done(function (geojson) {
+            map.addSource('parent_collection', {
+              'type': 'geojson',
+              'data': geojson
+            });
+            map.addLayer({
+              'id': 'parent_collection_lines',
+              'type': 'line',
+              'source': 'parent_collection',
+              'paint': {
+                'line-color': '#0080ff',
+                'line-width': 1
+              }
+            });
+            map.addLayer({
+              'id': 'parent_collection_fill',
+              'type': 'fill',
+              'source': 'parent_collection',
+              'maxzoom': 12,
+              'filter': [ '==', ['get', 'grid_id'], grid_row.grid_id ],
+              'paint': {
+                'fill-color': '#0080ff',
+                'fill-opacity': 0.75
+              }
+            });
+            map.addLayer({
+              'id': 'parent_collection_fill_click',
+              'type': 'fill',
+              'source': 'parent_collection',
+              'paint': {
+                'fill-color': 'white',
+                'fill-opacity': 0
+              }
+            });
+            map.addLayer({
+              'id': 'poi-labels',
+              'type': 'symbol',
+              'source': 'parent_collection',
+              'filter': [ '==', ['get', 'grid_id'], grid_row.grid_id ],
+              'layout': {
+                'text-field': ['get', 'full_name'],
+                'text-variable-anchor': ['top', 'bottom', 'left', 'right'],
+                'text-radial-offset': 0.5,
+                'text-justify': 'auto',
+                'icon-image': ['get', 'icon']
+              }
+            });
+
+            map.on('click', 'parent_collection_fill_click', function (e) {
+              new mapboxgl.Popup()
+                .setLngLat(e.lngLat)
+                .setHTML(e.features[0].properties.full_name)
+                .addTo(map);
+            });
+            map.on('mouseenter', 'parent_collection_fill_click', function () {
+              map.getCanvas().style.cursor = 'pointer';
+            });
+
+            map.on('mouseleave', 'parent_collection_fill_click', function () {
+              map.getCanvas().style.cursor = '';
+            });
+
+            map.fitBounds([
+              [parseFloat( grid_row.west_longitude), parseFloat(grid_row.south_latitude)], // southwestern corner of the bounds
+              [parseFloat(grid_row.east_longitude), parseFloat(grid_row.north_latitude)] // northeastern corner of the bounds
+            ], {padding: 25, duration: 5000});
+
+          })
+
+      }) // map load
+    }
+    window.load_map_with_style('discipletools/cl1qp8vuf002l15ngm5a7up59') // initialize map
+
   }
 
 
@@ -484,6 +601,9 @@ jQuery(document).ready(function(){
     prayer_progress_indicator( window.time )
     button_text.html('Keep Praying...')
   })
+  location_show_borders.on('click', function(e) {
+    mapbox_border_map()
+  })
 
 
   /**
@@ -491,6 +611,7 @@ jQuery(document).ready(function(){
    */
   function celebrate(){
     div.empty()
+    location_show_borders.hide()
     celebrate_panel.show()
   }
 
@@ -498,7 +619,7 @@ jQuery(document).ready(function(){
    * API HANDLERS
    */
   function log() {
-    window.api_post( 'log', { grid_id: window.current_content.grid_id, pace: window.pace } )
+    window.api_post( 'log', { grid_id: window.current_content.location.grid_id, pace: window.pace } )
       .done(function(location) {
         console.log(location)
         if ( location === false ) {
@@ -509,7 +630,7 @@ jQuery(document).ready(function(){
       })
   }
   function refresh() {
-    window.api_post( 'refresh', { grid_id: window.current_content.grid_id } )
+    window.api_post( 'refresh', { grid_id: window.current_content.location.grid_id } )
       .done(function(location) {
         console.log(location)
         if ( location === false ) {
@@ -539,7 +660,6 @@ jQuery(document).ready(function(){
    * TEMPLATE LOADER
    */
   function get_template( block ) {
-    let content = window.current_content
     switch(block.type) {
       case '4_fact_blocks':
         _template_4_fact_blocks( block.data )
@@ -577,8 +697,7 @@ jQuery(document).ready(function(){
   }
   function _template_percent_3_circles( data ) {
     div.append(
-      `<div class="w-100"><hr></div>
-       <div class="row">
+      `<div class="row">
           <div class="col text-center ">
              <p class="mt-3 mb-3 font-weight-normal one-em">${data.section_label}</p>
           </div>
@@ -604,13 +723,13 @@ jQuery(document).ready(function(){
         <div class="col-md-8">
            <p class="mt-3 mb-3 font-weight-normal one-em">${data.prayer}</p>
         </div>
-      </div>`
+      </div>
+      <div class="w-100"><hr></div>`
     )
   }
   function _template_percent_2_circles( data ) {
     div.append(
-      `<div class="w-100"><hr></div>
-      <div class="row">
+      `<div class="row">
           <div class="col text-center ">
              <p class="mt-3 mb-3 font-weight-normal one-em">${data.section_label}</p>
           </div>
@@ -618,12 +737,12 @@ jQuery(document).ready(function(){
       <div class="row text-center justify-content-center">
           <div class="col-md-3 col-lg-2">
             <p class="mt-3 mb-0 font-weight-bold">${data.label_1}</p>
-            <div class="pie" style="--p:${data.percent_1};--b:10px;--c:red;">${data.percent_1}%</div>
+            <div class="pie" style="--p:${data.percent_1};--b:10px;--c:${data.color_1};">${data.percent_1}%</div>
             <p class="mt-3 mb-0 font-weight-normal one-em">${data.population_1}</p>
           </div>
           <div class="col-md-3 col-lg-2">
             <p class="mt-3 mb-0 font-weight-bold">${data.label_2}</p>
-            <div class="pie" style="--p:${data.percent_2};--b:10px;--c:orange;">${data.percent_2}%</div>
+            <div class="pie" style="--p:${data.percent_2};--b:10px;--c:green;">${data.percent_2}%</div>
             <p class="mt-3 mb-0 font-weight-normal one-em">${data.population_2}</p>
           </div>
       </div>
@@ -631,13 +750,13 @@ jQuery(document).ready(function(){
         <div class="col-md-8">
            <p class="mt-3 mb-3 font-weight-normal one-em">${data.prayer}</p>
         </div>
-      </div>`
+      </div>
+      <div class="w-100"><hr></div>`
     )
   }
   function _template_percent_3_bar( data ) {
     div.append(
-      `<div class="w-100"><hr></div>
-      <div class="row">
+      `<div class="row">
           <div class="col text-center ">
              <p class="mt-3 mb-3 font-weight-normal one-em">${data.section_label}</p>
           </div>
@@ -663,7 +782,8 @@ jQuery(document).ready(function(){
         <div class="col-md-8">
            <p class="mt-3 mb-3 font-weight-normal one-em">${data.prayer}</p>
         </div>
-      </div>`
+      </div>
+      <div class="w-100"><hr></div>`
     )
   }
   function _template_100_bodies_chart( data ) {
@@ -685,8 +805,7 @@ jQuery(document).ready(function(){
       i++;
     }
     div.append(
-      `<div class="w-100"><hr></div>
-      <div class="row">
+      `<div class="row">
           <div class="col text-center ">
              <p class="mt-3 mb-3 font-weight-normal one-em">${data.section_label}</p>
           </div>
@@ -702,7 +821,8 @@ jQuery(document).ready(function(){
         <div class="col-md-8">
            <p class="mt-3 mb-3 font-weight-normal one-em">${data.prayer}</p>
         </div>
-      </div>`
+      </div>
+      <div class="w-100"><hr></div>`
     )
   }
   function _template_100_bodies_3_chart( data ) {
@@ -725,8 +845,7 @@ jQuery(document).ready(function(){
       i++;
     }
     div.append(
-      `<div class="w-100"><hr></div>
-      <div class="row">
+      `<div class="row">
           <div class="col text-center ">
              <p class="mt-3 mb-3 font-weight-normal one-em">${data.section_label}</p>
           </div>
@@ -755,7 +874,8 @@ jQuery(document).ready(function(){
         <div class="col-md-8">
            <p class="mt-3 mb-3 font-weight-normal one-em">${data.prayer}</p>
         </div>
-      </div>`
+      </div>
+      <div class="w-100"><hr></div>`
     )
   }
   function _template_population_change_icon_block( data ) {
@@ -812,13 +932,13 @@ jQuery(document).ready(function(){
         <div class="col-md-8">
            <p class="mt-3 mb-3 font-weight-normal one-em">${data.prayer}</p>
         </div>
-      </div>`
+      </div>
+      <div class="w-100"><hr></div>`
     )
   }
   function _template_4_fact_blocks( data ) {
     div.append(
-      `<div class="w-100"><hr></div>
-       <div class="row">
+      `<div class="row">
           <div class="col text-center ">
              <p class="mt-3 mb-3 font-weight-normal one-em">${data.section_label}</p>
           </div>
@@ -845,7 +965,8 @@ jQuery(document).ready(function(){
         <div class="col-md-8">
            <p class="mt-3 mb-3 font-weight-normal one-em">${data.prayer}</p>
         </div>
-      </div>`
+      </div>
+      <div class="w-100"><hr></div>`
     )
   }
   function _template_bullet_list_2_column( data ) {
@@ -855,8 +976,7 @@ jQuery(document).ready(function(){
         values_list += '<li>'+v+'</li>'
       })
       div.append(
-        `<div class="w-100"><hr></div>
-        <div class="row mb-1">
+        `<div class="row mb-1">
             <div class="col-md-6 mb-3" style="background:green;color:white;height:200px;">
                 <span >${data.section_label}</span>
             </div>
@@ -866,7 +986,8 @@ jQuery(document).ready(function(){
           <div class="col-md-8">
              <p class="mt-3 mb-3 font-weight-normal one-em">${data.prayer}</p>
           </div>
-      </div>`)
+      </div>
+      <div class="w-100"><hr></div>`)
     }
   }
   function _template_fact_block( data ) {
@@ -883,8 +1004,7 @@ jQuery(document).ready(function(){
       icon = '<p class="mt-3 mb-3 font-weight-bold six-em"><i class="'+iclass+' '+icolor+'"></i></p>'
     }
     div.append(
-      `<div class="w-100"><hr></div>
-      <div class="row">
+      `<div class="row">
           <div class="col text-center ">
              <p class="mt-3 mb-3 font-weight-bold two-em">${data.section_label}</p>${icon}
           </div>
@@ -898,7 +1018,8 @@ jQuery(document).ready(function(){
         <div class="col-md-8">
            <p class="mt-3 mb-3 font-weight-normal one-em">${data.prayer}</p>
         </div>
-    </div>`)
+    </div>
+    <div class="w-100"><hr></div>`)
   }
 
   function _template_content_block( data ) {
@@ -915,8 +1036,7 @@ jQuery(document).ready(function(){
       icon = '<p class="mt-3 mb-3 font-weight-bold six-em"><i class="'+iclass+' '+icolor+'"></i></p>'
     }
     div.append(
-      `<div class="w-100"><hr></div>
-      <div class="row">
+      `<div class="row">
           <div class="col text-center ">
              <p class="mt-3 mb-3 font-weight-bold two-em">${data.section_label}</p>
             ${icon}
@@ -926,6 +1046,7 @@ jQuery(document).ready(function(){
         <div class="col-md-8">
            <p class="mt-3 mb-3 font-weight-normal one-em">${data.content}</p>
         </div>
-    </div>`)
+      </div>
+      <div class="w-100"><hr></div>`)
   }
 })
