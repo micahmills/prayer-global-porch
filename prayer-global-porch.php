@@ -330,10 +330,40 @@ function prayer_global_image_json_url() {
     $fields = prayer_global_fields();
     return trailingslashit( $fields['image_asset_url']['value'] ) . 'location-grid-images/v1/v1.json';
 }
-function prayer_global_image_json( $grid_id = null ) {
+
+/**
+ * Returns the full array db of images in the location-grid-images file store.
+ * @param $grid_id
+ * @param $full_urls
+ * @return array|false|mixed|void
+ */
+function prayer_global_images( $grid_id = null, $full_urls = false ) {
     $image_list = get_option('location_grid_images_json' );
+
+    // full list
     if ( is_null( $grid_id ) ) {
+        if ( $full_urls ) {
+            $base_url = prayer_global_image_url();
+            unset($image_list['version'] );
+            foreach( $image_list as $i0 => $v0 ) {
+                foreach( $v0 as $i1 => $v1 ) {
+                    foreach( $v1 as $i2 => $v2 ) {
+                        $image_list[$i0][$i1][$i2] = $base_url . $i0 .'/'. $i1 . '/' . $v2;
+                    }
+                }
+            }
+        }
         return $image_list;
+    }
+
+    // single grid_id
+    if ( $full_urls ) {
+        $base_url = prayer_global_image_url();
+        foreach( $image_list[$grid_id] as $i1 => $v1 ) {
+            foreach( $v1 as $i2 => $v2 ) {
+                $image_list[$grid_id][$i1][$i2] = $base_url . $grid_id .'/'. $i1 . '/' . $v2;
+            }
+        }
     }
     return $image_list[$grid_id] ?? [];
 }

@@ -71,7 +71,7 @@ jQuery(document).ready(function(){
     })
 
     // FOOTER
-    div.append(`<div class="row text-center"><div class="col"><hr>Location ID: ${content.location.grid_id}</</div>`)
+    div.append(`<div class="row text-center"><div class="col">Location ID: ${content.location.grid_id}</</div>`)
 
     prayer_progress_indicator( window.time ) // SETS THE PRAYER PROGRESS WIDGET
   }
@@ -456,13 +456,22 @@ jQuery(document).ready(function(){
               'id': 'parent_collection_fill',
               'type': 'fill',
               'source': 'parent_collection',
-              'maxzoom': 12,
+              // 'maxzoom': 12,
               'filter': [ '==', ['get', 'grid_id'], grid_row.grid_id ],
               'paint': {
                 'fill-color': '#0080ff',
                 'fill-opacity': 0.75
               }
             });
+            map.setPaintProperty('parent_collection_fill', 'fill-opacity', [
+              'interpolate',
+              ['exponential', 0.5],
+              ['zoom'],
+              12,
+              0.75,
+              17,
+              .05
+            ]);
             map.addLayer({
               'id': 'parent_collection_fill_click',
               'type': 'fill',
@@ -510,7 +519,6 @@ jQuery(document).ready(function(){
       }) // map load
     }
     window.load_map_with_style('discipletools/cl1qp8vuf002l15ngm5a7up59') // initialize map
-
   }
 
 
@@ -691,6 +699,9 @@ jQuery(document).ready(function(){
       case 'content_block':
         _template_content_block( block.data )
         break;
+      case 'photo_block':
+        _template_photo_block( block.data )
+        break;
       default:
         break;
     }
@@ -719,6 +730,11 @@ jQuery(document).ready(function(){
             <p class="mt-3 mb-0 font-weight-normal one-em">${data.population_3}</p>
           </div>
       </div>
+      <div class="row text-center">
+        <div class="col">
+           <p class="font-weight-normal">${data.section_summary}</p>
+        </div>
+      </div>
       <div class="row text-center justify-content-center">
         <div class="col-md-8">
            <p class="mt-3 mb-3 font-weight-normal one-em">${data.prayer}</p>
@@ -746,9 +762,14 @@ jQuery(document).ready(function(){
             <p class="mt-3 mb-0 font-weight-normal one-em">${data.population_2}</p>
           </div>
       </div>
+      <div class="row text-center">
+        <div class="col">
+           <p class="font-weight-normal">${data.section_summary}</p>
+        </div>
+      </div>
       <div class="row text-center justify-content-center">
         <div class="col-md-8">
-           <p class="mt-3 mb-3 font-weight-normal one-em">${data.prayer}</p>
+          <p class="mt-3 mb-3 font-weight-normal one-em">${data.prayer}</p>
         </div>
       </div>
       <div class="w-100"><hr></div>`
@@ -758,7 +779,7 @@ jQuery(document).ready(function(){
     div.append(
       `<div class="row">
           <div class="col text-center ">
-             <p class="mt-3 mb-3 font-weight-normal one-em">${data.section_label}</p>
+             <p class="font-weight-normal one-em">${data.section_label}</p>
           </div>
       </div>
       <div class="row text-center">
@@ -777,6 +798,11 @@ jQuery(document).ready(function(){
               </div>
             </p>
           </div>
+      </div>
+      <div class="row text-center">
+        <div class="col">
+           <p class="font-weight-normal">${data.section_summary}</p>
+        </div>
       </div>
       <div class="row text-center justify-content-center">
         <div class="col-md-8">
@@ -815,6 +841,11 @@ jQuery(document).ready(function(){
             <p class="mt-0 mb-3 font-weight-normal grow">
               ${bodies}
             </p>
+        </div>
+      </div>
+      <div class="row text-center">
+        <div class="col">
+           <p class="font-weight-normal">${data.section_summary}</p>
         </div>
       </div>
       <div class="row text-center justify-content-center">
@@ -870,9 +901,14 @@ jQuery(document).ready(function(){
             </p>
           </div>
       </div>
+      <div class="row text-center">
+        <div class="col">
+           <p class="font-weight-normal">${data.section_summary}</p>
+        </div>
+      </div>
       <div class="row text-center justify-content-center">
         <div class="col-md-8">
-           <p class="mt-3 mb-3 font-weight-normal one-em">${data.prayer}</p>
+          <p class="mt-3 mb-3 font-weight-normal one-em">${data.prayer}</p>
         </div>
       </div>
       <div class="w-100"><hr></div>`
@@ -917,7 +953,6 @@ jQuery(document).ready(function(){
     div.append(
       `<div class="row">
           <div class="col text-center ">
-            <hr>
              <p class="mt-3 mb-3 font-weight-normal one-em">${data.section_label}</p>
           </div>
       </div>
@@ -927,6 +962,11 @@ jQuery(document).ready(function(){
               ${icon_list} (${data.count})
             </p>
           </div>
+      </div>
+      <div class="row text-center">
+        <div class="col">
+           <p class="font-weight-normal">${data.section_summary}</p>
+        </div>
       </div>
       <div class="row text-center justify-content-center">
         <div class="col-md-8">
@@ -961,6 +1001,11 @@ jQuery(document).ready(function(){
             <p class="mt-0 mb-3 font-weight-normal ${data.size_4}">${data.value_4}</p>
           </div>
       </div>
+      <div class="row text-center">
+        <div class="col">
+           <p class="font-weight-normal">${data.section_summary}</p>
+        </div>
+      </div>
       <div class="row text-center justify-content-center">
         <div class="col-md-8">
            <p class="mt-3 mb-3 font-weight-normal one-em">${data.prayer}</p>
@@ -982,6 +1027,11 @@ jQuery(document).ready(function(){
             </div>
             <div class="col-md-6"><ul style="padding-left: 1rem;">${values_list}</ul></div>
         </div>
+        <div class="row text-center">
+        <div class="col">
+           <p class="font-weight-normal">${data.section_summary}</p>
+        </div>
+      </div>
         <div class="row text-center justify-content-center">
           <div class="col-md-8">
              <p class="mt-3 mb-3 font-weight-normal one-em">${data.prayer}</p>
@@ -1006,14 +1056,16 @@ jQuery(document).ready(function(){
     div.append(
       `<div class="row">
           <div class="col text-center ">
-             <p class="mt-3 mb-3 font-weight-bold two-em">${data.section_label}</p>${icon}
+             <p class="mt-3 mb-3 font-weight-normal one-em">${data.section_label}</p>
+             <p class="mt-3 mb-3 font-weight-bold two-em">${data.focus_label}</p>
+            ${icon}
           </div>
       </div>
       <div class="row text-center justify-content-center">
         <div class="col-md-8">
-            <p class="mt-3 mb-3 font-weight-normal one-em">${data.description}</p>
+            <p class="mt-3 mb-3 font-weight-normal one-em">${data.section_summary}</p>
         </div>
-    </div>
+      </div>
       <div class="row text-center justify-content-center">
         <div class="col-md-8">
            <p class="mt-3 mb-3 font-weight-normal one-em">${data.prayer}</p>
@@ -1021,7 +1073,6 @@ jQuery(document).ready(function(){
     </div>
     <div class="w-100"><hr></div>`)
   }
-
   function _template_content_block( data ) {
     let icon = ''
     if ( typeof data.icon !== 'undefined' ) {
@@ -1038,15 +1089,40 @@ jQuery(document).ready(function(){
     div.append(
       `<div class="row">
           <div class="col text-center ">
-             <p class="mt-3 mb-3 font-weight-bold two-em">${data.section_label}</p>
+            <p class="mt-3 mb-3 font-weight-normal one-em">${data.section_label}</p>
+             <p class="mt-3 mb-3 font-weight-bold two-em">${data.focus_label}</p>
             ${icon}
           </div>
       </div>
       <div class="row text-center justify-content-center">
         <div class="col-md-8">
-           <p class="mt-3 mb-3 font-weight-normal one-em">${data.content}</p>
+           <p class="mt-3 mb-3 font-weight-normal one-em">${data.section_summary}</p>
         </div>
       </div>
+      <div class="w-100"><hr></div>`)
+  }
+  function _template_photo_block( data ) {
+    div.append(
+      `<div class="row">
+          <div class="col text-center ">
+            <p class="mt-3 mb-3 font-weight-normal one-em">${data.section_label}</p>
+          </div>
+      </div>
+      <div class="row text-center">
+        <div class="col">
+           <img src="${data.url}" class="img-fluid" alt="" />
+        </div>
+      </div>
+      <div class="row text-center justify-content-center">
+        <div class="col">
+            <p class="mt-3 font-weight-normal">${data.section_summary}</p>
+        </div>
+      </div>
+      <div class="row text-center justify-content-center">
+        <div class="col-md-8">
+           <p class="mt-3 mb-3 font-weight-normal one-em">${data.prayer}</p>
+        </div>
+    </div>
       <div class="w-100"><hr></div>`)
   }
 })
