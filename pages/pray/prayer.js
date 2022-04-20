@@ -399,12 +399,12 @@ jQuery(document).ready(function(){
           <div id="style-menu">
           <input id="dt" type="radio" name="rtoggle" value="discipletools/cl1qp8vuf002l15ngm5a7up59" checked="checked">
           <label for="dt">light</label>
+          <input id="outdoors-v11" type="radio" name="rtoggle" value="mapbox/outdoors-v11">
+          <label for="outdoors-v11">outdoors</label>
           <input id="satellite-v9" type="radio" name="rtoggle" value="mapbox/satellite-v9">
           <label for="satellite-v9">satellite</label>
           <input id="streets-v11" type="radio" name="rtoggle" value="mapbox/streets-v11">
           <label for="streets-v11">streets</label>
-          <input id="outdoors-v11" type="radio" name="rtoggle" value="mapbox/outdoors-v11">
-          <label for="outdoors-v11">outdoors</label>
           </div></div>`)
     jQuery('#style-menu input').on('change', function(e){
       console.log(e.target.value)
@@ -710,7 +710,7 @@ jQuery(document).ready(function(){
     div.append(
       `<div class="row">
           <div class="col text-center ">
-             <p class="mt-3 mb-3 font-weight-normal one-em">${data.section_label}</p>
+             <p class="mt-3 mb-3 font-weight-normal one-em uc">${data.section_label}</p>
           </div>
       </div>
       <div class="row text-center justify-content-center">
@@ -747,7 +747,7 @@ jQuery(document).ready(function(){
     div.append(
       `<div class="row">
           <div class="col text-center ">
-             <p class="mt-3 mb-3 font-weight-normal one-em">${data.section_label}</p>
+             <p class="mt-3 mb-3 font-weight-normal one-em uc">${data.section_label}</p>
           </div>
       </div>
       <div class="row text-center justify-content-center">
@@ -779,7 +779,7 @@ jQuery(document).ready(function(){
     div.append(
       `<div class="row">
           <div class="col text-center ">
-             <p class="font-weight-normal one-em">${data.section_label}</p>
+             <p class="font-weight-normal one-em uc">${data.section_label}</p>
           </div>
       </div>
       <div class="row text-center">
@@ -833,7 +833,7 @@ jQuery(document).ready(function(){
     div.append(
       `<div class="row">
           <div class="col text-center ">
-             <p class="mt-3 mb-3 font-weight-normal one-em">${data.section_label}</p>
+             <p class="mt-3 mb-3 font-weight-normal one-em uc">${data.section_label}</p>
           </div>
       </div>
       <div class="row text-center justify-content-center">
@@ -878,7 +878,7 @@ jQuery(document).ready(function(){
     div.append(
       `<div class="row">
           <div class="col text-center ">
-             <p class="mt-3 mb-3 font-weight-normal one-em">${data.section_label}</p>
+             <p class="mt-3 mb-3 font-weight-normal one-em uc">${data.section_label}</p>
           </div>
       </div>
       <div class="row text-center justify-content-center">
@@ -922,7 +922,7 @@ jQuery(document).ready(function(){
     // icon types
     let icons = ''
     if ( 'deaths' === data.type ) {
-      icons = ['ion-ios-contact-outline', 'ion-android-sad','ion-ios-contact','ion-woman', 'ion-man', 'ion-ios-body', 'ion-person','ion-ios-person','ion-sad']
+      icons = ['ion-ios-contact-outline', 'ion-android-sad','ion-ios-contact', 'ion-ios-body', 'ion-person','ion-ios-person','ion-sad']
     } else {
       icons = ['ion-social-reddit','ion-social-reddit', 'ion-home', 'ion-ios-heart', 'ion-ios-home']
     }
@@ -953,7 +953,7 @@ jQuery(document).ready(function(){
     div.append(
       `<div class="row">
           <div class="col text-center ">
-             <p class="mt-3 mb-3 font-weight-normal one-em">${data.section_label}</p>
+             <p class="mt-3 mb-3 font-weight-normal one-em uc">${data.section_label}</p>
           </div>
       </div>
       <div class="row text-center justify-content-center">
@@ -980,7 +980,7 @@ jQuery(document).ready(function(){
     div.append(
       `<div class="row">
           <div class="col text-center ">
-             <p class="mt-3 mb-3 font-weight-normal one-em">${data.section_label}</p>
+             <p class="mt-3 mb-3 font-weight-normal one-em uc">${data.section_label}</p>
           </div>
       </div>
       <div class="row text-center">
@@ -1018,20 +1018,24 @@ jQuery(document).ready(function(){
     if ( data.values.length > 0 ) {
       let values_list = ''
       jQuery.each(data.values, function(i,v) {
-        values_list += '<li>'+v+'</li>'
+        values_list += '<p>'+v+'</p>'
       })
       div.append(
-        `<div class="row mb-1">
-            <div class="col-md-6 mb-3" style="background:green;color:white;height:200px;">
-                <span >${data.section_label}</span>
-            </div>
-            <div class="col-md-6"><ul style="padding-left: 1rem;">${values_list}</ul></div>
+        `<div class="row">
+          <div class="col text-center ">
+             <p class="mt-3 mb-3 font-weight-normal one-em uc">${data.section_label}</p>
+          </div>
         </div>
         <div class="row text-center">
-        <div class="col">
-           <p class="font-weight-normal">${data.section_summary}</p>
+          <div class="col">
+             ${values_list}
+          </div>
         </div>
-      </div>
+        <div class="row text-center">
+          <div class="col">
+             <p class="font-weight-normal">${data.section_summary}</p>
+          </div>
+        </div>
         <div class="row text-center justify-content-center">
           <div class="col-md-8">
              <p class="mt-3 mb-3 font-weight-normal one-em">${data.prayer}</p>
@@ -1056,7 +1060,7 @@ jQuery(document).ready(function(){
     div.append(
       `<div class="row">
           <div class="col text-center ">
-             <p class="mt-3 mb-3 font-weight-normal one-em">${data.section_label}</p>
+             <p class="mt-3 mb-3 font-weight-normal one-em uc">${data.section_label}</p>
              <p class="mt-3 mb-3 font-weight-bold two-em">${data.focus_label}</p>
             ${icon}
           </div>
@@ -1089,7 +1093,7 @@ jQuery(document).ready(function(){
     div.append(
       `<div class="row">
           <div class="col text-center ">
-            <p class="mt-3 mb-3 font-weight-normal one-em">${data.section_label}</p>
+            <p class="mt-3 mb-3 font-weight-normal one-em uc">${data.section_label}</p>
              <p class="mt-3 mb-3 font-weight-bold two-em">${data.focus_label}</p>
             ${icon}
           </div>
@@ -1105,7 +1109,7 @@ jQuery(document).ready(function(){
     div.append(
       `<div class="row">
           <div class="col text-center ">
-            <p class="mt-3 mb-3 font-weight-normal one-em">${data.section_label}</p>
+            <p class="mt-3 mb-3 font-weight-normal one-em uc">${data.section_label}</p>
           </div>
       </div>
       <div class="row text-center">

@@ -208,6 +208,9 @@
          padding: 10px;
          font-family: 'Open Sans', sans-serif;
      }
+    .uc {
+        text-transform: uppercase;
+    }
 </style>
 
 <!-- navigation & widget -->

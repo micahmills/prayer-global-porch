@@ -46,7 +46,7 @@ function prayer_global_porch() {
     if ( !$is_theme_dt ){
         return false;
     }
-    require_once( 'pages/assets/utilities.php' );
+    require_once( 'pages/pray/utilities.php' );
     /**
      * Load useful function from the theme
      */

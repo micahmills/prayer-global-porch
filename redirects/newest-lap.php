@@ -31,7 +31,7 @@ class Prayer_Global_Porch_Newest_Lap extends DT_Magic_Url_Base
     }
 
     public function redirect() {
-        require_once( trailingslashit( plugin_dir_path(__DIR__) ) . 'pages/assets/utilities.php' );
+        require_once( trailingslashit( plugin_dir_path(__DIR__) ) . 'pages/pray/utilities.php' );
         $current_lap = PG_Utilities::get_current_global_lap();
         $link = '/prayer_app/global/' . $current_lap['key'];
         wp_redirect( $link );
