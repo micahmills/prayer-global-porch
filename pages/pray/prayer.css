@@ -1,0 +1,231 @@
+body {
+    color: black;
+}
+.bold {
+    font-weight:900;
+}
+.icon-block {
+    line-height:1.1;
+}
+.navbar.prayer_navbar {
+    border-bottom:1px solid lightgrey;
+    box-shadow: 0 1px 10px -2px rgb(0 0 0 / 15%);
+    background:white;
+    /*height:100px;*/
+}
+section {
+    margin-top:147px;
+}
+.btn-group {
+    width: 100%;
+}
+#praying_button {
+    width:100%;
+    border: none;
+    background: darkgrey;
+    color: #ffffff;
+    padding: 10px 16px;
+    position: relative;
+    cursor: pointer;
+    font-family: "Fira Sans", sans-serif;
+    overflow: hidden;
+    border-radius: 5px 0 0 5px;
+}
+#praying__close_button {
+    font-size:2em;
+}
+#praying__open_options {
+    font-size:2em;
+}
+.praying__progress {
+    position: absolute;
+    height: 100%;
+    width: 0%;
+    top: 0;
+    left: 0;
+    background: green;
+    transition: width 0.3s;
+    box-shadow: 0 10px 0 -2px rgb(0 0 0 / 15%);
+}
+.praying__text {
+    position: relative;
+}
+.container {
+    margin-bottom: .5em;
+}
+#decision-panel {
+    display: none;
+}
+#question-panel {
+    display: none;
+}
+#celebrate-panel {
+    display: none;
+}
+.decision_button_group .btn  {
+    width:100%;
+}
+.question_button_group .btn  {
+    width:100%;
+}
+.question__yes {
+    background:green !important;
+}
+.celebrate-image {
+
+}
+.pace-wrapper {
+    width: 100%;
+}
+.btn-primary,
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:visited,
+.btn-primary:focus {
+    background-color: green;
+    border-color: white;
+}
+.progress-bar {
+    height:4em;
+    line-height: 4em;
+}
+.progress-bar-success {
+    height:4em;
+    line-height: 4em;
+    background-color: red;
+    border-color: white;
+}
+.progress-bar-warning {
+    height:4em;
+    line-height: 4em;
+    background-color: orange;
+    border-color: white;
+}
+.progress-bar-danger {
+    height:4em;
+    line-height: 4em;
+    background-color: green;
+    border-color: white;
+}
+.green {
+    color: green;
+}
+.red {
+    color: red;
+}
+.orange {
+    color: orange;
+}
+
+.pie {
+    --w:150px;
+
+    width: var(--w);
+    aspect-ratio: 1;
+    position: relative;
+    display: inline-grid;
+    place-content: center;
+    margin: 5px;
+    font-size: 25px;
+    font-weight: bold;
+    font-family: sans-serif;
+}
+.pie:before {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    inset: 0;
+    background: conic-gradient(var(--c) calc(var(--p)*1%),#F6F6F6 0);
+    -webkit-mask:radial-gradient(farthest-side,#0000 calc(99% - var(--b)),#000 calc(100% - var(--b)));
+    mask:radial-gradient(farthest-side,#0000 calc(99% - var(--b)),#000 calc(100% - var(--b)));
+}
+.chartdiv {
+    width: 100%;
+    height: 500px;
+    max-width: 100%;
+}
+.chartdiv.wide_globe {
+    height: 300px;
+}
+@media (min-width: 768px) {
+    .chartdiv.wide_globe {
+        height: 500px;
+    }
+}
+.chartdiv.zoom_globe {
+    height: 300px;
+    padding-top:10px;
+}
+@media (min-width: 768px) {
+    .chartdiv.zoom_globe {
+        height: 500px;
+    }
+}
+.chartdiv.rotating_globe {
+    height: 400px;
+}
+@media (min-width: 768px) {
+    .chartdiv.rotating_globe {
+        height: 500px;
+    }
+}
+
+.six-em {
+    font-size: 6em;
+    line-height: .5em;
+}
+.three-em {
+    font-size: 3em;
+}
+.two-em {
+    font-size: 2em;
+}
+.one-em {
+    font-size: 1.5em;
+}
+@media (max-width: 768px) {
+    .six-em {
+        font-size: 3em ;
+        line-height: .5em;
+    }
+    .three-em {
+        font-size: 1.7em ;
+    }
+    .two-em {
+        font-size: 1.2em ;
+    }
+    .one-em {
+        font-size: 1em ;
+    }
+}
+nav {
+    padding-bottom: 0 !important;
+}
+#location-name {
+    width:100%;
+}
+.btn {
+    cursor: pointer;
+}
+#map-wrapper, #map-content, #mabox-map {
+    height:300px;
+    padding-top:10px;
+}
+@media (min-width: 768px) {
+    #map-wrapper, #map-content, #mabox-map {
+        height: 500px;
+    }
+}
+#style-menu {
+    position: absolute;
+    background: #efefef;
+    padding: 10px;
+    font-family: 'Open Sans', sans-serif;
+}
+.uc {
+    text-transform: uppercase;
+}
+.w-100 hr {
+    margin-top:4em;
+    margin-bottom:4em;
+}

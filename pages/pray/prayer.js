@@ -26,6 +26,7 @@ jQuery(document).ready(function(){
   let pace_buttons = jQuery('.pace')
 
   let location_show_borders = jQuery('#show_borders')
+  let location_map_wrapper = jQuery('#location-map')
 
   let i
 
@@ -62,7 +63,7 @@ jQuery(document).ready(function(){
     jQuery('#location-name').html(content.location.full_name)
     div.empty()
 
-    location_show_borders.show()
+    location_map_wrapper.show()
     add_map()
 
     // LOOP STACK
@@ -619,7 +620,7 @@ jQuery(document).ready(function(){
    */
   function celebrate(){
     div.empty()
-    location_show_borders.hide()
+    location_map_wrapper.hide()
     celebrate_panel.show()
   }
 
@@ -671,6 +672,9 @@ jQuery(document).ready(function(){
     switch(block.type) {
       case '4_fact_blocks':
         _template_4_fact_blocks( block.data )
+        break;
+      case 'demographics':
+        _template_demographics( block.data )
         break;
       case 'percent_3_circles':
         _template_percent_3_circles( block.data )
@@ -887,18 +891,21 @@ jQuery(document).ready(function(){
             <p class="mt-0 mb-3 font-weight-normal">
               ${bodies_1}
             </p>
+            <p class="mt-3 mb-0 font-weight-normal">${data.population_1}</p>
           </div>
           <div class="col-md-3 col-sm">
             <p class="mt-3 mb-0 font-weight-bold">${data.label_2}</p>
             <p class="mt-0 mb-3 font-weight-normal">
               ${bodies_2}
             </p>
+            <p class="mt-3 mb-0 font-weight-normal ">${data.population_2}</p>
           </div>
           <div class="col-md-3 col-sm">
             <p class="mt-3 mb-0 font-weight-bold">${data.label_3}</p>
             <p class="mt-0 mb-3 font-weight-normal">
               ${bodies_3}
             </p>
+            <p class="mt-3 mb-0 font-weight-normal">${data.population_3}</p>
           </div>
       </div>
       <div class="row text-center">
@@ -981,26 +988,90 @@ jQuery(document).ready(function(){
       `<div class="row">
           <div class="col text-center ">
              <p class="mt-3 mb-3 font-weight-normal one-em uc">${data.section_label}</p>
+             <p class="mt-3 mb-3 font-weight-bold two-em">${data.focus_label}</p>
           </div>
       </div>
+      <div class="row">
+          <div class="col-md-6">
+            <div class="row text-center">
+              <div class="col-6">
+                <p class="mt-3 mb-0 font-weight-bold">${data.label_1}</p>
+                <p class="mt-0 mb-3 font-weight-normal ${data.size_1}">${data.value_1}</p>
+              </div>
+              <div class="col-6">
+                <p class="mt-3 mb-0 font-weight-bold">${data.label_2}</p>
+                <p class="mt-0 mb-3 font-weight-normal ${data.size_2}">${data.value_2}</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="row text-center">
+                <div class="col-6">
+                  <p class="mt-3 mb-0 font-weight-bold">${data.label_3}</p>
+                  <p class="mt-0 mb-3 font-weight-normal ${data.size_3}">${data.value_3}</p>
+                </div>
+                <div class="col-6">
+                  <p class="mt-3 mb-0 font-weight-bold">${data.label_4}</p>
+                  <p class="mt-0 mb-3 font-weight-normal ${data.size_4}">${data.value_4}</p>
+                </div>
+            </div>
+          </div>
+      </div>
+
       <div class="row text-center">
-          <div class="col-md-3 col-sm-6">
+        <div class="col">
+           <p class="font-weight-normal">${data.section_summary}</p>
+        </div>
+      </div>
+      <div class="row text-center justify-content-center">
+        <div class="col-md-8">
+           <p class="mt-3 mb-3 font-weight-normal one-em">${data.prayer}</p>
+        </div>
+      </div>
+      <div class="w-100"><hr></div>`
+    )
+  }
+  function _template_demographics( data ) {
+    div.append(
+      `<div class="row">
+          <div class="col text-center ">
+             <p class="mt-3 mb-3 font-weight-normal one-em uc">${data.section_label}</p>
+             <p class="mt-3 mb-3 font-weight-bold two-em">${data.focus_label}</p>
+          </div>
+      </div>
+
+      <div class="row text-center justify-content-center">
+          <div class="col-6 col-md-4 col-lg-3">
             <p class="mt-3 mb-0 font-weight-bold">${data.label_1}</p>
             <p class="mt-0 mb-3 font-weight-normal ${data.size_1}">${data.value_1}</p>
           </div>
-          <div class="col-md-3 col-sm-6">
-            <p class="mt-3 mb-0 font-weight-bold">${data.label_2}</p>
-            <p class="mt-0 mb-3 font-weight-normal ${data.size_2}">${data.value_2}</p>
-          </div>
-          <div class="col-md-3 col-sm-6">
+          <div class="col-6 col-md-4 col-lg-3">
             <p class="mt-3 mb-0 font-weight-bold">${data.label_3}</p>
             <p class="mt-0 mb-3 font-weight-normal ${data.size_3}">${data.value_3}</p>
           </div>
-          <div class="col-md-3 col-sm-6">
+          <div class="col-md-4 col-lg-3">
             <p class="mt-3 mb-0 font-weight-bold">${data.label_4}</p>
             <p class="mt-0 mb-3 font-weight-normal ${data.size_4}">${data.value_4}</p>
           </div>
       </div>
+      <div class="row text-center justify-content-center">
+          <div class="col-6 col-md-4 col-lg-3">
+            <p class="mt-3 mb-0 font-weight-bold">${data.label_circle_1}</p>
+            <div class="pie" style="--p:${data.percent_circle_1};--b:10px;--c:red;">${data.percent_circle_1}%</div>
+            <p class="mt-3 mb-0 font-weight-normal one-em">${data.population_circle_1}</p>
+          </div>
+          <div class="col-6 col-md-4 col-lg-3">
+            <p class="mt-3 mb-0 font-weight-bold">${data.label_circle_2}</p>
+            <div class="pie" style="--p:${data.percent_circle_2};--b:10px;--c:orange;">${data.percent_circle_2}%</div>
+            <p class="mt-3 mb-0 font-weight-normal one-em">${data.population_circle_2}</p>
+          </div>
+          <div class="col-md-4 col-lg-3">
+            <p class="mt-3 mb-0 font-weight-bold">${data.label_circle_3}</p>
+            <div class="pie" style="--p:${data.percent_circle_3};--b:10px;--c:green;">${data.percent_circle_3}%</div>
+            <p class="mt-3 mb-0 font-weight-normal one-em">${data.population_circle_3}</p>
+          </div>
+      </div>
+
       <div class="row text-center">
         <div class="col">
            <p class="font-weight-normal">${data.section_summary}</p>
