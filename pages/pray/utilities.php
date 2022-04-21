@@ -4,7 +4,7 @@ if ( !defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly.
 class PG_Utilities {
 
     public static function generate_key(){
-        return substr( md5( rand( 10000, 100000 ).time() ), 0, 3 ) . substr( md5( rand( 10000, 100000 ).time() ), 10, 3 );
+        return substr( md5( mt_rand( 10000, 100000 ).time() ), 0, 3 ) . substr( md5( mt_rand( 10000, 100000 ).time() ), 10, 3 );
     }
 
     public static function get_current_global_lap() : array {
@@ -83,7 +83,6 @@ class PG_Utilities {
         self::_people_groups( $stack );
 
 
-
         // @todo  prioritize limit number of items
 
         return $stack;
@@ -155,7 +154,7 @@ class PG_Utilities {
                 'section_summary' => 'The '.$stack['location']['admin_level_name'].' of <strong>'.$stack['location']['full_name'].'</strong> has a population of <strong>'.$stack['location']['population'].'</strong> and is 1 of '.$stack['location']['peer_locations'].' '.$stack['location']['admin_level_name_plural'].' in '.$stack['location']['parent_name'].'. We estimate '.$stack['location']['name'].' has <strong>'.$stack['location']['believers'].'</strong> people who might know Jesus, <strong>'.$stack['location']['christian_adherents'].'</strong> people who might know about Jesus culturally, and <strong>'.$stack['location']['non_christians'].'</strong> people who do not know Jesus.',
             ]
         ];
-        $d = $demographics[rand(0,count($demographics)-1)];
+        $d = $demographics[mt_rand(0,count($demographics)-1)];
         $stack['list'] = array_merge( [ $d ], $stack['list'] );
 
         return $stack;
@@ -263,7 +262,7 @@ class PG_Utilities {
             ]
         ];
 
-        $stack['list'][] = $faith_status[rand(0,count($faith_status)-1)];
+        $stack['list'][] = $faith_status[mt_rand(0,count($faith_status)-1)];
 
         return $stack;
     }
@@ -281,10 +280,10 @@ class PG_Utilities {
 //        for ($i = 1; $i <= $stack['location']['percent_believers']; $i++) {
 //            $status[] = 'believers';
 //        }
-        $favor_status = $status[rand(0,count($status)-1)];
+        $favor_status = $status[mt_rand(0,count($status)-1)];
 
         $types = ['births', 'deaths' ];
-        $type = $types[rand(0,1)];
+        $type = $types[mt_rand(0,1)];
 
         // deaths non christians
         if ( 'non_christians' === $favor_status && 'deaths' === $type ) {
@@ -299,7 +298,7 @@ class PG_Utilities {
                         'type' => 'deaths',
                         'size' => ($stack['location']['deaths_non_christians_next_hour'] > 400) ? 2 : 3,
                         'section_summary' => '',
-                        'prayer' => 'Pray for the ' . $stack['location']['deaths_non_christians_next_hour'] . ' people who are dying without Jesus in the next hour. Pray they get one chance to hear the gospel, or if they have heard it that the Spirit would bring it to mind one more time.'
+                        'prayer' => 'Pray for the ' . $stack['location']['deaths_non_christians_next_hour'] . ' people in ' . $stack['location']['name'] . ' who are dying without Jesus in the next hour. Pray they get one chance to hear the gospel, or if they have heard it that the Spirit would bring it to mind one more time.'
                     ]
                 ];
             }
@@ -313,7 +312,7 @@ class PG_Utilities {
                         'type' => 'deaths',
                         'size' => ($stack['location']['deaths_non_christians_next_100'] > 400) ? 2 : 3,
                         'section_summary' => '',
-                        'prayer' => 'Pray for the ' . $stack['location']['deaths_non_christians_next_100'] . ' people who are dying without Jesus in the next 100 hours. Pray they get one chance to hear the gospel, or if they have heard it that the Spirit would bring it to mind one more time.'
+                        'prayer' => 'Pray for the ' . $stack['location']['deaths_non_christians_next_100'] . ' people in ' . $stack['location']['name'] . ' who are dying without Jesus in the next 100 hours. Pray they get one chance to hear the gospel, or if they have heard it that the Spirit would bring it to mind one more time.'
                     ]
                 ];
             }
@@ -327,7 +326,7 @@ class PG_Utilities {
                         'type' => 'deaths',
                         'size' => ($stack['location']['deaths_non_christians_next_week'] > 400) ? 2 : 3,
                         'section_summary' => '',
-                        'prayer' => 'Pray for the ' . $stack['location']['deaths_non_christians_next_week'] . ' people who are dying without Jesus in the next week. Pray they get one chance to hear the gospel, or if they have heard it that the Spirit would bring it to mind one more time.'
+                        'prayer' => 'Pray for the ' . $stack['location']['deaths_non_christians_next_week'] . ' people in ' . $stack['location']['name'] . ' who are dying without Jesus in the next week. Pray they get one chance to hear the gospel, or if they have heard it that the Spirit would bring it to mind one more time.'
                     ]
                 ];
             }
@@ -341,11 +340,11 @@ class PG_Utilities {
                         'type' => 'deaths',
                         'size' => ($stack['location']['deaths_non_christians_next_month'] > 400) ? 2 : 3,
                         'section_summary' => '',
-                        'prayer' => 'Pray for the ' . $stack['location']['deaths_non_christians_next_month'] . ' people who are dying without Jesus in the next month. Pray they get one chance to hear the gospel, or if they have heard it that the Spirit would bring it to mind one more time.'
+                        'prayer' => 'Pray for the ' . $stack['location']['deaths_non_christians_next_month'] . ' people in ' . $stack['location']['name'] . ' who are dying without Jesus in the next month. Pray they get one chance to hear the gospel, or if they have heard it that the Spirit would bring it to mind one more time.'
                     ]
                 ];
             }
-            $stack['list'][] = $deaths_non_christians[rand(0, count($deaths_non_christians) - 1)];
+            $stack['list'][] = $deaths_non_christians[mt_rand(0, count($deaths_non_christians) - 1)];
         }
 
             // births non christians
@@ -361,7 +360,7 @@ class PG_Utilities {
                         'type' => 'births',
                         'size' => ( $stack['location']['births_non_christians_last_hour'] > 400 ) ? 2 : 3,
                         'section_summary' => '',
-                        'prayer' => 'Pray for the ' . $stack['location']['births_non_christians_last_hour'] . ' babies born in the next hour to families who are far from God.'
+                        'prayer' => 'Pray for the ' . $stack['location']['births_non_christians_last_hour'] . ' babies born in the next hour to families who are far from God in ' . $stack['location']['name'] . '.'
                     ]
                 ];
             }
@@ -375,7 +374,7 @@ class PG_Utilities {
                         'type' => 'births',
                         'size' => ( $stack['location']['births_non_christians_last_100'] > 400 ) ? 2 : 3,
                         'section_summary' => '',
-                        'prayer' => 'Pray for the ' . $stack['location']['births_non_christians_last_100'] . ' babies born in the next hour to families who are far from God.'
+                        'prayer' => 'Pray for the ' . $stack['location']['births_non_christians_last_100'] . ' babies born in the next 100 hours to families who are far from God in ' . $stack['location']['name'] . '.'
                     ]
                 ];
             }
@@ -389,7 +388,7 @@ class PG_Utilities {
                         'type' => 'births',
                         'size' => ( $stack['location']['births_non_christians_last_week'] > 400 ) ? 2 : 3,
                         'section_summary' => '',
-                        'prayer' => 'Pray for the ' . $stack['location']['births_non_christians_last_week'] . ' babies born in the next hour to families who are far from God.'
+                        'prayer' => 'Pray for the ' . $stack['location']['births_non_christians_last_week'] . ' babies born in the next week to families who are far from God in ' . $stack['location']['name'] . '.'
                     ]
                 ];
             }
@@ -403,11 +402,11 @@ class PG_Utilities {
                         'type' => 'births',
                         'size' => ( $stack['location']['births_non_christians_last_month'] > 400 ) ? 2 : 3,
                         'section_summary' => '',
-                        'prayer' => 'Pray for the ' . $stack['location']['births_non_christians_last_month'] . ' babies born in the next hour to families who are far from God.'
+                        'prayer' => 'Pray for the ' . $stack['location']['births_non_christians_last_month'] . ' babies born in the next month to families who are far from God in ' . $stack['location']['name'] . '.'
                     ]
                 ];
             }
-            $stack['list'][] = $births_non_christians[rand(0,count($births_non_christians)-1)];
+            $stack['list'][] = $births_non_christians[mt_rand(0,count($births_non_christians)-1)];
         }
 
 
@@ -425,7 +424,7 @@ class PG_Utilities {
                         'type' => 'deaths',
                         'size' => ($stack['location']['deaths_christian_adherents_next_hour'] > 400) ? 2 : 3,
                         'section_summary' => '',
-                        'prayer' => 'Pray for the ' . $stack['location']['deaths_christian_adherents_next_hour'] . ' people who are dying without a personal relationship with Jesus in the next hour.'
+                        'prayer' => 'Pray for the ' . $stack['location']['deaths_christian_adherents_next_hour'] . ' people in ' . $stack['location']['name'] . ' who are dying without a personal relationship with Jesus in the next hour.'
                     ]
                 ];
             }
@@ -439,7 +438,7 @@ class PG_Utilities {
                         'type' => 'deaths',
                         'size' => ($stack['location']['deaths_christian_adherents_next_100'] > 400) ? 2 : 3,
                         'section_summary' => '',
-                        'prayer' => 'Pray for the ' . $stack['location']['deaths_christian_adherents_next_100'] . ' people who are dying without a personal relationship with Jesus in the next hour.'
+                        'prayer' => 'Pray for the ' . $stack['location']['deaths_christian_adherents_next_100'] . ' people in ' . $stack['location']['name'] . ' who are dying without a personal relationship with Jesus in the next 100 hours.'
                     ]
                 ];
             }
@@ -453,7 +452,7 @@ class PG_Utilities {
                         'type' => 'deaths',
                         'size' => ($stack['location']['deaths_christian_adherents_next_week'] > 400) ? 2 : 3,
                         'section_summary' => '',
-                        'prayer' => 'Pray for the ' . $stack['location']['deaths_christian_adherents_next_week'] . ' people who are dying without a personal relationship with Jesus in the next hour.'
+                        'prayer' => 'Pray for the ' . $stack['location']['deaths_christian_adherents_next_week'] . ' people in ' . $stack['location']['name'] . ' who are dying without a personal relationship with Jesus in the next week.'
                     ]
                 ];
             }
@@ -467,11 +466,11 @@ class PG_Utilities {
                         'type' => 'deaths',
                         'size' => ($stack['location']['deaths_christian_adherents_next_month'] > 400) ? 2 : 3,
                         'section_summary' => '',
-                        'prayer' => 'Pray for the ' . $stack['location']['deaths_christian_adherents_next_month'] . ' people who are dying without a personal relationship with Jesus in the next hour.'
+                        'prayer' => 'Pray for the ' . $stack['location']['deaths_christian_adherents_next_month'] . ' people in ' . $stack['location']['name'] . ' who are dying without a personal relationship with Jesus in the next month.'
                     ]
                 ];
             }
-            $stack['list'][] = $deaths_christian_adherents[rand(0, count($deaths_christian_adherents) - 1)];
+            $stack['list'][] = $deaths_christian_adherents[mt_rand(0, count($deaths_christian_adherents) - 1)];
         }
 
             // births christian adherents
@@ -501,7 +500,7 @@ class PG_Utilities {
                         'type' => 'births',
                         'size' => ( $stack['location']['births_christian_adherents_last_100'] > 400 ) ? 2 : 3,
                         'section_summary' => '',
-                        'prayer' => 'Pray for the ' . $stack['location']['births_christian_adherents_last_100'] . ' babies born in the next hour to families who might now about God culturally, but likely have no relationship with Jesus.'
+                        'prayer' => 'Pray for the ' . $stack['location']['births_christian_adherents_last_100'] . ' babies born in the next 100 hours to families who might now about God culturally, but likely have no relationship with Jesus.'
                     ]
                 ];
             }
@@ -515,7 +514,7 @@ class PG_Utilities {
                         'type' => 'births',
                         'size' => ( $stack['location']['births_christian_adherents_last_week'] > 400 ) ? 2 : 3,
                         'section_summary' => '',
-                        'prayer' => 'Pray for the ' . $stack['location']['births_christian_adherents_last_week'] . ' babies born in the next hour to families who might now about God culturally, but likely have no relationship with Jesus.'
+                        'prayer' => 'Pray for the ' . $stack['location']['births_christian_adherents_last_week'] . ' babies born in the next week to families who might now about God culturally, but likely have no relationship with Jesus.'
                     ]
                 ];
             }
@@ -529,11 +528,11 @@ class PG_Utilities {
                         'type' => 'births',
                         'size' => ( $stack['location']['births_christian_adherents_last_month'] > 400 ) ? 2 : 3,
                         'section_summary' => '',
-                        'prayer' => 'Pray for the ' . $stack['location']['births_christian_adherents_last_month'] . ' babies born in the next hour to families who might now about God culturally, but likely have no relationship with Jesus.'
+                        'prayer' => 'Pray for the ' . $stack['location']['births_christian_adherents_last_month'] . ' babies born in the next month to families who might now about God culturally, but likely have no relationship with Jesus.'
                     ]
                 ];
             }
-            $stack['list'][] = $births_christian_adherents[rand(0,count($births_christian_adherents)-1)];
+            $stack['list'][] = $births_christian_adherents[mt_rand(0,count($births_christian_adherents)-1)];
         }
 
         return $stack;
@@ -599,16 +598,23 @@ class PG_Utilities {
 
             // people group list
             $values = [];
-            foreach( $stack['people_groups'] as $city ) {
-                $values[] = $city['name'] . ' - (world pop ' . $city['population'] . ')';
+            foreach( $stack['people_groups'] as $group ) {
+                $values[] = [
+                    'name' => $group['name'],
+                    'image_url' => prayer_global_jp_image_url( 'pid3', $group['PeopleID3'] ),
+                    'description' => $group['name'] . '<br>(' . $group['PrimaryReligion'].')',
+                    'progress' => $group['JPScale'],
+                    'progress_image_url' => prayer_global_jp_image_url( 'progress', $group['JPScale'] ),
+                    'least_reached' => $group['LeastReached']
+                ];
             }
             $stack['list'][] = [
-                'type' => 'bullet_list_2_column',
+                'type' => 'people_groups_list',
                 'data' => [
                     'section_label' => 'People Groups In The Area',
                     'values' => $values,
                     'section_summary' => '',
-                    'prayer' => 'Pray that the ' . $stack['location']['believers'] . ' believers in ' . $stack['location']['full_name'] . ' to be bold witnesses to the ' . $stack['location']['non_christians'] . ' nominal neighbors around them.'
+                    'prayer' => 'Pray that God call his worshippers out of these groups.'
                 ]
             ];
 
@@ -617,33 +623,17 @@ class PG_Utilities {
     }
 
     public static function _least_reached( &$stack ) {
-        if ( ! empty( $stack['people_groups'] ) ) {
-
-            // least reached block
-            $name = $description = '';
-            $people_groups = $stack['people_groups'];
-            shuffle($people_groups);
-            foreach( $people_groups as $group ) {
-                if ( 'Y' === $group['LeastReached'] ) {
-                    $name = $group['name'];
-                    $description = 'Joshua Project identifies the '.$group['name'].' people in ' . $stack['location']['full_name'] . ' as a least reached people group. They are classified as '.$group['AffinityBloc'].' and speak '.$group['PrimaryLanguageName'].'. Primarily, they follow '.$group['PrimaryReligion'].' and only '.$group['PercentEvangelical'].'% are suspected of being believers.';
-                    break;
-                }
-            }
-            if ( ! empty( $name ) ) {
-                $stack['list'][] = [
-                    'type' => 'fact_block',
-                    'data' => [
-                        'section_label' => 'Least Reached',
-                        'focus_label' => $name,
-                        'icon' => 'ion-android-warning', // ion icons from /pages/fonts/ionicons/
-                        'color' => false,
-                        'section_summary' => $description,
-                        'prayer' => 'Pray that the ' . $stack['location']['believers'] . ' believers in ' . $stack['location']['full_name'] . ' to be bold witnesses to the '.$name.' neighbors near them.'
-                    ]
-                ];
-            }
-
+        if ( ! empty( $stack['least_reached'] ) ) {
+            $stack['list'][] = [
+                'type' => 'least_reached_block',
+                'data' => [
+                    'section_label' => 'Least Reached',
+                    'focus_label' => $stack['least_reached']['name'],
+                    'image_url' => prayer_global_jp_image_url( 'pid3', $stack['least_reached']['PeopleID3'] ), // ion icons from /pages/fonts/ionicons/
+                    'section_summary' => 'The '.$stack['least_reached']['name'].' people in ' . $stack['location']['full_name'] . ' are a least reached people group, according to Joshua Project. They are classified as '.$stack['least_reached']['AffinityBloc'].' and speak '.$stack['least_reached']['PrimaryLanguageName'].'. Primarily, they follow '.$stack['least_reached']['PrimaryReligion'].' and only '.$stack['least_reached']['PercentEvangelical'].'% are suspected of being believers.',
+                    'prayer' => 'Pray that the ' . $stack['location']['believers'] . ' believers in ' . $stack['location']['full_name'] . ' to boldly witnesses to the '.$stack['least_reached']['name'].' near them.'
+                ]
+            ];
         }
         return $stack;
     }
@@ -654,7 +644,7 @@ class PG_Utilities {
         if ( ! empty( $images['photos'] ) ) {
             $photo_template = [];
 
-            $rand_index = rand( 0, count( $images['photos'] ) - 1 );
+            $rand_index = mt_rand( 0, count( $images['photos'] ) - 1 );
             $photo_template[] = [
                 'type' => 'photo_block',
                 'data' => [
@@ -665,7 +655,7 @@ class PG_Utilities {
                 ]
             ];
 
-            $rand_index = rand( 0, count( $images['photos'] ) - 1 );
+            $rand_index = mt_rand( 0, count( $images['photos'] ) - 1 );
             $photo_template[] = [
                 'type' => 'photo_block',
                 'data' => [
@@ -675,7 +665,7 @@ class PG_Utilities {
                     'prayer' => 'What does the Spirit prompt you to pray?',
                 ]
             ];
-            $stack['list'][] = $photo_template[rand(0,count($photo_template)-1)];
+            $stack['list'][] = $photo_template[mt_rand(0,count($photo_template)-1)];
         }
 
         return $stack;
@@ -854,9 +844,10 @@ class PG_Utilities {
                     lgpg.longitude >  %d AND /* west */
                     lgpg.latitude < %d AND /* north */
                     lgpg.latitude > %d AND /* south */
-                    lgpg.admin0_grid_id = %d
+                    lgpg.admin0_grid_id = %d AND
+                    lgpg.PrimaryReligion != 'Christianity'
                 ORDER BY lgpg.LeastReached DESC, lgpg.population DESC
-                LIMIT 5
+                LIMIT 10
         ", $grid_record['east_longitude'], $grid_record['west_longitude'], $grid_record['north_latitude'], $grid_record['south_latitude'], $grid_record['admin0_grid_id'] ), ARRAY_A );
         if ( empty( $people_groups ) ) {
             $people_groups = $wpdb->get_results($wpdb->prepare( "
@@ -867,11 +858,28 @@ class PG_Utilities {
                         lgpg.longitude >  %d AND /* west */
                         lgpg.latitude < %d AND /* north */
                         lgpg.latitude > %d AND /* south */
-                        lgpg.admin0_grid_id = %d
+                        lgpg.admin0_grid_id = %d AND
+                        lgpg.PrimaryReligion != 'Christianity'
                     ORDER BY lgpg.LeastReached DESC, lgpg.population DESC
-                    LIMIT 5
+                    LIMIT 10
             ", $grid_record['p_east_longitude'], $grid_record['p_west_longitude'], $grid_record['p_north_latitude'], $grid_record['p_south_latitude'], $grid_record['admin0_grid_id'] ), ARRAY_A );
         }
+        if ( empty( $people_groups ) ) {
+            $people_groups = [];
+        }
+        shuffle( $people_groups ); // randomize results
+
+        $least_reached = [];
+        if ( ! empty( $people_groups ) ) {
+            foreach( $people_groups as $pg ) {
+                if ( 'Y' === $pg['LeastReached'] ) {
+                    $least_reached = $pg; // get first least reached group
+                    break;
+                }
+            }
+        }
+
+        $people_groups = array_slice($people_groups, 0, 5, true); // trim to first 5 shuffled results
 
         // cities
         $cities = $wpdb->get_results($wpdb->prepare( "
@@ -901,7 +909,8 @@ class PG_Utilities {
         return [
             'location' => $grid_record,
             'cities' => $cities,
-            'people_groups' => $people_groups
+            'people_groups' => $people_groups,
+            'least_reached' => $least_reached
         ];
     }
 
@@ -1227,11 +1236,12 @@ class PG_Utilities {
             }
         }
 
-        if ( count( $list_4770 ) > 20 ) { // turn off shuffle for the last few records
-            shuffle( $list_4770 );
-        } else {
-            sort( $list_4770 );
-        }
+//        if ( count( $list_4770 ) > 20 ) { // turn off shuffle for the last few records
+//            shuffle( $list_4770 );
+//        } else {
+//            sort( $list_4770 );
+//        }
+        shuffle( $list_4770 );
         $grid_id = $list_4770[0];
 
         $content = PG_Utilities::build_location_stack( $grid_id );

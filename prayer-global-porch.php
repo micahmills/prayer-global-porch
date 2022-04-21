@@ -326,6 +326,28 @@ function prayer_global_image_url() {
     $fields = prayer_global_fields();
     return trailingslashit( $fields['image_asset_url']['value'] ) . 'location-grid-images/v1/';
 }
+function prayer_global_jp_image_url( $type, $id ) {
+    $image_list = get_option('location_grid_images_json' );
+    $base_url = prayer_global_image_url() . 'jp/';
+    switch( $type ) {
+        case 'pid3':
+            if ( isset( $image_list['jp']['pid3'][$id] ) ) {
+                return $base_url . 'pid3/' . $image_list['jp']['pid3'][$id];
+            } else {
+                return false;
+            }
+        case 'progress':
+            if ( isset( $image_list['jp']['progress'][$id] ) ) {
+                return $base_url . 'progress/' . $image_list['jp']['progress'][$id];
+            } else {
+                return false;
+            }
+        default:
+            return false;
+    }
+//    $fields = prayer_global_fields();
+//    return trailingslashit( $fields['image_asset_url']['value'] ) . 'location-grid-images/v1/';
+}
 function prayer_global_image_json_url() {
     $fields = prayer_global_fields();
     return trailingslashit( $fields['image_asset_url']['value'] ) . 'location-grid-images/v1/v1.json';

@@ -697,6 +697,12 @@ jQuery(document).ready(function(){
       case 'bullet_list_2_column':
         _template_bullet_list_2_column( block.data )
         break;
+      case 'people_groups_list':
+        _template_people_groups_list( block.data )
+        break;
+      case 'least_reached_block':
+        _template_least_reached_block( block.data )
+        break;
       case 'fact_block':
         _template_fact_block( block.data )
         break;
@@ -1114,6 +1120,65 @@ jQuery(document).ready(function(){
       </div>
       <div class="w-100"><hr></div>`)
     }
+  }
+  function _template_people_groups_list( data ) {
+    let values_list = ''
+    let image = ''
+    jQuery.each(data.values, function(i,v) {
+      if ( v.image_url ) {
+        image = '<div style="background-image:url('+v.image_url+'); width:200px; height:200px;background-size: cover;background-repeat: no-repeat;" class="img-fluid"></div>'
+      } else {
+        image = '<div style=" height:200px;"><img class="img-fluid" src="'+jsObject.nope+'" alt="" /></div>'
+      }
+      values_list += '<div class="col-6 col-md-4 col-lg-2 mb-1"><p class="mb-2 text-center">'+image+'</p><p class="text-center"><img src="'+v.progress_image_url+'" class="img-fluid" alt="" /></p><p class="text-center">'+v.description+'</p></div>'
+    })
+    div.append(
+      `<div class="row">
+          <div class="col text-center ">
+             <p class="mt-3 mb-3 font-weight-normal one-em uc">${data.section_label}</p>
+          </div>
+        </div>
+        <div class="row text-center justify-content-center">
+          ${values_list}
+        </div>
+        <div class="row text-center">
+          <div class="col">
+             <p class="font-weight-normal">${data.section_summary}</p>
+          </div>
+        </div>
+        <div class="row text-center justify-content-center">
+          <div class="col-md-8">
+             <p class="mt-3 mb-3 font-weight-normal one-em">${data.prayer}</p>
+          </div>
+      </div>
+      <div class="w-100"><hr></div>`)
+  }
+  function _template_least_reached_block( data ) {
+    let image
+    if ( data.image_url ) {
+      image = '<p class="mt-3 mb-3"><img src="'+data.image_url+'" class="img-fluid" alt="" /></p>'
+    } else {
+      image = '<p class="mt-3 mb-3 font-weight-bold six-em"><i class="ion-android-warning red"></i></p>'
+    }
+    div.append(
+      `<div class="row">
+          <div class="col text-center ">
+             <p class="mt-3 mb-3 font-weight-normal one-em uc">${data.section_label}</p>
+             <p class="mt-3 mb-3 font-weight-bold two-em">${data.focus_label}</p>
+            ${image}
+          </div>
+      </div>
+      <div class="row text-center justify-content-center">
+        <div class="col-md-8">
+            <p class="mt-3 mb-3 font-weight-normal one-em">${data.section_summary}</p>
+        </div>
+      </div>
+      <div class="row text-center justify-content-center">
+        <div class="col-md-8">
+           <p class="mt-3 mb-3 font-weight-normal one-em">${data.prayer}</p>
+        </div>
+    </div>
+    <div class="w-100"><hr></div>`)
   }
   function _template_fact_block( data ) {
     let icon = ''
