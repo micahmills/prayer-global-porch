@@ -712,6 +712,9 @@ jQuery(document).ready(function(){
       case 'photo_block':
         _template_photo_block( block.data )
         break;
+      case 'verse_block':
+        _template_verse_block( block.data )
+        break;
       default:
         break;
     }
@@ -1239,6 +1242,25 @@ jQuery(document).ready(function(){
            <p class="mt-3 mb-3 font-weight-normal one-em">${data.section_summary}</p>
         </div>
       </div>
+      <div class="w-100"><hr></div>`)
+  }
+  function _template_verse_block( data ) {
+    div.append(
+      `<div class="row">
+          <div class="col text-center ">
+            <p class="mt-3 mb-3 font-weight-normal one-em uc">${data.section_label}</p>
+          </div>
+      </div>
+      <div class="row text-center justify-content-center">
+        <div class="col-md-8">
+           <p class="mt-3 mb-3 font-weight-bold two-em">${data.section_summary}</p>
+        </div>
+      </div>
+      <div class="row text-center justify-content-center">
+        <div class="col-md-8">
+           <p class="mt-3 mb-3 font-weight-normal one-em">${data.prayer}</p>
+        </div>
+    </div>
       <div class="w-100"><hr></div>`)
   }
   function _template_photo_block( data ) {

@@ -71,11 +71,14 @@ class PG_Utilities {
         self::_photos( $stack );
         self::_population_change( $stack );
         self::_least_reached( $stack );
+        self::_key_city( $stack );
 
 
         $list = $stack['list'];
         shuffle($list);
         $stack['list'] = $list;
+
+        self::_verses( $stack );
 
         self::_demographics( $stack );
 
@@ -113,37 +116,6 @@ class PG_Utilities {
                 'prayer' => ''
             ]
         ];
-//        $demographics[] = [
-//            'type' => 'demographics',
-//            'data' => [
-//                'section_label' => $stack['location']['full_name'],
-//                'focus_label' => '',
-//                'label_1' => 'Population',
-//                'value_1' => $stack['location']['population'],
-//                'size_1' => 'two-em',
-//                'label_2' => 'Population Growth',
-//                'value_2' => $stack['location']['population_growth_status'],
-//                'size_2' => 'two-em',
-//                'label_3' => 'Dominant Religion',
-//                'value_3' => $stack['location']['primary_religion'],
-//                'size_3' => 'two-em',
-//                'label_4' => 'Language',
-//                'value_4' => $stack['location']['primary_language'],
-//                'size_4' => 'two-em',
-//                'label_circle_1' => "Don't Know Jesus",
-//                'percent_circle_1' => $stack['location']['percent_non_christians'],
-//                'population_circle_1' => $stack['location']['non_christians'],
-//                'label_circle_2' => 'Know About Jesus',
-//                'percent_circle_2' => $stack['location']['percent_christian_adherents'],
-//                'population_circle_2' => $stack['location']['christian_adherents'],
-//                'label_circle_3' => 'Know Jesus',
-//                'percent_circle_3' => $stack['location']['percent_believers'],
-//                'population_circle_3' => $stack['location']['believers'],
-//                'section_summary' => '',
-//                'prayer' => ''
-//            ]
-//        ];
-
         $demographics[] = [
             'type' => 'content_block',
             'data' => [
@@ -558,6 +530,10 @@ class PG_Utilities {
                 ];
             }
 
+        }
+        return $stack;
+    }
+    public static function _key_city( &$stack ) {
             // focus block
             $cities = $stack['cities'];
             shuffle($cities);
@@ -589,7 +565,6 @@ class PG_Utilities {
                     ]
                 ];
             }
-        }
         return $stack;
     }
 
@@ -659,7 +634,7 @@ class PG_Utilities {
             $photo_template[] = [
                 'type' => 'photo_block',
                 'data' => [
-                    'section_label' => 'Photo from '.$stack['location']['full_name'],
+                    'section_label' => 'Glimpse of '.$stack['location']['full_name'],
                     'url' => $images['photos'][$rand_index],
                     'section_summary' => '',
                     'prayer' => 'What does the Spirit prompt you to pray?',
@@ -667,6 +642,38 @@ class PG_Utilities {
             ];
             $stack['list'][] = $photo_template[mt_rand(0,count($photo_template)-1)];
         }
+
+        return $stack;
+    }
+
+    public static function _verses( &$stack ) {
+        $list = $stack['list'];
+
+        $pos_1 = 1;
+        $prayer_1 = [
+            'type' => 'verse_block',
+            'data' => [
+                'section_label' => 'Matthew 24:14',
+                'section_summary' => 'And this gospel of the kingdom will be preached in the whole world as a testimony to all nations, and then the end will come.',
+                'prayer' => 'Pray the gospel is preached in ' . $stack['location']['name'] . '.',
+            ]
+        ];
+        $list = array_merge(array_slice($list, 0, $pos_1), array($prayer_1), array_slice($list, $pos_1));
+
+
+        $pos_2 = 4;
+        $prayer_2 = [
+            'type' => 'verse_block',
+            'data' => [
+                'section_label' => 'Matthew 28:19-20',
+                'section_summary' => 'Therefore go and make disciples of all nations, baptizing them in the name of the Father and of the Son and of the Holy Spirit, and teaching them to obey everything I have commanded you. And surely I am with you always, to the very end of the age.',
+                'prayer' => 'Pray for disciples who make disciples in ' . $stack['location']['name'] . '.',
+            ]
+        ];
+        $list = array_merge(array_slice($list, 0, $pos_2), array($prayer_2), array_slice($list, $pos_2));
+
+
+        $stack['list'] = $list;
 
         return $stack;
     }
