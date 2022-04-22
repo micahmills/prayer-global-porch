@@ -121,6 +121,7 @@ class Prayer_Global_Laps_Post_Type_Link extends DT_Magic_Url_Base {
                     ],
                     'nope' => plugin_dir_url(__DIR__) . 'assets/images/nope.jpg',
                     'images_url' => prayer_global_image_url(),
+                    'image_folder' => plugin_dir_url(__DIR__) . 'assets/images/',
                     'start_content' => PG_Utilities::get_new_global_location(),
                     'next_content' => PG_Utilities::get_new_global_location(),
                 ]) ?>][0]

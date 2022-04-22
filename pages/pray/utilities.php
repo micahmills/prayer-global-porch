@@ -78,6 +78,7 @@ class PG_Utilities {
         shuffle($list);
         $stack['list'] = $list;
 
+        self::_prayers( $stack );
         self::_verses( $stack );
 
         self::_demographics( $stack );
@@ -662,10 +663,29 @@ class PG_Utilities {
         return $stack;
     }
 
+    public static function _prayers( &$stack ) {
+        $list = $stack['list'];
+
+        $prayer_1 = [
+            'type' => 'prayer_block',
+            'data' => [
+                'section_label' => 'Pray for Movement',
+                'verse' => 'Don’t you have a saying, ‘It’s still four months until harvest’? I tell you, open your eyes and look at the fields! They are ripe for harvest.',
+                'reference' => 'John 4:35',
+                'prayer' => 'Pray for consistent and clear Kingdom vision casting and modeling by movement catalysts and leaders. Ask that all in movements love God and others, worship in Spirit and truth, and share the Good News with those who have not yet heard.',
+            ]
+        ];
+        $pos_1 = 1;
+        $list = array_merge(array_slice($list, 0, $pos_1), array($prayer_1), array_slice($list, $pos_1));
+
+        $stack['list'] = $list;
+
+        return $stack;
+    }
+
     public static function _verses( &$stack ) {
         $list = $stack['list'];
 
-        $pos_1 = 1;
         $prayer_1 = [
             'type' => 'verse_block',
             'data' => [
@@ -674,20 +694,8 @@ class PG_Utilities {
                 'prayer' => 'Pray the gospel is preached in ' . $stack['location']['name'] . '.',
             ]
         ];
+        $pos_1 = 4;
         $list = array_merge(array_slice($list, 0, $pos_1), array($prayer_1), array_slice($list, $pos_1));
-
-
-        $pos_2 = 4;
-        $prayer_2 = [
-            'type' => 'verse_block',
-            'data' => [
-                'section_label' => 'Matthew 28:19-20',
-                'section_summary' => 'Therefore go and make disciples of all nations, baptizing them in the name of the Father and of the Son and of the Holy Spirit, and teaching them to obey everything I have commanded you. And surely I am with you always, to the very end of the age.',
-                'prayer' => 'Pray for disciples who make disciples in ' . $stack['location']['name'] . '.',
-            ]
-        ];
-        $list = array_merge(array_slice($list, 0, $pos_2), array($prayer_2), array_slice($list, $pos_2));
-
 
         $stack['list'] = $list;
 

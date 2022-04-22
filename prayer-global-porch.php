@@ -295,7 +295,7 @@ function prayer_global_fields() {
         'image_asset_url' => [
             'label' => 'Image Asset URL',
             'description' => 'Add root site URl. {root_site_url}/location-grid-images/v1/...',
-            'value' => site_url(),
+            'value' => 'https://storage.googleapis.com/',
             'type' => 'text',
         ],
         'scripture_api_bible' => [

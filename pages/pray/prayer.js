@@ -715,6 +715,9 @@ jQuery(document).ready(function(){
       case 'verse_block':
         _template_verse_block( block.data )
         break;
+      case 'prayer_block':
+        _template_prayer_block( block.data )
+        break;
       default:
         break;
     }
@@ -1259,6 +1262,29 @@ jQuery(document).ready(function(){
       <div class="row text-center justify-content-center">
         <div class="col-md-8">
            <p class="mt-3 mb-3 font-weight-normal one-em">${data.prayer}</p>
+        </div>
+    </div>
+      <div class="w-100"><hr></div>`)
+  }
+  function _template_prayer_block( data ) {
+    let icons = ['ion-android-sync']
+    let icon_name = icons[Math.floor(Math.random() * icons.length)]
+    div.append(
+      `<div class="row">
+          <div class="col text-center ">
+            <p class="mt-3 mb-3 font-weight-normal one-em uc">${data.section_label}</p>
+            <p class="mt-3 mb-3"><i class="${icon_name} green six-em" /></p>
+          </div>
+      </div>
+      <div class="row text-center justify-content-center">
+        <div class="col-md-8">
+           <p class="mt-3 mb-0 font-weight-bold two-em font-italic">${data.verse}</p>
+           <p class="mt-0 mb-3 font-italic">${data.reference}</p>
+        </div>
+      </div>
+      <div class="row text-center justify-content-center">
+        <div class="col-md-8">
+           <p class="mt-3 mb-3 font-weight-normal two-em">${data.prayer}</p>
         </div>
     </div>
       <div class="w-100"><hr></div>`)
