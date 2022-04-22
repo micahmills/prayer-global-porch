@@ -653,7 +653,7 @@ class PG_Utilities {
                     'prayer' => 'What does the Spirit prompt you to pray?',
                 ]
             ];
-            
+
             if ( ! is_null( array_key_last($photo_template) ) ) {
                 $stack['list'][] = $photo_template[mt_rand(0,array_key_last($photo_template))];
             }
@@ -1294,42 +1294,6 @@ class PG_Utilities {
         return $list;
     }
 
-    public static function generate_first_global_prayer_lap() {
-        global $wpdb;
-
-        // create key
-        $key = self::generate_key();
-
-        $time = time();
-        $date = date( 'Y-m-d H:m:s', time() );
-
-        $fields = [];
-        $fields['title'] = 'Global #1';
-        $fields['status'] = 'active';
-        $fields['type'] = 'global';
-        $fields['start_date'] = $date;
-        $fields['start_time'] = $time;
-        $fields['global_lap_number'] = 1;
-        $fields['prayer_app_global_magic_key'] = $key;
-        $new_post = DT_Posts::create_post('laps', $fields, false, false );
-        if ( is_wp_error( $new_post ) ) {
-            // @handle error
-            dt_write_log('failed to create');
-            dt_write_log($new_post);
-            exit;
-        }
-
-        $lap = [
-            'lap_number' => 1,
-            'post_id' => $new_post['ID'],
-            'key' => $key,
-            'start_time' => $time,
-        ];
-        update_option('pg_current_global_lap', $lap, true );
-
-
-        return $new_post['ID'];
-    }
 
     public static function generate_new_global_prayer_lap() {
         global $wpdb;

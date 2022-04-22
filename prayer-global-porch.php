@@ -141,8 +141,6 @@ class Prayer_Global_Porch {
      * @return void
      */
     public static function activation() {
-        require_once( 'pages/pray/utilities.php' );
-        PG_Utilities::generate_first_global_prayer_lap();
     }
 
     /**
