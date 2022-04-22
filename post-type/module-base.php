@@ -347,6 +347,33 @@ class Prayer_Global_Laps_Post_Type extends DT_Module_Base {
 
     //action when a post has been created
     public function dt_post_created( $post_type, $post_id, $initial_fields ){
+
+        // creates initial global lap
+        if ( $post_type === $this->post_type && isset( $initial_fields['type'] ) && 'global' === $initial_fields['type'] ){
+            $lap = get_option('pg_current_global_lap');
+            if ( empty( $lap ) ) {
+                $post = DT_Posts::get_post( $this->post_type, $post_id, false, false );
+                update_post_meta( $post_id, 'global_lap_number', 1 );
+                if ( ! isset( $post['prayer_app_global_magic_key'] ) ) {
+                    $key = substr( md5( rand( 10000, 100000 ) ), 0, 3 ) . substr( md5( rand( 10000, 100000 ) ), 0, 3 );
+                    update_post_meta( $post_id, 'prayer_app_global_magic_key', $key );
+                    $post['prayer_app_global_magic_key'] = $key;
+                }
+                if ( ! isset( $post['start_time'] ) ) {
+                    update_post_meta( $post_id, 'start_time', time() );
+                    update_post_meta( $post_id, 'start_date', time() );
+                    $post['start_time'] = time();
+                }
+                $lap = [
+                    'lap_number' => 1,
+                    'post_id' => $post['ID'],
+                    'key' => $post['prayer_app_global_magic_key'],
+                    'start_time' =>  $post['start_time'],
+                ];
+                update_option('pg_current_global_lap', $lap, true );
+            }
+
+        }
     }
 
     private static function get_my_status(){

@@ -9,10 +9,6 @@ class PG_Utilities {
 
     public static function get_current_global_lap() : array {
         $lap = get_option('pg_current_global_lap');
-        if ( ! $lap ) {
-            self::generate_first_global_prayer_lap();
-            $lap = get_option('pg_current_global_lap');
-        }
         return $lap;
     }
 
