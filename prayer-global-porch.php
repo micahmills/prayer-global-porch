@@ -147,8 +147,6 @@ class Prayer_Global_Porch {
             'key' => '00000'
         ];
         update_option('pg_current_global_lap', $lap, true );
-
-
     }
 
     /**
