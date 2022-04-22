@@ -1256,7 +1256,8 @@ jQuery(document).ready(function(){
       </div>
       <div class="row text-center justify-content-center">
         <div class="col-md-8">
-           <p class="mt-3 mb-3 font-weight-bold two-em">${data.section_summary}</p>
+           <p class="mt-3 mb-3 font-weight-bold two-em">${data.verse}</p>
+           <p class="mt-0 mb-3 font-italic">${data.reference}</p>
         </div>
       </div>
       <div class="row text-center justify-content-center">

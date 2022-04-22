@@ -56,36 +56,28 @@ class PG_Utilities {
     public static function build_location_stack( $grid_id ) {
         // get queries
         $stack = self::_stack_query( $grid_id );
-        /**
-         * $stack = [
-         *  'location' => [], (array) grid_record
-         *  'cities' => [], (array) list of cities
-         *  'people_groups' => [], (array) list of people_groups
-         * ]
-         */
 
         // build full stack
         $stack['list'] = [];
 
+        // adds and shuffles for variation
         self::_faith_status( $stack );
         self::_photos( $stack );
         self::_population_change( $stack );
         self::_least_reached( $stack );
         self::_key_city( $stack );
+        shuffle($stack['list']);
 
+        // inserts into suffled array specific array positions
+        self::_prayers( $stack, 1 );
+        self::_verses( $stack, 4 );
 
-        $list = $stack['list'];
-        shuffle($list);
-        $stack['list'] = $list;
-
-        self::_prayers( $stack );
-        self::_verses( $stack );
-
+        // adds to top
         self::_demographics( $stack );
 
+        // adds to bottom
         self::_cities( $stack );
         self::_people_groups( $stack );
-
 
         // @todo  prioritize limit number of items
 
@@ -261,7 +253,7 @@ class PG_Utilities {
         // deaths non christians
         if ( 'non_christians' === $favor_status && 'deaths' === $type ) {
             $deaths_non_christians = [];
-            if ($stack['location']['deaths_non_christians_next_hour']) {
+            if ( $stack['location']['deaths_non_christians_next_hour'] > 1 ) {
                 $deaths_non_christians[] = [
                     'type' => 'population_change_icon_block',
                     'data' => [
@@ -522,7 +514,6 @@ class PG_Utilities {
         return $stack;
     }
 
-
     public static function _cities( &$stack ) {
         if ( ! empty( $stack['cities'] ) ) {
 
@@ -538,7 +529,7 @@ class PG_Utilities {
                         'section_label' => 'Top Cities',
                         'values' => $values,
                         'section_summary' => '',
-                        'prayer' => 'Pray that the ' . $stack['location']['believers'] . ' believers in ' . $stack['location']['full_name'] . ' to be bold witnesses to the ' . $stack['location']['non_christians'] . ' nominal neighbors around them.'
+                        'prayer' => ''
                     ]
                 ];
             }
@@ -663,11 +654,16 @@ class PG_Utilities {
         return $stack;
     }
 
-    public static function _prayers( &$stack ) {
-        $list = $stack['list'];
+    public static function _prayers( &$stack, int $position ) {
 
-        $prayer_1 = [
-            'type' => 'prayer_block',
+        if ( empty( $position ) ) {
+            $position = 4;
+        }
+
+        $blocks = [];
+
+        $blocks[] = [
+            'type' => 'verse_block',
             'data' => [
                 'section_label' => 'Pray for Movement',
                 'verse' => 'Don’t you have a saying, ‘It’s still four months until harvest’? I tell you, open your eyes and look at the fields! They are ripe for harvest.',
@@ -675,29 +671,75 @@ class PG_Utilities {
                 'prayer' => 'Pray for consistent and clear Kingdom vision casting and modeling by movement catalysts and leaders. Ask that all in movements love God and others, worship in Spirit and truth, and share the Good News with those who have not yet heard.',
             ]
         ];
-        $pos_1 = 1;
-        $list = array_merge(array_slice($list, 0, $pos_1), array($prayer_1), array_slice($list, $pos_1));
 
-        $stack['list'] = $list;
+        $blocks[] = [
+            'type' => 'verse_block',
+            'data' => [
+                'section_label' => 'Pray for Movement',
+                'verse' => 'Don’t you have a saying, ‘It’s still four months until harvest’? I tell you, open your eyes and look at the fields! They are ripe for harvest.',
+                'reference' => 'John 4:35',
+                'prayer' => 'Pray for consistent and clear Kingdom vision casting and modeling by movement catalysts and leaders. Ask that all in movements love God and others, worship in Spirit and truth, and share the Good News with those who have not yet heard.',
+            ]
+        ];
+
+        $blocks[] = [
+            'type' => 'verse_block',
+            'data' => [
+                'section_label' => 'Pray for Movement',
+                'verse' => 'Don’t you have a saying, ‘It’s still four months until harvest’? I tell you, open your eyes and look at the fields! They are ripe for harvest.',
+                'reference' => 'John 4:35',
+                'prayer' => 'Pray for consistent and clear Kingdom vision casting and modeling by movement catalysts and leaders. Ask that all in movements love God and others, worship in Spirit and truth, and share the Good News with those who have not yet heard.',
+            ]
+        ];
+
+        if ( ! is_null( array_key_last($blocks) ) ) {
+            $stack['list'] = array_merge(array_slice($stack['list'], 0, $position), array($blocks[mt_rand(0,array_key_last($blocks))]), array_slice($stack['list'], $position));
+        }
 
         return $stack;
     }
 
-    public static function _verses( &$stack ) {
-        $list = $stack['list'];
+    public static function _verses( &$stack, int $position ) {
 
-        $prayer_1 = [
+        if ( empty( $position ) ) {
+            $position = 4;
+        }
+
+        $blocks = [];
+
+        $blocks[] = [
             'type' => 'verse_block',
             'data' => [
                 'section_label' => 'Matthew 24:14',
-                'section_summary' => 'And this gospel of the kingdom will be preached in the whole world as a testimony to all nations, and then the end will come.',
+                'verse' => 'And this gospel of the kingdom will be preached in the whole world as a testimony to all nations, and then the end will come.',
+                'reference' => '',
                 'prayer' => 'Pray the gospel is preached in ' . $stack['location']['name'] . '.',
             ]
         ];
-        $pos_1 = 4;
-        $list = array_merge(array_slice($list, 0, $pos_1), array($prayer_1), array_slice($list, $pos_1));
 
-        $stack['list'] = $list;
+        $blocks[] = [
+            'type' => 'verse_block',
+            'data' => [
+                'section_label' => 'Matthew 28:19-20',
+                'verse' => 'Go therefore and make disciples of all nations, baptizing them in the name of the Father and of the Son and of the Holy Spirit, teaching them to observe all that I have commanded you; and lo, I am with you always, to the close of the age.',
+                'reference' => '',
+                'prayer' => 'Pray the gospel is preached in to all nations including ' . $stack['location']['name'] . '.',
+            ]
+        ];
+
+        $blocks[] = [
+            'type' => 'verse_block',
+            'data' => [
+                'section_label' => 'Habakkuk 2:14',
+                'verse' => 'For the earth will be filled with the knowledge of the glory of the LORD as the waters cover the sea.',
+                'reference' => '',
+                'prayer' => 'Pray the gospel is preached in ' . $stack['location']['name'] . '.',
+            ]
+        ];
+
+        if ( ! is_null( array_key_last($blocks) ) ) {
+            $stack['list'] = array_merge(array_slice($stack['list'], 0, $position), array($blocks[mt_rand(0,array_key_last($blocks))]), array_slice($stack['list'], $position));
+        }
 
         return $stack;
     }
