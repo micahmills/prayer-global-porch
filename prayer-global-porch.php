@@ -141,12 +141,8 @@ class Prayer_Global_Porch {
      * @return void
      */
     public static function activation() {
-        $lap = [
-            'lap_number' => '0',
-            'post_id' => '0',
-            'key' => '00000'
-        ];
-        update_option('pg_current_global_lap', $lap, true );
+        require_once( 'pages/pray/utilities.php' );
+        PG_Utilities::generate_first_global_prayer_lap();
     }
 
     /**
