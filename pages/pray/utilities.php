@@ -316,7 +316,10 @@ class PG_Utilities {
                     ]
                 ];
             }
-            $stack['list'][] = $deaths_non_christians[mt_rand(0, count($deaths_non_christians) - 1)];
+
+            if ( ! is_null( array_key_last($deaths_non_christians) ) ) {
+                $stack['list'][] = $deaths_non_christians[mt_rand(0,array_key_last($deaths_non_christians))];
+            }
         }
 
             // births non christians
@@ -378,7 +381,10 @@ class PG_Utilities {
                     ]
                 ];
             }
-            $stack['list'][] = $births_non_christians[mt_rand(0,count($births_non_christians)-1)];
+
+            if ( ! is_null( array_key_last($births_non_christians) ) ) {
+                $stack['list'][] = $births_non_christians[mt_rand(0,array_key_last($births_non_christians))];
+            }
         }
 
 
@@ -442,7 +448,10 @@ class PG_Utilities {
                     ]
                 ];
             }
-            $stack['list'][] = $deaths_christian_adherents[mt_rand(0, count($deaths_christian_adherents) - 1)];
+
+            if ( ! is_null( array_key_last($deaths_christian_adherents) ) ) {
+                $stack['list'][] = $deaths_christian_adherents[mt_rand(0,array_key_last($deaths_christian_adherents))];
+            }
         }
 
             // births christian adherents
@@ -504,11 +513,14 @@ class PG_Utilities {
                     ]
                 ];
             }
-            $stack['list'][] = $births_christian_adherents[mt_rand(0,count($births_christian_adherents)-1)];
+            if ( ! is_null( array_key_last($births_christian_adherents) ) ) {
+                $stack['list'][] = $births_christian_adherents[mt_rand(0,array_key_last($births_christian_adherents))];
+            }
         }
 
         return $stack;
     }
+
 
     public static function _cities( &$stack ) {
         if ( ! empty( $stack['cities'] ) ) {
@@ -619,7 +631,7 @@ class PG_Utilities {
         if ( ! empty( $images['photos'] ) ) {
             $photo_template = [];
 
-            $rand_index = mt_rand( 0, count( $images['photos'] ) - 1 );
+            $rand_index = mt_rand( 0, array_key_last( $images['photos'] ) );
             $photo_template[] = [
                 'type' => 'photo_block',
                 'data' => [
@@ -630,7 +642,8 @@ class PG_Utilities {
                 ]
             ];
 
-            $rand_index = mt_rand( 0, count( $images['photos'] ) - 1 );
+
+            $rand_index = mt_rand( 0, array_key_last( $images['photos'] ) );
             $photo_template[] = [
                 'type' => 'photo_block',
                 'data' => [
@@ -640,7 +653,10 @@ class PG_Utilities {
                     'prayer' => 'What does the Spirit prompt you to pray?',
                 ]
             ];
-            $stack['list'][] = $photo_template[mt_rand(0,count($photo_template)-1)];
+            
+            if ( ! is_null( array_key_last($photo_template) ) ) {
+                $stack['list'][] = $photo_template[mt_rand(0,array_key_last($photo_template))];
+            }
         }
 
         return $stack;

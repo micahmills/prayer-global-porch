@@ -200,7 +200,8 @@ class Prayer_Global_Laps_Post_Type extends DT_Module_Base {
                 'description' => '',
                 'type'        => 'text',
                 'default'     => '',
-                "hidden" => true,
+                'tile' => 'details',
+                "hidden" => false,
             ];
             $fields['prayer_app_global_magic_key'] = [
                 'name'        => __( 'Global Key', 'prayer-global' ),
