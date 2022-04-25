@@ -40,7 +40,7 @@ class PG_Stacker {
 
         // adds to bottom
         self::_cities( $stack );
-//        self::_people_groups( $stack );
+//        self::_people_groups( $stack ); // @todo disabled because it was adding 100ms to the processing. Investigate why.
 
         // @todo  prioritize limit number of items
 
@@ -623,44 +623,6 @@ class PG_Stacker {
         return $stack;
     }
 
-    public static function _people_groups( &$stack ) {
-        if ( ! empty( $stack['people_groups'] ) ) {
-            $image_list = get_option('location_grid_images_json' );
-            $base_url = pg_image_url() . 'jp/';
-
-            // people group list
-            $values = [];
-            foreach( $stack['people_groups'] as $group ) {
-                if ( isset( $image_list['jp']['pid3'][$group['PeopleID3']] ) ) {
-                    $image = $base_url . 'pid3/' . $image_list['jp']['pid3'][$group['PeopleID3']];
-                } else {
-                    continue;
-                }
-
-                $values[] = [
-                    'name' => $group['name'],
-                    'image_url' => $image,
-                    'description' => $group['name'] . '<br>(' . $group['PrimaryReligion'].')',
-                    'progress' => $group['JPScale'],
-                    'progress_image_url' => $base_url . 'progress/' . $image_list['jp']['progress'][$group['JPScale']],
-                    'least_reached' => $group['LeastReached']
-                ];
-            }
-            if ( ! empty( $values ) ) {
-                $stack['list'][] = [
-                    'type' => 'people_groups_list',
-                    'data' => [
-                        'section_label' => 'People Groups In The Area',
-                        'values' => $values,
-                        'section_summary' => '',
-                        'prayer' => 'Pray that God call his worshippers out of these groups.'
-                    ]
-                ];
-            }
-        }
-        return $stack;
-    }
-
     public static function _least_reached( &$stack ) {
         if ( ! empty( $stack['least_reached'] ) ) {
             $stack['list'][] = [
@@ -1094,6 +1056,44 @@ class PG_Stacker {
 
 
         $stack['list'] = array_merge(array_slice($stack['list'], 0, $position), array($blocks[array_rand($blocks, 1)]), array_slice($stack['list'], $position));
+        return $stack;
+    }
+
+    public static function _people_groups( &$stack ) {
+        if ( ! empty( $stack['people_groups'] ) ) {
+            $image_list = get_option('location_grid_images_json' );
+            $base_url = pg_image_url() . 'jp/';
+
+            // people group list
+            $values = [];
+            foreach( $stack['people_groups'] as $group ) {
+                if ( isset( $image_list['jp']['pid3'][$group['PeopleID3']] ) ) {
+                    $image = $base_url . 'pid3/' . $image_list['jp']['pid3'][$group['PeopleID3']];
+                } else {
+                    continue;
+                }
+
+                $values[] = [
+                    'name' => $group['name'],
+                    'image_url' => $image,
+                    'description' => $group['name'] . '<br>(' . $group['PrimaryReligion'].')',
+                    'progress' => $group['JPScale'],
+                    'progress_image_url' => $base_url . 'progress/' . $image_list['jp']['progress'][$group['JPScale']],
+                    'least_reached' => $group['LeastReached']
+                ];
+            }
+            if ( ! empty( $values ) ) {
+                $stack['list'][] = [
+                    'type' => 'people_groups_list',
+                    'data' => [
+                        'section_label' => 'People Groups In The Area',
+                        'values' => $values,
+                        'section_summary' => '',
+                        'prayer' => 'Pray that God call his worshippers out of these groups.'
+                    ]
+                ];
+            }
+        }
         return $stack;
     }
 
