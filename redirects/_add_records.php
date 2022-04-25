@@ -59,7 +59,7 @@ class Prayer_Global_Add extends DT_Magic_Url_Base
                       AND lg3.admin0_grid_id IN (100050711,100219347,100089589,100074576,100259978,100018514)"
         );
         $inc = 0;
-        $current_lap = PG_Utilities::get_current_global_lap();
+        $current_lap = pg_current_global_lap();
         $post_id = $current_lap['post_id'];
         if ( isset( $_GET['post_id'] ) ) {
             $post_id = $_GET['post_id'];

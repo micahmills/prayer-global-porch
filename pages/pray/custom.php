@@ -104,12 +104,12 @@ class Prayer_Global_Laps_Custom_Link extends DT_Magic_Url_Base {
                     'root' => esc_url_raw( rest_url() ),
                     'nonce' => wp_create_nonce( 'wp_rest' ),
                     'parts' => $this->parts,
-                    'current_lap' => PG_Utilities::get_current_global_lap(),
+                    'current_lap' => pg_current_global_lap(),
                     'translations' => [
                         'add' => __( 'Add Magic', 'prayer-global' ),
                     ],
-                    'start_content' => PG_Utilities::get_new_custom_location( $this->parts ),
-                    'next_content' => PG_Utilities::get_new_custom_location( $this->parts ),
+                    'start_content' => $this->get_new_location( $this->parts ),
+                    'next_content' => $this->get_new_location( $this->parts ),
                 ]) ?>][0]
             </script>
             <script type="text/javascript" src="<?php echo DT_Mapbox_API::$mapbox_gl_js ?>"></script>
@@ -162,13 +162,114 @@ class Prayer_Global_Laps_Custom_Link extends DT_Magic_Url_Base {
 
         switch( $params['action'] ) {
             case 'log':
-                $result = PG_Utilities::save_log( $params['parts'], $params['data'], false );
+                $result = $this->save_log( $params['parts'], $params['data'] );
                 return $result;
             case 'refresh':
-                return PG_Utilities::get_new_custom_location( $params['parts']['post_id'] );
+                return $this->get_new_location( $params['parts']['post_id'] );
             default:
                 return new WP_Error( __METHOD__, "Incorrect action", [ 'status' => 400 ] );
         }
+    }
+
+    public function save_log( $parts, $data ) {
+
+        if ( !isset( $parts['post_id'], $parts['root'], $parts['type'], $data['grid_id'] ) ) {
+            return new WP_Error( __METHOD__, "Missing parameters", [ 'status' => 400 ] );
+        }
+
+        $args = [
+            'post_id' => $parts['post_id'],
+            'post_type' => 'laps',
+            'type' => $parts['root'],
+            'subtype' => $parts['type'],
+            'payload' => null,
+            'value' => $data['pace'] ?? 1,
+            'grid_id' => $data['grid_id'],
+        ];
+        if ( is_user_logged_in() ) {
+            $args['user_id'] = get_current_user_id();
+        }
+        $id = dt_report_insert( $args, false );
+
+        return $this->get_new_location( $parts );
+    }
+
+    /**
+     * Custom query
+     * @param $post_id
+     * @return array|false|void
+     */
+    public function get_new_location( $parts ) {
+        $post_id = $parts['post_id'];
+        $public_key = $parts['public_key'];
+
+        // get 4770 list
+        $list_4770 = pg_query_4770_locations();
+
+        // subtract prayed places
+        $list_prayed = $this->_query_prayed_list( $post_id );
+        if ( ! empty( $list_prayed ) ) {
+            foreach( $list_prayed as $grid_id ) {
+                if ( isset( $list_4770[$grid_id] ) ) {
+                    unset( $list_4770[$grid_id] );
+                }
+            }
+        }
+
+        if ( empty( $list_4770 ) ) {
+            $time = time();
+            $date = date( 'Y-m-d H:m:s', time() );
+            DT_Posts::update_post('laps', $post_id, [ 'status' => 'complete', 'end_date' => $date, 'end_time' => $time ], false, false );
+            if ( dt_is_rest() ) { // signal new lap to rest request
+                return false;
+            } else { // if first load on finished lap, redirect to new lap
+                wp_redirect( '/prayer_app/custom/'.$public_key );
+                exit;
+            }
+        }
+
+        if ( count( $list_4770 ) > 20 ) { // turn off shuffle for the last few records
+            shuffle( $list_4770 );
+        } else {
+            sort( $list_4770 );
+        }
+        $grid_id = $list_4770[0];
+
+        // checks global list and finds an id that has not been prayer for by either custom or global.
+        // else it goes with the custom selected grid_id above
+
+        $global_list_prayed = Prayer_Global_Laps_Post_Type_Link::instance()->_query_prayed_list(); // positive list of global locations prayed for
+        if ( ! empty( $global_list_prayed ) && in_array( $grid_id, $global_list_prayed ) /* in_array means the global list has already prayed for this location */ ) {
+            foreach( $list_4770 as $index => $custom_grid_id ) {
+                if ( ! isset( $global_list_prayed[$custom_grid_id] ) ) {
+                    $grid_id = $list_4770[$index];
+                }
+            }
+        }
+
+        $content = PG_Stacker::build_location_stack( $grid_id );
+        return $content;
+    }
+
+    public function _query_prayed_list( $post_id ) {
+
+        global $wpdb;
+        $raw_list = $wpdb->get_col( $wpdb->prepare(
+            "SELECT DISTINCT grid_id
+                    FROM $wpdb->dt_reports
+                    WHERE post_id = %d
+                      AND type = 'prayer_app'
+                      AND subtype = 'custom';"
+            , $post_id ) );
+
+        $list = [];
+        if ( ! empty( $raw_list) ) {
+            foreach( $raw_list as $item ) {
+                $list[$item] = $item;
+            }
+        }
+
+        return $list;
     }
 }
 Prayer_Global_Laps_Custom_Link::instance();

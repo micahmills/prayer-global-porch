@@ -72,7 +72,7 @@
         <div class="row">
             <div class="col">
                 <p class="text-md-center" id="location-map"></p>
-                <p class="text-md-center"><button type="button" class="btn btn-link btn-sm" id="show_borders">show borders</button></p>
+                <p class="text-md-center"><button type="button" class="btn btn-link btn-sm" id="show_borders">show detail map</button></p>
             </div>
         </div>
         <div class="w-100"><hr></div>

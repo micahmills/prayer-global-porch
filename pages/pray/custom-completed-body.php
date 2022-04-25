@@ -1,5 +1,5 @@
 <?php
-$current_lap = PG_Utilities::get_current_global_lap();
+$current_lap = pg_current_global_lap();
 $lap_parts = $this->parts;
 $lap_post_id = $lap_parts['post_id'];
 

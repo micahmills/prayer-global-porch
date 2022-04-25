@@ -673,9 +673,6 @@ jQuery(document).ready(function(){
       case '4_fact_blocks':
         _template_4_fact_blocks( block.data )
         break;
-      case 'demographics':
-        _template_demographics( block.data )
-        break;
       case 'percent_3_circles':
         _template_percent_3_circles( block.data )
         break;
@@ -1043,60 +1040,6 @@ jQuery(document).ready(function(){
       <div class="w-100"><hr></div>`
     )
   }
-  function _template_demographics( data ) {
-    div.append(
-      `<div class="row">
-          <div class="col text-center ">
-             <p class="mt-3 mb-3 font-weight-normal one-em uc">${data.section_label}</p>
-             <p class="mt-3 mb-3 font-weight-bold two-em">${data.focus_label}</p>
-          </div>
-      </div>
-
-      <div class="row text-center justify-content-center">
-          <div class="col-6 col-md-4 col-lg-3">
-            <p class="mt-3 mb-0 font-weight-bold">${data.label_1}</p>
-            <p class="mt-0 mb-3 font-weight-normal ${data.size_1}">${data.value_1}</p>
-          </div>
-          <div class="col-6 col-md-4 col-lg-3">
-            <p class="mt-3 mb-0 font-weight-bold">${data.label_3}</p>
-            <p class="mt-0 mb-3 font-weight-normal ${data.size_3}">${data.value_3}</p>
-          </div>
-          <div class="col-md-4 col-lg-3">
-            <p class="mt-3 mb-0 font-weight-bold">${data.label_4}</p>
-            <p class="mt-0 mb-3 font-weight-normal ${data.size_4}">${data.value_4}</p>
-          </div>
-      </div>
-      <div class="row text-center justify-content-center">
-          <div class="col-6 col-md-4 col-lg-3">
-            <p class="mt-3 mb-0 font-weight-bold">${data.label_circle_1}</p>
-            <div class="pie" style="--p:${data.percent_circle_1};--b:10px;--c:red;">${data.percent_circle_1}%</div>
-            <p class="mt-3 mb-0 font-weight-normal one-em">${data.population_circle_1}</p>
-          </div>
-          <div class="col-6 col-md-4 col-lg-3">
-            <p class="mt-3 mb-0 font-weight-bold">${data.label_circle_2}</p>
-            <div class="pie" style="--p:${data.percent_circle_2};--b:10px;--c:orange;">${data.percent_circle_2}%</div>
-            <p class="mt-3 mb-0 font-weight-normal one-em">${data.population_circle_2}</p>
-          </div>
-          <div class="col-md-4 col-lg-3">
-            <p class="mt-3 mb-0 font-weight-bold">${data.label_circle_3}</p>
-            <div class="pie" style="--p:${data.percent_circle_3};--b:10px;--c:green;">${data.percent_circle_3}%</div>
-            <p class="mt-3 mb-0 font-weight-normal one-em">${data.population_circle_3}</p>
-          </div>
-      </div>
-
-      <div class="row text-center">
-        <div class="col">
-           <p class="font-weight-normal">${data.section_summary}</p>
-        </div>
-      </div>
-      <div class="row text-center justify-content-center">
-        <div class="col-md-8">
-           <p class="mt-3 mb-3 font-weight-normal one-em">${data.prayer}</p>
-        </div>
-      </div>
-      <div class="w-100"><hr></div>`
-    )
-  }
   function _template_bullet_list_2_column( data ) {
     if ( data.values.length > 0 ) {
       let values_list = ''
@@ -1247,11 +1190,12 @@ jQuery(document).ready(function(){
       </div>
       <div class="w-100"><hr></div>`)
   }
-  function _template_verse_block( data ) {
+  function _template_prayer_block( data ) {
     div.append(
       `<div class="row">
           <div class="col text-center ">
             <p class="mt-3 mb-3 font-weight-normal one-em uc">${data.section_label}</p>
+            <p class="mt-3 mb-3"><i class="ion-android-people ${data.icon_color} six-em" /> <i class="ion-android-people ${data.icon_color} six-em" /> <i class="ion-android-people ${data.icon_color} six-em" /></p>
           </div>
       </div>
       <div class="row text-center justify-content-center">
@@ -1267,14 +1211,14 @@ jQuery(document).ready(function(){
     </div>
       <div class="w-100"><hr></div>`)
   }
-  function _template_prayer_block( data ) {
+  function _template_verse_block( data ) {
     let icons = ['ion-android-sync']
     let icon_name = icons[Math.floor(Math.random() * icons.length)]
     div.append(
       `<div class="row">
           <div class="col text-center ">
             <p class="mt-3 mb-3 font-weight-normal one-em uc">${data.section_label}</p>
-            <p class="mt-3 mb-3"><i class="${icon_name} green six-em" /></p>
+            <p class="mt-3 mb-3"><img src="${jsObject.image_folder}bible-${data.icon_color}.svg" alt="icon" /></p>
           </div>
       </div>
       <div class="row text-center justify-content-center">
@@ -1285,7 +1229,7 @@ jQuery(document).ready(function(){
       </div>
       <div class="row text-center justify-content-center">
         <div class="col-md-8">
-           <p class="mt-3 mb-3 font-weight-normal two-em">${data.prayer}</p>
+           <p class="mt-3 mb-3 font-weight-normal one-em">${data.prayer}</p>
         </div>
     </div>
       <div class="w-100"><hr></div>`)
@@ -1300,11 +1244,6 @@ jQuery(document).ready(function(){
       <div class="row text-center">
         <div class="col">
            <img src="${data.url}" class="img-fluid" alt="" />
-        </div>
-      </div>
-      <div class="row text-center justify-content-center">
-        <div class="col">
-            <p class="mt-3 font-weight-normal">${data.section_summary}</p>
         </div>
       </div>
       <div class="row text-center justify-content-center">

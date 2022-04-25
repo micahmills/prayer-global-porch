@@ -139,7 +139,7 @@ class Prayer_Global_Tab_General {
             'async' => array(),
             'src' => array()
         );
-        $fields = prayer_global_fields();
+        $fields = pg_fields();
         if ( isset( $_POST['pg_settings_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['pg_settings_nonce'] ) ), 'pg_settings' ) ) {
             $saved_fields = $fields;
 
@@ -157,9 +157,9 @@ class Prayer_Global_Tab_General {
                 $saved_fields[$key]['value'] = $value;
             }
 
-            $fields = prayer_global_recursive_parse_args( $saved_fields, $fields );
+            $fields = pg_recursive_parse_args( $saved_fields, $fields );
 
-            update_option( 'prayer_global_fields', $fields );
+            update_option( 'pg_fields', $fields );
         }
         ?>
         <form method="post" class="metabox-table">
@@ -219,7 +219,7 @@ class Prayer_Global_Tab_General {
     }
 
     public function meta_box_build() {
-        $json_url = prayer_global_image_json_url();
+        $json_url = pg_image_json_url();
         $json = json_decode( wp_remote_retrieve_body( wp_remote_get($json_url) ), true  );
         $location_grid_images_version = get_option('location_grid_images_version');
 
