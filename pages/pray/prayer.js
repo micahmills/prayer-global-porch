@@ -1238,16 +1238,18 @@ jQuery(document).ready(function(){
     div.append(
       `<div class="row">
           <div class="col text-center ">
-            <p class="mt-3 mb-3 font-weight-normal one-em uc">${data.section_label}</p>
+            <p class="mt-3 mb-0 font-weight-normal one-em uc">${data.section_label}</p>
+            <p class="mt-0 mb-3 font-weight-normal">${data.location_label}</p>
           </div>
       </div>
       <div class="row text-center">
         <div class="col">
-           <img src="${data.url}" class="img-fluid" alt="" />
+           <p><img src="${data.url}" class="img-fluid" alt="prayer photo" /></p>
         </div>
       </div>
       <div class="row text-center justify-content-center">
         <div class="col-md-8">
+           <p class="mt-0 mb-3 font-weight-normal">${data.section_summary}</p>
            <p class="mt-3 mb-3 font-weight-normal one-em">${data.prayer}</p>
         </div>
     </div>

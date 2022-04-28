@@ -32,11 +32,11 @@ class PG_Stacker {
         shuffle($stack['list']);
 
         // inserts into shuffled array specific array positions
-        self::_prayers( $stack, 1 );
-        self::_verses( $stack, 4 );
+        self::_verses( $stack, 3 );
 
         // adds to top
         self::_demographics( $stack );
+        self::_prayers( $stack, 1 );
 
         // adds to bottom
         self::_cities( $stack );
@@ -83,17 +83,17 @@ class PG_Stacker {
 
 
         if ( $stack['location']['percent_non_christians'] > 50 ) {
-            if ( ( $stack['location']['christian_adherents_int'] + $stack['location']['non_christians_int'] ) / 5000 ) {
+            if ( $stack['location']['all_lost_int'] / 5000 ) {
                 $templates[] = [
                     'type' => '4_fact_blocks',
                     'data' => [
                         'section_label' => 'Demographics',
                         'focus_label' => $stack['location']['full_name'],
                         'label_1' => 'Lost Population',
-                        'value_1' => number_format( $stack['location']['christian_adherents_int'] + $stack['location']['non_christians_int'] ),
+                        'value_1' => $stack['location']['all_lost'],
                         'size_1' => 'two-em',
                         'label_2' => 'New Churches Needed',
-                        'value_2' => number_format( ( $stack['location']['christian_adherents_int'] + $stack['location']['non_christians_int'] ) / 5000 ),
+                        'value_2' => number_format( ceil( $stack['location']['all_lost_int'] / 5000 ) ),
                         'size_2' => 'two-em',
                         'label_3' => 'Dominant Religion',
                         'value_3' => $stack['location']['primary_religion'],
@@ -107,18 +107,16 @@ class PG_Stacker {
                 ];
             }
 
-            if ( $stack['location']['believers_int'] > 0 && $stack['location']['christian_adherents_int'] > 0 ) {
-                $templates[] = [
-                    'type' => 'content_block',
-                    'data' => [
-                        'section_label' => 'Demographics',
-                        'focus_label' => $stack['location']['full_name'],
-                        'icon' => 'ion-map',
-                        'color' => 'red',
-                        'section_summary' => 'The '.$stack['location']['admin_level_name'].' of <strong>'.$stack['location']['full_name'].'</strong> has a population of <strong>'.$stack['location']['population'].'</strong>.<br><br> We estimate '.$stack['location']['name'].' has <strong>'.$stack['location']['believers'].'</strong> people who might know Jesus, <strong>'.$stack['location']['christian_adherents'].'</strong> people who might know about Jesus culturally, and <strong>'.$stack['location']['non_christians'].'</strong> people who do not know Jesus.<br><br>This is <strong>1</strong> believer for every <strong>'. number_format(  ceil( (  $stack['location']['non_christians_int'] + $stack['location']['christian_adherents_int'] ) / $stack['location']['believers_int'] ) ) .'</strong> neighbors who need Jesus.',
-                    ]
-                ];
-            }
+            $templates[] = [
+                'type' => 'content_block',
+                'data' => [
+                    'section_label' => 'Demographics',
+                    'focus_label' => $stack['location']['full_name'],
+                    'icon' => 'ion-map',
+                    'color' => 'red',
+                    'section_summary' => 'The '.$stack['location']['admin_level_name'].' of <strong>'.$stack['location']['full_name'].'</strong> has a population of <strong>'.$stack['location']['population'].'</strong>.<br><br> We estimate '.$stack['location']['name'].' has <strong>'.$stack['location']['believers'].'</strong> people who might know Jesus, <strong>'.$stack['location']['christian_adherents'].'</strong> people who might know about Jesus culturally, and <strong>'.$stack['location']['non_christians'].'</strong> people who do not know Jesus.<br><br>This is <strong>1</strong> believer for every <strong>'. $stack['location']['lost_per_believer'] .'</strong> neighbors who need Jesus.',
+                ]
+            ];
 
         }
         if ( $stack['location']['percent_christian_adherents'] > 50  ) {
@@ -143,23 +141,20 @@ class PG_Stacker {
                     'prayer' => 'Pray that every disciple become an active harvest worker.'
                 ]
             ];
-            if ( $stack['location']['believers_int'] > 0 && $stack['location']['christian_adherents_int'] > 0 ) {
-                $templates[] = [
-                    'type' => 'content_block',
-                    'data' => [
-                        'section_label' => 'Demographics',
-                        'focus_label' => $stack['location']['full_name'],
-                        'icon' => 'ion-map',
-                        'color' => 'orange',
-                        'section_summary' => 'The ' . $stack['location']['admin_level_name'] . ' of <strong>' . $stack['location']['full_name'] . '</strong> has a population of <strong>' . $stack['location']['population'] . '</strong>.<br><br> We estimate ' . $stack['location']['name'] . ' has <strong>' . $stack['location']['believers'] . '</strong> people who might know Jesus, <strong>' . $stack['location']['christian_adherents'] . '</strong> people who might know about Jesus culturally, and <strong>' . $stack['location']['non_christians'] . '</strong> people who do not know Jesus.<br><br>This is <strong>1</strong> believer for every <strong>' . number_format(ceil(($stack['location']['non_christians_int'] + $stack['location']['christian_adherents_int']) / $stack['location']['believers_int'])) . '</strong> neighbors who need Jesus.',
-                    ]
-                ];
-            }
+            $templates[] = [
+                'type' => 'content_block',
+                'data' => [
+                    'section_label' => 'Demographics',
+                    'focus_label' => $stack['location']['full_name'],
+                    'icon' => 'ion-map',
+                    'color' => 'orange',
+                    'section_summary' => 'The ' . $stack['location']['admin_level_name'] . ' of <strong>' . $stack['location']['full_name'] . '</strong> has a population of <strong>' . $stack['location']['population'] . '</strong>.<br><br> We estimate ' . $stack['location']['name'] . ' has <strong>' . $stack['location']['believers'] . '</strong> people who might know Jesus, <strong>' . $stack['location']['christian_adherents'] . '</strong> people who might know about Jesus culturally, and <strong>' . $stack['location']['non_christians'] . '</strong> people who do not know Jesus.<br><br>This is <strong>1</strong> believer for every <strong>' .  $stack['location']['lost_per_believer'] . '</strong> neighbors who need Jesus.',
+                ]
+            ];
         }
 
 
-        $template = $templates[mt_rand(0,count($templates)-1)];
-
+        $template = $templates[array_rand($templates)];
         $stack['list'] = array_merge( [ $template ], $stack['list'] );
 
         return $stack;
@@ -183,7 +178,7 @@ class PG_Stacker {
                 'percent_3' => $stack['location']['percent_believers'],
                 'population_3' => $stack['location']['believers'],
                 'section_summary' => '',
-                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' lost neighbors around them.',
+                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['all_lost'].' lost neighbors around them.',
             ]
         ];
         if ( $stack['location']['percent_non_christians'] > $stack['location']['percent_christian_adherents']) {
@@ -235,7 +230,7 @@ class PG_Stacker {
                 'percent_3' => $stack['location']['percent_believers'],
                 'population_3' => $stack['location']['believers'],
                 'section_summary' => '',
-                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' lost neighbors around them.',
+                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['all_lost'].' lost neighbors around them.',
             ]
         ];
         $faith_status[] = [
@@ -246,7 +241,7 @@ class PG_Stacker {
                 'percent_2' => $stack['location']['percent_christian_adherents'],
                 'percent_3' => $stack['location']['percent_believers'],
                 'section_summary' => '',
-                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' lost neighbors around them.',
+                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['all_lost'].' lost neighbors around them.',
             ]
         ];
         $faith_status[] = [
@@ -263,12 +258,11 @@ class PG_Stacker {
                 'percent_3' => $stack['location']['percent_believers'],
                 'population_3' => $stack['location']['believers'],
                 'section_summary' => '',
-                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' lost neighbors around them.',
+                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['all_lost'].' lost neighbors around them.',
             ]
         ];
 
-        $stack['list'][] = $faith_status[mt_rand(0,count($faith_status)-1)];
-//        $stack['list'][] = $faith_status[mt_rand(0,array_key_last($faith_status))];
+        $stack['list'][] = $faith_status[array_rand($faith_status)];
 
         return $stack;
     }
@@ -646,42 +640,51 @@ class PG_Stacker {
 
             $text = [
                 [
-                    'section_label' => 'Local photo of ' . $stack['location']['name'],
-                    'prayer' => 'What does the Spirit prompt you to pray?'
+                    'section_label' => 'One Shot Prayer Walk',
+                    'section_summary' => 'What people, places, activities or culture do you see? <br>Do you see conditions of education, economy, religion, environment? <br>How could you pray for that?',
+                    'prayer' => 'Spirit, what do you want prayed for '.$stack['location']['full_name'].'?',
                 ],
                 [
-                    'section_label' => 'Photo from '.$stack['location']['name'],
-                    'prayer' => 'Pray for those lives who will pass by here in the next few days.'
+                    'section_label' => 'One Shot Prayer Walk',
+                    'section_summary' => 'What people, places, activities or culture do you see? <br>Do you see conditions of education, economy, religion, environment? <br>How could you pray for that?',
+                    'prayer' => 'Spirit, what do you want prayed for '.$stack['location']['full_name'].'?',
                 ],
                 [
-                    'section_label' => 'Photo from '.$stack['location']['name'],
-                    'prayer' => 'Pray for knowledge of the Lord to fill this place.'
+                    'section_label' => 'One Shot Prayer Walk',
+                    'section_summary' => 'What people, places, activities or culture do you see? <br>Do you see condition of education, economy, religion, environment? <br>How could you pray for that?',
+                    'prayer' => 'Spirit, what do you want prayed for '.$stack['location']['full_name'].'?',
                 ],
                 [
-                    'section_label' => 'A view in '.$stack['location']['name'],
-                    'prayer' => 'Pray that Jesus’ name is proclaimed here.'
+                    'section_label' => 'One Shot Prayer Walk',
+                    'section_summary' => 'What people, places, activities or culture do you see? <br>Do you see conditions of education, economy, religion, environment? <br>How could you pray for that?',
+                    'prayer' => 'Spirit, what do you want prayed for the people of '.$stack['location']['full_name'].'?',
                 ],
                 [
-                    'section_label' => 'Snapshot from '.$stack['location']['name'],
-                    'prayer' => 'What would the Spirit of Jesus desire in this photo? Pray for that.'
+                    'section_label' => 'One Shot Prayer Walk',
+                    'section_summary' => 'What people, places, activities or culture do you see? <br>Do you see conditions of education, economy, religion, environment? <br>How could you pray for that?',
+                    'prayer' => 'Spirit, what do you want prayed for the people of '.$stack['location']['full_name'].'?',
                 ],
                 [
-                    'section_label' => 'Photo glimpse into '.$stack['location']['name'],
-                    'prayer' => 'What lives can you imagine in this place? What would you pray for them?'
+                    'section_label' => 'One Shot Prayer Walk',
+                    'section_summary' => 'What people, places, activities or culture do you see? <br>Do you see conditions of education, economy, religion, environment? <br>How could you pray for that?',
+                    'prayer' => 'Spirit, what do you want prayed for '.$stack['location']['full_name'].'?',
                 ],
                 [
-                    'section_label' => 'In ' . $stack['location']['full_name'],
-                    'prayer' => 'Pray the gospel be preached here.'
+                    'section_label' => 'One Shot Prayer Walk',
+                    'section_summary' => 'What people, places, activities or culture do you see? <br>Do you see conditions of education, economy, religion, environment? <br>How could you pray for that?',
+                    'prayer' => 'Spirit, what do you want prayed for '.$stack['location']['full_name'].'?',
                 ],
             ];
 
-            $image_url = $images['photos'][array_rand( $images['photos'], 1  )];
-            $text_index = array_rand( $text, 1 );
+            $image_url = $images['photos'][array_rand( $images['photos'])];
+            $text_index = array_rand( $text );
             $template = [
                 'type' => 'photo_block',
                 'data' => [
                     'section_label' => $text[$text_index]['section_label'],
+                    'location_label' => 'Photo from the ' . $stack['location']['admin_level_name'] . ' of ' . $stack['location']['full_name'],
                     'url' => $image_url,
+                    'section_summary' => $text[$text_index]['section_summary'],
                     'prayer' => $text[$text_index]['prayer'],
                 ]
             ];
@@ -1232,6 +1235,16 @@ class PG_Stacker {
         $grid_record['percent_christian_adherents'] = round( (float) $grid_record['percent_christian_adherents'], 2 );
         $grid_record['percent_non_christians_full'] = (float) $grid_record['percent_non_christians'];
         $grid_record['percent_non_christians'] = round( (float) $grid_record['percent_non_christians'], 2 );
+
+        // lost
+        $grid_record['all_lost_int'] = $grid_record['christian_adherents_int'] + $grid_record['non_christians_int'];
+        $grid_record['all_lost'] = number_format( $grid_record['all_lost_int'] );
+        if ( $grid_record['believers_int'] > 0 ) {
+            $grid_record['lost_per_believer_int'] = (int) ceil( ( $grid_record['christian_adherents_int'] + $grid_record['non_christians_int'] ) / $grid_record['believers_int'] );
+        } else {
+            $grid_record['lost_per_believer_int'] = $grid_record['christian_adherents_int'] + $grid_record['non_christians_int'];
+        }
+        $grid_record['lost_per_believer'] = number_format( $grid_record['lost_per_believer_int'] );
 
         // process pace
         $grid_record['population_growth_status'] = self::_get_pace( 'population_growth_status', $grid_record );
