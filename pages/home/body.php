@@ -60,8 +60,8 @@
         </div>
         <div class="row">
             <div class="col-md text-center">
-                <a href="/map_app/current/" role="button" class="btn smoothscroll pb_outline-dark btn-xl pb_font-13 p-4 rounded-0 pb_letter-spacing-2">Current Lap Map</a>
-                <a href="/stats_app/current/" role="button" class="btn smoothscroll pb_outline-dark btn-xl pb_font-13 p-4 rounded-0 pb_letter-spacing-2">Current Lap Stats</a>
+                <a href="/newest/map/" role="button" class="btn smoothscroll pb_outline-dark btn-xl pb_font-13 p-4 rounded-0 pb_letter-spacing-2">Current Lap Map</a>
+                <a href="/newest/stats/" role="button" class="btn smoothscroll pb_outline-dark btn-xl pb_font-13 p-4 rounded-0 pb_letter-spacing-2">Current Lap Stats</a>
             </div>
         </div>
         <div class="row">

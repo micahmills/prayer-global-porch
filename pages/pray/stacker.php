@@ -25,7 +25,7 @@ class PG_Stacker {
 
         // adds and shuffles for variation
         self::_faith_status( $stack );
-        self::_photos( $stack );
+//        self::_photos( $stack );
         self::_population_change( $stack );
         self::_least_reached( $stack );
         self::_key_city( $stack );

@@ -89,7 +89,6 @@ class Prayer_Global_Porch {
         $wpdb->location_grid_people_groups = 'location_grid_people_groups';
 
         require_once( 'global-utilities.php' );
-
         require_once( 'pages/pray/stacker.php' );
 
         if ( is_admin() ) {
@@ -99,21 +98,19 @@ class Prayer_Global_Porch {
         require_once( 'redirects/loader.php' );
         require_once( 'post-type/loader.php' );
         require_once( 'support/cron.php' );
-        require_once( 'post-type/verses-post-type.php' );
+//        require_once( 'post-type/verses-post-type.php' );
 //        require_once( 'support/config-required-plugins.php' );
 
         // home
-        require_once( 'pages/home/magic-link.php' );
-
-
+        require_once( 'pages/home/magic-home.php' );
 
         // prayer_app
-        require_once( 'pages/pray/global.php' );
-        require_once( 'pages/pray/custom.php' );
+        require_once( 'pages/pray/magic-global.php' );
+//        require_once( 'pages/pray/custom.php' );
 
         // map_app
 //        require_once( 'pages/map/current.php' );
-        require_once( 'pages/map/global-map.php' );
+//        require_once( 'pages/map/global-map.php' );
 
 
         // stats_app

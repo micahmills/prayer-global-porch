@@ -3,29 +3,11 @@ if ( !defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly.
 
 
 /**
- * Class Prayer_Global_Laps_Post_Type_Link
+ * Class Prayer_Global_Prayer_App
  */
-class Prayer_Global_Laps_Post_Type_Link extends DT_Magic_Url_Base {
-
-    public $magic = false;
-//    public $parts = false;
-    public $page_title = 'Global Lap';
-    public $page_description = 'Prayer Laps';
-    public $root = "prayer_app";
-    public $type = 'global';
-    public $type_actions = [
-        '' => "Pray",
-        'map' => "Map",
-        'stats' => "Stats",
-    ];
-    public $show_bulk_send = false;
-    public $post_type = 'laps';
-    private $meta_key = '';
-    public $show_app_tile = true;
+class Prayer_Global_Prayer_App_Lap extends Prayer_Global_Prayer_App {
 
     private static $_instance = null;
-    public $meta = []; // Allows for instance specific data.
-
     public static function instance() {
         if ( is_null( self::$_instance ) ) {
             self::$_instance = new self();
@@ -34,48 +16,38 @@ class Prayer_Global_Laps_Post_Type_Link extends DT_Magic_Url_Base {
     } // End instance()
 
     public function __construct() {
-
-        $this->meta_key = $this->root . '_' . $this->type . '_magic_key';
         parent::__construct();
 
         /**
          * post type and module section
          */
-        add_filter( 'dt_settings_apps_list', [ $this, 'dt_settings_apps_list' ], 10, 1 );
-
         if ( dt_is_rest() ) {
             add_action( 'rest_api_init', [ $this, 'add_endpoints' ] );
         }
 
-        /**
-         * tests if other URL
-         */
+        // must be valid url
         $url = dt_get_url_path();
         if ( strpos( $url, $this->root . '/' . $this->type ) === false ) {
             return;
         }
-        /**
-         * tests magic link parts are registered and have valid elements
-         */
+
+        // must be valid parts
         if ( !$this->check_parts_match() ){
-            if ( substr( $url, 0, 17 ) === $this->root . '/' . $this->type ) {
-                wp_redirect( trailingslashit( site_url() ) . 'newest/lap/' ); // @todo change to redirect to most recent
-                exit;
-            }
-            wp_redirect( site_url() );
-            exit;
+            return;
         }
 
+        // has empty action, of stop
         if ( ! empty( $this->parts['action'] ) ) {
             return;
         }
 
-        // load if valid url
+        // redirect to completed if not current global lap
         $current_lap = pg_current_global_lap();
         if ( (int) $current_lap['post_id'] === (int) $this->parts['post_id'] ) {
             add_action( 'dt_blank_body', [ $this, 'body' ] );
         } else {
-            add_action( 'dt_blank_body', [ $this, 'completed_body' ] );
+            wp_redirect( trailingslashit( site_url() ) . $this->root . '/' . $this->type . '/' . $this->parts['public_key'] . '/completed' );
+            exit;
         }
 
         add_filter( 'dt_magic_url_base_allowed_css', [ $this, 'dt_magic_url_base_allowed_css' ], 10, 1 );
@@ -89,19 +61,6 @@ class Prayer_Global_Laps_Post_Type_Link extends DT_Magic_Url_Base {
 
     public function dt_magic_url_base_allowed_css( $allowed_css ) {
         return [];
-    }
-
-    public function dt_settings_apps_list( $apps_list )
-    {
-        $apps_list[$this->meta_key] = [
-            'key' => $this->meta_key,
-            'url_base' => $this->root . '/' . $this->type,
-            'label' => $this->page_title,
-            'description' => $this->page_description,
-            'settings_display' => false
-        ];
-
-        return $apps_list;
     }
 
     public function header_javascript(){
@@ -148,11 +107,92 @@ class Prayer_Global_Laps_Post_Type_Link extends DT_Magic_Url_Base {
 
     public function body(){
         DT_Mapbox_API::geocoder_scripts();
-        require_once( 'body.php' );
+        ?>
+
+        <!-- navigation & widget -->
+        <nav class="navbar prayer_navbar fixed-top" id="pb-pray-navbar">
+            <div class="container praying" id="praying-panel">
+                <div class="btn-group praying_button_group" role="group" aria-label="Praying Button">
+                    <button type="button" class="btn praying" id="praying_button" data-percent="0" data-seconds="0">
+                        <div class="praying__progress"></div>
+                        <span class="praying__text"></span>
+                    </button>
+                    <button type="button" class="btn btn-secondary praying" id="praying__close_button"><i class="ion-close-circled"></i></button>
+                    <button type="button" class="btn btn-secondary settings" id="praying__open_options" data-toggle="modal" data-target="#option_filter"><i class="ion-android-options"></i></button>
+                </div>
+            </div>
+            <div class="container question" id="question-panel">
+                Did you pray for this location?
+                <div class="btn-group question_button_group" role="group" aria-label="Praying Button">
+                    <button type="button" class="btn btn-secondary question" id="question__no">No</button>
+                    <button type="button" class="btn btn-secondary question question__yes" id="question__yes_done">Yes & Done</button>
+                    <button type="button" class="btn btn-secondary question question__yes" id="question__yes_next">Yes & Next</button>
+                </div>
+            </div>
+            <div class="container celebrate " id="celebrate-panel">
+                <div class="text-center">
+                    <img src="https://via.placeholder.com/600x400?text=Celebrate+Animation" class="img-fluid celebrate-image" alt="photo" />
+                </div>
+            </div>
+            <div class="w-100" ></div>
+            <div class="container decision" id="decision-panel">
+                <div class="btn-group decision_button_group" role="group" aria-label="Decision Button">
+                    <button type="button" class="btn btn-secondary decision" id="decision__home">Home</button>
+                    <button type="button" class="btn btn-secondary decision" id="decision__continue">Continue</button>
+                    <button type="button" class="btn btn-secondary decision" id="decision__next">Next</button>
+                </div>
+            </div>
+            <div class="w-100" ></div>
+            <div class="container">
+                <h3 class="mt-3 font-weight-normal text-center" id="location-name"></h3>
+            </div>
+        </nav>
+
+        <!-- Modal -->
+        <div class="modal fade" id="option_filter" tabindex="-1" role="dialog" aria-labelledby="option_filter_label" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Options</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Adjust your prayer pace. Spend longer on each location.<br>
+                        <div class="btn-group-vertical pace-wrapper">
+                            <button type="button" class="btn btn-secondary pace" id="pace__1" value="1">1 Minute</button>
+                            <button type="button" class="btn btn-outline-secondary pace" id="pace__2" value="2">2 Minutes</button>
+                            <button type="button" class="btn btn-outline-secondary pace" id="pace__3" value="3">3 Minutes</button>
+                            <button type="button" class="btn btn-outline-secondary pace" id="pace__5" value="5">5 Minutes</button>
+                            <button type="button" class="btn btn-outline-secondary pace" id="pace__10" value="10">10 Minutes</button>
+                            <button type="button" class="btn btn-outline-secondary pace" id="pace__15" value="15">15 Minutes</button>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- content section -->
+        <section>
+            <div class="container" id="map">
+                <div class="row">
+                    <div class="col">
+                        <p class="text-md-center" id="location-map"></p>
+                        <p class="text-md-center"><button type="button" class="btn btn-link btn-sm" id="show_borders">show detail map</button></p>
+                    </div>
+                </div>
+                <div class="w-100"><hr></div>
+            </div>
+            <div class="container" id="content"></div>
+        </section>
+
+        <?php
     }
-    public function completed_body(){
-        require_once( 'global-completed-body.php' );
-    }
+
 
     /**
      * Register REST Endpoints
@@ -328,4 +368,4 @@ class Prayer_Global_Laps_Post_Type_Link extends DT_Magic_Url_Base {
         return $new_post['ID'];
     }
 }
-Prayer_Global_Laps_Post_Type_Link::instance();
+Prayer_Global_Prayer_App_Lap::instance();
