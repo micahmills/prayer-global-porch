@@ -105,12 +105,16 @@ class Prayer_Global_Porch {
         // home
         require_once( 'pages/home/magic-link.php' );
 
-        // map_app
-        require_once( 'pages/map/current.php' );
+
 
         // prayer_app
         require_once( 'pages/pray/global.php' );
         require_once( 'pages/pray/custom.php' );
+
+        // map_app
+//        require_once( 'pages/map/current.php' );
+        require_once( 'pages/map/global-map.php' );
+
 
         // stats_app
         require_once( 'pages/stats/current.php' );

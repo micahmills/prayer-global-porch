@@ -4,7 +4,7 @@ if ( !defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly.
 class PG_Stacker {
 
     public static function build_location_stack( $grid_id ) {
-        dt_write_log(__METHOD__ . ' BEGIN');
+//        dt_write_log(__METHOD__ . ' BEGIN');
         // get queries
         $stack = self::_stack_query( $grid_id );
 
@@ -44,7 +44,7 @@ class PG_Stacker {
 
         // @todo  prioritize limit number of items
 
-        dt_write_log(__METHOD__ . ' END');
+//        dt_write_log(__METHOD__ . ' END');
 
         $reduced_stack = [];
         $reduced_stack['list'] = $stack['list'];

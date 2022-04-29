@@ -13,7 +13,7 @@ jQuery(document).ready(function($){
       data: JSON.stringify({ action: action, parts: jsObject.parts }),
       contentType: "application/json; charset=utf-8",
       dataType: "json",
-      url: jsObject.root + jsObject.parts.root + '/v1/' + jsObject.parts.type,
+      url: jsObject.root + jsObject.parts.root + '/v1/' + jsObject.parts.type + '/' + jsObject.parts.action,
       beforeSend: function (xhr) {
         xhr.setRequestHeader('X-WP-Nonce', jsObject.nonce )
       }
@@ -30,7 +30,7 @@ jQuery(document).ready(function($){
       data: JSON.stringify({ action: action, parts: jsObject.parts, data: data }),
       contentType: "application/json; charset=utf-8",
       dataType: "json",
-      url: jsObject.root + jsObject.parts.root + '/v1/' + jsObject.parts.type,
+      url: jsObject.root + jsObject.parts.root + '/v1/' + jsObject.parts.type + '/' + jsObject.parts.action,
       beforeSend: function (xhr) {
         xhr.setRequestHeader('X-WP-Nonce', jsObject.nonce )
       }

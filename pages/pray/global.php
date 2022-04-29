@@ -13,9 +13,14 @@ class Prayer_Global_Laps_Post_Type_Link extends DT_Magic_Url_Base {
     public $page_description = 'Prayer Laps';
     public $root = "prayer_app";
     public $type = 'global';
+    public $type_actions = [
+        '' => "Pray",
+        'map' => "Map",
+        'stats' => "Stats",
+    ];
+    public $show_bulk_send = false;
     public $post_type = 'laps';
     private $meta_key = '';
-    public $show_bulk_send = false;
     public $show_app_tile = true;
 
     private static $_instance = null;
@@ -59,6 +64,10 @@ class Prayer_Global_Laps_Post_Type_Link extends DT_Magic_Url_Base {
             }
             wp_redirect( site_url() );
             exit;
+        }
+
+        if ( ! empty( $this->parts['action'] ) ) {
+            return;
         }
 
         // load if valid url
