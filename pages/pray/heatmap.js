@@ -57,15 +57,14 @@ jQuery(document).ready(function($){
                         <span class="loading-spinner active"></span>
                         <div id='map'></div>
                         <div id="head_block">
-                            <div class="center"><h2>Lap ${jsObject.current_lap.lap_number}</h2></div>
                             <div id="title" class="center"></div>
                         </div>
                         <div id="foot_block">
                             <div class="grid-x grid-padding-x">
-                                <div class="cell medium-3 center"><h3>Section</h3></div>
-                                <div class="cell medium-3 center"><h3>Section</h3></div>
-                                <div class="cell medium-3 center"><h3>Section</h3></div>
-                                <div class="cell medium-3 center"><h3>Section</h3></div>
+                                <div class="cell medium-3 center"><h2>Lap ${jsObject.current_lap.lap_number}</h2></div>
+                                <div class="cell medium-3 center"><strong>Completed</strong><h2 id="completed"></h2></div>
+                                <div class="cell medium-3 center"><strong>Remaining</strong><h2 id="remaining"></h2></div>
+                                <div class="cell medium-3 center"><strong>Lap Start</strong><h2 id="start"></h2></div>
                             </div>
                         </div>
                     </div>
@@ -98,6 +97,7 @@ jQuery(document).ready(function($){
                       margin: 1em auto;
                       padding: 1em;
                       opacity: .9;
+                      display:none;
                     }
                     #head_block {
                       top: 10px;
@@ -298,6 +298,25 @@ jQuery(document).ready(function($){
 
         }) /* ajax call */
     }) /* for each loop */
+
+
+    jQuery('#completed').html( jsObject.grid_data.completed )
+    jQuery('#remaining').html( jsObject.grid_data.remaining )
+    jQuery('#start').html( jsObject.grid_data.start )
+    jQuery('#head_block').show()
+    jQuery('#foot_block').show()
+
+    map.on('load', function() {
+
+      jQuery.each( jsObject.grid_data.last_ten.features, function(i,v){
+        new mapboxgl.Marker({
+          color: 'green'
+        })
+          .setLngLat([v.geometry.coordinates[0],v.geometry.coordinates[1]])
+          .addTo(map);
+      })
+
+    })
 
   } /* .preCache */
 
