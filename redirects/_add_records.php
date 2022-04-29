@@ -31,7 +31,7 @@ class Prayer_Global_Add extends DT_Magic_Url_Base
     }
 
     public function redirect() {
-        require_once( trailingslashit( plugin_dir_path(__DIR__) ) . 'pages/assets/utilities.php' );
+        require_once( trailingslashit( plugin_dir_path(__DIR__) ) . 'pages/pray/stacker.php' );
         global $wpdb;
         $start=2;
         if ( isset(  $_GET['start'] ) ) {
@@ -67,8 +67,8 @@ class Prayer_Global_Add extends DT_Magic_Url_Base
         foreach( $raw_list as $grid_id ) {
             if ( $inc > $start ) {
                 $timestamp = time();
-                $wpdb->query( "INSERT INTO $wpdb->dt_reports(user_id, post_id, post_type, type, subtype, grid_id, timestamp)
-                VALUES('2', $post_id, 'laps', 'prayer_app', 'custom', $grid_id, $timestamp);" );
+                $wpdb->query( "INSERT INTO $wpdb->dt_reports(user_id, post_id, post_type, value, type, subtype, grid_id, timestamp)
+                VALUES('2', $post_id, 'laps', 1, 'prayer_app', 'global', $grid_id, $timestamp);" );
             }
             $inc++;
         }

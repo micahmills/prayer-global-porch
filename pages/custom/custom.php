@@ -238,7 +238,7 @@ class Prayer_Global_Laps_Custom_Link extends DT_Magic_Url_Base {
         // checks global list and finds an id that has not been prayer for by either custom or global.
         // else it goes with the custom selected grid_id above
 
-        $global_list_prayed = Prayer_Global_Laps_Post_Type_Link::instance()->_query_prayed_list(); // positive list of global locations prayed for
+        $global_list_prayed = Prayer_Global_Prayer_App::instance()->_query_prayed_list(); // positive list of global locations prayed for
         if ( ! empty( $global_list_prayed ) && in_array( $grid_id, $global_list_prayed ) /* in_array means the global list has already prayed for this location */ ) {
             foreach( $list_4770 as $index => $custom_grid_id ) {
                 if ( ! isset( $global_list_prayed[$custom_grid_id] ) ) {
