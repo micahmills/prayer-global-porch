@@ -16,6 +16,41 @@ function pg_current_global_lap() : array {
     return $lap;
 }
 
+function pg_lap_stats( $lap_number ) : array {
+
+    $data = [
+        'time_elapsed' => '',
+        'start_timestamp' => '',
+        'participants' => '',
+        'completed' => '',
+        'remaining' => '',
+        'lap_number' => 0,
+        'key' => '',
+        'post_id' => ''
+    ];
+
+    if ( ! empty( $lap_number ) ) {
+        global $wpdb;
+        $result = $wpdb->get_row(
+            ""
+        );
+
+
+
+        $data['time_elapsed'] = '22 days, 10 hours, 5 min';
+        $data['start_timestamp'] = '2345678987654';
+        $data['end_timestamp'] = '';
+        $data['participants'] = '234';
+        $data['completed'] = '2345';
+        $data['remaining'] = '234';
+        $data['lap_number'] = $lap_number;
+        $data['key'] = '';
+        $data['post_id'] = '';
+    }
+
+    return $data;
+}
+
 function pg_query_4770_locations() {
 
     if ( get_transient( __METHOD__ ) ) {

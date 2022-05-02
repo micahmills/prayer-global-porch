@@ -106,15 +106,10 @@ class Prayer_Global_Porch {
 
         // prayer_app
         require_once( 'pages/pray/magic-global.php' );
+
 //        require_once( 'pages/pray/custom.php' );
 
-        // map_app
-//        require_once( 'pages/map/current.php' );
-//        require_once( 'pages/map/global-map.php' );
-
-
         // stats_app
-        require_once( 'pages/stats/current.php' );
         require_once( 'pages/stats/previous.php' );
 
         // user
@@ -226,7 +221,7 @@ if ( is_admin() ){
 
 
 // Register activation hook.
-register_activation_hook( __FILE__, [ 'Prayer_Global_Porch', 'activation' ] );
+//register_activation_hook( __FILE__, [ 'Prayer_Global_Porch', 'activation' ] );
 //register_deactivation_hook( __FILE__, [ 'Prayer_Global_Porch', 'deactivation' ] );
 
 

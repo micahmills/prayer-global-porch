@@ -1,16 +1,19 @@
 <?php require_once( trailingslashit( plugin_dir_path( __DIR__ ) ) . '/assets/nav.php' ) ?>
+<?php
+$current_global_lap = pg_current_global_lap();
+$current_global_stats = pg_lap_stats($current_global_lap['lap_number']);
+$previous_global_stats = pg_lap_stats( (int) $current_global_lap['lap_number'] - 1 );
+?>
 
 <section class="pb_cover_v1 text-left cover-bg-black cover-bg-opacity-4" style="background-image: url(<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/images/map_background.jpg)" id="section-home">
     <div class="container">
         <div class="row align-items-center justify-content-end">
             <div class="col-md-6  order-md-1">
-
                 <h2 class="heading mb-3">Cover the World in Prayer</h2>
                 <div class="sub-heading">
                     <p class="mb-5">Community driven, movement-focused, saturation prayer.</p>
                     <p><a href="/newest/lap/" style="background-color:rgba(255,255,255,.7);" role="button" class="btn smoothscroll pb_font-25 btn-xl pb_font-13 p-4 rounded-0 pb_letter-spacing-2">Start Praying</a></p>
                 </div>
-
             </div>
         </div>
     </div>
@@ -22,7 +25,7 @@
         <div class="row">
             <div class="col-md text-center pb_sm_py_cover">
                 <h2 class=" mb-3 heading" style="color:#212529">Current Lap</h2>
-                <h3 class="mt-0 heading-border-top pb_font-30">22 days, 10 hours, 5 min</h3>
+                <h3 class="mt-0 heading-border-top pb_font-30"><?php echo $current_global_stats['time_elapsed'] ?></h3>
                 <br>
             </div>
         </div>
@@ -31,7 +34,7 @@
                 <div class="media pb_media_v2 d-block text-center mb-3">
                     <div class="icon border border-gray rounded-circle d-flex mr-3 display-4 mx-auto mb-4"><i class="text-primary ion-ios-body-outline"></i></div>
                     <div class="media-body">
-                        <h3 class="mt-0 pb_font-45">234</h3>
+                        <h3 class="mt-0 pb_font-45"><?php echo $current_global_stats['participants'] ?></h3>
                         <h3 class="mt-0 pb_font-20">Prayer Warriors</h3>
                     </div>
                 </div>
@@ -40,7 +43,7 @@
                 <div class="media pb_media_v2 d-block text-center mb-3">
                     <div class="icon border border-gray rounded-circle d-block mr-3 display-4 mx-auto mb-4"><i class="text-primary ion-earth"></i></div>
                     <div class="media-body">
-                        <h3 class="mt-0 pb_font-45">2345</h3>
+                        <h3 class="mt-0 pb_font-45"><?php echo $current_global_stats['completed'] ?></h3>
                         <h3 class="mt-0 pb_font-20">Covered</h3>
                     </div>
                 </div>
@@ -49,7 +52,7 @@
                 <div class="media pb_media_v2 d-block text-center  mb-3">
                     <div class="icon border border-gray rounded-circle d-flex mr-3 display-4 mx-auto mb-4"><i class="text-primary ion-android-alarm-clock"></i></i></div>
                     <div class="media-body">
-                        <h3 class="mt-0 pb_font-45">345</h3>
+                        <h3 class="mt-0 pb_font-45"><?php echo $current_global_stats['remaining'] ?></h3>
                         <h3 class="mt-0 pb_font-20">Remaining</h3>
                     </div>
                 </div>
@@ -67,13 +70,13 @@
         <div class="row">
             <div class="col-md text-center pb_sm_py_cover">
                 <h2 class=" mb-3 heading" style="color:#212529">Previous Lap</h2>
-                <h3 class="mt-0 heading-border-top pb_font-30">36 days, 3 hours, 50 min</h3>
+                <h3 class="mt-0 heading-border-top pb_font-30"><?php echo $previous_global_stats['time_elapsed'] ?></h3>
                 <br>
             </div>
         </div>
         <div class="row">
             <div class="col-md text-center">
-                <a href="/stats_app/previous/" role="button" class="btn smoothscroll pb_outline-dark btn-xl pb_font-13 p-4 rounded-0 pb_letter-spacing-2">All Previous Stats</a>
+                <a href="/stats_app/previous/" role="button" class="btn smoothscroll pb_outline-dark btn-xl pb_font-13 p-4 rounded-0 pb_letter-spacing-2">All Previous Laps</a>
             </div>
         </div>
     </div>
