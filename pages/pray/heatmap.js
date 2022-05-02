@@ -41,71 +41,27 @@ jQuery(document).ready(function($){
       })
   }
 
-  let content = jQuery('#map-content')
-  content.empty().html(`
-                    <div id="initialize-screen">
-                        <div id="initialize-spinner-wrapper" class="center">
-                            <progress class="success initialize-progress" max="46" value="0"></progress><br>
-                            Loading the planet ...<br>
-                            <span id="initialize-people" style="display:none;">Locating world population...</span><br>
-                            <span id="initialize-activity" style="display:none;">Calculating movement activity...</span><br>
-                            <span id="initialize-coffee" style="display:none;">Shamelessly brewing coffee...</span><br>
-                            <span id="initialize-dothis" style="display:none;">Let's do this...</span><br>
-                        </div>
-                    </div>
-                    <div id="map-wrapper">
-                        <span class="loading-spinner active"></span>
-                        <div id='map'></div>
-                        <div id="head_block">
-                            <div id="title" class="center"></div>
-                        </div>
-                        <div id="foot_block">
-                            <div class="grid-x grid-padding-x">
-                                <div class="cell medium-3 center"><h2>Lap ${jsObject.current_lap.lap_number}</h2></div>
-                                <div class="cell medium-3 center"><strong>Completed</strong><h2 id="completed"></h2></div>
-                                <div class="cell medium-3 center"><strong>Remaining</strong><h2 id="remaining"></h2></div>
-                                <div class="cell medium-3 center"><strong>Lap Start</strong><h2 id="start"></h2></div>
-                            </div>
-                        </div>
-                    </div>
-                    `)
-
   jQuery('#custom-style').empty().append(`
-                    #wrapper {
-                        height: ${window.innerHeight}px !important;
-                    }
-                    #map-wrapper {
-                        height: ${window.innerHeight}px !important;
-                    }
-                    #map {
-                        height: ${window.innerHeight}px !important;
-                    }
-                    #initialize-screen {
-                        height: ${window.innerHeight}px !important;
-                    }
-                    #welcome-modal {
-                        height: ${window.innerHeight - 30}px !important;
-                    }
-                    #map-sidebar-wrapper {
-                        height: ${window.innerHeight}px !important;
-                    }
-                    #head_block, #foot_block {
-                      position: absolute;
-                      width:100%;
-                      z-index: 100;
-                      background: white;
-                      margin: 1em auto;
-                      padding: 1em;
-                      opacity: .9;
-                      display:none;
-                    }
-                    #head_block {
-                      top: 10px;
-                    }
-                    #foot_block {
-                      bottom: 10px;
-                    }
-                `)
+      #wrapper {
+          height: ${window.innerHeight}px !important;
+      }
+      #map-wrapper {
+          height: ${window.innerHeight}px !important;
+      }
+      #map {
+          height: ${window.innerHeight}px !important;
+      }
+      #initialize-screen {
+          height: ${window.innerHeight}px !important;
+      }
+      #welcome-modal {
+          height: ${window.innerHeight - 30}px !important;
+      }
+      #map-sidebar-wrapper {
+          height: ${window.innerHeight}px !important;
+      }
+
+`)
 
   let initialize_screen = jQuery('.initialize-progress')
 

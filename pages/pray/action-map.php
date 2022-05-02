@@ -100,7 +100,38 @@ class Prayer_Global_Prayer_App_Map extends Prayer_Global_Prayer_App {
                 height:50px;
                 width:300px;
             }
+            .pb_navbar .navbar-toggler {
+                color: black;
+                border-color: black;
+                cursor: pointer;
+                padding-right: 0;
+            }
+            #head_block, #foot_block {
+                position: absolute;
+                width:100%;
+                z-index: 100;
+                background: white;
+                padding: 1em;
+                opacity: .9;
+                display:none;
+            }
+            #head_block {
+                margin: 0 auto 1em;
+            }
+            #foot_block {
+                bottom: 0;
+                margin: 1em auto 0;
+            }
+            #offCanvas {
+                background: white;
+                z-index: 200;
+                padding: 1em;
+            }
+            .nav-item {
+                list-style-type: none;
+            }
         </style>
+        <link rel="stylesheet" href="<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) ) ?>fonts/ionicons/css/ionicons.min.css">
         <?php
     }
 
@@ -108,10 +139,58 @@ class Prayer_Global_Prayer_App_Map extends Prayer_Global_Prayer_App {
     }
 
     public function body(){
+        $current_lap = pg_current_global_lap();
         DT_Mapbox_API::geocoder_scripts();
         ?>
         <style id="custom-style"></style>
-        <div id="map-content"></div>
+        <div id="map-content">
+            <div id="initialize-screen">
+                <div id="initialize-spinner-wrapper" class="center">
+                    <progress class="success initialize-progress" max="46" value="0"></progress><br>
+                    Loading the planet ...<br>
+                    <span id="initialize-people" style="display:none;">Locating world population...</span><br>
+                    <span id="initialize-activity" style="display:none;">Calculating movement activity...</span><br>
+                    <span id="initialize-coffee" style="display:none;">Shamelessly brewing coffee...</span><br>
+                    <span id="initialize-dothis" style="display:none;">Let's do this...</span><br>
+                </div>
+            </div>
+            <div id="map-wrapper">
+                <div id="head_block">
+                    <div class="grid-x grid-padding-x">
+                        <div class="cell medium-4 hide-for-small-only">
+                            <a href="/">Prayer.Global</a>
+                        </div>
+                        <div id="title" class="cell small-9 medium-4 center">
+                            <span>Hover or click for the location name</span>
+                        </div>
+                        <div class="cell small-3 medium-4" style="text-align:right;">
+                            <button type="button" data-toggle="offCanvas"><i class="fi-list" style="font-size:1.5em;"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <span class="loading-spinner active"></span>
+                <div id='map'></div>
+                <div id="foot_block">
+                    <div class="grid-x grid-padding-x">
+                        <div class="cell medium-3 center"><span style="font-size: 3rem;">Lap <?php echo $current_lap['lap_number'] ?></span></div>
+                        <div class="cell small-4 medium-3 center"><strong>Completed</strong><h2 id="completed"></h2></div>
+                        <div class="cell small-4 medium-3 center"><strong>Remaining</strong><h2 id="remaining"></h2></div>
+                        <div class="cell small-4 medium-3 center"><strong>Lap Start</strong><h2 id="start"></h2></div>
+                        <div class="cell center"><i class="fi-marker" style="color:green;"></i> indicates last 10 prayers logged</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="off-canvas position-right" id="offCanvas" data-off-canvas>
+            <button type="button" data-toggle="offCanvas">Close Menu</button>
+            <hr>
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="/#section-lap">Current Lap</a></li>
+                <li class="nav-item"><a class="nav-link" href="/#section-about">About</a></li>
+                <li class="nav-item"><a class="nav-link btn smoothscroll pb_outline-dark" style="text-transform: capitalize;" href="/newest/lap/">Start Praying</a></li>
+            </ul>
+        </div>
         <?php
     }
 

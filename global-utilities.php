@@ -5,6 +5,13 @@ function pg_generate_key(){
 }
 
 function pg_current_global_lap() : array {
+    /**
+     * Example:
+     *  [lap_number] => 5
+     *  [post_id] => 19
+     *  [key] => d7dcd4
+     *  [start_time] => 1651269768
+     */
     $lap = get_option('pg_current_global_lap');
     return $lap;
 }
