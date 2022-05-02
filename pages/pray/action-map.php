@@ -130,6 +130,12 @@ class Prayer_Global_Prayer_App_Map extends Prayer_Global_Prayer_App {
             .nav-item {
                 list-style-type: none;
             }
+            #title {
+                font-weight: bold;
+            }
+            .mapboxgl-ctrl-group {
+                margin-top:70px !important;
+            }
         </style>
         <link rel="stylesheet" href="<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) ) ?>fonts/ionicons/css/ionicons.min.css">
         <?php
@@ -175,8 +181,8 @@ class Prayer_Global_Prayer_App_Map extends Prayer_Global_Prayer_App {
                         <div class="cell medium-3 center"><span style="font-size: 3rem;">Lap <?php echo $current_lap['lap_number'] ?></span></div>
                         <div class="cell small-4 medium-3 center"><strong>Completed</strong><h2 id="completed"></h2></div>
                         <div class="cell small-4 medium-3 center"><strong>Remaining</strong><h2 id="remaining"></h2></div>
-                        <div class="cell small-4 medium-3 center"><strong>Lap Start</strong><h2 id="start"></h2></div>
-                        <div class="cell center"><i class="fi-marker" style="color:green;"></i> indicates last 10 prayers logged</div>
+                        <div class="cell small-4 medium-3 center"><strong>Time</strong><h2 id="time_elapsed"></h2></div>
+                        <div class="cell center hide-for-small-only"><i class="fi-marker" style="color:green;"></i> indicates last 10 prayers logged</div>
                     </div>
                 </div>
             </div>
@@ -190,6 +196,11 @@ class Prayer_Global_Prayer_App_Map extends Prayer_Global_Prayer_App {
                 <li class="nav-item"><a class="nav-link" href="/#section-about">About</a></li>
                 <li class="nav-item"><a class="nav-link btn smoothscroll pb_outline-dark" style="text-transform: capitalize;" href="/newest/lap/">Start Praying</a></li>
             </ul>
+            <div class="show-for-small-only">
+                <hr>
+                <i class="fi-marker" style="color:green;"></i> indicates last 10 prayers logged
+            </div>
+
         </div>
         <?php
     }
@@ -243,16 +254,9 @@ class Prayer_Global_Prayer_App_Map extends Prayer_Global_Prayer_App {
         ", $current_lap['start_time'], $current_lap['start_time'], $current_lap['start_time'] ), ARRAY_A );
 
         $data = [];
-        $completed = 0;
-        $remaining = 0;
         foreach ( $data_raw as $row ) {
             if ( ! isset( $data[$row['grid_id']] ) ) {
                 $data[$row['grid_id']] = (int) $row['value'] ?? 0;
-                if ( $row['value'] ) {
-                    $completed++;
-                } else {
-                    $remaining++;
-                }
             }
         }
 
@@ -296,13 +300,15 @@ class Prayer_Global_Prayer_App_Map extends Prayer_Global_Prayer_App {
             'features' => $features,
         );
 
+        $stats = pg_lap_stats( $current_lap['lap_number'] );
+
 
         return [
             'data' => $data,
             'last_ten' => $last_ten,
-            'completed' => $completed,
-            'remaining' => $remaining,
-            'start' => date( 'm-d-Y', $current_lap['start_time'] ),
+            'completed' => $stats['completed'],
+            'remaining' => $stats['remaining'],
+            'time_elapsed' => $stats['time_elapsed_small'],
             'current_lap' => $current_lap,
         ];
     }

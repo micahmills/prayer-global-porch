@@ -21,6 +21,7 @@ function pg_lap_stats( $lap_number ) : array {
     $data = [
         'time_elapsed' => '',
         'start_timestamp' => '',
+        'end_timestamp' => '',
         'participants' => '',
         'completed' => '',
         'remaining' => '',
@@ -30,22 +31,68 @@ function pg_lap_stats( $lap_number ) : array {
     ];
 
     if ( ! empty( $lap_number ) ) {
+
+        // lap number
+        $data['lap_number'] = (int) $lap_number;
+
+        // lap elements
         global $wpdb;
-        $result = $wpdb->get_row(
-            ""
-        );
+        $result = $wpdb->get_row( $wpdb->prepare(
+            "SELECT pm.meta_value as lap_number, pm1.meta_value as lap_key, pm.post_id, pm2.meta_value as start_time, pm3.meta_value as end_time
+                    FROM $wpdb->postmeta pm
+                    LEFT JOIN $wpdb->postmeta pm1 ON pm.post_id=pm1.post_id AND pm1.meta_key = 'prayer_app_global_magic_key'
+                    LEFT JOIN $wpdb->postmeta pm2 ON pm.post_id=pm2.post_id AND pm2.meta_key = 'start_time'
+                    LEFT JOIN $wpdb->postmeta pm3 ON pm.post_id=pm3.post_id AND pm3.meta_key = 'end_time'
+                    WHERE pm.meta_key = 'global_lap_number' AND pm.meta_value = %d",
+            $lap_number
+        ), ARRAY_A);
+        $data['start_timestamp'] = (int) $result['start_time'];
+        $data['end_timestamp'] = (int) $result['end_time'];
+        $data['key'] = $result['lap_key'];
+        $data['post_id'] = (int) $result['post_id'];
+
+        // start and end
+        $end_time = $data['end_timestamp'];
+        if ( empty( $end_time ) ) {
+            $end_time = time();
+        }
+        $time_difference = $end_time - $data['start_timestamp'];
+
+        // time calculations
+        $days = floor( $time_difference / 60 / 60 / 24 );
+        $hours = floor( ( $time_difference / 60 / 60 ) - ( $days * 24 ) );
+        $minutes =  floor( ( $time_difference / 60 ) - ( $hours * 60 ) - ( $days * 24 * 60 )  );
+        if ( empty( $days ) && empty( $hours ) ){
+            $data['time_elapsed'] = "$minutes minutes";
+            $data['time_elapsed_small'] = $minutes."m";
+        }
+        else if ( empty( $days ) ) {
+            $data['time_elapsed'] = "$hours hours, $minutes minutes";
+            $data['time_elapsed_small'] = $hours."h, ".$minutes."m";
+        }
+        else {
+            $data['time_elapsed'] = "$days days, $hours hours, $minutes minutes";
+            $data['time_elapsed_small'] = $days."d, ".$hours."h, ".$minutes."m";
+        }
+
+        // get completed and remaining counts
+        $completed = $wpdb->get_var( $wpdb->prepare( "
+           SELECT COUNT( DISTINCT( r.grid_id ) )
+           FROM $wpdb->dt_reports r
+            WHERE r.post_type = 'laps'
+                AND r.type = 'prayer_app'
+           AND r.timestamp >= %d AND r.timestamp <= %d
+        ", $data['start_timestamp'], $end_time ) );
+
+        $completed = (int) $completed;
+
+        $data['completed'] = number_format( $completed );
+        $data['remaining'] = number_format( 4770 - $completed );
 
 
-
-        $data['time_elapsed'] = '22 days, 10 hours, 5 min';
-        $data['start_timestamp'] = '2345678987654';
-        $data['end_timestamp'] = '';
+        // participants
         $data['participants'] = '234';
-        $data['completed'] = '2345';
-        $data['remaining'] = '234';
-        $data['lap_number'] = $lap_number;
-        $data['key'] = '';
-        $data['post_id'] = '';
+
     }
 
     return $data;

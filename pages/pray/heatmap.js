@@ -141,18 +141,24 @@ jQuery(document).ready(function($){
 
     jQuery('.loading-spinner').removeClass('active')
 
-    let center = [0, 0]
+    let center = [0, 20]
     mapboxgl.accessToken = jsObject.map_key;
     let map = new mapboxgl.Map({
       container: 'map',
       style: 'mapbox://styles/discipletools/cl2ksnvie001i15qm1h5ahqea',
       center: center,
-      minZoom: 2,
+      minZoom: 0,
       maxZoom: 12,
       zoom: 1
     });
     map.dragRotate.disable();
     map.touchZoomRotate.disableRotation();
+
+    let nav = new mapboxgl.NavigationControl({
+      showCompass: false,
+      showZoom: true
+    });
+    map.addControl(nav, "top-right");
 
     window.previous_hover = false
 
@@ -258,7 +264,7 @@ jQuery(document).ready(function($){
 
     jQuery('#completed').html( jsObject.grid_data.completed )
     jQuery('#remaining').html( jsObject.grid_data.remaining )
-    jQuery('#start').html( jsObject.grid_data.start )
+    jQuery('#time_elapsed').html( jsObject.grid_data.time_elapsed )
     jQuery('#head_block').show()
     jQuery('#foot_block').show()
 
