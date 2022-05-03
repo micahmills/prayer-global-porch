@@ -1,5 +1,57 @@
 jQuery(document).ready(function(){
   /**
+   * API HANDLERS
+   */
+  window.api_post = ( action, data ) => {
+    return jQuery.ajax({
+      type: "POST",
+      data: JSON.stringify({ action: action, parts: jsObject.parts, data: data }),
+      contentType: "application/json; charset=utf-8",
+      dataType: "json",
+      url: jsObject.root + jsObject.parts.root + '/v1/' + jsObject.parts.type,
+      beforeSend: function (xhr) {
+        xhr.setRequestHeader('X-WP-Nonce', jsObject.nonce )
+      }
+    })
+      .fail(function(e) {
+        console.log(e)
+      })
+  }
+  function log() {
+    window.api_post( 'log', { grid_id: window.current_content.location.grid_id, pace: window.pace, user: window.user_location } )
+      .done(function(location) {
+        console.log(location)
+        if ( location === false ) {
+          window.location = '/'+jsObject.parts.root+'/'+jsObject.parts.type+'/'+jsObject.parts.public_key
+        }
+        window.current_content = window.next_content
+        window.next_content = location
+      })
+  }
+  function refresh() {
+    window.api_post( 'refresh', { grid_id: window.current_content.location.grid_id } )
+      .done(function(location) {
+        console.log(location)
+        if ( location === false ) {
+          window.location = '/'+jsObject.parts.root+'/'+jsObject.parts.type+'/'+jsObject.parts.public_key
+        }
+        window.current_content = window.next_content
+        window.next_content = location
+      })
+  }
+  function ip_location() {
+    window.api_post( 'ip_location', [] )
+      .done(function(location) {
+        console.log(location)
+        window.user_location = []
+        if ( location ) {
+          window.user_location = location
+        }
+      })
+  }
+
+
+  /**
    * Progress widget
    */
   let div = jQuery('#content')
@@ -43,6 +95,7 @@ jQuery(document).ready(function(){
     window.current_content = jsObject.start_content
     window.next_content = jsObject.next_content
     load_location()
+    ip_location()
   }
   initialize_location() // initialize prayer framework
 
@@ -624,46 +677,6 @@ jQuery(document).ready(function(){
     celebrate_panel.show()
   }
 
-  /**
-   * API HANDLERS
-   */
-  function log() {
-    window.api_post( 'log', { grid_id: window.current_content.location.grid_id, pace: window.pace } )
-      .done(function(location) {
-        console.log(location)
-        if ( location === false ) {
-          window.location = '/prayer_app/'+jsObject.parts.type+'/'+jsObject.parts.public_key
-        }
-        window.current_content = window.next_content
-        window.next_content = location
-      })
-  }
-  function refresh() {
-    window.api_post( 'refresh', { grid_id: window.current_content.location.grid_id } )
-      .done(function(location) {
-        console.log(location)
-        if ( location === false ) {
-          window.location = '/prayer_app/'+jsObject.parts.type+'/'+jsObject.parts.public_key
-        }
-        window.current_content = window.next_content
-        window.next_content = location
-      })
-  }
-  window.api_post = ( action, data ) => {
-    return jQuery.ajax({
-      type: "POST",
-      data: JSON.stringify({ action: 'log', parts: jsObject.parts, data: data }),
-      contentType: "application/json; charset=utf-8",
-      dataType: "json",
-      url: jsObject.root + jsObject.parts.root + '/v1/' + jsObject.parts.type,
-      beforeSend: function (xhr) {
-        xhr.setRequestHeader('X-WP-Nonce', jsObject.nonce )
-      }
-    })
-      .fail(function(e) {
-        console.log(e)
-      })
-  }
 
   /**
    * TEMPLATE LOADER

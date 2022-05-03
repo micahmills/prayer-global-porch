@@ -77,7 +77,7 @@ class Prayer_Global_Menu {
             <h2 class="nav-tab-wrapper">
                 <a href="<?php echo esc_attr( $link ) . 'general' ?>"
                    class="nav-tab <?php echo esc_html( ( $tab == 'general' || !isset( $tab ) ) ? 'nav-tab-active' : '' ); ?>">General</a>
-                <a href="<?php echo esc_attr( $link ) . 'second' ?>" class="nav-tab <?php echo esc_html( ( $tab == 'second' ) ? 'nav-tab-active' : '' ); ?>">Second</a>
+<!--                <a href="--><?php //echo esc_attr( $link ) . 'second' ?><!--" class="nav-tab --><?php //echo esc_html( ( $tab == 'second' ) ? 'nav-tab-active' : '' ); ?><!--">Second</a>-->
             </h2>
 
             <?php
@@ -116,6 +116,7 @@ class Prayer_Global_Tab_General {
 
                         <?php $this->main_column() ?>
                         <?php $this->meta_box_build(); ?>
+                        <?php DT_Ipstack_API::metabox_for_admin(); ?>
 
                         <!-- End Main Column -->
                     </div><!-- end post-body-content -->
@@ -219,16 +220,25 @@ class Prayer_Global_Tab_General {
     }
 
     public function meta_box_build() {
-        $json_url = pg_image_json_url();
-        $json = json_decode( wp_remote_retrieve_body( wp_remote_get($json_url) ), true  );
-        $location_grid_images_version = get_option('location_grid_images_version');
-
-        if ( isset( $_POST['pg_build_settings_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['pg_build_settings_nonce'] ) ), 'pg_build_settings' ) ) {
-            update_option('location_grid_images_json', $json, true );
-            update_option('location_grid_images_version', $json['version']);
-            $location_grid_images_version = get_option('location_grid_images_version');
+        $grid_url = pg_grid_json_url();
+        $grid_json = json_decode( wp_remote_retrieve_body( wp_remote_get($grid_url) ), true  );
+        $grid_images_version = pg_grid_images_version();
+        if ( isset( $_POST['pg_build_settings_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['pg_build_settings_nonce'] ) ), 'pg_build_settings' ) && isset( $_POST['grid_db'] ) ) {
+            update_option('pg_grid_images_json', $grid_json, true );
+            update_option('pg_grid_images_version', $grid_json['version']);
+            $grid_images_version = pg_grid_images_version();
         }
-        $update_needed = ( $location_grid_images_version == $json['version'] );
+        $grid_update_needed = ( $grid_images_version == $grid_json['version'] );
+
+        $jp_url = pg_jp_json_url();
+        $jp_json = json_decode( wp_remote_retrieve_body( wp_remote_get($jp_url) ), true  );
+        $jp_images_version = pg_jp_images_version();
+        if ( isset( $_POST['pg_build_settings_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['pg_build_settings_nonce'] ) ), 'pg_build_settings' ) && isset( $_POST['jp_db'] ) ) {
+            update_option('pg_jp_images_json', $jp_json, true );
+            update_option('pg_jp_images_version', $jp_json['version']);
+            $jp_images_version = pg_jp_images_version();
+        }
+        $jp_update_needed = ( $jp_images_version == $jp_json['version'] );
         ?>
         <form method="post" class="metabox-table">
             <?php wp_nonce_field( 'pg_build_settings', 'pg_build_settings_nonce' ) ?>
@@ -242,14 +252,28 @@ class Prayer_Global_Tab_General {
                 <tbody>
                 <tr>
                     <td>
-                        Your Version: <?php echo $location_grid_images_version ?><br>
-                        Live Version : <?php echo $json['version'] ?? 'Unknown' ?><br>
-                         Update: <?php echo  ($update_needed) ? 'No' : '<strong>YES. PLEASE REBUILD THE DATABASE</strong>' ?><br><br>
+                        <strong>Grid Images Database</strong><br>
+                        Your Version: <?php echo $grid_images_version ?><br>
+                        Live Version : <?php echo $grid_json['version'] ?? 'Unknown' ?><br>
+                         Update: <?php echo  ($grid_update_needed) ? 'No' : '<strong>YES. PLEASE REBUILD THE DATABASE</strong>' ?><br><br>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <button type="submit" class="button">Rebuild images Database</button>
+                        <button type="submit" class="button" name="grid_db" value="true">Rebuild Grid Images Database</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Joshua Project Database</strong><br>
+                        Your Version: <?php echo $jp_images_version ?><br>
+                        Live Version : <?php echo $jp_json['version'] ?? 'Unknown' ?><br>
+                         Update: <?php echo  ($jp_update_needed) ? 'No' : '<strong>YES. PLEASE REBUILD THE DATABASE</strong>' ?><br><br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button type="submit" name="jp_db" class="button" value="true">Rebuild Joshua Project Images Database</button>
                     </td>
                 </tr>
                 </tbody>
@@ -258,10 +282,6 @@ class Prayer_Global_Tab_General {
             <!-- End Box -->
         </form>
         <?php
-    }
-
-    public function build_location_grid_photos_table(){
-
     }
 }
 

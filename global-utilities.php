@@ -15,6 +15,18 @@ function pg_current_global_lap() : array {
     $lap = get_option('pg_current_global_lap');
     return $lap;
 }
+function pg_grid_images_json(){
+    return get_option('pg_grid_images_json');
+}
+function pg_jp_images_json(){
+    return get_option('pg_jp_images_json');
+}
+function pg_grid_images_version(){
+    return get_option('pg_grid_images_version');
+}
+function pg_jp_images_version(){
+    return get_option('pg_jp_images_version');
+}
 
 function pg_lap_stats( $lap_number ) : array {
 
@@ -162,35 +174,42 @@ function pg_fields() {
     return pg_recursive_parse_args( $saved_fields, $defaults );
 }
 
-function pg_image_url() {
+function pg_grid_image_url() {
     $fields = pg_fields();
-    return trailingslashit( $fields['image_asset_url']['value'] ) . 'location-grid-images/v1/';
+    return trailingslashit( $fields['image_asset_url']['value'] ) . 'location-grid-images/v1/grid/';
 }
-function pg_jp_image_url( $type, $id ) {
-    $image_list = get_option('location_grid_images_json' );
-    $base_url = pg_image_url() . 'jp/';
+function pg_jp_image_url() {
+    $fields = pg_fields();
+    return trailingslashit( $fields['image_asset_url']['value'] ) . 'location-grid-images/v1/jp/';
+}
+function pg_jp_image( $type, $id ) {
+    $base_url = pg_jp_image_url();
+    $image_list = pg_jp_images_json();
+
     switch( $type ) {
         case 'pid3':
-            if ( isset( $image_list['jp']['pid3'][$id] ) ) {
-                return $base_url . 'pid3/' . $image_list['jp']['pid3'][$id];
+            if ( isset( $image_list['pid3'][$id] ) ) {
+                return $base_url . 'pid3/' . $image_list['pid3'][$id];
             } else {
                 return false;
             }
         case 'progress':
-            if ( isset( $image_list['jp']['progress'][$id] ) ) {
-                return $base_url . 'progress/' . $image_list['jp']['progress'][$id];
+            if ( isset( $image_list['progress'][$id] ) ) {
+                return $base_url . 'progress/' . $image_list['progress'][$id];
             } else {
                 return false;
             }
         default:
             return false;
     }
-//    $fields = pg_fields();
-//    return trailingslashit( $fields['image_asset_url']['value'] ) . 'location-grid-images/v1/';
 }
-function pg_image_json_url() {
+function pg_grid_json_url() {
     $fields = pg_fields();
-    return trailingslashit( $fields['image_asset_url']['value'] ) . 'location-grid-images/v1/v1.json';
+    return trailingslashit( $fields['image_asset_url']['value'] ) . 'location-grid-images/v1/grid.json';
+}
+function pg_jp_json_url() {
+    $fields = pg_fields();
+    return trailingslashit( $fields['image_asset_url']['value'] ) . 'location-grid-images/v1/jp.json';
 }
 
 /**
@@ -200,12 +219,12 @@ function pg_image_json_url() {
  * @return array|false|mixed|void
  */
 function pg_images( $grid_id = null, $full_urls = false ) {
-    $image_list = get_option('location_grid_images_json' );
+    $image_list = pg_grid_images_json();
 
     // full list
     if ( is_null( $grid_id ) ) {
         if ( $full_urls ) {
-            $base_url = pg_image_url();
+            $base_url = pg_grid_image_url();
             unset($image_list['version'] );
             foreach( $image_list as $i0 => $v0 ) {
                 foreach( $v0 as $i1 => $v1 ) {
@@ -220,7 +239,7 @@ function pg_images( $grid_id = null, $full_urls = false ) {
 
     // single grid_id
     if ( $full_urls ) {
-        $base_url = pg_image_url();
+        $base_url = pg_grid_image_url();
         foreach( $image_list[$grid_id] as $i1 => $v1 ) {
             foreach( $v1 as $i2 => $v2 ) {
                 $image_list[$grid_id][$i1][$i2] = $base_url . $grid_id .'/'. $i1 . '/' . $v2;

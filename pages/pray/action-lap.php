@@ -88,7 +88,7 @@ class Prayer_Global_Prayer_App_Lap extends Prayer_Global_Prayer_App {
                         'add' => __( 'Add Magic', 'prayer-global' ),
                     ],
                     'nope' => plugin_dir_url(__DIR__) . 'assets/images/nope.jpg',
-                    'images_url' => pg_image_url(),
+                    'images_url' => pg_grid_image_url(),
                     'image_folder' => plugin_dir_url(__DIR__) . 'assets/images/',
                     'start_content' => $this->get_new_location(),
                     'next_content' => $this->get_new_location(),
@@ -228,6 +228,8 @@ class Prayer_Global_Prayer_App_Lap extends Prayer_Global_Prayer_App {
                 return $result;
             case 'refresh':
                 return $this->get_new_location();
+            case 'ip_location':
+                return $this->get_ip_location();
             default:
                 return new WP_Error( __METHOD__, "Incorrect action", [ 'status' => 400 ] );
         }
@@ -316,7 +318,6 @@ class Prayer_Global_Prayer_App_Lap extends Prayer_Global_Prayer_App {
         return $list;
     }
 
-
     public static function _generate_new_prayer_lap() {
         global $wpdb;
 
@@ -366,6 +367,12 @@ class Prayer_Global_Prayer_App_Lap extends Prayer_Global_Prayer_App {
         DT_Posts::update_post('laps', $previous_lap['post_id'], [ 'status' => 'complete', 'end_date' => $date, 'end_time' => $time ], false, false );
 
         return $new_post['ID'];
+    }
+
+    public function get_ip_location() {
+        $ip_stack = DT_Ipstack_API::get_location_grid_meta_from_current_visitor();
+
+        return DT_Ipstack_API::get_location_grid_meta_from_current_visitor();
     }
 }
 Prayer_Global_Prayer_App_Lap::instance();

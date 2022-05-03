@@ -25,7 +25,7 @@ class PG_Stacker {
 
         // adds and shuffles for variation
         self::_faith_status( $stack );
-//        self::_photos( $stack );
+        self::_photos( $stack );
         self::_population_change( $stack );
         self::_least_reached( $stack );
         self::_key_city( $stack );
@@ -40,7 +40,7 @@ class PG_Stacker {
 
         // adds to bottom
         self::_cities( $stack );
-//        self::_people_groups( $stack ); // @todo disabled because it was adding 100ms to the processing. Investigate why.
+        self::_people_groups( $stack ); // @todo disabled because it was adding 100ms to the processing. Investigate why.
 
         // @todo  prioritize limit number of items
 
@@ -624,7 +624,7 @@ class PG_Stacker {
                 'data' => [
                     'section_label' => 'Least Reached',
                     'focus_label' => $stack['least_reached']['name'],
-                    'image_url' => pg_jp_image_url( 'pid3', $stack['least_reached']['PeopleID3'] ), // ion icons from /pages/fonts/ionicons/
+                    'image_url' => pg_jp_image( 'pid3', $stack['least_reached']['PeopleID3'] ), // ion icons from /pages/fonts/ionicons/
                     'section_summary' => 'The '.$stack['least_reached']['name'].' people in ' . $stack['location']['full_name'] . ' are a least reached people group, according to Joshua Project. They are classified as '.$stack['least_reached']['AffinityBloc'].' and speak '.$stack['least_reached']['PrimaryLanguageName'].'. Primarily, they follow '.$stack['least_reached']['PrimaryReligion'].' and only '.$stack['least_reached']['PercentEvangelical'].'% are suspected of being believers.',
                     'prayer' => 'Pray that the ' . $stack['location']['believers'] . ' believers in ' . $stack['location']['full_name'] . ' to boldly witnesses to the '.$stack['least_reached']['name'].' near them.'
                 ]
@@ -1064,14 +1064,14 @@ class PG_Stacker {
 
     public static function _people_groups( &$stack ) {
         if ( ! empty( $stack['people_groups'] ) ) {
-            $image_list = get_option('location_grid_images_json' );
-            $base_url = pg_image_url() . 'jp/';
+            $image_list = pg_jp_images_json();
+            $base_url = pg_jp_image_url();
 
             // people group list
             $values = [];
             foreach( $stack['people_groups'] as $group ) {
-                if ( isset( $image_list['jp']['pid3'][$group['PeopleID3']] ) ) {
-                    $image = $base_url . 'pid3/' . $image_list['jp']['pid3'][$group['PeopleID3']];
+                if ( isset( $image_list['pid3'][$group['PeopleID3']] ) ) {
+                    $image = $base_url . 'pid3/' . $image_list['pid3'][$group['PeopleID3']];
                 } else {
                     continue;
                 }
@@ -1081,7 +1081,7 @@ class PG_Stacker {
                     'image_url' => $image,
                     'description' => $group['name'] . '<br>(' . $group['PrimaryReligion'].')',
                     'progress' => $group['JPScale'],
-                    'progress_image_url' => $base_url . 'progress/' . $image_list['jp']['progress'][$group['JPScale']],
+                    'progress_image_url' => $base_url . 'progress/' . $image_list['progress'][$group['JPScale']],
                     'least_reached' => $group['LeastReached']
                 ];
             }
