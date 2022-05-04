@@ -1,8 +1,8 @@
 <?php require_once( trailingslashit( plugin_dir_path( __DIR__ ) ) . '/assets/nav.php' ) ?>
 <?php
 $current_global_lap = pg_current_global_lap();
-$current_global_stats = pg_lap_stats($current_global_lap['lap_number']);
-$previous_global_stats = pg_lap_stats( (int) $current_global_lap['lap_number'] - 1 );
+$current_global_stats = pg_lap_stats_by_lap_number($current_global_lap['lap_number']);
+$previous_global_stats = pg_lap_stats_by_lap_number( (int) $current_global_lap['lap_number'] - 1 );
 ?>
 
 <section class="pb_cover_v1 text-left cover-bg-black cover-bg-opacity-4" style="background-image: url(<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/images/map_background.jpg)" id="section-home">

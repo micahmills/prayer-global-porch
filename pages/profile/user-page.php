@@ -7,8 +7,8 @@ if ( !defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly.
 class Prayer_Global_Porch_User_Page extends DT_Magic_Url_Base {
 
     public $page_title = 'Private User Page';
-    public $root = "private_app";
-    public $type = 'user';
+    public $root = "user_app";
+    public $type = 'private';
     public $post_type = 'user';
 
     private static $_instance = null;
@@ -39,9 +39,9 @@ class Prayer_Global_Porch_User_Page extends DT_Magic_Url_Base {
         }
 
         // require login access
-        if ( ! is_user_logged_in() ) {
-            wp_safe_redirect( dt_custom_login_url( 'login' ) );
-        }
+//        if ( ! is_user_logged_in() ) {
+//            wp_safe_redirect( dt_custom_login_url( 'login' ) );
+//        }
 
 
         // load if valid url

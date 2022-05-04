@@ -74,6 +74,7 @@ class Prayer_Global_Prayer_App_Lap extends Prayer_Global_Prayer_App {
             <script src="https://cdn.amcharts.com/lib/5/map.js"></script>
             <script src="https://cdn.amcharts.com/lib/5/geodata/worldLow.js"></script>
             <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js?ver=3"></script>
             <script src="<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) ) ?>prayer.js?ver=<?php echo fileatime( trailingslashit( plugin_dir_path( __FILE__ ) ) . 'prayer.js' ) ?>"></script>
             <script>
                 let jsObject = [<?php echo json_encode([
@@ -235,25 +236,49 @@ class Prayer_Global_Prayer_App_Lap extends Prayer_Global_Prayer_App {
         }
     }
 
+    /**
+     * Log Data Model
+     *
+     * Lap information includes (post_id, post_type, type, subtype)
+     *
+     * Prayer information includes (value = number of minutes in prayer, grid_id = location_grid prayed for)
+     *
+     * User information includes (lng, lat, level, label = location information of the visitors ip address, hash = the unique user id stored by cookie on their client)
+     *
+     * @param $parts
+     * @param $data
+     * @return array|false|void|WP_Error
+     */
     public function save_log( $parts, $data ) {
 
         if ( !isset( $parts['post_id'], $parts['root'], $parts['type'], $data['grid_id'] ) ) {
             return new WP_Error( __METHOD__, "Missing parameters", [ 'status' => 400 ] );
         }
 
+        // prayer location log
         $args = [
+
+            // lap information
             'post_id' => $parts['post_id'],
             'post_type' => 'laps',
             'type' => $parts['root'],
             'subtype' => $parts['type'],
-            'payload' => null,
+
+            // prayer information
             'value' => $data['pace'] ?? 1,
             'grid_id' => $data['grid_id'],
+
+            // user information
+            'lng' => $data['user']['lng'],
+            'lat' => $data['user']['lat'],
+            'level' => $data['user']['level'],
+            'label' => $data['user']['label'],
+            'hash' => $data['user']['hash'],
         ];
         if ( is_user_logged_in() ) {
             $args['user_id'] = get_current_user_id();
         }
-        $id = dt_report_insert( $args, false );
+        $id = dt_report_insert( $args, true, false );
 
         return $this->get_new_location();
     }
@@ -370,9 +395,11 @@ class Prayer_Global_Prayer_App_Lap extends Prayer_Global_Prayer_App {
     }
 
     public function get_ip_location() {
-        $ip_stack = DT_Ipstack_API::get_location_grid_meta_from_current_visitor();
-
-        return DT_Ipstack_API::get_location_grid_meta_from_current_visitor();
+        $response = DT_Ipstack_API::get_location_grid_meta_from_current_visitor();
+        if ( $response ) {
+            $response['hash'] = hash('sha256', serialize( $response ) );
+        }
+        return $response;
     }
 }
 Prayer_Global_Prayer_App_Lap::instance();

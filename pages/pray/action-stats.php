@@ -57,14 +57,35 @@ class Prayer_Global_Prayer_App_Stats extends Prayer_Global_Prayer_App {
     }
 
     public function body(){
+        $parts = $this->parts;
+        $lap_stats = pg_lap_stats_by_key($parts['public_key']);
 
-        $current_lap = pg_current_global_lap();
-        $lap_parts = $this->parts;
-        $lap_post_id = $lap_parts['post_id'];
+        global $wpdb;
+        if ( empty( $lap_stats['end_time'] ) ) {
+            $lap_stats['end_time'] = time();
+        }
+        $participant_locations = $wpdb->get_results( $wpdb->prepare( "
+           SELECT r.label as location, COUNT(r.label) as count
+           FROM wp_dt_reports r
+            WHERE r.post_type = 'laps'
+                AND r.type = 'prayer_app'
+            AND r.timestamp >= %d AND r.timestamp <= %d
+			AND r.label IS NOT NULL
+            GROUP BY r.label
+			ORDER BY count DESC
+			LIMIT 10
+        ", $lap_stats['start_time'], $lap_stats['end_time'] ), ARRAY_A );
 
-        $this_lap_number = get_post_meta( $lap_post_id, 'global_lap_number', true );
         ?>
-
+        <style>
+            .pb_cover_v1.completed-lap .container .row {
+                height: 10vh;
+                padding-top:10vh;
+            }
+            .pb_cover_v1 {
+                height: 100vh;
+            }
+        </style>
         <nav class="navbar navbar-expand-lg navbar-dark pb_navbar pb_navbar_nav pb_scrolled-light" id="pb-navbar">
             <div class="container">
                 <a class="navbar-brand" href="/">Prayer.Global</a>
@@ -82,37 +103,29 @@ class Prayer_Global_Prayer_App_Stats extends Prayer_Global_Prayer_App {
             </div>
         </nav>
 
-        <style>
-            .pb_cover_v1.completed-lap .container .row {
-                height: 10vh;
-                padding-top:10vh;
-            }
-            .pb_cover_v1 {
-                height: 100vh;
-            }
-        </style>
         <section class="pb_cover_v1 completed-lap text-left cover-bg-black cover-bg-opacity-4" style="background-image: url(<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/images/map_background.jpg)" id="section-home">
             <div class="container">
                 <div class="row ">
                     <div class="col text-center">
-                        <h2 class="heading mb-5">Lap <?php echo esc_attr( $this_lap_number ) ?> </h2>
+                        <h2 class="heading mb-5">Lap <?php echo esc_attr( $lap_stats['lap_number'] ) ?> </h2>
+                        <a href="<?php echo '/'. $this->parts['root'] . '/' . $this->parts['type'] . '/' . $this->parts['public_key'] . '/map' ?>" style="background-color:rgba(255,255,255,.7);" role="button" class="btn smoothscroll btn-xl pb_font-20 p-4 rounded-0 pb_letter-spacing-2">Map</a><br>
                         <hr style="border:1px solid white;margin-top:5vh;">
                     </div>
                     <div class="w-100"></div>
                     <div class="col-md-6 justify-content-end">
                         <h2 class="heading mb-3">Prayer</h2>
                         <div class="sub-heading pl-4">
-                            <p class="mb-0">4770+ Minutes of Prayer</p>
-                            <p class="mb-0">All Populated Places in the World Covered</p>
-                            <p class="mb-0">213 Prayer Warriors Participated</p>
+                            <p class="mb-0"><?php echo esc_attr( $lap_stats['minutes_prayed'] ) ?> Minutes of Prayer</p>
+                            <p class="mb-0"><?php echo esc_attr( $lap_stats['completed_percent'] ) ?>% of the World Covered in Prayer</p>
+
                         </div>
                     </div>
                     <div class="col-md-6 justify-content-end">
                         <h2 class="heading mb-3">Pace</h2>
                         <div class="sub-heading pl-4">
-                            <p class="mb-0">Start: 6-12-2022</p>
-                            <p class="mb-0">End: 6-22-2022</p>
-                            <p class="mb-0">10 days, 10 hours, 5 minutes</p>
+                            <p class="mb-0">Start: <?php echo esc_attr( date( 'M j, Y', $lap_stats['start_time'] ) ) ?></p>
+                            <p class="mb-0">End: <?php echo esc_attr( ( $lap_stats['end_time'] ) ? date( 'M j, Y', $lap_stats['end_time'] ) : 'ongoing' ) ?></p>
+                            <p class="mb-0"><?php echo esc_attr( $lap_stats['time_elapsed'] ) ?></p>
                         </div>
                     </div>
                     <div class="w-100"></div>
@@ -120,31 +133,33 @@ class Prayer_Global_Prayer_App_Stats extends Prayer_Global_Prayer_App {
                         <h2 class="heading mb-3">Participants</h2>
                     </div>
                     <div class="w-100"></div>
+
                     <div class="col-md-6">
                         <div class="sub-heading pl-4">
-                            <p class="mb-2"><u>Top Countries</u></p>
-                            <p class="mb-0">United States</p>
-                            <p class="mb-0">Brazil</p>
-                            <p class="mb-0">Spain</p>
-                            <p class="mb-0">Ghana</p>
-                            <p class="mb-0">Nigeria</p>
+                            <p class="mb-0"><?php echo esc_attr( $lap_stats['participants'] ) ?> Prayer Warriors Participated</p>
+
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="sub-heading pl-4">
-                            <p class="mb-2"><u>Top Commitments</u></p>
-                            <p class="mb-0">2 prayed for 300 minutes</p>
-                            <p class="mb-0">10 prayed for 110 minutes</p>
-                            <p class="mb-0">100 prayed for 30 minutes</p>
-                            <p class="mb-0">45 prayed for 20 minutes</p>
+                            <p class="mb-2"><u>Top Warrior Locations</u></p>
+                            <ol>
+                            <?php
+                            if ( ! empty( $participant_locations ) ) {
+                                foreach( $participant_locations as $location ) {
+                                    ?>
+                                    <li class="mb-0"><?php echo esc_html( $location['location'] ) ?></li>
+                                    <?php
+                                }
+                            }
+                            ?>
+                            </ol>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
         <!-- END section -->
-
-
 
         <?php // end html
     }

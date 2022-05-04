@@ -23,7 +23,6 @@ jQuery(document).ready(function($){
         jQuery('#error').html(e)
       })
   }
-
   window.get_data_page = (action, data ) => {
     return jQuery.ajax({
       type: "POST",
@@ -60,7 +59,6 @@ jQuery(document).ready(function($){
       #map-sidebar-wrapper {
           height: ${window.innerHeight}px !important;
       }
-
 `)
 
   let initialize_screen = jQuery('.initialize-progress')
@@ -76,7 +74,7 @@ jQuery(document).ready(function($){
   let loop = 0
   let list = 0
   window.load_map_triggered = 0
-  window.get_page( 'current_lap')
+  window.get_page( 'get_grid')
     .done(function(x){
       list = 1
       jsObject.grid_data = x
@@ -89,6 +87,16 @@ jQuery(document).ready(function($){
       console.log('Error getting grid data')
       jsObject.grid_data = {'data': {}, 'highest_value': 1 }
     })
+  window.get_page( 'get_participants')
+    .done(function(participants){
+      jsObject.participants = participants
+    })
+    .fail(function(){
+      console.log('Error getting grid data')
+      jsObject.participants = []
+    })
+
+  let map
   jQuery.each(asset_list, function(i,v) {
     jQuery.ajax({
       url: jsObject.mirror_url + 'tiles/world/flat_states/' + v,
@@ -134,16 +142,11 @@ jQuery(document).ready(function($){
 
   function load_map() {
     jQuery('#initialize-screen').hide()
-
-    // set title
-    let ptt = 'Population'
-    jQuery('#panel-type-title').html(ptt)
-
     jQuery('.loading-spinner').removeClass('active')
 
     let center = [0, 20]
     mapboxgl.accessToken = jsObject.map_key;
-    let map = new mapboxgl.Map({
+    map = new mapboxgl.Map({
       container: 'map',
       style: 'mapbox://styles/discipletools/cl2ksnvie001i15qm1h5ahqea',
       center: center,
@@ -160,6 +163,10 @@ jQuery(document).ready(function($){
     });
     map.addControl(nav, "top-right");
 
+    load_grid()
+  }
+
+  function load_grid() {
     window.previous_hover = false
 
     jQuery.each(asset_list, function(i,file){
@@ -176,7 +183,6 @@ jQuery(document).ready(function($){
         }
       })
         .done(function (geojson) {
-
           map.on('load', function() {
 
             jQuery.each(geojson.features, function (i, v) {
@@ -200,6 +206,20 @@ jQuery(document).ready(function($){
                 'line-width': .5
               }
             });
+            map.addLayer({
+              'id': i.toString() + 'fills_heat',
+              'type': 'fill',
+              'source': i.toString(),
+              'paint': {
+                'fill-color': {
+                  property: 'value',
+                  stops: [[0, 'rgba(255,0,0, 1)'], [1, 'rgba(0,128,0, 1)']]
+                },
+                'fill-opacity': 0.75,
+                'fill-outline-color': 'black'
+              }
+            },'waterway-label' )
+
 
             /**************/
             /* hover map*/
@@ -218,26 +238,6 @@ jQuery(document).ready(function($){
                 ]
               }
             })
-            /* end hover map*/
-
-            /**********/
-            /* heat map brown */
-            /**********/
-            map.addLayer({
-              'id': i.toString() + 'fills_heat',
-              'type': 'fill',
-              'source': i.toString(),
-              'paint': {
-                'fill-color': {
-                  property: 'value',
-                  stops: [[0, 'rgba(255,0,0, 1)'], [1, 'rgba(0,128,0, 1)']]
-                },
-                'fill-opacity': 0.75,
-                'fill-outline-color': 'black'
-              }
-            },'waterway-label' )
-
-
             map.on('mousemove', i.toString()+'fills', function (e) {
               if ( window.previous_hover ) {
                 map.setFeatureState(
@@ -252,40 +252,83 @@ jQuery(document).ready(function($){
                   {hover: true}
                 );
                 jQuery('#title').html(e.features[0].properties.full_name)
-                jQuery('#population').html(numberWithCommas(jsObject.grid_data.data[e.features[0].properties.grid_id]))
-                jQuery('#grid_id').html(e.features[0].properties.grid_id)
               }
             });
           })
 
         }) /* ajax call */
+
     }) /* for each loop */
 
-
-    jQuery('#completed').html( jsObject.grid_data.completed )
-    jQuery('#remaining').html( jsObject.grid_data.remaining )
-    jQuery('#time_elapsed').html( jsObject.grid_data.time_elapsed )
-    jQuery('#head_block').show()
-    jQuery('#foot_block').show()
-
     map.on('load', function() {
+      let features = []
+      jQuery.each( jsObject.participants, function(i,v){
+        features.push({
+            "type": "Feature",
+            "geometry": {
+              "type": "Point",
+              "coordinates": [v.longitude, v.latitude]
+            },
+            "properties": {
+              "name": "Name"
+            }
+          }
+        )
 
-      jQuery.each( jsObject.grid_data.last_ten.features, function(i,v){
-        new mapboxgl.Marker({
-          color: 'green'
-        })
-          .setLngLat([v.geometry.coordinates[0],v.geometry.coordinates[1]])
-          .addTo(map);
+      //   new mapboxgl.Marker({
+      //     color: 'darkblue'
+      //   })
+      //     .setLngLat([v.longitude,v.latitude])
+      //     .addTo(map);
+
       })
+      let geojson = {
+        "type": "FeatureCollection",
+        "features": features
+      }
+      console.log(geojson)
+
+      map.addSource('participants', {
+        'type': 'geojson',
+        'data': geojson
+      });
+
+      map.loadImage(
+        jsObject.image_folder + 'mapbox-marker-icon-20px-blue.png',
+        (error, image) => {
+          if (error) throw error;
+          map.addImage('custom-marker', image);
+          map.addLayer({
+            'id': 'points',
+            'type': 'symbol',
+            'source': 'participants',
+            'layout': {
+              'icon-image': 'custom-marker',
+              'text-font': [
+                'Open Sans Semibold',
+                'Arial Unicode MS Bold'
+              ],
+              'text-offset': [0, 1.25],
+              'text-anchor': 'top'
+            }
+          });
+        })
 
     })
+
+    // add stats
+    jQuery('#completed').html( jsObject.stats.completed )
+    jQuery('#remaining').html( jsObject.stats.remaining )
+    jQuery('#warriors').html( jsObject.stats.participants )
+    jQuery('#time_elapsed').html( jsObject.stats.time_elapsed )
+    jQuery('#head_block').show()
+    jQuery('#foot_block').show()
 
   } /* .preCache */
 
   function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
-
 })
 
 

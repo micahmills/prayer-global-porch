@@ -20,7 +20,7 @@ jQuery(document).ready(function(){
   function log() {
     window.api_post( 'log', { grid_id: window.current_content.location.grid_id, pace: window.pace, user: window.user_location } )
       .done(function(location) {
-        console.log(location)
+        // console.log(location)
         if ( location === false ) {
           window.location = '/'+jsObject.parts.root+'/'+jsObject.parts.type+'/'+jsObject.parts.public_key
         }
@@ -31,7 +31,7 @@ jQuery(document).ready(function(){
   function refresh() {
     window.api_post( 'refresh', { grid_id: window.current_content.location.grid_id } )
       .done(function(location) {
-        console.log(location)
+        // console.log(location)
         if ( location === false ) {
           window.location = '/'+jsObject.parts.root+'/'+jsObject.parts.type+'/'+jsObject.parts.public_key
         }
@@ -42,9 +42,17 @@ jQuery(document).ready(function(){
   function ip_location() {
     window.api_post( 'ip_location', [] )
       .done(function(location) {
-        console.log(location)
         window.user_location = []
         if ( location ) {
+          console.log(location)
+          // persist user identity hash
+          let pg_user_hash = Cookies.get('pg_user_hash')
+          if ( ! pg_user_hash ) {
+            Cookies.set('pg_user_hash', location.hash )
+          } else {
+            location.hash = pg_user_hash
+          }
+
           window.user_location = location
         }
       })
