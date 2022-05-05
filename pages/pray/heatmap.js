@@ -62,6 +62,7 @@ jQuery(document).ready(function($){
 `)
 
   let initialize_screen = jQuery('.initialize-progress')
+  let grid_details_content = jQuery('#grid-details-content')
 
   // preload all geojson
   let asset_list = []
@@ -144,7 +145,7 @@ jQuery(document).ready(function($){
     jQuery('#initialize-screen').hide()
     jQuery('.loading-spinner').removeClass('active')
 
-    let center = [0, 20]
+    let center = [0, 30]
     mapboxgl.accessToken = jsObject.map_key;
     map = new mapboxgl.Map({
       container: 'map',
@@ -220,40 +221,10 @@ jQuery(document).ready(function($){
               }
             },'waterway-label' )
 
-
-            /**************/
-            /* hover map*/
-            /**************/
-            map.addLayer({
-              'id': i.toString() + 'fills',
-              'type': 'fill',
-              'source': i.toString(),
-              'paint': {
-                'fill-color': 'red',
-                'fill-opacity': [
-                  'case',
-                  ['boolean', ['feature-state', 'hover'], false],
-                  .5,
-                  0
-                ]
-              }
+            map.on('click', i.toString() + 'fills_heat', function (e) {
+              console.log(e.features[0].id)
+              load_grid_details( e.features[0].id )
             })
-            map.on('mousemove', i.toString()+'fills', function (e) {
-              if ( window.previous_hover ) {
-                map.setFeatureState(
-                  window.previous_hover,
-                  { hover: false }
-                )
-              }
-              window.previous_hover = { source: i.toString(), id: e.features[0].id }
-              if (e.features.length > 0) {
-                map.setFeatureState(
-                  window.previous_hover,
-                  {hover: true}
-                );
-                jQuery('#title').html(e.features[0].properties.full_name)
-              }
-            });
           })
 
         }) /* ajax call */
@@ -274,13 +245,6 @@ jQuery(document).ready(function($){
             }
           }
         )
-
-      //   new mapboxgl.Marker({
-      //     color: 'darkblue'
-      //   })
-      //     .setLngLat([v.longitude,v.latitude])
-      //     .addTo(map);
-
       })
       let geojson = {
         "type": "FeatureCollection",
@@ -313,18 +277,25 @@ jQuery(document).ready(function($){
             }
           });
         })
-
     })
 
     // add stats
-    jQuery('#completed').html( jsObject.stats.completed )
+    jQuery('#completed_percent').html( jsObject.stats.completed_percent )
     jQuery('#remaining').html( jsObject.stats.remaining )
     jQuery('#warriors').html( jsObject.stats.participants )
     jQuery('#time_elapsed').html( jsObject.stats.time_elapsed )
+    jQuery('#minutes_prayed_formatted').html( jsObject.stats.minutes_prayed_formatted )
     jQuery('#head_block').show()
     jQuery('#foot_block').show()
 
   } /* .preCache */
+
+  function load_grid_details( grid_id ) {
+    let div = jQuery('#grid_details_content')
+    div.empty().html(`<img style="width:25px;height:25px;" src="${jsObject.image_folder}spinner.svg" />`)
+
+    jQuery('#offcanvas_location_details').foundation('open')
+  }
 
   function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");

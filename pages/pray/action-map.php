@@ -86,7 +86,7 @@ class Prayer_Global_Prayer_App_Map extends Prayer_Global_Prayer_App {
             #initialize-screen {
                 width: 100%;
                 height: 2000px;
-                z-index: 100;
+                z-index: 10;
                 background-color: white;
                 position: absolute;
             }
@@ -109,7 +109,7 @@ class Prayer_Global_Prayer_App_Map extends Prayer_Global_Prayer_App {
             #head_block, #foot_block {
                 position: absolute;
                 width:100%;
-                z-index: 100;
+                z-index: 5;
                 background: white;
                 padding: 1em;
                 opacity: .9;
@@ -122,10 +122,21 @@ class Prayer_Global_Prayer_App_Map extends Prayer_Global_Prayer_App {
                 bottom: 0;
                 margin: 1em auto 0;
             }
-            #offCanvas {
+            #offcanvas_menu {
                 background: white;
-                z-index: 200;
+                z-index: 15;
                 padding: 1em;
+            }
+            #offcanvas_location_details {
+                background: white;
+                z-index: 15;
+                padding: 1em;
+            }
+            #offcanvas_stats {
+                background: white;
+                z-index: 15;
+                padding: 1em;
+                height: 80%;
             }
             .nav-item {
                 list-style-type: none;
@@ -134,15 +145,52 @@ class Prayer_Global_Prayer_App_Map extends Prayer_Global_Prayer_App {
                 font-weight: bold;
             }
             .mapboxgl-ctrl-group {
-                margin-top:70px !important;
+                margin-top:120px !important;
+            }
+            .one-em {
+                font-size: 1.5rem;
+            }
+            .two-em {
+                font-size: 2rem;
+            }
+            .three-em {
+                font-size: 3rem;
+            }
+            .bold {
+                font-weight: bold;
+            }
+            .stats-title {
+                font-size: 1.5rem;
+            }
+            .stats-figure {
+                font-size: 2rem;
+            }
+            @media (max-width: 768px) {
+                .mapboxgl-ctrl-group {
+                    margin-top:100px !important;
+                }
+                .one-em {
+                    font-size: 1rem;
+                }
+                .two-em {
+                    font-size: 1.8rem;
+                }
+                .three-em {
+                    font-size: 2rem;
+                }
+                .stats-title {
+                    font-size: 1rem;
+                    padding-bottom: 0;
+                }
+                .stats-figure {
+                    font-size: 1.8rem;
+                    font-weight: bold;
+                    padding-top: 0;
+                }
             }
         </style>
         <link rel="stylesheet" href="<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/fonts/ionicons/css/ionicons.min.css">
-        <link rel="stylesheet" href="<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) ) ?>pg.css?ver=<?php echo fileatime( trailingslashit( plugin_dir_path( __FILE__ ) ) . 'pg.css' ) ?>">
         <?php
-    }
-
-    public function footer_javascript(){
     }
 
     public function body(){
@@ -166,14 +214,16 @@ class Prayer_Global_Prayer_App_Map extends Prayer_Global_Prayer_App {
                 <div id="head_block">
                     <div class="grid-x grid-padding-x">
                         <div class="cell medium-4 hide-for-small-only">
-                            <a href="/"><i class="fi-home" style="font-size:1.5em;"></i></a>
+                            <a href="/"><i class="fi-home two-em" style="color:black;"></i></a>
                         </div>
-                        <div class="cell small-9 medium-4 center">
-                            <div class="center"><span style="font-size: 3rem;">Lap <?php echo $lap_stats['lap_number'] ?></span></div>
-                            <div id="title"><span>Hover or click for the location name</span></div>
+                        <div class="cell small-9 medium-4 center hide-for-small-only">
+                            <span class="two-em">Lap <?php echo $lap_stats['lap_number'] ?></span>
+                        </div>
+                        <div class="cell small-9 medium-4 show-for-small-only">
+                            <span class="two-em"><strong>Lap <?php echo $lap_stats['lap_number'] ?></strong></span>
                         </div>
                         <div class="cell small-3 medium-4" style="text-align:right;">
-                            <button type="button" data-toggle="offCanvas"><i class="fi-list" style="font-size:1.5em;"></i></button>
+                            <button type="button" data-toggle="offcanvas_menu"><i class="fi-list two-em"></i></button>
                         </div>
                     </div>
                 </div>
@@ -181,19 +231,20 @@ class Prayer_Global_Prayer_App_Map extends Prayer_Global_Prayer_App {
                 <div id='map'></div>
                 <div id="foot_block">
                     <div class="grid-x grid-padding-x">
-                        <div class="cell small-4 medium-3 center"><strong>Completed</strong><h2 id="completed"></h2></div>
-                        <div class="cell small-4 medium-3 center"><strong>Remaining</strong><h2 id="remaining"></h2></div>
-                        <div class="cell small-4 medium-3 center"><strong>Warriors</strong> <i class="fi-marker" style="color:blue;"></i><h2 id="warriors"></h2></div>
-                        <div class="cell small-4 medium-3 center"><strong>Time</strong><h2 id="time_elapsed"></h2></div>
-                        <div class="cell center hide-for-small-only"><i class="fi-marker" style="color:blue;"></i> = prayer warriors</div>
+                        <div class="cell center"><button type="button" data-toggle="offcanvas_stats"><i class="ion-chevron-up two-em"></i></button></div>
+                        <div class="cell small-6 medium-2 center"><strong>Warriors</strong> <i class="fi-marker" style="color:blue;"></i><br><span class="one-em" id="warriors"></span></div>
+                        <div class="cell small-6 medium-2 center"><strong>World Coverage</strong><br><span class="one-em" id="completed_percent"></span><span class="one-em">%</span></div>
+                        <div class="cell small-6 medium-2 center hide-for-small-only"><strong>Places Remaining</strong><br><span class="one-em" id="remaining"></span></div>
+                        <div class="cell small-6 medium-3 center hide-for-small-only"><strong>Length of Time</strong><br><span class="one-em" id="time_elapsed"></span></div>
+                        <div class="cell small-6 medium-3 center hide-for-small-only"><strong>Quantity of Time</strong><br><span class="one-em" id="minutes_prayed_formatted"></span></div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="off-canvas position-right" id="offCanvas" data-off-canvas>
-            <button type="button" data-toggle="offCanvas">Close Menu</button>
+        <div class="off-canvas position-right reveal-for-large" id="offcanvas_menu" data-close-on-click="true" data-off-canvas>
+            <button type="button" data-toggle="offcanvas_menu"><i class="ion-chevron-right three-em"></i></button>
             <hr>
-            <ul class="navbar-nav">
+            <ul class="navbar-nav two-em">
                 <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
                 <li class="nav-item"><a class="nav-link" href="/#section-lap">Current Lap</a></li>
                 <li class="nav-item"><a class="nav-link" href="/#section-about">About</a></li>
@@ -203,7 +254,41 @@ class Prayer_Global_Prayer_App_Map extends Prayer_Global_Prayer_App {
                 <hr>
                 <i class="fi-marker" style="color:blue;"></i> = prayer warriors
             </div>
-
+        </div>
+        <div class="off-canvas position-right reveal-for-large" id="offcanvas_location_details" data-close-on-click="true" data-off-canvas>
+            <button type="button" data-toggle="offcanvas_location_details"><i class="ion-chevron-right three-em"></i></button>
+            <hr>
+            <div class="grid-x grid-padding-x" id="grid_details_content"></div>
+        </div>
+        <div class="off-canvas position-bottom reveal-for-large" id="offcanvas_stats" data-close-on-click="true" data-off-canvas>
+            <div class="center"><button type="button" data-toggle="offcanvas_stats"><i class="ion-chevron-down three-em"></i></button></div>
+            <hr>
+            <div class="grid-x grid-padding-x center">
+                <div class="cell small-6 medium-3">
+                    <p class="stats-title">Warriors</p>
+                    <p class="stats-figure">0</p>
+                </div>
+                <div class="cell small-6 medium-3">
+                    <p class="stats-title">Warriors Countries</p>
+                    <p class="stats-figure">0</p>
+                </div>
+                <div class="cell small-6 medium-3">
+                    <p class="stats-title">Percent Complete</p>
+                    <p class="stats-figure">0</p>
+                </div>
+                <div class="cell small-6 medium-3">
+                    <p class="stats-title">Completed Locations</p>
+                    <p class="stats-figure">0</p>
+                </div>
+                <div class="cell small-6 medium-3">
+                    <p class="stats-title">Percent Remaining</p>
+                    <p class="stats-figure">0</p>
+                </div>
+                <div class="cell small-6 medium-3">
+                    <p class="stats-title">Remaining Locations</p>
+                    <p class="stats-figure">0</p>
+                </div>
+            </div>
         </div>
         <?php
     }
