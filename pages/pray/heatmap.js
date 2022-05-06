@@ -222,7 +222,6 @@ jQuery(document).ready(function($){
             },'waterway-label' )
 
             map.on('click', i.toString() + 'fills_heat', function (e) {
-              console.log(e.features[0].id)
               load_grid_details( e.features[0].id )
             })
           })
@@ -250,7 +249,6 @@ jQuery(document).ready(function($){
         "type": "FeatureCollection",
         "features": features
       }
-      console.log(geojson)
 
       map.addSource('participants', {
         'type': 'geojson',
@@ -280,11 +278,15 @@ jQuery(document).ready(function($){
     })
 
     // add stats
-    jQuery('#completed_percent').html( jsObject.stats.completed_percent )
-    jQuery('#remaining').html( jsObject.stats.remaining )
-    jQuery('#warriors').html( jsObject.stats.participants )
-    jQuery('#time_elapsed').html( jsObject.stats.time_elapsed )
-    jQuery('#minutes_prayed_formatted').html( jsObject.stats.minutes_prayed_formatted )
+    jQuery('.completed').html( jsObject.stats.completed )
+    jQuery('.completed_percent').html( jsObject.stats.completed_percent )
+    jQuery('.remaining').html( jsObject.stats.remaining )
+    jQuery('.remaining_percent').html( jsObject.stats.remaining_percent )
+    jQuery('.warriors').html( jsObject.stats.participants )
+    jQuery('.time_elapsed').html( jsObject.stats.time_elapsed_small )
+    jQuery('.minutes_prayed').html( jsObject.stats.minutes_prayed )
+    jQuery('.start_time').html( jsObject.stats.start_time_formatted )
+    jQuery('.end_time').html( jsObject.stats.end_time_formatted )
     jQuery('#head_block').show()
     jQuery('#foot_block').show()
 
@@ -295,6 +297,44 @@ jQuery(document).ready(function($){
     div.empty().html(`<img style="width:25px;height:25px;" src="${jsObject.image_folder}spinner.svg" />`)
 
     jQuery('#offcanvas_location_details').foundation('open')
+
+    window.get_data_page( 'get_grid_details', {grid_id: grid_id} )
+      .done(function(response){
+        console.log(response)
+        div.html(
+          `
+          <div class="grid-x grid-padding-x">
+              <div class="cell">
+                <span class="stats-title">${response.location.full_name}</span>
+                <hr>
+              </div>
+              <div class="cell">
+                Population: ${response.location.population}<br>
+                Believers: ${response.location.believers}<br>
+                Christian Adherents: ${response.location.christian_adherents}<br>
+                Non-Christians: ${response.location.non_christians}
+                <hr>
+              </div>
+              <div class="cell">
+                Primary Religion: ${response.location.primary_religion}<br>
+                Primary Language: ${response.location.primary_language}<br>
+                <hr>
+              </div>
+              <div class="cell">
+                1 of ${response.location.peer_locations} ${response.location.admin_level_name_plural} in ${response.location.parent_name}.<br>
+                This is 1 believer for every ${numberWithCommas(Math.ceil(response.location.all_lost_int / response.location.believers_int ) ) } lost neighbors.<br>
+                <hr>
+              </div>
+              <div class="cell">
+
+              </div>
+              <div class="cell">
+
+              </div>
+          </div>
+          `
+        )
+      })
   }
 
   function numberWithCommas(x) {

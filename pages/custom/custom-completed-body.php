@@ -16,7 +16,7 @@ $this_lap_number = get_post_meta( $lap_post_id, 'global_lap_number', true );
         <div class="collapse navbar-collapse" id="probootstrap-navbar">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item"><a class="nav-link" href="/#section-home">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="/#section-lap">Current Lap</a></li>
+                <li class="nav-item"><a class="nav-link" href="/#section-lap">Prayer Laps</a></li>
                 <li class="nav-item"><a class="nav-link" href="/#section-about">About</a></li>
                 <li class="nav-item"><a class="nav-link btn smoothscroll pb_outline-dark" style="text-transform: capitalize;" href="/newest/lap/">Start Praying</a></li>
             </ul>

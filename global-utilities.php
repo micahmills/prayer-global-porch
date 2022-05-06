@@ -118,6 +118,7 @@ function pg_lap_stats_by_key( $key ) {
     return _pg_stats_builder( $data );
 }
 function _pg_stats_builder( $data ) : array {
+//    dt_write_log(__METHOD__);
     global $wpdb;
 
     // start and end
@@ -187,6 +188,30 @@ function _pg_stats_builder( $data ) : array {
         $data['minutes_prayed_formatted'] = "$days days, $hours hours, $minutes minutes";
         $data['minutes_prayed_formatted_small'] = $days."d, ".$hours."h, ".$minutes."m";
     }
+
+    $data['start_time_formatted'] = date('M d, Y', $data['start_time'] );
+    $data['end_time_formatted'] = date('M d, Y', $data['end_time'] );
+
+//    $participants_locations = $wpdb->get_results( $wpdb->prepare( "
+//        SELECT r.label, COUNT(r.label) as count
+//        FROM $wpdb->dt_reports r
+//        WHERE r.post_type = 'laps'
+//            AND r.type = 'prayer_app'
+//            AND r.timestamp >= %d
+//            AND r.timestamp <= %d
+//            AND r.label IS NOT NULL
+//        GROUP BY r.label
+//        ORDER BY count DESC
+//    ", $data['start_time'], $data['end_time'] ), ARRAY_A );
+////    $data['participants_locations'] = $participants_locations;
+//
+//    $countries = [];
+//    foreach( $participants_locations as $item ){
+//        $explode = array_reverse( explode( ',', $item['label'] ) );
+//        $countries[ trim($explode[0]) ] = true;
+//    }
+//    $data['participants_countries'] = count( $countries );
+
 
 //    dt_write_log(__METHOD__);
 //    dt_write_log($data);

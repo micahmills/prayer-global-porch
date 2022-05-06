@@ -131,6 +131,7 @@ class Prayer_Global_Prayer_App_Map extends Prayer_Global_Prayer_App {
                 background: white;
                 z-index: 15;
                 padding: 1em;
+                min-width: 40%;
             }
             #offcanvas_stats {
                 background: white;
@@ -190,6 +191,7 @@ class Prayer_Global_Prayer_App_Map extends Prayer_Global_Prayer_App {
             }
         </style>
         <link rel="stylesheet" href="<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/fonts/ionicons/css/ionicons.min.css">
+<!--        <link rel="stylesheet" href="--><?php //echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) ) ?><!--prayer.css?ver=--><?php //echo fileatime( trailingslashit( plugin_dir_path( __FILE__ ) ) . 'prayer.css' ) ?><!--" type="text/css" media="all">-->
         <?php
     }
 
@@ -232,21 +234,21 @@ class Prayer_Global_Prayer_App_Map extends Prayer_Global_Prayer_App {
                 <div id="foot_block">
                     <div class="grid-x grid-padding-x">
                         <div class="cell center"><button type="button" data-toggle="offcanvas_stats"><i class="ion-chevron-up two-em"></i></button></div>
-                        <div class="cell small-6 medium-2 center"><strong>Warriors</strong> <i class="fi-marker" style="color:blue;"></i><br><span class="one-em" id="warriors"></span></div>
-                        <div class="cell small-6 medium-2 center"><strong>World Coverage</strong><br><span class="one-em" id="completed_percent"></span><span class="one-em">%</span></div>
-                        <div class="cell small-6 medium-2 center hide-for-small-only"><strong>Places Remaining</strong><br><span class="one-em" id="remaining"></span></div>
-                        <div class="cell small-6 medium-3 center hide-for-small-only"><strong>Length of Time</strong><br><span class="one-em" id="time_elapsed"></span></div>
-                        <div class="cell small-6 medium-3 center hide-for-small-only"><strong>Quantity of Time</strong><br><span class="one-em" id="minutes_prayed_formatted"></span></div>
+                        <div class="cell small-6 medium-2 center"><strong>Warriors</strong> <i class="fi-marker" style="color:blue;"></i><br><span class="one-em warriors" id="warriors"></span></div>
+                        <div class="cell small-6 medium-3 center hide-for-small-only"><strong>Minutes Prayed</strong><br><span class="one-em minutes_prayed" id="minutes_prayed_formatted"></span></div>
+                        <div class="cell small-6 medium-2 center"><strong>World Coverage</strong><br><span class="one-em completed_percent" id="completed_percent"></span><span class="one-em">%</span></div>
+                        <div class="cell small-6 medium-2 center hide-for-small-only"><strong>Places Remaining</strong><br><span class="one-em remaining" id="remaining"></span></div>
+                        <div class="cell small-6 medium-3 center hide-for-small-only"><strong>Pace of Lap</strong><br><span class="one-em time_elapsed" id="time_elapsed"></span></div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="off-canvas position-right reveal-for-large" id="offcanvas_menu" data-close-on-click="true" data-off-canvas>
+        <div class="off-canvas position-right" id="offcanvas_menu" data-close-on-click="true" data-off-canvas>
             <button type="button" data-toggle="offcanvas_menu"><i class="ion-chevron-right three-em"></i></button>
             <hr>
             <ul class="navbar-nav two-em">
                 <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="/#section-lap">Current Lap</a></li>
+                <li class="nav-item"><a class="nav-link" href="/#section-lap">Prayer Laps</a></li>
                 <li class="nav-item"><a class="nav-link" href="/#section-about">About</a></li>
                 <li class="nav-item"><a class="nav-link btn smoothscroll pb_outline-dark" style="text-transform: capitalize;" href="/newest/lap/">Start Praying</a></li>
             </ul>
@@ -255,38 +257,52 @@ class Prayer_Global_Prayer_App_Map extends Prayer_Global_Prayer_App {
                 <i class="fi-marker" style="color:blue;"></i> = prayer warriors
             </div>
         </div>
-        <div class="off-canvas position-right reveal-for-large" id="offcanvas_location_details" data-close-on-click="true" data-off-canvas>
+        <div class="off-canvas position-right " id="offcanvas_location_details" data-close-on-click="true" data-content-overlay="false" data-off-canvas>
             <button type="button" data-toggle="offcanvas_location_details"><i class="ion-chevron-right three-em"></i></button>
             <hr>
             <div class="grid-x grid-padding-x" id="grid_details_content"></div>
         </div>
-        <div class="off-canvas position-bottom reveal-for-large" id="offcanvas_stats" data-close-on-click="true" data-off-canvas>
+        <div class="off-canvas position-bottom" id="offcanvas_stats" data-close-on-click="true" data-off-canvas>
             <div class="center"><button type="button" data-toggle="offcanvas_stats"><i class="ion-chevron-down three-em"></i></button></div>
             <hr>
             <div class="grid-x grid-padding-x center">
+                <div class="cell">
+                    <span class="three-em">Lap <?php echo $lap_stats['lap_number'] ?></span>
+                    <hr>
+                </div>
                 <div class="cell small-6 medium-3">
                     <p class="stats-title">Warriors</p>
-                    <p class="stats-figure">0</p>
+                    <p class="stats-figure warriors">0</p>
                 </div>
                 <div class="cell small-6 medium-3">
-                    <p class="stats-title">Warriors Countries</p>
-                    <p class="stats-figure">0</p>
+                    <p class="stats-title">Minutes Prayed</p>
+                    <p class="stats-figure minutes_prayed">0</p>
                 </div>
-                <div class="cell small-6 medium-3">
-                    <p class="stats-title">Percent Complete</p>
-                    <p class="stats-figure">0</p>
-                </div>
+
                 <div class="cell small-6 medium-3">
                     <p class="stats-title">Completed Locations</p>
-                    <p class="stats-figure">0</p>
-                </div>
-                <div class="cell small-6 medium-3">
-                    <p class="stats-title">Percent Remaining</p>
-                    <p class="stats-figure">0</p>
+                    <p class="stats-figure completed">0</p>
                 </div>
                 <div class="cell small-6 medium-3">
                     <p class="stats-title">Remaining Locations</p>
-                    <p class="stats-figure">0</p>
+                    <p class="stats-figure remaining">0</p>
+                </div>
+                <div class="cell small-6 medium-3">
+                    <p class="stats-title">World Coverage</p>
+                    <p class="stats-figure"><span class="completed_percent">0</span>%</p>
+                </div>
+                <div class="cell small-6 medium-3">
+                    <p class="stats-title">Pace of Lap</p>
+                    <p class="stats-figure time_elapsed">0</p>
+                </div>
+
+                <div class="cell small-6 medium-3">
+                    <p class="stats-title">Start Time</p>
+                    <p class="stats-figure start_time">0</p>
+                </div>
+                <div class="cell small-6 medium-3">
+                    <p class="stats-title">End Time</p>
+                    <p class="stats-figure end_time">0</p>
                 </div>
             </div>
         </div>
@@ -314,6 +330,8 @@ class Prayer_Global_Prayer_App_Map extends Prayer_Global_Prayer_App {
                 return pg_lap_stats_by_key($params['parts']['public_key']);
             case 'get_grid':
                 return $this->get_grid( $params['parts'] );
+            case 'get_grid_details':
+                return $this->get_grid_details( $params['parts'], $params['data'] );
             case 'get_participants':
                 return $this->get_participants( $params['parts'] );
             default:
@@ -388,6 +406,12 @@ class Prayer_Global_Prayer_App_Map extends Prayer_Global_Prayer_App {
         }
 
         return $participants;
+    }
+
+    public function get_grid_details( $parts, $data ) {
+        $details = PG_Stacker::build_location_stack( $data['grid_id'] );
+
+        return $details;
     }
 
 }

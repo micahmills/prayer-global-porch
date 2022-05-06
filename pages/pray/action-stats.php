@@ -95,7 +95,7 @@ class Prayer_Global_Prayer_App_Stats extends Prayer_Global_Prayer_App {
                 <div class="collapse navbar-collapse" id="probootstrap-navbar">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item"><a class="nav-link" href="/#section-home">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/#section-lap">Current Lap</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/#section-lap">Prayer Laps</a></li>
                         <li class="nav-item"><a class="nav-link" href="/#section-about">About</a></li>
                         <li class="nav-item"><a class="nav-link btn smoothscroll pb_outline-dark" style="text-transform: capitalize;" href="/newest/lap/">Start Praying</a></li>
                     </ul>
@@ -108,7 +108,7 @@ class Prayer_Global_Prayer_App_Stats extends Prayer_Global_Prayer_App {
                 <div class="row ">
                     <div class="col text-center">
                         <h2 class="heading mb-5">Lap <?php echo esc_attr( $lap_stats['lap_number'] ) ?> </h2>
-                        <a href="<?php echo '/'. $this->parts['root'] . '/' . $this->parts['type'] . '/' . $this->parts['public_key'] . '/map' ?>" style="background-color:rgba(255,255,255,.7);" role="button" class="btn smoothscroll btn-xl pb_font-20 p-4 rounded-0 pb_letter-spacing-2">Map</a><br>
+<!--                        <a href="--><?php //echo '/'. $this->parts['root'] . '/' . $this->parts['type'] . '/' . $this->parts['public_key'] . '/map' ?><!--" style="background-color:rgba(255,255,255,.7);" role="button" class="btn smoothscroll btn-xl pb_font-20 p-4 rounded-0 pb_letter-spacing-2">Map</a><br>-->
                         <hr style="border:1px solid white;margin-top:5vh;">
                     </div>
                     <div class="w-100"></div>

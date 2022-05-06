@@ -54,7 +54,7 @@ class PG_Stacker {
         return $stack;
     }
 
-    public static function _demographics( &$stack ) {
+    private static function _demographics( &$stack ) {
 
         $templates = [];
 
@@ -160,7 +160,7 @@ class PG_Stacker {
         return $stack;
     }
 
-    public static function _faith_status( &$stack ) {
+    private static function _faith_status( &$stack ) {
 
         $faith_status = [];
 
@@ -267,7 +267,7 @@ class PG_Stacker {
         return $stack;
     }
 
-    public static function _population_change( &$stack ) {
+    private static function _population_change( &$stack ) {
 
         $types = ['births', 'deaths' ];
         $type = $types[array_rand($types)];
@@ -557,7 +557,7 @@ class PG_Stacker {
         return $stack;
     }
 
-    public static function _cities( &$stack ) {
+    private static function _cities( &$stack ) {
         if ( ! empty( $stack['cities'] ) ) {
 
             // cities list
@@ -581,7 +581,7 @@ class PG_Stacker {
         return $stack;
     }
 
-    public static function _key_city( &$stack ) {
+    private static function _key_city( &$stack ) {
         if ( ! empty( $stack['cities'] ) ) {
             // focus block
             $cities = $stack['cities'];
@@ -617,7 +617,7 @@ class PG_Stacker {
         return $stack;
     }
 
-    public static function _least_reached( &$stack ) {
+    private static function _least_reached( &$stack ) {
         if ( ! empty( $stack['least_reached'] ) ) {
             $stack['list'][] = [
                 'type' => 'least_reached_block',
@@ -633,7 +633,7 @@ class PG_Stacker {
         return $stack;
     }
 
-    public static function _photos( &$stack ) {
+    private static function _photos( &$stack ) {
         $images = pg_images( $stack['location']['grid_id'], true );
 
         if ( ! empty( $images['photos'] ) ) {
@@ -695,7 +695,7 @@ class PG_Stacker {
         return $stack;
     }
 
-    public static function _prayers( &$stack, int $position ) {
+    private static function _prayers( &$stack, int $position ) {
 
         if ( empty( $position ) ) {
             $position = 4;
@@ -858,7 +858,7 @@ class PG_Stacker {
         return $stack;
     }
 
-    public static function _verses( &$stack, int $position ) {
+    private static function _verses( &$stack, int $position ) {
 
         if ( empty( $position ) ) {
             $position = 4;
@@ -1062,7 +1062,7 @@ class PG_Stacker {
         return $stack;
     }
 
-    public static function _people_groups( &$stack ) {
+    private static function _people_groups( &$stack ) {
         if ( ! empty( $stack['people_groups'] ) ) {
             $image_list = pg_jp_images_json();
             $base_url = pg_jp_image_url();

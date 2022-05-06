@@ -64,12 +64,11 @@ $previous_global_stats = pg_lap_stats_by_lap_number( (int) $current_global_lap['
         <div class="row">
             <div class="col-md text-center">
                 <a href="/newest/map/" role="button" class="btn smoothscroll pb_outline-dark btn-xl pb_font-13 p-4 rounded-0 pb_letter-spacing-2">Current Lap Map</a>
-                <a href="/newest/stats/" role="button" class="btn smoothscroll pb_outline-dark btn-xl pb_font-13 p-4 rounded-0 pb_letter-spacing-2">Current Lap Stats</a>
             </div>
         </div>
         <div class="row">
             <div class="col-md text-center pb_sm_py_cover">
-                <h2 class=" mb-3 heading" style="color:#212529">Previous Lap</h2>
+                <h2 class=" mb-3 heading" style="color:#212529">Previous Laps</h2>
                 <h3 class="mt-0 heading-border-top pb_font-30"><?php echo $previous_global_stats['time_elapsed'] ?></h3>
                 <br>
             </div>
