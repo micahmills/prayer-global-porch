@@ -67,6 +67,33 @@ function pg_get_global_lap_by_key( $key ) {
 
     return $lap;
 }
+function pg_get_global_race(){
+
+    if ( wp_cache_get( __METHOD__ ) ) {
+        return wp_cache_get( __METHOD__ );
+    }
+
+    global $wpdb;
+    $result = $wpdb->get_row(
+        "SELECT pm.meta_value as lap_number, pm1.meta_value as lap_key, pm.post_id, pm2.meta_value as start_time, pm3.meta_value as end_time
+                    FROM $wpdb->postmeta pm
+                    LEFT JOIN $wpdb->postmeta pm1 ON pm.post_id=pm1.post_id AND pm1.meta_key = 'prayer_app_global_magic_key'
+                    LEFT JOIN $wpdb->postmeta pm2 ON pm.post_id=pm2.post_id AND pm2.meta_key = 'start_time'
+                    LEFT JOIN $wpdb->postmeta pm3 ON pm.post_id=pm3.post_id AND pm3.meta_key = 'end_time'
+                    WHERE pm.meta_key = 'global_lap_number' AND pm.meta_value = '1'", ARRAY_A);
+
+    $lap = [
+        'lap_number' => (int) $result['lap_number'],
+        'post_id' => (int) $result['post_id'],
+        'key' => $result['lap_key'],
+        'start_time' => (int) $result['start_time'],
+        'end_time' => time()
+    ];
+
+    wp_cache_set( __METHOD__, $lap );
+
+    return $lap;
+}
 
 /**
  * @param $lap_number
@@ -88,7 +115,6 @@ function pg_get_global_lap_by_lap_number( $lap_number ) {
                     WHERE pm.meta_key = 'global_lap_number' AND pm.meta_value = %d",
         $lap_number
     ), ARRAY_A);
-
 
     if ( empty( $result ) ) {
         $lap = false;
@@ -117,6 +143,12 @@ function pg_lap_stats_by_key( $key ) {
     $data = pg_get_global_lap_by_key( $key );
     return _pg_stats_builder( $data );
 }
+function pg_global_race_stats() {
+    $data = pg_get_global_race();
+    $current_lap = pg_current_global_lap();
+    $data['number_of_laps'] = $current_lap['lap_number'];
+    return _pg_stats_builder( $data );
+}
 function _pg_stats_builder( $data ) : array {
 //    dt_write_log(__METHOD__);
     global $wpdb;
@@ -135,6 +167,11 @@ function _pg_stats_builder( $data ) : array {
     else if ( empty( $days ) ) {
         $data['time_elapsed'] = "$hours hours, $minutes minutes";
         $data['time_elapsed_small'] = $hours."h, ".$minutes."m";
+    }
+    else if ( $days > 365 ) {
+        $years = floor( $time_difference / 60 / 60 / 24 / 365 );
+        $data['time_elapsed'] = "$years years, $days days, $hours hours, $minutes minutes";
+        $data['time_elapsed_small'] = $years."y, ".$days."d, ".$hours."h, ".$minutes."m";
     }
     else {
         $data['time_elapsed'] = "$days days, $hours hours, $minutes minutes";
@@ -184,6 +221,11 @@ function _pg_stats_builder( $data ) : array {
         $data['minutes_prayed_formatted'] = "$hours hours, $minutes minutes";
         $data['minutes_prayed_formatted_small'] = $hours."h, ".$minutes."m";
     }
+    else if ( $days > 365 ) {
+        $years = floor( $seconds_prayed / 60 / 60 / 24 / 365 );
+        $data['minutes_prayed_formatted'] = "$years years, $days days, $hours hours, $minutes minutes";
+        $data['minutes_prayed_formatted_small'] = $years."y, ".$days."d, ".$hours."h, ".$minutes."m";
+    }
     else {
         $data['minutes_prayed_formatted'] = "$days days, $hours hours, $minutes minutes";
         $data['minutes_prayed_formatted_small'] = $days."d, ".$hours."h, ".$minutes."m";
@@ -192,31 +234,11 @@ function _pg_stats_builder( $data ) : array {
     $data['start_time_formatted'] = date('M d, Y', $data['start_time'] );
     $data['end_time_formatted'] = date('M d, Y', $data['end_time'] );
 
-//    $participants_locations = $wpdb->get_results( $wpdb->prepare( "
-//        SELECT r.label, COUNT(r.label) as count
-//        FROM $wpdb->dt_reports r
-//        WHERE r.post_type = 'laps'
-//            AND r.type = 'prayer_app'
-//            AND r.timestamp >= %d
-//            AND r.timestamp <= %d
-//            AND r.label IS NOT NULL
-//        GROUP BY r.label
-//        ORDER BY count DESC
-//    ", $data['start_time'], $data['end_time'] ), ARRAY_A );
-////    $data['participants_locations'] = $participants_locations;
-//
-//    $countries = [];
-//    foreach( $participants_locations as $item ){
-//        $explode = array_reverse( explode( ',', $item['label'] ) );
-//        $countries[ trim($explode[0]) ] = true;
-//    }
-//    $data['participants_countries'] = count( $countries );
-
-
 //    dt_write_log(__METHOD__);
 //    dt_write_log($data);
     return $data;
 }
+
 
 function pg_query_4770_locations() {
 

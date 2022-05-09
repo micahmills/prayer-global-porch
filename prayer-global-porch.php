@@ -110,7 +110,8 @@ class Prayer_Global_Porch {
 //        require_once( 'pages/pray/custom.php' );
 
         // stats_app
-        require_once( 'pages/stats/previous.php' );
+        require_once( 'pages/stats/big-list.php' );
+        require_once( 'pages/stats/big-map.php' );
 
         // user
         require_once( 'pages/profile/magic-link.php' );

@@ -1,46 +1,63 @@
 <?php
 if ( !defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly.
 
-class Prayer_Global_Prayer_App_Map extends Prayer_Global_Prayer_App {
+class Prayer_Global_Porch_Stats_Big_Map extends DT_Magic_Url_Base
+{
+    public $magic = false;
+    public $parts = false;
+    public $page_title = 'Global Prayer Map';
+    public $root = 'stats_app';
+    public $type = 'big_map';
+    public $type_name = 'Global Prayer Stats';
+    public static $token = 'stats_app_big_map';
+    public $post_type = 'laps';
 
     private static $_instance = null;
-
     public static function instance() {
         if ( is_null( self::$_instance ) ) {
             self::$_instance = new self();
         }
         return self::$_instance;
-    }
+    } // End instance()
 
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct();
 
-
-        // must be valid url
         $url = dt_get_url_path();
-        if ( strpos( $url, $this->root . '/' . $this->type ) === false ) {
-            return;
+        if ( ( $this->root . '/' . $this->type ) === $url ) {
+
+            $this->magic = new DT_Magic_URL( $this->root );
+            $this->parts = $this->magic->parse_url_parts();
+
+            // register url and access
+            add_action( "template_redirect", [ $this, 'theme_redirect' ] );
+            add_filter( 'dt_blank_access', function (){ return true;
+            }, 100, 1 );
+            add_filter( 'dt_allow_non_login_access', function (){ return true;
+            }, 100, 1 );
+            add_filter( 'dt_override_header_meta', function (){ return true;
+            }, 100, 1 );
+
+            // header content
+            add_filter( "dt_blank_title", [ $this, "page_tab_title" ] ); // adds basic title to browser tab
+            add_action( 'wp_print_scripts', [ $this, 'print_scripts' ], 1500 ); // authorizes scripts
+            add_action( 'wp_print_styles', [ $this, 'print_styles' ], 1500 ); // authorizes styles
+
+            // page content
+            add_action( 'dt_blank_head', [ $this, '_header' ] );
+            add_action( 'dt_blank_footer', [ $this, '_footer' ] );
+            add_action( 'dt_blank_body', [ $this, 'body' ] ); // body for no post key
+
+            add_filter( 'dt_magic_url_base_allowed_css', [ $this, 'dt_magic_url_base_allowed_css' ], 10, 1 );
+            add_filter( 'dt_magic_url_base_allowed_js', [ $this, 'dt_magic_url_base_allowed_js' ], 10, 1 );
+
+            add_action( 'wp_enqueue_scripts', [ $this, '_wp_enqueue_scripts' ], 100 );
         }
 
-        // must be valid parts
-        if ( !$this->check_parts_match() ){
-            return;
+        if ( dt_is_rest() ) {
+            add_action( 'rest_api_init', [ $this, 'add_endpoints' ] );
+            add_filter( 'dt_allow_rest_access', [ $this, 'authorize_url' ], 10, 1 );
         }
-
-        // must be specific action
-        if ( 'map' !== $this->parts['action'] ) {
-            return;
-        }
-
-        // load if valid url
-        add_action( 'dt_blank_head', [ $this, '_header' ] );
-        add_action( 'dt_blank_body', [ $this, 'body' ] );
-
-        add_filter( 'dt_magic_url_base_allowed_css', [ $this, 'dt_magic_url_base_allowed_css' ], 10, 1 );
-        add_filter( 'dt_magic_url_base_allowed_js', [ $this, 'dt_magic_url_base_allowed_js' ], 10, 1 );
-
-        add_action( 'wp_enqueue_scripts', [ $this, '_wp_enqueue_scripts' ], 100 );
     }
 
     public function dt_magic_url_base_allowed_js( $allowed_js ) {
@@ -72,7 +89,7 @@ class Prayer_Global_Prayer_App_Map extends Prayer_Global_Prayer_App {
                 'parts' => $this->parts,
                 'grid_data' => [],
                 'participants' => [],
-                'stats' => pg_lap_stats_by_key($this->parts['public_key']),
+                'stats' => pg_global_race_stats(),
                 'image_folder' => plugin_dir_url(__DIR__) . 'assets/images/',
                 'translations' => [
                     'add' => __( 'Add Magic', 'prayer-global' ),
@@ -189,33 +206,20 @@ class Prayer_Global_Prayer_App_Map extends Prayer_Global_Prayer_App {
                     padding-top: 0;
                 }
             }
-            @keyframes spin {
-                0% {
-                    transform: rotate(0deg);
-                }
 
-                100% {
-                    transform: rotate(360deg);
-                }
-            }
-            .loading-spinner.active {
-                border-radius: 50%;
-                width: 24px;
-                height: 24px;
-                border: 0.25rem solid #919191;
-                border-top-color: black;
-                animation: spin 1s infinite linear;
-                display: inline-block;
-            }
         </style>
         <link rel="stylesheet" href="<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/fonts/ionicons/css/ionicons.min.css">
         <link rel="stylesheet" href="<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/basic.css?ver=<?php echo fileatime( trailingslashit( plugin_dir_path( __DIR__ ) ) . 'assets/basic.css' ) ?>" type="text/css" media="all">
         <?php
     }
 
+    public function footer_javascript(){
+        require_once( trailingslashit( plugin_dir_path( __DIR__ ) ) . 'assets/footer.php' );
+    }
+
     public function body(){
-        $parts = $this->parts;
-        $lap_stats = pg_lap_stats_by_key($parts['public_key']);
+        $lap_stats = pg_global_race_stats();
+        $finished_laps = number_format( (int) $lap_stats['number_of_laps'] - 1 );
         DT_Mapbox_API::geocoder_scripts();
         ?>
         <style id="custom-style"></style>
@@ -237,10 +241,10 @@ class Prayer_Global_Prayer_App_Map extends Prayer_Global_Prayer_App {
                             <a href="/"><i class="fi-home two-em" style="color:black;"></i></a>
                         </div>
                         <div class="cell small-9 medium-4 center hide-for-small-only">
-                            <span class="two-em">Lap <?php echo $lap_stats['lap_number'] ?></span>
+                            <span class="two-em lap-title">Race Map</span>
                         </div>
                         <div class="cell small-9 medium-4 show-for-small-only">
-                            <span class="two-em"><strong>Lap <?php echo $lap_stats['lap_number'] ?></strong></span>
+                            <span class="two-em lap-title"><strong>Race Map</strong></span>
                         </div>
                         <div class="cell small-3 medium-4" style="text-align:right;">
                             <button type="button" data-toggle="offcanvas_menu"><i class="fi-list two-em"></i></button>
@@ -252,11 +256,11 @@ class Prayer_Global_Prayer_App_Map extends Prayer_Global_Prayer_App {
                 <div id="foot_block">
                     <div class="grid-x grid-padding-x">
                         <div class="cell center"><button type="button" data-toggle="offcanvas_stats"><i class="ion-chevron-up two-em"></i></button></div>
-                        <div class="cell small-6 medium-2 center"><strong>Warriors</strong> <i class="fi-marker" style="color:blue;"></i><br><span class="one-em warriors" id="warriors"></span></div>
-                        <div class="cell small-6 medium-3 center hide-for-small-only"><strong>Minutes Prayed</strong><br><span class="one-em minutes_prayed" id="minutes_prayed_formatted"></span></div>
-                        <div class="cell small-6 medium-2 center"><strong>World Coverage</strong><br><span class="one-em completed_percent" id="completed_percent"></span><span class="one-em">%</span></div>
-                        <div class="cell small-6 medium-2 center hide-for-small-only"><strong>Places Remaining</strong><br><span class="one-em remaining" id="remaining"></span></div>
-                        <div class="cell small-6 medium-3 center hide-for-small-only"><strong>Pace of Lap</strong><br><span class="one-em time_elapsed" id="time_elapsed"></span></div>
+                        <div class="cell small-6 medium-3 center"><strong>Warriors</strong> <i class="fi-marker" style="color:blue;"></i><br><span class="one-em"><?php echo $lap_stats['participants'] ?></span></div>
+                        <div class="cell small-6 medium-3 center"><strong>Minutes Prayed</strong><br><span class="one-em"><?php echo $lap_stats['minutes_prayed'] ?></span></div>
+                        <div class="cell small-6 medium-3 center"><strong>World Prayer Coverage</strong><br><span class="one-em"><?php echo $finished_laps ?> times</span>
+                        </div>
+                        <div class="cell small-6 medium-3 center"><strong>Pace</strong><br><span class="one-em time_elapsed" id="time_elapsed"></span></div>
                     </div>
                 </div>
             </div>
@@ -290,42 +294,24 @@ class Prayer_Global_Prayer_App_Map extends Prayer_Global_Prayer_App {
             <hr>
             <div class="grid-x grid-padding-x center">
                 <div class="cell">
-                    <span class="three-em">Lap <?php echo $lap_stats['lap_number'] ?></span>
+                    <span class="three-em lap-title">Race Map</span>
                     <hr>
                 </div>
                 <div class="cell small-6 medium-3">
                     <p class="stats-title">Warriors</p>
-                    <p class="stats-figure warriors">0</p>
+                    <p class="stats-figure"><?php echo $lap_stats['participants'] ?></p>
                 </div>
                 <div class="cell small-6 medium-3">
                     <p class="stats-title">Minutes Prayed</p>
-                    <p class="stats-figure minutes_prayed">0</p>
-                </div>
-
-                <div class="cell small-6 medium-3">
-                    <p class="stats-title">Completed Locations</p>
-                    <p class="stats-figure completed">0</p>
+                    <p class="stats-figure"><?php echo $lap_stats['minutes_prayed'] ?></p>
                 </div>
                 <div class="cell small-6 medium-3">
-                    <p class="stats-title">Remaining Locations</p>
-                    <p class="stats-figure remaining">0</p>
+                    <p class="stats-title">World Prayer Coverage</p>
+                    <p class="stats-figure"><?php echo $finished_laps ?> times</p>
                 </div>
                 <div class="cell small-6 medium-3">
-                    <p class="stats-title">World Coverage</p>
-                    <p class="stats-figure"><span class="completed_percent">0</span>%</p>
-                </div>
-                <div class="cell small-6 medium-3">
-                    <p class="stats-title">Pace of Lap</p>
-                    <p class="stats-figure time_elapsed">0</p>
-                </div>
-
-                <div class="cell small-6 medium-3">
-                    <p class="stats-title">Start Time</p>
-                    <p class="stats-figure start_time">0</p>
-                </div>
-                <div class="cell small-6 medium-3">
-                    <p class="stats-title">End Time</p>
-                    <p class="stats-figure end_time">0</p>
+                    <p class="stats-title">Pace</p>
+                    <p class="stats-figure"><?php echo $lap_stats['time_elapsed'] ?></p>
                 </div>
             </div>
         </div>
@@ -334,11 +320,28 @@ class Prayer_Global_Prayer_App_Map extends Prayer_Global_Prayer_App {
 
     public static function _wp_enqueue_scripts(){
         DT_Mapbox_API::load_mapbox_header_scripts();
-
-        wp_enqueue_script( 'heatmap-js', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'heatmap.js', [
+        wp_enqueue_script( 'heatmap-js', trailingslashit( plugin_dir_url( __DIR__ ) ) . 'pray/heatmap.js', [
             'jquery',
             'mapbox-gl'
-        ], filemtime( plugin_dir_path( __FILE__ ) .'heatmap.js' ), true );
+        ], filemtime( plugin_dir_path( __DIR__ ) .'pray/heatmap.js' ), true );
+    }
+
+    /**
+     * Register REST Endpoints
+     * @link https://github.com/DiscipleTools/disciple-tools-theme/wiki/Site-to-Site-Link for outside of wordpress authentication
+     */
+    public function add_endpoints() {
+        $namespace = $this->root . '/v1';
+        register_rest_route(
+            $namespace,
+            '/'.$this->type,
+            [
+                [
+                    'methods'  => WP_REST_Server::CREATABLE,
+                    'callback' => [ $this, 'endpoint' ],
+                ],
+            ]
+        );
     }
 
     public function endpoint( WP_REST_Request $request ) {
@@ -350,7 +353,7 @@ class Prayer_Global_Prayer_App_Map extends Prayer_Global_Prayer_App {
 
         switch( $params['action'] ) {
             case 'get_stats':
-                return pg_lap_stats_by_key($params['parts']['public_key']);
+                return pg_global_race_stats();
             case 'get_grid':
                 return $this->get_grid( $params['parts'] );
             case 'get_grid_details':
@@ -365,7 +368,7 @@ class Prayer_Global_Prayer_App_Map extends Prayer_Global_Prayer_App {
 
     public function get_grid( $parts ) {
         global $wpdb;
-        $lap_stats = pg_lap_stats_by_key($parts['public_key']);
+        $lap_stats = pg_get_global_race();
 
         // map grid
         $data_raw = $wpdb->get_results( $wpdb->prepare( "
@@ -406,7 +409,7 @@ class Prayer_Global_Prayer_App_Map extends Prayer_Global_Prayer_App {
 
     public function get_participants( $parts ){
         global $wpdb;
-        $lap_stats = pg_lap_stats_by_key($parts['public_key']);
+        $lap_stats = pg_get_global_race();
 
         $participants_raw = $wpdb->get_results( $wpdb->prepare( "
            SELECT r.lng as longitude, r.lat as latitude
@@ -433,9 +436,8 @@ class Prayer_Global_Prayer_App_Map extends Prayer_Global_Prayer_App {
 
     public function get_grid_details( $data ) {
         $details = PG_Stacker::build_location_stack( $data['grid_id'] );
-
         return $details;
     }
 
 }
-Prayer_Global_Prayer_App_Map::instance();
+Prayer_Global_Porch_Stats_Big_Map::instance();

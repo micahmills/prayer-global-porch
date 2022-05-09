@@ -69,16 +69,5 @@ class Prayer_Global_Porch_Home extends DT_Magic_Url_Base
         require_once( 'body.php' );
     }
 
-    public function total_global_laps(){
-//        global $wpdb;
-//            $total_locations = $wpdb->get_var( $wpdb->prepare(
-//                "SELECT COUNT( DISTINCT grid_id) as total_locations
-//                        FROM $wpdb->dt_reports
-//                        WHERE post_id = %d
-//                          AND type = 'prayer_app'
-//                          AND subtype = 'global';"
-//                , $current_prayer_lap_post_id )
-//            );
-    }
 }
 Prayer_Global_Porch_Home::instance();

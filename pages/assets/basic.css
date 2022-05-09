@@ -1,0 +1,58 @@
+body {
+    color: black;
+}
+.six-em {
+    font-size: 6em;
+    line-height: .5em;
+}
+.three-em {
+    font-size: 3em;
+}
+.two-em {
+    font-size: 2em;
+}
+.one-em {
+    font-size: 1.5em;
+}
+@media (max-width: 768px) {
+    .six-em {
+        font-size: 3em ;
+        line-height: .5em;
+    }
+    .three-em {
+        font-size: 1.7em ;
+    }
+    .two-em {
+        font-size: 1.2em ;
+    }
+    .one-em {
+        font-size: 1em ;
+    }
+}
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+.loading-spinner.active {
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    border: 0.25rem solid #919191;
+    border-top-color: black;
+    animation: spin 1s infinite linear;
+    display: inline-block;
+}
+.green {
+    color: green;
+}
+.red {
+    color: red;
+}
+.orange {
+    color: orange;
+}

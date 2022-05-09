@@ -294,7 +294,7 @@ jQuery(document).ready(function($){
 
   function load_grid_details( grid_id ) {
     let div = jQuery('#grid_details_content')
-    div.empty().html(`<img style="width:25px;height:25px;" src="${jsObject.image_folder}spinner.svg" />`)
+    div.empty().html(`<span class="loading-spinner active"></span>`)
 
     jQuery('#offcanvas_location_details').foundation('open')
 

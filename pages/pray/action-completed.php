@@ -61,7 +61,6 @@ class Prayer_Global_Prayer_App_Completed extends Prayer_Global_Prayer_App {
 
         $parts = $this->parts;
         $lap_stats = pg_lap_stats_by_key($parts['public_key']);
-        $current_lap = pg_current_global_lap();
 
         if ( empty( $lap_stats['end_time'] ) ) {
             $lap_stats['end_time'] = time();

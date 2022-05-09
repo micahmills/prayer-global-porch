@@ -1,16 +1,16 @@
 <?php
 if ( !defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly.
 
-class Prayer_Global_Porch_Stats_Previous extends DT_Magic_Url_Base
+class Prayer_Global_Porch_Stats_Big_List extends DT_Magic_Url_Base
 {
     public $magic = false;
     public $parts = false;
     public $page_title = 'Global Prayer Map';
     public $root = 'stats_app';
-    public $type = 'previous';
+    public $type = 'big_list';
     public $type_name = 'Global Prayer Stats';
-    public static $token = 'stats_app_previous';
-    public $post_type = 'groups';
+    public static $token = 'stats_app_big_list';
+    public $post_type = 'laps';
 
     private static $_instance = null;
     public static function instance() {
@@ -69,6 +69,33 @@ class Prayer_Global_Porch_Stats_Previous extends DT_Magic_Url_Base
 
     public function header_javascript(){
         require_once( trailingslashit( plugin_dir_path( __DIR__ ) ) . 'assets/header.php' );
+        ?>
+        <script>
+            let jsObject = [<?php echo json_encode([
+                'map_key' => DT_Mapbox_API::get_key(),
+                'mirror_url' => dt_get_location_grid_mirror( true ),
+                'ipstack' => DT_Ipstack_API::get_key(),
+                'root' => esc_url_raw( rest_url() ),
+                'nonce' => wp_create_nonce( 'wp_rest' ),
+                'parts' => $this->parts,
+                'current_lap' => pg_current_global_lap(),
+                'global_race' => pg_global_race_stats(),
+                'translations' => [
+                    'add' => __( 'Add Magic', 'prayer-global' ),
+                ],
+                'nope' => plugin_dir_url(__DIR__) . 'assets/images/nope.jpg',
+                'images_url' => pg_grid_image_url(),
+                'image_folder' => plugin_dir_url(__DIR__) . 'assets/images/',
+            ]) ?>][0]
+        </script>
+        <script src="<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) ) ?>big-list.js?ver=<?php echo fileatime( trailingslashit( plugin_dir_path( __FILE__ ) ) . 'big-list.js' ) ?>"></script>
+        <link rel="stylesheet" href="<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/basic.css?ver=<?php echo fileatime( trailingslashit( plugin_dir_path( __DIR__ ) ) . 'assets/basic.css' ) ?>" type="text/css" media="all">
+        <style>
+            section {
+                margin-top: 110px;
+            }
+        </style>
+        <?php
     }
 
     public function footer_javascript(){
@@ -77,7 +104,20 @@ class Prayer_Global_Porch_Stats_Previous extends DT_Magic_Url_Base
 
     public function body(){
         require_once( trailingslashit( plugin_dir_path( __DIR__ ) ) . '/assets/nav.php' );
-        // @todo add body content
+        ?>
+        <!-- content section -->
+        <section>
+            <div class="container pb-4">
+                <div class="row">
+                    <div class="col-md text-center">
+                        <span class="two-em lap-title">Race List</span>
+
+                    </div>
+                </div>
+            </div>
+            <div class="container" id="content"><span class="loading-spinner active"></span></div>
+        </section>
+        <?php
     }
 
     /**
@@ -105,8 +145,39 @@ class Prayer_Global_Porch_Stats_Previous extends DT_Magic_Url_Base
             return new WP_Error( __METHOD__, "Missing parameters", [ 'status' => 400 ] );
         }
 
-        return true;
+        switch( $params['action'] ) {
+            case 'get_global_list':
+                return $this->get_global_list();
+        }
+
+        return false;
+    }
+
+    public function get_global_list() {
+         global $wpdb;
+
+         $data = [];
+
+         $results = $wpdb->get_results(
+             "
+                SELECT pm.post_id, p.post_title, pm2.meta_value as lap_number, pm3.meta_value as lap_key, pm4.meta_value as start_time, pm5.meta_value as end_time
+                FROM $wpdb->posts p
+                JOIN $wpdb->postmeta pm ON pm.post_id=p.ID AND pm.meta_key = 'type' AND pm.meta_value = 'global'
+                JOIN $wpdb->postmeta pm2 ON pm2.post_id=p.ID AND pm2.meta_key = 'global_lap_number'
+                LEFT JOIN $wpdb->postmeta pm3 ON pm3.post_id=p.ID AND pm3.meta_key = 'prayer_app_global_magic_key'
+                LEFT JOIN $wpdb->postmeta pm4 ON pm4.post_id=p.ID AND pm4.meta_key = 'start_time'
+                LEFT JOIN $wpdb->postmeta pm5 ON pm5.post_id=p.ID AND pm5.meta_key = 'end_time'
+                WHERE p.post_type = 'laps'
+                ORDER BY pm2.meta_value DESC
+             ", ARRAY_A );
+
+         foreach( $results as $row ) {
+             $row['stats'] = pg_lap_stats_by_lap_number($row['lap_number']);
+             $data[] = $row;
+         }
+
+         return $data;
     }
 
 }
-Prayer_Global_Porch_Stats_Previous::instance();
+Prayer_Global_Porch_Stats_Big_List::instance();
