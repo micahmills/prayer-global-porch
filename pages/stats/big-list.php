@@ -111,11 +111,18 @@ class Prayer_Global_Porch_Stats_Big_List extends DT_Magic_Url_Base
                 <div class="row">
                     <div class="col-md text-center">
                         <span class="two-em lap-title">Race List</span>
-
                     </div>
                 </div>
             </div>
             <div class="container" id="content"><span class="loading-spinner active"></span></div>
+            <div class="container center">
+                <div class="row">
+                    <div class="col center">
+                        <a href="/stats_app/big_map/" role="button" class="btn smoothscroll pb_outline-dark btn-xl pb_font-13 p-4 rounded-0 pb_letter-spacing-2">Big Map</a>
+                    </div>
+                </div>
+            </div>
+
         </section>
         <?php
     }

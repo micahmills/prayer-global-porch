@@ -1,6 +1,9 @@
 body {
     color: black;
 }
+.center {
+    text-align:center;
+}
 .six-em {
     font-size: 6em;
     line-height: .5em;
