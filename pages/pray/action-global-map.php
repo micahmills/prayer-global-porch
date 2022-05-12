@@ -1,7 +1,7 @@
 <?php
 if ( !defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly.
 
-class Prayer_Global_Prayer_App_Map extends Prayer_Global_Prayer_App {
+class PG_Global_Prayer_App_Map extends PG_Global_Prayer_App {
 
     private static $_instance = null;
 
@@ -438,4 +438,4 @@ class Prayer_Global_Prayer_App_Map extends Prayer_Global_Prayer_App {
     }
 
 }
-Prayer_Global_Prayer_App_Map::instance();
+PG_Global_Prayer_App_Map::instance();

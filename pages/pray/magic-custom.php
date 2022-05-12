@@ -3,16 +3,15 @@ if ( !defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly.
 
 
 /**
- * Class PG_Global_Prayer_App
+ * Class PG_Custom_Prayer_App
  */
-class PG_Global_Prayer_App extends DT_Magic_Url_Base {
+class PG_Custom_Prayer_App extends DT_Magic_Url_Base {
 
     public $magic = false;
-//    public $parts = false;
     public $page_title = 'Global Lap';
     public $page_description = 'Prayer Laps';
     public $root = "prayer_app";
-    public $type = 'global';
+    public $type = 'custom';
     public $type_actions = [
         '' => "Pray",
         'map' => "Map",
@@ -63,17 +62,17 @@ class PG_Global_Prayer_App extends DT_Magic_Url_Base {
         if ( empty( $this->parts['action'] ) ) {
             $current_lap = pg_current_global_lap();
             if ( (int) $current_lap['post_id'] === (int) $this->parts['post_id'] ) {
-                require_once('action-global-lap.php');
+                require_once('action-custom-lap.php');
             } else {
                 wp_redirect( trailingslashit( site_url() ) . $this->root . '/' . $this->type . '/' . $this->parts['public_key'] . '/completed' );
                 exit;
             }
         } else if ( 'completed' === $this->parts['action'] ) {
-            require_once('action-global-completed.php');
+            require_once('action-custom-completed.php');
         } else if ( 'map' === $this->parts['action'] ) {
-            require_once('action-global-map.php');
+            require_once('action-custom-map.php');
         } else if ( 'stats' === $this->parts['action'] ) {
-            require_once('action-global-stats.php');
+            require_once('action-custom-stats.php');
         } else {
             wp_redirect( trailingslashit( site_url() ) );
         }
@@ -128,25 +127,25 @@ class PG_Global_Prayer_App extends DT_Magic_Url_Base {
             case 'completed':
                 return true;
             case 'map':
-                require_once('action-global-map.php');
-                if ( class_exists( 'PG_Global_Prayer_App_Map') ) {
-                    return PG_Global_Prayer_App_Map::instance()->endpoint($request);
+                require_once('action-custom-map.php');
+                if ( class_exists( 'PG_Custom_Prayer_App_Map') ) {
+                    return PG_Custom_Prayer_App_Map::instance()->endpoint($request);
                 }
-                return new WP_Error( __METHOD__, "Class not loaded: PG_Global_Prayer_App_Map" , [ 'status' => 400 ] );
+                return new WP_Error( __METHOD__, "Class not loaded: PG_Custom_Prayer_App_Map" , [ 'status' => 400 ] );
             case 'stats':
-                require_once('action-global-stats.php');
-                if ( class_exists( 'PG_Global_Prayer_App_Stats') ) {
-                    return PG_Global_Prayer_App_Stats::instance()->endpoint($request);
+                require_once('action-custom-stats.php');
+                if ( class_exists( 'PG_Custom_Prayer_App_Stats') ) {
+                    return PG_Custom_Prayer_App_Stats::instance()->endpoint($request);
                 }
-                return new WP_Error( __METHOD__, "Class not loaded: PG_Global_Prayer_App_Stats", [ 'status' => 400 ] );
+                return new WP_Error( __METHOD__, "Class not loaded: PG_Custom_Prayer_App_Stats", [ 'status' => 400 ] );
             default:
-                require_once('action-global-lap.php');
-                if ( class_exists( 'PG_Global_Prayer_App_Lap') ) {
-                    return PG_Global_Prayer_App_Lap::instance()->endpoint($request);
+                require_once('action-custom-lap.php');
+                if ( class_exists( 'PG_Custom_Prayer_App_Lap') ) {
+                    return PG_Custom_Prayer_App_Lap::instance()->endpoint($request);
                 }
-                return new WP_Error( __METHOD__, "Class not loaded: PG_Global_Prayer_App_Lap", [ 'status' => 400 ] );
+                return new WP_Error( __METHOD__, "Class not loaded: PG_Custom_Prayer_App_Lap", [ 'status' => 400 ] );
         }
     }
 
 }
-PG_Global_Prayer_App::instance();
+PG_Custom_Prayer_App::instance();

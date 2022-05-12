@@ -3,9 +3,9 @@ if ( !defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly.
 
 
 /**
- * Class Prayer_Global_Prayer_App
+ * Class PG_Global_Prayer_App
  */
-class Prayer_Global_Prayer_App_Completed extends Prayer_Global_Prayer_App {
+class PG_Global_Prayer_App_Completed extends PG_Global_Prayer_App {
 
     private static $_instance = null;
     public static function instance() {
@@ -171,4 +171,4 @@ class Prayer_Global_Prayer_App_Completed extends Prayer_Global_Prayer_App {
     }
 
 }
-Prayer_Global_Prayer_App_Completed::instance();
+PG_Global_Prayer_App_Completed::instance();

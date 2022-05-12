@@ -3,9 +3,9 @@ if ( !defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly.
 
 
 /**
- * Class Prayer_Global_Prayer_App
+ * Class PG_Custom_Prayer_App_Lap
  */
-class Prayer_Global_Prayer_App_Lap extends Prayer_Global_Prayer_App {
+class PG_Custom_Prayer_App_Lap extends PG_Custom_Prayer_App {
 
     private static $_instance = null;
     public static function instance() {
@@ -42,7 +42,7 @@ class Prayer_Global_Prayer_App_Lap extends Prayer_Global_Prayer_App {
         }
 
         // redirect to completed if not current global lap
-        $current_lap = pg_current_global_lap();
+        $current_lap = pg_current_global_lap(); // @todo
         if ( (int) $current_lap['post_id'] === (int) $this->parts['post_id'] ) {
             add_action( 'dt_blank_body', [ $this, 'body' ] );
         } else {
@@ -403,4 +403,4 @@ class Prayer_Global_Prayer_App_Lap extends Prayer_Global_Prayer_App {
         return $response;
     }
 }
-Prayer_Global_Prayer_App_Lap::instance();
+PG_Custom_Prayer_App_Lap::instance();

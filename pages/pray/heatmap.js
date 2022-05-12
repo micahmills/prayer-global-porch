@@ -301,18 +301,52 @@ jQuery(document).ready(function($){
     window.get_data_page( 'get_grid_details', {grid_id: grid_id} )
       .done(function(response){
         console.log(response)
+        let bodies_1 = ''
+        let bodies_2 = ''
+        let bodies_3 = ''
+        i = 0
+        while ( i < response.location.percent_non_christians ) {
+          bodies_1 += '<i class="ion-ios-body red two-em"></i>';
+          i++;
+        }
+        i = 0
+        while ( i < response.location.percent_christian_adherents ) {
+          bodies_2 += '<i class="ion-ios-body orange two-em"></i>';
+          i++;
+        }
+        i = 0
+        while ( i < response.location.percent_believers ) {
+          bodies_3 += '<i class="ion-ios-body green two-em"></i>';
+          i++;
+        }
         div.html(
           `
           <div class="grid-x grid-padding-x">
               <div class="cell">
-                <span class="stats-title">${response.location.full_name}</span>
+                <p><span class="stats-title">${response.location.full_name}</span></p>
+                <p>1 believer for every ${numberWithCommas(Math.ceil(response.location.all_lost_int / response.location.believers_int ) ) } lost neighbors.</p>
                 <hr>
               </div>
               <div class="cell">
-                Population: ${response.location.population}<br>
-                Believers: ${response.location.believers}<br>
-                Christian Adherents: ${response.location.christian_adherents}<br>
-                Non-Christians: ${response.location.non_christians}
+                 <div class="grid-x">
+                    <div class="cell center">
+                        <p><strong>Don't Know Jesus</strong></p>
+                        <p>${bodies_1} <span>(${response.location.non_christians})</span></p>
+                    </div>
+                    <div class="cell center">
+                        <p><strong>Know about Jesus</strong></p>
+                        <p>${bodies_2} <span>(${response.location.christian_adherents})</span></p>
+                    </div>
+                    <div class="cell center">
+                        <p><strong>Know Jesus</strong></p>
+                        <p>${bodies_3} <span>(${response.location.believers})</span></p>
+                    </div>
+                </div>
+                <hr>
+              </div>
+              <div class="cell">
+                The ${response.location.admin_level_name} of <strong>${response.location.full_name}</strong> has a population of ${response.location.population}. We estimate ${response.location.name} has ${response.location.non_christians} who are far from Jesus, ${response.location.christian_adherents} who might know about Jesus culturally, and ${response.location.believers} people who know Jesus personally.
+                ${response.location.full_name} is 1 of ${response.location.peer_locations} ${response.location.admin_level_name_plural} in ${response.location.parent_name}.
                 <hr>
               </div>
               <div class="cell">
@@ -320,21 +354,71 @@ jQuery(document).ready(function($){
                 Primary Language: ${response.location.primary_language}<br>
                 <hr>
               </div>
-              <div class="cell">
-                1 of ${response.location.peer_locations} ${response.location.admin_level_name_plural} in ${response.location.parent_name}.<br>
-                This is 1 believer for every ${numberWithCommas(Math.ceil(response.location.all_lost_int / response.location.believers_int ) ) } lost neighbors.<br>
-                <hr>
-              </div>
-              <div class="cell">
-
-              </div>
-              <div class="cell">
-
-              </div>
           </div>
           `
         )
       })
+  }
+  function _template_100_bodies_3_chart( data ) {
+    let bodies_1 = ''
+    let bodies_2 = ''
+    let bodies_3 = ''
+    i = 0
+    while ( i < data.percent_1 ) {
+      bodies_1 += '<i class="ion-ios-body red two-em"></i>';
+      i++;
+    }
+    i = 0
+    while ( i < data.percent_2 ) {
+      bodies_2 += '<i class="ion-ios-body orange two-em"></i>';
+      i++;
+    }
+    i = 0
+    while ( i < data.percent_3 ) {
+      bodies_3 += '<i class="ion-ios-body green two-em"></i>';
+      i++;
+    }
+    div.append(
+      `<div class="row">
+          <div class="col text-center ">
+             <p class="mt-3 mb-3 font-weight-normal one-em uc">${data.section_label}</p>
+          </div>
+      </div>
+      <div class="row text-center justify-content-center">
+          <div class="col-md-3 col-sm">
+            <p class="mt-3 mb-0 font-weight-bold">${data.label_1}</p>
+            <p class="mt-0 mb-3 font-weight-normal">
+              ${bodies_1}
+            </p>
+            <p class="mt-3 mb-0 font-weight-normal">${data.population_1}</p>
+          </div>
+          <div class="col-md-3 col-sm">
+            <p class="mt-3 mb-0 font-weight-bold">${data.label_2}</p>
+            <p class="mt-0 mb-3 font-weight-normal">
+              ${bodies_2}
+            </p>
+            <p class="mt-3 mb-0 font-weight-normal ">${data.population_2}</p>
+          </div>
+          <div class="col-md-3 col-sm">
+            <p class="mt-3 mb-0 font-weight-bold">${data.label_3}</p>
+            <p class="mt-0 mb-3 font-weight-normal">
+              ${bodies_3}
+            </p>
+            <p class="mt-3 mb-0 font-weight-normal">${data.population_3}</p>
+          </div>
+      </div>
+      <div class="row text-center">
+        <div class="col">
+           <p class="font-weight-normal">${data.section_summary}</p>
+        </div>
+      </div>
+      <div class="row text-center justify-content-center">
+        <div class="col-md-8">
+          <p class="mt-3 mb-3 font-weight-normal one-em">${data.prayer}</p>
+        </div>
+      </div>
+      <div class="w-100"><hr></div>`
+    )
   }
 
   function numberWithCommas(x) {

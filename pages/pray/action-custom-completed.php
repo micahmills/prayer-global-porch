@@ -3,9 +3,9 @@ if ( !defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly.
 
 
 /**
- * Class Prayer_Global_Prayer_App
+ * Class PG_Global_Prayer_App
  */
-class Prayer_Global_Prayer_App_Stats extends Prayer_Global_Prayer_App {
+class PG_Custom_Prayer_App_Completed extends PG_Custom_Prayer_App {
 
     private static $_instance = null;
     public static function instance() {
@@ -30,7 +30,7 @@ class Prayer_Global_Prayer_App_Stats extends Prayer_Global_Prayer_App {
         }
 
         // must be specific action
-        if ( 'stats' !== $this->parts['action'] ) {
+        if ( 'completed' !== $this->parts['action'] ) {
             return;
         }
 
@@ -57,10 +57,11 @@ class Prayer_Global_Prayer_App_Stats extends Prayer_Global_Prayer_App {
     }
 
     public function body(){
+        global $wpdb;
+
         $parts = $this->parts;
         $lap_stats = pg_lap_stats_by_key($parts['public_key']);
 
-        global $wpdb;
         if ( empty( $lap_stats['end_time'] ) ) {
             $lap_stats['end_time'] = time();
         }
@@ -102,13 +103,13 @@ class Prayer_Global_Prayer_App_Stats extends Prayer_Global_Prayer_App {
                 </div>
             </div>
         </nav>
-
         <section class="pb_cover_v1 completed-lap text-left cover-bg-black cover-bg-opacity-4" style="background-image: url(<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/images/map_background.jpg)" id="section-home">
             <div class="container">
                 <div class="row ">
                     <div class="col text-center">
-                        <h2 class="heading mb-5">Lap <?php echo esc_attr( $lap_stats['lap_number'] ) ?> </h2>
-<!--                        <a href="--><?php //echo '/'. $this->parts['root'] . '/' . $this->parts['type'] . '/' . $this->parts['public_key'] . '/map' ?><!--" style="background-color:rgba(255,255,255,.7);" role="button" class="btn smoothscroll btn-xl pb_font-20 p-4 rounded-0 pb_letter-spacing-2">Map</a><br>-->
+                        <h2 class="heading mb-5">Lap <?php echo esc_attr( $lap_stats['lap_number'] ) ?> Completed!</h2>
+                        <a href="<?php echo '/'. $this->parts['root'] . '/' . $this->parts['type'] . '/' . $this->parts['public_key'] . '/map' ?>" style="background-color:rgba(255,255,255,.7);" role="button" class="btn smoothscroll btn-xl pb_font-25 p-4 rounded-0 pb_letter-spacing-2">View Map</a>
+                        <a href="/newest/lap/" style="background-color:rgba(255,255,255,.7);" role="button" class="btn smoothscroll pb_font-25 btn-xl pb_font-13 p-4 rounded-0 pb_letter-spacing-2">Go To The Current Lap</a> <br>
                         <hr style="border:1px solid white;margin-top:5vh;">
                     </div>
                     <div class="w-100"></div>
@@ -144,25 +145,29 @@ class Prayer_Global_Prayer_App_Stats extends Prayer_Global_Prayer_App {
                         <div class="sub-heading pl-4">
                             <p class="mb-2"><u>Top Warrior Locations</u></p>
                             <ol>
-                            <?php
-                            if ( ! empty( $participant_locations ) ) {
-                                foreach( $participant_locations as $location ) {
-                                    ?>
-                                    <li class="mb-0"><?php echo esc_html( $location['location'] ) ?></li>
-                                    <?php
+                                <?php
+                                if ( ! empty( $participant_locations ) ) {
+                                    foreach( $participant_locations as $location ) {
+                                        ?>
+                                        <li class="mb-0"><?php echo esc_html( $location['location'] ) ?></li>
+                                        <?php
+                                    }
                                 }
-                            }
-                            ?>
+                                ?>
                             </ol>
                         </div>
                     </div>
+                    <div class="col center">
+
+                    </div>
                 </div>
+
             </div>
         </section>
         <!-- END section -->
 
-        <?php // end html
+        <?php
     }
 
 }
-Prayer_Global_Prayer_App_Stats::instance();
+PG_Custom_Prayer_App_Completed::instance();
