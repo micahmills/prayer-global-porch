@@ -1,7 +1,7 @@
 <?php require_once( trailingslashit( plugin_dir_path( __DIR__ ) ) . '/assets/nav.php' ) ?>
 <?php
 $current_global_lap = pg_current_global_lap();
-$current_global_stats = pg_lap_stats_by_lap_number($current_global_lap['lap_number']);
+$current_global_stats = pg_global_stats_by_lap_number($current_global_lap['lap_number']);
 $global_race = pg_global_race_stats();
 ?>
 
@@ -108,8 +108,8 @@ $global_race = pg_global_race_stats();
         </div>
         <div class="row">
             <div class="col-md text-center">
-                <a href="/stats_app/big_list/" role="button" class="btn smoothscroll pb_outline-dark btn-xl pb_font-13 p-4 rounded-0 pb_letter-spacing-2">Big List</a>
                 <a href="/stats_app/big_map/" role="button" class="btn smoothscroll pb_outline-dark btn-xl pb_font-13 p-4 rounded-0 pb_letter-spacing-2">Big Map</a>
+                <a href="/stats_app/big_list/" role="button" class="btn smoothscroll pb_outline-dark btn-xl pb_font-13 p-4 rounded-0 pb_letter-spacing-2">Big List</a>
             </div>
         </div>
     </div>
@@ -188,7 +188,7 @@ $global_race = pg_global_race_stats();
                         </div>
                     </div>
                     <div class="item">
-                        <a data-toggle="collapse" data-parent="#exampleAccordion" href="#exampleAccordion2" aria-expanded="false" aria-controls="exampleAccordion2" class="pb_font-18">Moravian 2.0</a>
+                        <a data-toggle="collapse" data-parent="#exampleAccordion" href="#exampleAccordion2" aria-expanded="false" aria-controls="exampleAccordion2" class="pb_font-18">Moravian Prayer Challenge</a>
                         <div id="exampleAccordion2" class="collapse" role="tabpanel">
                             <p>
                                 Inspired by the <a href="https://www.christianitytoday.com/history/issues/issue-1/prayer-meeting-that-lasted-100-years.html">Moravians</a>, who prayed non-stop for 100 years,
@@ -201,12 +201,6 @@ $global_race = pg_global_race_stats();
                             </p>
                             <p>
                                 The Moravians had one person praying every hour of every day for 100 years. This was roughly 876,000 hours of prayer, or 52,560,000 minutes of prayer for the world. We are humbled by this extraordinary commitment to praying for the world.
-                            </p>
-                            <p>
-
-                            </p>
-                            <p>
-
                             </p>
                             <p>
                                 <br>

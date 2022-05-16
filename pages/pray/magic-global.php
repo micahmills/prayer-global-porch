@@ -8,7 +8,6 @@ if ( !defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly.
 class PG_Global_Prayer_App extends DT_Magic_Url_Base {
 
     public $magic = false;
-//    public $parts = false;
     public $page_title = 'Global Lap';
     public $page_description = 'Prayer Laps';
     public $root = "prayer_app";

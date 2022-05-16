@@ -323,7 +323,7 @@ jQuery(document).ready(function($){
           `
           <div class="grid-x grid-padding-x">
               <div class="cell">
-                <p><span class="stats-title">${response.location.full_name}</span></p>
+                <p><span class="stats-title two-em">${response.location.full_name}</span></p>
                 <p>1 believer for every ${numberWithCommas(Math.ceil(response.location.all_lost_int / response.location.believers_int ) ) } lost neighbors.</p>
                 <hr>
               </div>
@@ -358,67 +358,6 @@ jQuery(document).ready(function($){
           `
         )
       })
-  }
-  function _template_100_bodies_3_chart( data ) {
-    let bodies_1 = ''
-    let bodies_2 = ''
-    let bodies_3 = ''
-    i = 0
-    while ( i < data.percent_1 ) {
-      bodies_1 += '<i class="ion-ios-body red two-em"></i>';
-      i++;
-    }
-    i = 0
-    while ( i < data.percent_2 ) {
-      bodies_2 += '<i class="ion-ios-body orange two-em"></i>';
-      i++;
-    }
-    i = 0
-    while ( i < data.percent_3 ) {
-      bodies_3 += '<i class="ion-ios-body green two-em"></i>';
-      i++;
-    }
-    div.append(
-      `<div class="row">
-          <div class="col text-center ">
-             <p class="mt-3 mb-3 font-weight-normal one-em uc">${data.section_label}</p>
-          </div>
-      </div>
-      <div class="row text-center justify-content-center">
-          <div class="col-md-3 col-sm">
-            <p class="mt-3 mb-0 font-weight-bold">${data.label_1}</p>
-            <p class="mt-0 mb-3 font-weight-normal">
-              ${bodies_1}
-            </p>
-            <p class="mt-3 mb-0 font-weight-normal">${data.population_1}</p>
-          </div>
-          <div class="col-md-3 col-sm">
-            <p class="mt-3 mb-0 font-weight-bold">${data.label_2}</p>
-            <p class="mt-0 mb-3 font-weight-normal">
-              ${bodies_2}
-            </p>
-            <p class="mt-3 mb-0 font-weight-normal ">${data.population_2}</p>
-          </div>
-          <div class="col-md-3 col-sm">
-            <p class="mt-3 mb-0 font-weight-bold">${data.label_3}</p>
-            <p class="mt-0 mb-3 font-weight-normal">
-              ${bodies_3}
-            </p>
-            <p class="mt-3 mb-0 font-weight-normal">${data.population_3}</p>
-          </div>
-      </div>
-      <div class="row text-center">
-        <div class="col">
-           <p class="font-weight-normal">${data.section_summary}</p>
-        </div>
-      </div>
-      <div class="row text-center justify-content-center">
-        <div class="col-md-8">
-          <p class="mt-3 mb-3 font-weight-normal one-em">${data.prayer}</p>
-        </div>
-      </div>
-      <div class="w-100"><hr></div>`
-    )
   }
 
   function numberWithCommas(x) {

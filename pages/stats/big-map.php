@@ -72,6 +72,7 @@ class Prayer_Global_Porch_Stats_Big_Map extends DT_Magic_Url_Base
     public function dt_magic_url_base_allowed_css( $allowed_css ) {
         $allowed_css[] = 'mapbox-gl-css';
         $allowed_css[] = 'introjs-css';
+        $allowed_css[] = 'foundation-css';
         $allowed_css[] = 'heatmap-css';
         $allowed_css[] = 'site-css';
         return $allowed_css;
@@ -96,120 +97,10 @@ class Prayer_Global_Porch_Stats_Big_Map extends DT_Magic_Url_Base
                 ],
             ]) ?>][0]
         </script>
-        <style>
-            body {
-                background: white !important;
-            }
-            #initialize-screen {
-                width: 100%;
-                height: 2000px;
-                z-index: 10;
-                background-color: white;
-                position: absolute;
-            }
-            #initialize-spinner-wrapper{
-                position:relative;
-                top:45%;
-            }
-            progress {
-                top: 50%;
-                margin: 0 auto;
-                height:50px;
-                width:300px;
-            }
-            .pb_navbar .navbar-toggler {
-                color: black;
-                border-color: black;
-                cursor: pointer;
-                padding-right: 0;
-            }
-            #head_block, #foot_block {
-                position: absolute;
-                width:100%;
-                z-index: 5;
-                background: white;
-                padding: 1em;
-                opacity: .9;
-                display:none;
-            }
-            #head_block {
-                margin: 0 auto 1em;
-            }
-            #foot_block {
-                bottom: 0;
-                margin: 1em auto 0;
-            }
-            #offcanvas_menu {
-                background: white;
-                z-index: 15;
-                padding: 1em;
-            }
-            #offcanvas_location_details {
-                background: white;
-                z-index: 15;
-                padding: 1em;
-                min-width: 40%;
-            }
-            #offcanvas_stats {
-                background: white;
-                z-index: 15;
-                padding: 1em;
-                height: 80%;
-            }
-            .nav-item {
-                list-style-type: none;
-            }
-            #title {
-                font-weight: bold;
-            }
-            .mapboxgl-ctrl-group {
-                margin-top:120px !important;
-            }
-            .one-em {
-                font-size: 1.5rem;
-            }
-            .two-em {
-                font-size: 2rem;
-            }
-            .three-em {
-                font-size: 3rem;
-            }
-            .bold {
-                font-weight: bold;
-            }
-            .stats-title {
-                font-size: 1.5rem;
-            }
-            .stats-figure {
-                font-size: 2rem;
-            }
-            @media (max-width: 768px) {
-                .mapboxgl-ctrl-group {
-                    margin-top:100px !important;
-                }
-                .one-em {
-                    font-size: 1rem;
-                }
-                .two-em {
-                    font-size: 1.8rem;
-                }
-                .three-em {
-                    font-size: 2rem;
-                }
-                .stats-title {
-                    font-size: 1rem;
-                    padding-bottom: 0;
-                }
-                .stats-figure {
-                    font-size: 1.8rem;
-                    font-weight: bold;
-                    padding-top: 0;
-                }
-            }
-
-        </style>
+        <link href="https://fonts.googleapis.com/css?family=Crimson+Text:400,400i,600|Montserrat:200,300,400" rel="stylesheet">
         <link rel="stylesheet" href="<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/fonts/ionicons/css/ionicons.min.css">
         <link rel="stylesheet" href="<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/basic.css?ver=<?php echo fileatime( trailingslashit( plugin_dir_path( __DIR__ ) ) . 'assets/basic.css' ) ?>" type="text/css" media="all">
+        <link rel="stylesheet" href="<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>pray/heatmap.css?ver=<?php echo fileatime( trailingslashit( plugin_dir_path( __DIR__ ) ) . 'pray/heatmap.css' ) ?>" type="text/css" media="all">
         <?php
     }
 
@@ -237,17 +128,25 @@ class Prayer_Global_Porch_Stats_Big_Map extends DT_Magic_Url_Base
             <div id="map-wrapper">
                 <div id="head_block">
                     <div class="grid-x grid-padding-x">
-                        <div class="cell medium-4 hide-for-small-only">
-                            <a href="/"><i class="fi-home two-em" style="color:black;"></i></a>
+                        <div class="cell medium-5 hide-for-small-only">
+                            <a href="/" class="navbar-brand">Prayer.Global</a>
                         </div>
-                        <div class="cell small-9 medium-4 center hide-for-small-only">
+                        <div class="cell small-9 medium-2 center hide-for-small-only">
                             <span class="two-em lap-title">Race Map</span>
                         </div>
                         <div class="cell small-9 medium-4 show-for-small-only">
                             <span class="two-em lap-title"><strong>Race Map</strong></span>
                         </div>
-                        <div class="cell small-3 medium-4" style="text-align:right;">
-                            <button type="button" data-toggle="offcanvas_menu"><i class="fi-list two-em"></i></button>
+                        <div class="cell small-3 medium-5 hide-for-small-only" id="nav-list">
+                            <ul>
+                                <li><a href="/newest/lap/" class="highlight">Start Praying</a></li>
+                                <li><a href="/#section-about">About</a></li>
+                                <li><a href="/#section-lap">Prayer Laps</a></li>
+                                <li><a href="/">Home</a></li>
+                            </ul>
+                        </div>
+                        <div class="cell small-3 medium-4 show-for-small-only" style="text-align:right;">
+                            <button type="button" data-toggle="offcanvas_menu"><i class="fi-list three-em"></i></button>
                         </div>
                     </div>
                 </div>
@@ -258,8 +157,7 @@ class Prayer_Global_Porch_Stats_Big_Map extends DT_Magic_Url_Base
                         <div class="cell center"><button type="button" data-toggle="offcanvas_stats"><i class="ion-chevron-up two-em"></i></button></div>
                         <div class="cell small-6 medium-3 center"><strong>Warriors</strong> <i class="fi-marker" style="color:blue;"></i><br><span class="one-em"><?php echo $lap_stats['participants'] ?></span></div>
                         <div class="cell small-6 medium-3 center"><strong>Minutes Prayed</strong><br><span class="one-em"><?php echo $lap_stats['minutes_prayed'] ?></span></div>
-                        <div class="cell small-6 medium-3 center"><strong>World Prayer Coverage</strong><br><span class="one-em"><?php echo $finished_laps ?> times</span>
-                        </div>
+                        <div class="cell small-6 medium-3 center"><strong>World Prayer Coverage</strong><br><span class="one-em"><?php echo $finished_laps ?> times</span></div>
                         <div class="cell small-6 medium-3 center"><strong>Pace</strong><br><span class="one-em time_elapsed" id="time_elapsed"></span></div>
                     </div>
                 </div>
@@ -279,10 +177,6 @@ class Prayer_Global_Porch_Stats_Big_Map extends DT_Magic_Url_Base
                 <li class="nav-item"><a class="nav-link" href="/stats_app/big_list/">Race List</a></li>
                 <li class="nav-item"><a class="nav-link" href="/stats_app/big_map/">Race Map</a></li>
             </ul>
-            <div class="show-for-small-only">
-                <hr>
-                <i class="fi-marker" style="color:blue;"></i> = prayer warriors
-            </div>
         </div>
         <div class="off-canvas position-right " id="offcanvas_location_details" data-close-on-click="true" data-content-overlay="false" data-off-canvas>
             <button type="button" data-toggle="offcanvas_location_details"><i class="ion-chevron-right three-em"></i></button>

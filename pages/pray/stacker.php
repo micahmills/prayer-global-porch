@@ -183,6 +183,23 @@ class PG_Stacker {
         ];
         if ( $stack['location']['percent_non_christians'] > $stack['location']['percent_christian_adherents']) {
             $faith_status[] = [
+                'type' => 'percent_3_circles',
+                'data' => [
+                    'section_label' => 'Faith Status',
+                    'label_1' => "Don't Know Jesus",
+                    'percent_1' => $stack['location']['percent_non_christians'],
+                    'population_1' => $stack['location']['non_christians'],
+                    'label_2' => 'Know About Jesus',
+                    'percent_2' => $stack['location']['percent_christian_adherents'],
+                    'population_2' => $stack['location']['christian_adherents'],
+                    'label_3' => 'Know Jesus',
+                    'percent_3' => $stack['location']['percent_believers'],
+                    'population_3' => $stack['location']['believers'],
+                    'section_summary' => '',
+                    'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' lost neighbors around them.',
+                ]
+            ];
+            $faith_status[] = [
                 'type' => 'percent_2_circles',
                 'data' => [
                     'section_label' => 'Faith Status',
@@ -200,6 +217,23 @@ class PG_Stacker {
         }
        else {
            $faith_status[] = [
+               'type' => 'percent_3_circles',
+               'data' => [
+                   'section_label' => 'Faith Status',
+                   'label_1' => "Don't Know Jesus",
+                   'percent_1' => $stack['location']['percent_non_christians'],
+                   'population_1' => $stack['location']['non_christians'],
+                   'label_2' => 'Know About Jesus',
+                   'percent_2' => $stack['location']['percent_christian_adherents'],
+                   'population_2' => $stack['location']['christian_adherents'],
+                   'label_3' => 'Know Jesus',
+                   'percent_3' => $stack['location']['percent_believers'],
+                   'population_3' => $stack['location']['believers'],
+                   'section_summary' => '',
+                   'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' encourage the '.$stack['location']['christian_adherents'].' cultural Christians around them to read and obey the Word.',
+               ]
+           ];
+           $faith_status[] = [
                'type' => 'percent_2_circles',
                'data' => [
                    'section_label' => 'Faith Status',
@@ -211,7 +245,7 @@ class PG_Stacker {
                    'percent_2' => $stack['location']['percent_believers'],
                    'population_2' => $stack['location']['believers'],
                    'section_summary' => '',
-                   'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' lost neighbors around them.',
+                   'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' encourage the '.$stack['location']['christian_adherents'].' cultural Christians around them to read and obey the Word.',
                ]
            ];
        }

@@ -75,7 +75,6 @@ class PG_Global_Prayer_App_Lap extends PG_Global_Prayer_App {
             <script src="https://cdn.amcharts.com/lib/5/geodata/worldLow.js"></script>
             <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
             <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js?ver=3"></script>
-            <script src="<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) ) ?>prayer.js?ver=<?php echo fileatime( trailingslashit( plugin_dir_path( __FILE__ ) ) . 'prayer.js' ) ?>"></script>
             <script>
                 let jsObject = [<?php echo json_encode([
                     'map_key' => DT_Mapbox_API::get_key(),
@@ -98,7 +97,8 @@ class PG_Global_Prayer_App_Lap extends PG_Global_Prayer_App {
             <script type="text/javascript" src="<?php echo DT_Mapbox_API::$mapbox_gl_js ?>"></script>
             <link rel="stylesheet" href="<?php echo DT_Mapbox_API::$mapbox_gl_css ?>" type="text/css" media="all">
             <link rel="stylesheet" href="<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/basic.css?ver=<?php echo fileatime( trailingslashit( plugin_dir_path( __DIR__ ) ) . 'assets/basic.css' ) ?>" type="text/css" media="all">
-            <link rel="stylesheet" href="<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) ) ?>prayer.css?ver=<?php echo fileatime( trailingslashit( plugin_dir_path( __FILE__ ) ) . 'prayer.css' ) ?>" type="text/css" media="all">
+            <link rel="stylesheet" href="<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) ) ?>lap.css?ver=<?php echo fileatime( trailingslashit( plugin_dir_path( __FILE__ ) ) . 'lap.css' ) ?>" type="text/css" media="all">
+            <script src="<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) ) ?>lap.js?ver=<?php echo fileatime( trailingslashit( plugin_dir_path( __FILE__ ) ) . 'lap.js' ) ?>"></script>
             <?php
         }
     }
@@ -270,10 +270,14 @@ class PG_Global_Prayer_App_Lap extends PG_Global_Prayer_App {
             'grid_id' => $data['grid_id'],
 
             // user information
+            'payload' => [
+                'user_location' => $data['user']['label'],
+                'user_language' => 'en' // @todo expand for other languages
+            ],
             'lng' => $data['user']['lng'],
             'lat' => $data['user']['lat'],
             'level' => $data['user']['level'],
-            'label' => $data['user']['label'],
+            'label' => $data['user']['country'],
             'hash' => $data['user']['hash'],
         ];
         if ( is_user_logged_in() ) {
@@ -321,8 +325,6 @@ class PG_Global_Prayer_App_Lap extends PG_Global_Prayer_App {
     }
 
     public static function _query_prayed_list() {
-        // global
-
         global $wpdb;
         $current_lap = pg_current_global_lap();
 
@@ -332,7 +334,7 @@ class PG_Global_Prayer_App_Lap extends PG_Global_Prayer_App {
                     WHERE
                           timestamp >= %d
                       AND type = 'prayer_app'"
-            , $current_lap['start_time']  ) );
+            , $current_lap['start_time'] ) );
 
         $list = [];
         if ( ! empty( $raw_list) ) {
@@ -399,6 +401,8 @@ class PG_Global_Prayer_App_Lap extends PG_Global_Prayer_App {
         $response = DT_Ipstack_API::get_location_grid_meta_from_current_visitor();
         if ( $response ) {
             $response['hash'] = hash('sha256', serialize( $response ) );
+            $array = array_reverse( explode(', ', $response['label'] ) );
+            $response['country'] = $array[0] ?? '';
         }
         return $response;
     }

@@ -39,11 +39,12 @@ function pg_get_global_lap_by_key( $key ) {
 
     global $wpdb;
     $result = $wpdb->get_row( $wpdb->prepare(
-        "SELECT pm.meta_value as lap_key, pm1.meta_value as lap_number, pm.post_id, pm2.meta_value as start_time, pm3.meta_value as end_time
+        "SELECT pm.meta_value as lap_key, pm1.meta_value as lap_number, pm.post_id, pm2.meta_value as start_time, pm3.meta_value as end_time, p.post_title as title
                     FROM $wpdb->postmeta pm
                     LEFT JOIN $wpdb->postmeta pm1 ON pm.post_id=pm1.post_id AND pm1.meta_key = 'global_lap_number'
                     LEFT JOIN $wpdb->postmeta pm2 ON pm.post_id=pm2.post_id AND pm2.meta_key = 'start_time'
                     LEFT JOIN $wpdb->postmeta pm3 ON pm.post_id=pm3.post_id AND pm3.meta_key = 'end_time'
+                    LEFT JOIN $wpdb->posts p ON pm.post_id=p.ID
                     WHERE pm.meta_key = 'prayer_app_global_magic_key' AND pm.meta_value = %s",
         $key
     ), ARRAY_A);
@@ -55,6 +56,7 @@ function pg_get_global_lap_by_key( $key ) {
             $result['end_time'] = time();
         }
         $lap = [
+            'title' => $result['title'],
             'lap_number' => (int) $result['lap_number'],
             'post_id' => (int) $result['post_id'],
             'key' => $result['lap_key'],
@@ -67,6 +69,45 @@ function pg_get_global_lap_by_key( $key ) {
 
     return $lap;
 }
+function pg_get_custom_lap_by_post_id( $post_id ) {
+
+    if ( wp_cache_get( __METHOD__. $post_id ) ) {
+        return wp_cache_get( __METHOD__. $post_id );
+    }
+
+    global $wpdb;
+    $result = $wpdb->get_row( $wpdb->prepare(
+        "SELECT pm4.meta_value as lap_key, pm1.meta_value as lap_number, pm.post_id, pm2.meta_value as start_time, pm3.meta_value as end_time, p.post_title as title
+                    FROM $wpdb->postmeta pm
+                    LEFT JOIN $wpdb->postmeta pm1 ON pm.post_id=pm1.post_id AND pm1.meta_key = 'global_lap_number'
+                    LEFT JOIN $wpdb->postmeta pm2 ON pm.post_id=pm2.post_id AND pm2.meta_key = 'start_time'
+                    LEFT JOIN $wpdb->postmeta pm3 ON pm.post_id=pm3.post_id AND pm3.meta_key = 'end_time'
+                    LEFT JOIN $wpdb->postmeta pm4 ON pm.post_id=pm4.post_id AND pm4.meta_key = 'prayer_app_custom_magic_key'
+                    LEFT JOIN $wpdb->posts p ON pm.post_id=p.ID
+                    WHERE pm.post_id = %d",
+        $post_id
+    ), ARRAY_A);
+
+    if ( empty( $result ) ) {
+        $lap = false;
+    } else {
+        if ( empty( $result['end_time'] ) ) {
+            $result['end_time'] = time();
+        }
+        $lap = [
+            'title' => $result['title'],
+            'lap_number' => (int) $result['lap_number'],
+            'post_id' => (int) $result['post_id'],
+            'key' => $result['lap_key'],
+            'start_time' => (int) $result['start_time'],
+            'end_time' => (int) $result['end_time']
+        ];
+    }
+
+    wp_cache_set( __METHOD__.$post_id, $lap );
+
+    return $lap;
+}
 function pg_get_global_race(){
 
     if ( wp_cache_get( __METHOD__ ) ) {
@@ -75,14 +116,16 @@ function pg_get_global_race(){
 
     global $wpdb;
     $result = $wpdb->get_row(
-        "SELECT pm.meta_value as lap_number, pm1.meta_value as lap_key, pm.post_id, pm2.meta_value as start_time, pm3.meta_value as end_time
-                    FROM $wpdb->postmeta pm
-                    LEFT JOIN $wpdb->postmeta pm1 ON pm.post_id=pm1.post_id AND pm1.meta_key = 'prayer_app_global_magic_key'
-                    LEFT JOIN $wpdb->postmeta pm2 ON pm.post_id=pm2.post_id AND pm2.meta_key = 'start_time'
-                    LEFT JOIN $wpdb->postmeta pm3 ON pm.post_id=pm3.post_id AND pm3.meta_key = 'end_time'
-                    WHERE pm.meta_key = 'global_lap_number' AND pm.meta_value = '1'", ARRAY_A);
+        "SELECT pm.meta_value as lap_number, pm1.meta_value as lap_key, pm.post_id, pm2.meta_value as start_time, pm3.meta_value as end_time, p.post_title as title
+            FROM $wpdb->postmeta pm
+            LEFT JOIN $wpdb->postmeta pm1 ON pm.post_id=pm1.post_id AND pm1.meta_key = 'prayer_app_global_magic_key'
+            LEFT JOIN $wpdb->postmeta pm2 ON pm.post_id=pm2.post_id AND pm2.meta_key = 'start_time'
+            LEFT JOIN $wpdb->postmeta pm3 ON pm.post_id=pm3.post_id AND pm3.meta_key = 'end_time'
+            LEFT JOIN $wpdb->posts p ON pm.post_id=p.ID
+            WHERE pm.meta_key = 'global_lap_number' AND pm.meta_value = '1'", ARRAY_A);
 
     $lap = [
+        'title' => $result['title'],
         'lap_number' => (int) $result['lap_number'],
         'post_id' => (int) $result['post_id'],
         'key' => $result['lap_key'],
@@ -107,11 +150,12 @@ function pg_get_global_lap_by_lap_number( $lap_number ) {
 
     global $wpdb;
     $result = $wpdb->get_row( $wpdb->prepare(
-        "SELECT pm.meta_value as lap_number, pm1.meta_value as lap_key, pm.post_id, pm2.meta_value as start_time, pm3.meta_value as end_time
+        "SELECT pm.meta_value as lap_number, pm1.meta_value as lap_key, pm.post_id, pm2.meta_value as start_time, pm3.meta_value as end_time, p.post_title as title
                     FROM $wpdb->postmeta pm
                     LEFT JOIN $wpdb->postmeta pm1 ON pm.post_id=pm1.post_id AND pm1.meta_key = 'prayer_app_global_magic_key'
                     LEFT JOIN $wpdb->postmeta pm2 ON pm.post_id=pm2.post_id AND pm2.meta_key = 'start_time'
                     LEFT JOIN $wpdb->postmeta pm3 ON pm.post_id=pm3.post_id AND pm3.meta_key = 'end_time'
+                    LEFT JOIN $wpdb->posts p ON pm.post_id=p.ID
                     WHERE pm.meta_key = 'global_lap_number' AND pm.meta_value = %d",
         $lap_number
     ), ARRAY_A);
@@ -123,6 +167,7 @@ function pg_get_global_lap_by_lap_number( $lap_number ) {
             $result['end_time'] = time();
         }
         $lap = [
+            'title' => $result['title'],
             'lap_number' => (int) $result['lap_number'],
             'post_id' => (int) $result['post_id'],
             'key' => $result['lap_key'],
@@ -135,28 +180,69 @@ function pg_get_global_lap_by_lap_number( $lap_number ) {
 
     return $lap;
 }
-function pg_lap_stats_by_lap_number( $lap_number ) {
+function pg_global_stats_by_lap_number( $lap_number ) {
     $data = pg_get_global_lap_by_lap_number( $lap_number );
+    _pg_global_stats_builder_query($data );
     return _pg_stats_builder( $data );
 }
-function pg_lap_stats_by_key( $key ) {
+function pg_global_stats_by_key( $key ) {
     $data = pg_get_global_lap_by_key( $key );
+    _pg_global_stats_builder_query($data );
     return _pg_stats_builder( $data );
 }
 function pg_global_race_stats() {
     $data = pg_get_global_race();
     $current_lap = pg_current_global_lap();
     $data['number_of_laps'] = $current_lap['lap_number'];
+    _pg_global_stats_builder_query($data );
     return _pg_stats_builder( $data );
 }
+function _pg_global_stats_builder_query( &$data ) {
+    global $wpdb;
+    $counts = $wpdb->get_row( $wpdb->prepare( "
+       SELECT SUM(r.value) as minutes_prayed, COUNT( DISTINCT( r.grid_id ) ) as locations_completed, COUNT( DISTINCT( r.hash ) ) as participants, COUNT(DISTINCT(r.label)) as participant_country_count
+       FROM $wpdb->dt_reports r
+        WHERE r.post_type = 'laps'
+            AND r.type = 'prayer_app'
+       AND r.timestamp >= %d AND r.timestamp <= %d
+    ", $data['start_time'], $data['end_time'] ), ARRAY_A );
+    $data['locations_completed'] = (int) $counts['locations_completed'];
+    $data['participants'] = (int) $counts['participants'];
+    $data['minutes_prayed'] = (int) $counts['minutes_prayed'];
+    $data['participant_country_count'] = (int) $counts['participant_country_count'];
+
+    return $data;
+}
+function pg_custom_lap_stats_by_post_id( $post_id ) {
+    $data = pg_get_custom_lap_by_post_id( $post_id );
+    _pg_custom_stats_builder_query($data );
+    return _pg_stats_builder( $data );
+}
+function _pg_custom_stats_builder_query( &$data ) {
+    global $wpdb;
+    $counts = $wpdb->get_row( $wpdb->prepare( "
+       SELECT SUM(r.value) as minutes_prayed, COUNT( DISTINCT( r.grid_id ) ) as locations_completed, COUNT( DISTINCT( r.hash ) ) as participants, COUNT(DISTINCT(r.label)) as participant_country_count
+       FROM $wpdb->dt_reports r
+        WHERE r.post_type = 'laps'
+            AND r.type = 'prayer_app'
+       AND r.subtype = 'custom' AND r.post_id = %d
+    ", $data['post_id'] ), ARRAY_A );
+
+    $data['locations_completed'] = (int) $counts['locations_completed'];
+    $data['participants'] = (int) $counts['participants'];
+    $data['minutes_prayed'] = (int) $counts['minutes_prayed'];
+    $data['participant_country_count'] = (int) $counts['participant_country_count'];
+
+    return $data;
+}
+
 function _pg_stats_builder( $data ) : array {
 //    dt_write_log(__METHOD__);
-    global $wpdb;
 
-    // start and end
+    /**
+     * TIME CALCULATIONS
+     */
     $time_difference = $data['end_time'] - $data['start_time'];
-
-    // time calculations
     $days = floor( $time_difference / 60 / 60 / 24 );
     $hours = floor( ( $time_difference / 60 / 60 ) - ( $days * 24 ) );
     $minutes =  floor( ( $time_difference / 60 ) - ( $hours * 60 ) - ( $days * 24 * 60 )  );
@@ -178,17 +264,10 @@ function _pg_stats_builder( $data ) : array {
         $data['time_elapsed_small'] = $days."d, ".$hours."h, ".$minutes."m";
     }
 
-    // get completed and remaining counts
-    $counts = $wpdb->get_row( $wpdb->prepare( "
-       SELECT SUM(r.value) as minutes_prayed, COUNT( DISTINCT( r.grid_id ) ) as locations_completed, COUNT( DISTINCT( r.hash ) ) as participants, COUNT(DISTINCT(r.label)) as warrior_locations
-       FROM $wpdb->dt_reports r
-        WHERE r.post_type = 'laps'
-            AND r.type = 'prayer_app'
-       AND r.timestamp >= %d AND r.timestamp <= %d
-    ", $data['start_time'], $data['end_time'] ), ARRAY_A );
-
-    $completed = (int) $counts['locations_completed'];
-
+    /**
+     * COMPLETED & REMAINING
+     */
+    $completed = (int) $data['locations_completed'];
     $data['completed'] = number_format( $completed );
     $data['completed_int'] = $completed;
     $completed_percent = ROUND( $completed / 4770 * 100, 0);
@@ -200,13 +279,17 @@ function _pg_stats_builder( $data ) : array {
     $data['remaining_int'] = 4770 - $completed;
     $data['remaining_percent'] = 100 - $data['completed_percent'];
 
-    // participants involved
-    $participants = (int) $counts['participants'];
+    /**
+     * PARTICIPANTS
+     */
+    $participants = (int) $data['participants'];
     $data['participants'] = number_format( $participants );
     $data['participants_int'] = $participants;
 
-    // quantity of time of prayer
-    $minutes_prayed = (int) $counts['minutes_prayed'];
+    /**
+     * QUANTITY OF PRAYER
+     */
+    $minutes_prayed = (int) $data['minutes_prayed'];
     $data['minutes_prayed'] = number_format( $minutes_prayed );
     $data['minutes_prayed_int'] = $minutes_prayed;
     $seconds_prayed = $minutes_prayed * 60;
@@ -230,7 +313,6 @@ function _pg_stats_builder( $data ) : array {
         $data['minutes_prayed_formatted'] = "$days days, $hours hours, $minutes minutes";
         $data['minutes_prayed_formatted_small'] = $days."d, ".$hours."h, ".$minutes."m";
     }
-
     $data['start_time_formatted'] = date('M d, Y', $data['start_time'] );
     $data['end_time_formatted'] = date('M d, Y', $data['end_time'] );
 
@@ -393,4 +475,20 @@ function pg_recursive_parse_args( $args, $defaults ) {
     }
 
     return $new_args;
+}
+
+function pg_is_lap_complete( $post_id ) {
+    $complete = get_post_meta( $post_id, 'lap_completed', true );
+    if ( ! $complete ) {
+        global $wpdb;
+        $count = $wpdb->get_var($wpdb->prepare( "SELECT COUNT( DISTINCT( grid_id ) ) FROM $wpdb->dt_reports WHERE post_id = %d AND type = 'prayer_app' AND subtype = 'custom'", $post_id) );
+        if ( $count >= 4770 ){
+            update_post_meta( $post_id, 'lap_completed', time() );
+            return true;
+        } else {
+            return false;
+        }
+    } else {
+        return true;
+    }
 }

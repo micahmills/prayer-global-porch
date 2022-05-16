@@ -8,8 +8,8 @@ if ( !defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly.
 class PG_Custom_Prayer_App extends DT_Magic_Url_Base {
 
     public $magic = false;
-    public $page_title = 'Global Lap';
-    public $page_description = 'Prayer Laps';
+    public $page_title = 'Custom Lap';
+    public $page_description = 'Custom Prayer Laps';
     public $root = "prayer_app";
     public $type = 'custom';
     public $type_actions = [
@@ -60,12 +60,11 @@ class PG_Custom_Prayer_App extends DT_Magic_Url_Base {
 
         // load different actions
         if ( empty( $this->parts['action'] ) ) {
-            $current_lap = pg_current_global_lap();
-            if ( (int) $current_lap['post_id'] === (int) $this->parts['post_id'] ) {
-                require_once('action-custom-lap.php');
-            } else {
+            if ( pg_is_lap_complete( $this->parts['post_id'] ) ) {
                 wp_redirect( trailingslashit( site_url() ) . $this->root . '/' . $this->type . '/' . $this->parts['public_key'] . '/completed' );
                 exit;
+            } else {
+                require_once('action-custom-lap.php');
             }
         } else if ( 'completed' === $this->parts['action'] ) {
             require_once('action-custom-completed.php');

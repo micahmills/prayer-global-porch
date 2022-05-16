@@ -179,7 +179,7 @@ class Prayer_Global_Porch_Stats_Big_List extends DT_Magic_Url_Base
              ", ARRAY_A );
 
          foreach( $results as $row ) {
-             $row['stats'] = pg_lap_stats_by_lap_number($row['lap_number']);
+             $row['stats'] = pg_global_stats_by_lap_number($row['lap_number']);
              $data[] = $row;
          }
 

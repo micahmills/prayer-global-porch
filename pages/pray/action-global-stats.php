@@ -58,7 +58,7 @@ class PG_Global_Prayer_App_Stats extends PG_Global_Prayer_App {
 
     public function body(){
         $parts = $this->parts;
-        $lap_stats = pg_lap_stats_by_key($parts['public_key']);
+        $lap_stats = pg_global_stats_by_key($parts['public_key']);
 
         global $wpdb;
         if ( empty( $lap_stats['end_time'] ) ) {

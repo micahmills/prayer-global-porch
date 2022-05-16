@@ -55,6 +55,7 @@ class PG_Global_Prayer_App_Map extends PG_Global_Prayer_App {
     public function dt_magic_url_base_allowed_css( $allowed_css ) {
         $allowed_css[] = 'mapbox-gl-css';
         $allowed_css[] = 'introjs-css';
+        $allowed_css[] = 'foundation-css';
         $allowed_css[] = 'heatmap-css';
         $allowed_css[] = 'site-css';
         return $allowed_css;
@@ -72,150 +73,23 @@ class PG_Global_Prayer_App_Map extends PG_Global_Prayer_App {
                 'parts' => $this->parts,
                 'grid_data' => [],
                 'participants' => [],
-                'stats' => pg_lap_stats_by_key($this->parts['public_key']),
+                'stats' => pg_global_stats_by_key($this->parts['public_key']),
                 'image_folder' => plugin_dir_url(__DIR__) . 'assets/images/',
                 'translations' => [
                     'add' => __( 'Add Magic', 'prayer-global' ),
                 ],
             ]) ?>][0]
         </script>
-        <style>
-            body {
-                background: white !important;
-            }
-            #initialize-screen {
-                width: 100%;
-                height: 2000px;
-                z-index: 10;
-                background-color: white;
-                position: absolute;
-            }
-            #initialize-spinner-wrapper{
-                position:relative;
-                top:45%;
-            }
-            progress {
-                top: 50%;
-                margin: 0 auto;
-                height:50px;
-                width:300px;
-            }
-            .pb_navbar .navbar-toggler {
-                color: black;
-                border-color: black;
-                cursor: pointer;
-                padding-right: 0;
-            }
-            #head_block, #foot_block {
-                position: absolute;
-                width:100%;
-                z-index: 5;
-                background: white;
-                padding: 1em;
-                opacity: .9;
-                display:none;
-            }
-            #head_block {
-                margin: 0 auto 1em;
-            }
-            #foot_block {
-                bottom: 0;
-                margin: 1em auto 0;
-            }
-            #offcanvas_menu {
-                background: white;
-                z-index: 15;
-                padding: 1em;
-            }
-            #offcanvas_location_details {
-                background: white;
-                z-index: 15;
-                padding: 1em;
-                min-width: 40%;
-            }
-            #offcanvas_stats {
-                background: white;
-                z-index: 15;
-                padding: 1em;
-                height: 80%;
-            }
-            .nav-item {
-                list-style-type: none;
-            }
-            #title {
-                font-weight: bold;
-            }
-            .mapboxgl-ctrl-group {
-                margin-top:120px !important;
-            }
-            .one-em {
-                font-size: 1.5rem;
-            }
-            .two-em {
-                font-size: 2rem;
-            }
-            .three-em {
-                font-size: 3rem;
-            }
-            .bold {
-                font-weight: bold;
-            }
-            .stats-title {
-                font-size: 1.5rem;
-            }
-            .stats-figure {
-                font-size: 2rem;
-            }
-            @media (max-width: 768px) {
-                .mapboxgl-ctrl-group {
-                    margin-top:100px !important;
-                }
-                .one-em {
-                    font-size: 1rem;
-                }
-                .two-em {
-                    font-size: 1.8rem;
-                }
-                .three-em {
-                    font-size: 2rem;
-                }
-                .stats-title {
-                    font-size: 1rem;
-                    padding-bottom: 0;
-                }
-                .stats-figure {
-                    font-size: 1.8rem;
-                    font-weight: bold;
-                    padding-top: 0;
-                }
-            }
-            @keyframes spin {
-                0% {
-                    transform: rotate(0deg);
-                }
-
-                100% {
-                    transform: rotate(360deg);
-                }
-            }
-            .loading-spinner.active {
-                border-radius: 50%;
-                width: 24px;
-                height: 24px;
-                border: 0.25rem solid #919191;
-                border-top-color: black;
-                animation: spin 1s infinite linear;
-                display: inline-block;
-            }
-        </style>
+        <link href="https://fonts.googleapis.com/css?family=Crimson+Text:400,400i,600|Montserrat:200,300,400" rel="stylesheet">
         <link rel="stylesheet" href="<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/fonts/ionicons/css/ionicons.min.css">
         <link rel="stylesheet" href="<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/basic.css?ver=<?php echo fileatime( trailingslashit( plugin_dir_path( __DIR__ ) ) . 'assets/basic.css' ) ?>" type="text/css" media="all">
+        <link rel="stylesheet" href="<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) ) ?>heatmap.css?ver=<?php echo fileatime( trailingslashit( plugin_dir_path( __FILE__ ) ) . 'heatmap.css' ) ?>" type="text/css" media="all">
         <?php
     }
 
     public function body(){
         $parts = $this->parts;
-        $lap_stats = pg_lap_stats_by_key($parts['public_key']);
+        $lap_stats = pg_global_stats_by_key($parts['public_key']);
         DT_Mapbox_API::geocoder_scripts();
         ?>
         <style id="custom-style"></style>
@@ -234,7 +108,7 @@ class PG_Global_Prayer_App_Map extends PG_Global_Prayer_App {
                 <div id="head_block">
                     <div class="grid-x grid-padding-x">
                         <div class="cell medium-4 hide-for-small-only">
-                            <a href="/"><i class="fi-home two-em" style="color:black;"></i></a>
+                            <a href="/" class="navbar-brand">Prayer.Global</a>
                         </div>
                         <div class="cell small-9 medium-4 center hide-for-small-only">
                             <span class="two-em">Lap <?php echo $lap_stats['lap_number'] ?></span>
@@ -242,8 +116,16 @@ class PG_Global_Prayer_App_Map extends PG_Global_Prayer_App {
                         <div class="cell small-9 medium-4 show-for-small-only">
                             <span class="two-em"><strong>Lap <?php echo $lap_stats['lap_number'] ?></strong></span>
                         </div>
-                        <div class="cell small-3 medium-4" style="text-align:right;">
-                            <button type="button" data-toggle="offcanvas_menu"><i class="fi-list two-em"></i></button>
+                        <div class="cell small-3 medium-4 show-for-medium" id="nav-list">
+                            <ul>
+                                <li><a href="/newest/lap/" class="highlight">Start Praying</a></li>
+                                <li><a href="/#section-about">About</a></li>
+                                <li><a href="/#section-lap">Prayer Laps</a></li>
+                                <li><a href="/">Home</a></li>
+                            </ul>
+                        </div>
+                        <div class="cell small-3 medium-4 hide-for-medium" style="text-align:right;">
+                            <button type="button" data-toggle="offcanvas_menu"><i class="fi-list three-em"></i></button>
                         </div>
                     </div>
                 </div>
@@ -350,7 +232,7 @@ class PG_Global_Prayer_App_Map extends PG_Global_Prayer_App {
 
         switch( $params['action'] ) {
             case 'get_stats':
-                return pg_lap_stats_by_key($params['parts']['public_key']);
+                return pg_global_stats_by_key($params['parts']['public_key']);
             case 'get_grid':
                 return $this->get_grid( $params['parts'] );
             case 'get_grid_details':
@@ -365,7 +247,7 @@ class PG_Global_Prayer_App_Map extends PG_Global_Prayer_App {
 
     public function get_grid( $parts ) {
         global $wpdb;
-        $lap_stats = pg_lap_stats_by_key($parts['public_key']);
+        $lap_stats = pg_global_stats_by_key($parts['public_key']);
 
         // map grid
         $data_raw = $wpdb->get_results( $wpdb->prepare( "
@@ -406,7 +288,7 @@ class PG_Global_Prayer_App_Map extends PG_Global_Prayer_App {
 
     public function get_participants( $parts ){
         global $wpdb;
-        $lap_stats = pg_lap_stats_by_key($parts['public_key']);
+        $lap_stats = pg_global_stats_by_key($parts['public_key']);
 
         $participants_raw = $wpdb->get_results( $wpdb->prepare( "
            SELECT r.lng as longitude, r.lat as latitude

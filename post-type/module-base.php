@@ -104,6 +104,26 @@ class Prayer_Global_Laps_Post_Type extends DT_Module_Base {
     public function dt_custom_fields_settings( $fields, $post_type ){
         if ( $post_type === $this->post_type ){
 
+
+            $fields['type'] = [
+                'name'        => __( 'Type', 'prayer-global' ),
+                'description' => __( 'Type of Lap', 'prayer-global' ),
+                'type'        => 'key_select',
+                'default'     => [
+                    'custom' => [
+                        'label' => __( 'Custom', 'prayer-global' ),
+                        'description' => __( 'Custom laps', 'prayer-global' ),
+                    ],
+                    'global'   => [
+                        'label' => __( 'Global (Auto)', 'prayer-global' ),
+                        'description' => __( 'Do not manually create! System creates new laps when ready.', 'prayer-global' ),
+                    ]
+                ],
+                'tile'     => 'status',
+                'icon' => get_template_directory_uri() . '/dt-assets/images/nametag.svg',
+                "default_color" => "#366184",
+                "show_in_table" => 1,
+            ];
             $fields['status'] = [
                 'name'        => __( 'Status', 'prayer-global' ),
                 'description' => __( 'Set the current status.', 'prayer-global' ),
@@ -128,26 +148,8 @@ class Prayer_Global_Laps_Post_Type extends DT_Module_Base {
                 'tile'     => 'status',
                 'icon' => get_template_directory_uri() . '/dt-assets/images/status.svg',
                 "default_color" => "#366184",
-                "show_in_table" => 10,
-            ];
-            $fields['type'] = [
-                'name'        => __( 'Type', 'prayer-global' ),
-                'description' => __( 'Type of Lap', 'prayer-global' ),
-                'type'        => 'key_select',
-                'default'     => [
-                    'custom' => [
-                        'label' => __( 'Custom', 'prayer-global' ),
-                        'description' => __( 'Custom laps', 'prayer-global' ),
-                    ],
-                    'global'   => [
-                        'label' => __( 'Global (Auto)', 'prayer-global' ),
-                        'description' => __( 'Do not manually create! System creates new laps when ready.', 'prayer-global' ),
-                    ]
-                ],
-                'tile'     => 'status',
-                'icon' => get_template_directory_uri() . '/dt-assets/images/nametag.svg',
-                "default_color" => "#366184",
-                "show_in_table" => 10,
+                "show_in_table" => 2,
+                "in_create_form" => true,
             ];
             $fields['assigned_to'] = [
                 'name'        => __( 'Assigned To', 'prayer-global' ),
@@ -258,28 +260,32 @@ class Prayer_Global_Laps_Post_Type extends DT_Module_Base {
     }
 
     public function dt_details_additional_section( $section, $post_type ){
-
-        if ( $post_type === $this->post_type && $section === "other" && false ) {
-            $fields = DT_Posts::get_post_field_settings( $post_type );
+        if ( $post_type === $this->post_type && $section === "other" ) {
+            // hide opposite key app
             $post = DT_Posts::get_post( $this->post_type, get_the_ID() );
-            ?>
-            <div class="section-subheader">
-                <?php esc_html_e( "Custom Section Contact", 'prayer-global' ) ?>
-            </div>
-            <div>
-                <p>Add information or custom fields here</p>
-            </div>
-
-        <?php
+                dt_write_log($post);
+            if ( isset( $post['type']['key'] ) && $post['type']['key'] === 'global' ) {
+                ?>
+                <script>
+                    jQuery(document).ready(function(){
+                        jQuery('.section-app-links.prayer_app_custom_magic_key').hide().prev().hide()
+                        console.log('test')
+                    })
+                </script>
+                <?php
+            } else if ( isset( $post['type']['key'] ) && $post['type']['key'] === 'custom' ) {
+                ?>
+                <script>
+                    jQuery(document).ready(function(){
+                        jQuery('.section-app-links.prayer_app_global_magic_key').hide().prev().hide()
+                        console.log('test')
+                    })
+                </script>
+                <?php
+            }
         }
     }
 
-    /**
-     * action when a post connection is added during create or update
-     * @todo catch field changes and do additional processing
-     *
-     * The next three functions are added, removed, and updated of the same field concept
-     */
     public function post_connection_added( $post_type, $post_id, $field_key, $value ){
 //        if ( $post_type === $this->post_type ){
 //            if ( $field_key === "members" ){
