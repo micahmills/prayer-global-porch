@@ -959,9 +959,9 @@ jQuery(document).ready(function(){
     // icon types
     let icons = ''
     if ( 'deaths' === data.type ) {
-      icons = ['ion-ios-contact-outline', 'ion-android-sad','ion-ios-contact', 'ion-ios-body', 'ion-person','ion-ios-person','ion-sad']
+      icons = [ 'ion-sad']
     } else {
-      icons = ['ion-social-reddit','ion-social-reddit', 'ion-home', 'ion-ios-heart', 'ion-ios-home']
+      icons = ['ion-happy']
     }
     let icon = icons[Math.floor(Math.random() * icons.length)]
 
