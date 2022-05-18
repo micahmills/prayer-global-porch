@@ -400,7 +400,7 @@ class PG_Global_Prayer_App_Lap extends PG_Global_Prayer_App {
     public function get_ip_location() {
         $response = DT_Ipstack_API::get_location_grid_meta_from_current_visitor();
         if ( $response ) {
-            $response['hash'] = hash('sha256', serialize( $response ) );
+            $response['hash'] = hash('sha256', serialize( $response ) . mt_rand(1000000,10000000000000000) );
             $array = array_reverse( explode(', ', $response['label'] ) );
             $response['country'] = $array[0] ?? '';
         }
