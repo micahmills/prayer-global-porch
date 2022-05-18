@@ -167,7 +167,7 @@ class PG_Stacker {
         $faith_status[] = [
             'type' => 'percent_3_circles',
             'data' => [
-                'section_label' => 'Faith Status',
+                'section_label' => 'Faith',
                 'label_1' => "Don't Know Jesus",
                 'percent_1' => $stack['location']['percent_non_christians'],
                 'population_1' => $stack['location']['non_christians'],
@@ -185,7 +185,7 @@ class PG_Stacker {
             $faith_status[] = [
                 'type' => 'percent_3_circles',
                 'data' => [
-                    'section_label' => 'Faith Status',
+                    'section_label' => 'Faith',
                     'label_1' => "Don't Know Jesus",
                     'percent_1' => $stack['location']['percent_non_christians'],
                     'population_1' => $stack['location']['non_christians'],
@@ -202,7 +202,7 @@ class PG_Stacker {
             $faith_status[] = [
                 'type' => 'percent_2_circles',
                 'data' => [
-                    'section_label' => 'Faith Status',
+                    'section_label' => 'Faith',
                     'label_1' => "Don't Know Jesus",
                     'percent_1' => $stack['location']['percent_non_christians'],
                     'population_1' => $stack['location']['non_christians'],
@@ -219,7 +219,7 @@ class PG_Stacker {
            $faith_status[] = [
                'type' => 'percent_3_circles',
                'data' => [
-                   'section_label' => 'Faith Status',
+                   'section_label' => 'Faith',
                    'label_1' => "Don't Know Jesus",
                    'percent_1' => $stack['location']['percent_non_christians'],
                    'population_1' => $stack['location']['non_christians'],
@@ -236,7 +236,7 @@ class PG_Stacker {
            $faith_status[] = [
                'type' => 'percent_2_circles',
                'data' => [
-                   'section_label' => 'Faith Status',
+                   'section_label' => 'Faith',
                    'label_1' => "Know About Jesus",
                    'percent_1' => $stack['location']['percent_christian_adherents'],
                    'population_1' => $stack['location']['christian_adherents'],
@@ -253,7 +253,7 @@ class PG_Stacker {
         $faith_status[] = [
             'type' => 'percent_3_bar',
             'data' => [
-                'section_label' => 'Faith Status',
+                'section_label' => 'Faith',
                 'label_1' => "Don't",
                 'percent_1' => $stack['location']['percent_non_christians'],
                 'population_1' => $stack['location']['non_christians'],
@@ -270,7 +270,7 @@ class PG_Stacker {
         $faith_status[] = [
             'type' => '100_bodies_chart',
             'data' => [
-                'section_label' => 'Faith Status',
+                'section_label' => 'Faith',
                 'percent_1' => $stack['location']['percent_non_christians'],
                 'percent_2' => $stack['location']['percent_christian_adherents'],
                 'percent_3' => $stack['location']['percent_believers'],
@@ -281,7 +281,7 @@ class PG_Stacker {
         $faith_status[] = [
             'type' => '100_bodies_3_chart',
             'data' => [
-                'section_label' => 'Faith Status',
+                'section_label' => 'Faith',
                 'label_1' => "Don't know Jesus",
                 'percent_1' => $stack['location']['percent_non_christians'],
                 'population_1' => $stack['location']['non_christians'],
@@ -741,7 +741,7 @@ class PG_Stacker {
             $blocks[] = [
                 'type' => 'prayer_block',
                 'data' => [
-                    'section_label' => 'Pray for Movement',
+                    'section_label' => 'Harvest',
                     'icon_color' => 'red',
                     'verse' => 'Don’t you have a saying, ‘It’s still four months until harvest’? I tell you, open your eyes and look at the fields! They are ripe for harvest.',
                     'reference' => 'John 4:35',
@@ -754,7 +754,7 @@ class PG_Stacker {
             $blocks[] = [
                 'type' => 'prayer_block',
                 'data' => [
-                    'section_label' => 'Pray for Movement',
+                    'section_label' => 'Harvest',
                     'icon_color' => 'orange',
                     'verse' => 'Don’t you have a saying, ‘It’s still four months until harvest’? I tell you, open your eyes and look at the fields! They are ripe for harvest.',
                     'reference' => 'John 4:35',
@@ -767,7 +767,7 @@ class PG_Stacker {
             $blocks[] = [
                 'type' => 'prayer_block',
                 'data' => [
-                    'section_label' => 'Pray for Movement',
+                    'section_label' => 'Harvest',
                     'icon_color' => 'green',
                     'verse' => 'I am the vine; you are the branches. If you remain in me and I in you, you will bear much fruit; apart from me you can do nothing.',
                     'reference' => 'John 15:5',
@@ -779,7 +779,7 @@ class PG_Stacker {
         $blocks[] = [
             'type' => 'prayer_block',
             'data' => [
-                'section_label' => 'Pray for Movement',
+                'section_label' => 'Harvest',
                 'icon_color' => 'green',
                 'verse' => 'Father, even as we pray for people of '.$stack['location']['name'].' and long to see disciples made and multiplied, we cry out for a prayer movement to stir inside and outside of '.$stack['location']['full_name'].'.',
                 'reference' => '',
@@ -789,7 +789,7 @@ class PG_Stacker {
         $blocks[] = [
             'type' => 'prayer_block',
             'data' => [
-                'section_label' => 'Pray for Movement',
+                'section_label' => 'Harvest',
                 'icon_color' => 'green',
                 'verse' => 'Lord, stir the hearts of Your people to agree with You and with one another in strong faith, passion, and perseverance to see You build Your Church in '.$stack['location']['full_name'].'.',
                 'reference' => '',
@@ -799,7 +799,7 @@ class PG_Stacker {
         $blocks[] = [
             'type' => 'prayer_block',
             'data' => [
-                'section_label' => 'Pray for Movement',
+                'section_label' => 'Harvest',
                 'icon_color' => 'green',
                 'verse' => 'Lord we pray you unite believers to pray at all times in the Spirit, with all prayer and supplication, for spiritual breakthrough and protection and transformation throughout '.$stack['location']['full_name'].' in this generation.',
                 'reference' => '',
@@ -809,7 +809,7 @@ class PG_Stacker {
         $blocks[] = [
             'type' => 'prayer_block',
             'data' => [
-                'section_label' => 'Pray for Movement',
+                'section_label' => 'Harvest',
                 'icon_color' => 'orange',
                 'verse' => 'Lord, help the people of '.$stack['location']['full_name'].' to discover the essence of being a disciple, making disciples, and how to plant churches that multiply.',
                 'reference' => '',
@@ -819,7 +819,7 @@ class PG_Stacker {
         $blocks[] = [
             'type' => 'prayer_block',
             'data' => [
-                'section_label' => 'Pray for Movement',
+                'section_label' => 'Harvest',
                 'icon_color' => 'red',
                 'verse' => 'God, please help the people of '.$stack['location']['full_name'].' to become disciples who hear from you and then obey you.',
                 'reference' => '',
@@ -829,7 +829,7 @@ class PG_Stacker {
         $blocks[] = [
             'type' => 'prayer_block',
             'data' => [
-                'section_label' => 'Pray for Movement',
+                'section_label' => 'Harvest',
                 'icon_color' => 'green',
                 'verse' => 'Father, we pray that the people of '.$stack['location']['full_name'].' that they will learn to study the Bible, understand it, obey it, and share it.',
                 'reference' => '',
@@ -839,7 +839,7 @@ class PG_Stacker {
         $blocks[] = [
             'type' => 'prayer_block',
             'data' => [
-                'section_label' => 'Pray for Movement',
+                'section_label' => 'Harvest',
                 'icon_color' => 'green',
                 'verse' => 'God, we pray both the men and women of '.$stack['location']['full_name'].' that they will find ways to meet in groups of two or three to encourage and correct one another from your Word.',
                 'reference' => '',
@@ -849,7 +849,7 @@ class PG_Stacker {
         $blocks[] = [
             'type' => 'prayer_block',
             'data' => [
-                'section_label' => 'Pray for Movement',
+                'section_label' => 'Harvest',
                 'icon_color' => 'green',
                 'verse' => 'Lord, we pray for the believers in '.$stack['location']['full_name'].' to be more like Jesus, which is the greatest blessing we can offer them.',
                 'reference' => '',
@@ -859,7 +859,7 @@ class PG_Stacker {
         $blocks[] = [
             'type' => 'prayer_block',
             'data' => [
-                'section_label' => 'Pray for Movement',
+                'section_label' => 'Harvest',
                 'icon_color' => 'green',
                 'verse' => 'God, we pray for the believers in '.$stack['location']['full_name'].' that they will know how easy it is to spend an hour in prayer with you, and will do it.',
                 'reference' => '',
@@ -869,7 +869,7 @@ class PG_Stacker {
         $blocks[] = [
             'type' => 'prayer_block',
             'data' => [
-                'section_label' => 'Pray for Movement',
+                'section_label' => 'Harvest',
                 'icon_color' => 'green',
                 'verse' => 'Father, we pray for the believers in '.$stack['location']['full_name'].' to be good stewards of their relationships.',
                 'reference' => '',
@@ -879,7 +879,7 @@ class PG_Stacker {
         $blocks[] = [
             'type' => 'prayer_block',
             'data' => [
-                'section_label' => 'Pray for Movement',
+                'section_label' => 'Harvest',
                 'icon_color' => 'green',
                 'verse' => 'God, we pray for the believers in '.$stack['location']['full_name'].' to be generous so that they would be worthy of greater investment by you.',
                 'reference' => 'Matthew 25:28',
