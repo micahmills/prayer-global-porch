@@ -316,13 +316,13 @@ class PG_Stacker {
                 $deaths_christian_adherents[] = [
                     'type' => 'population_change_icon_block',
                     'data' => [
-                        'section_label' => 'Dying in the next hour',
+                        'section_label' => 'Next hour',
                         'count' => $stack['location']['deaths_christian_adherents_next_hour'],
                         'group' => 'christian_adherents',
                         'type' => 'deaths',
                         'size' => ($stack['location']['deaths_christian_adherents_next_hour'] > 400) ? 2 : 3,
-                        'section_summary' => '',
-                        'prayer' => 'Pray for the ' . $stack['location']['deaths_christian_adherents_next_hour'] . ' people in ' . $stack['location']['name'] . ' who are dying without a personal relationship with Jesus in the next hour.'
+                        'section_summary' => 'In ' . $stack['location']['name'] . ', ' . $stack['location']['deaths_christian_adherents_next_hour'] . ' people are dying without a personal relationship with Jesus in the next hour.',
+                        'prayer' => ''
                     ]
                 ];
                 $added = true;
@@ -331,13 +331,13 @@ class PG_Stacker {
                 $deaths_christian_adherents[] = [
                     'type' => 'population_change_icon_block',
                     'data' => [
-                        'section_label' => 'Dying in the next 100 hours',
+                        'section_label' => 'Next 100 hours',
                         'count' => $stack['location']['deaths_christian_adherents_next_100'],
                         'group' => 'christian_adherents',
                         'type' => 'deaths',
                         'size' => ($stack['location']['deaths_christian_adherents_next_100'] > 400) ? 2 : 3,
-                        'section_summary' => '',
-                        'prayer' => 'Pray for the ' . $stack['location']['deaths_christian_adherents_next_100'] . ' people in ' . $stack['location']['name'] . ' who are dying without a personal relationship with Jesus in the next 100 hours.'
+                        'section_summary' => 'In ' . $stack['location']['name'] . ', ' . $stack['location']['deaths_christian_adherents_next_100'] . ' people are dying without a personal relationship with Jesus in the next 100 hours.',
+                        'prayer' => ''
                     ]
                 ];
                 $added = true;
@@ -346,13 +346,13 @@ class PG_Stacker {
                 $deaths_christian_adherents[] = [
                     'type' => 'population_change_icon_block',
                     'data' => [
-                        'section_label' => 'Dying in the next week',
+                        'section_label' => 'Next week',
                         'count' => $stack['location']['deaths_christian_adherents_next_week'],
                         'group' => 'christian_adherents',
                         'type' => 'deaths',
                         'size' => ($stack['location']['deaths_christian_adherents_next_week'] > 400) ? 2 : 3,
-                        'section_summary' => '',
-                        'prayer' => 'Pray for the ' . $stack['location']['deaths_christian_adherents_next_week'] . ' people in ' . $stack['location']['name'] . ' who are dying without a personal relationship with Jesus in the next week.'
+                        'section_summary' => 'In ' . $stack['location']['name'] . ', ' . $stack['location']['deaths_christian_adherents_next_week'] . ' people are dying without a personal relationship with Jesus in the next week.',
+                        'prayer' => ''
                     ]
                 ];
                 $added = true;
@@ -361,13 +361,13 @@ class PG_Stacker {
                 $deaths_christian_adherents[] = [
                     'type' => 'population_change_icon_block',
                     'data' => [
-                        'section_label' => 'Dying in the next month',
+                        'section_label' => 'Next month',
                         'count' => $stack['location']['deaths_christian_adherents_next_month'],
                         'group' => 'christian_adherents',
                         'type' => 'deaths',
                         'size' => ($stack['location']['deaths_christian_adherents_next_month'] > 400) ? 2 : 3,
-                        'section_summary' => '',
-                        'prayer' => 'Pray for the ' . $stack['location']['deaths_christian_adherents_next_month'] . ' people in ' . $stack['location']['name'] . ' who are dying without a personal relationship with Jesus in the next month.'
+                        'section_summary' => 'In ' . $stack['location']['name'] . ', ' . $stack['location']['deaths_christian_adherents_next_month'] . ' people are dying without a personal relationship with Jesus in the next month.',
+                        'prayer' => ''
                     ]
                 ];
                 $added = true;
@@ -386,13 +386,13 @@ class PG_Stacker {
                 $births_christian_adherents[] = [
                     'type' => 'population_change_icon_block',
                     'data' => [
-                        'section_label' => 'Born in the next hour',
+                        'section_label' => 'Next hour',
                         'count' => $stack['location']['births_christian_adherents_last_hour'],
                         'group' => 'christian_adherents',
                         'type' => 'births',
                         'size' => ( $stack['location']['births_christian_adherents_last_hour'] > 400 ) ? 2 : 3,
-                        'section_summary' => '',
-                        'prayer' => 'Pray for the ' . $stack['location']['births_christian_adherents_last_hour'] . ' babies born in the next hour to families who might now about God culturally, but likely have no relationship with Jesus.'
+                        'section_summary' => 'In ' . $stack['location']['name'] . ', ' . $stack['location']['births_christian_adherents_last_hour'] . ' babies will be born in the next hour to families who might now about God culturally, but likely have no relationship with Jesus.',
+                        'prayer' => ''
                     ]
                 ];
                 $added = true;
@@ -401,13 +401,13 @@ class PG_Stacker {
                 $births_christian_adherents[] = [
                     'type' => 'population_change_icon_block',
                     'data' => [
-                        'section_label' => 'Born in the next 100 hours',
+                        'section_label' => 'Next 100 hours',
                         'count' => $stack['location']['births_christian_adherents_last_100'],
                         'group' => 'christian_adherents',
                         'type' => 'births',
                         'size' => ( $stack['location']['births_christian_adherents_last_100'] > 400 ) ? 2 : 3,
-                        'section_summary' => '',
-                        'prayer' => 'Pray for the ' . $stack['location']['births_christian_adherents_last_100'] . ' babies born in the next 100 hours to families who might now about God culturally, but likely have no relationship with Jesus.'
+                        'section_summary' => 'In ' . $stack['location']['name'] . ', ' . $stack['location']['births_christian_adherents_last_100'] . ' babies will be born in the next 100 hours to families who might now about God culturally, but likely have no relationship with Jesus.',
+                        'prayer' => ''
                     ]
                 ];
                 $added = true;
@@ -416,13 +416,13 @@ class PG_Stacker {
                 $births_christian_adherents[] = [
                     'type' => 'population_change_icon_block',
                     'data' => [
-                        'section_label' => 'Born in the next week',
+                        'section_label' => 'Next week',
                         'count' => $stack['location']['births_christian_adherents_last_week'],
                         'group' => 'christian_adherents',
                         'type' => 'births',
                         'size' => ( $stack['location']['births_christian_adherents_last_week'] > 400 ) ? 2 : 3,
-                        'section_summary' => '',
-                        'prayer' => 'Pray for the ' . $stack['location']['births_christian_adherents_last_week'] . ' babies born in the next week to families who might now about God culturally, but likely have no relationship with Jesus.'
+                        'section_summary' => 'In ' . $stack['location']['name'] . ', ' . $stack['location']['births_christian_adherents_last_week'] . ' babies will be born in the next week to families who might now about God culturally, but likely have no relationship with Jesus.',
+                        'prayer' => ''
                     ]
                 ];
                 $added = true;
@@ -431,13 +431,13 @@ class PG_Stacker {
                 $births_christian_adherents[] = [
                     'type' => 'population_change_icon_block',
                     'data' => [
-                        'section_label' => 'Born in the next month',
+                        'section_label' => 'Next month',
                         'count' => $stack['location']['births_christian_adherents_last_month'],
                         'group' => 'christian_adherents',
                         'type' => 'births',
                         'size' => ( $stack['location']['births_christian_adherents_last_month'] > 400 ) ? 2 : 3,
-                        'section_summary' => '',
-                        'prayer' => 'Pray for the ' . $stack['location']['births_christian_adherents_last_month'] . ' babies born in the next month to families who might now about God culturally, but likely have no relationship with Jesus.'
+                        'section_summary' => 'In ' . $stack['location']['name'] . ', ' . $stack['location']['births_christian_adherents_last_month'] . ' babies will be born in the next month to families who might now about God culturally, but likely have no relationship with Jesus.',
+                        'prayer' => ''
                     ]
                 ];
                 $added = true;
@@ -455,13 +455,13 @@ class PG_Stacker {
                 $deaths_non_christians[] = [
                     'type' => 'population_change_icon_block',
                     'data' => [
-                        'section_label' => 'Dying without Jesus in the next hour',
+                        'section_label' => 'Next hour',
                         'count' => $stack['location']['deaths_non_christians_next_hour'],
                         'group' => 'non_christians',
                         'type' => 'deaths',
                         'size' => ($stack['location']['deaths_non_christians_next_hour'] > 400) ? 2 : 3,
-                        'section_summary' => '',
-                        'prayer' => 'Pray for the ' . $stack['location']['deaths_non_christians_next_hour'] . ' people in ' . $stack['location']['name'] . ' who are dying without Jesus in the next hour. Pray they get one chance to hear the gospel, or if they have heard it that the Spirit would bring it to mind one more time.'
+                        'section_summary' => 'In ' . $stack['location']['name'] . ', ' . $stack['location']['deaths_non_christians_next_hour'] . ' people will die without Jesus in the next hour.',
+                        'prayer' => ''
                     ]
                 ];
                 $added = true;
@@ -470,13 +470,13 @@ class PG_Stacker {
                 $deaths_non_christians[] = [
                     'type' => 'population_change_icon_block',
                     'data' => [
-                        'section_label' => 'Dying without Jesus in the next 100 hours',
+                        'section_label' => 'Next 100 hours',
                         'count' => $stack['location']['deaths_non_christians_next_100'],
                         'group' => 'non_christians',
                         'type' => 'deaths',
                         'size' => ($stack['location']['deaths_non_christians_next_100'] > 400) ? 2 : 3,
-                        'section_summary' => '',
-                        'prayer' => 'Pray for the ' . $stack['location']['deaths_non_christians_next_100'] . ' people in ' . $stack['location']['name'] . ' who are dying without Jesus in the next 100 hours. Pray they get one chance to hear the gospel, or if they have heard it that the Spirit would bring it to mind one more time.'
+                        'section_summary' => 'In ' . $stack['location']['name'] . ', ' . $stack['location']['deaths_non_christians_next_100'] . ' people will die without Jesus in the next 100 hours.',
+                        'prayer' => ''
                     ]
                 ];
                 $added = true;
@@ -485,13 +485,13 @@ class PG_Stacker {
                 $deaths_non_christians[] = [
                     'type' => 'population_change_icon_block',
                     'data' => [
-                        'section_label' => 'Dying without Jesus in the next week',
+                        'section_label' => 'Next week',
                         'count' => $stack['location']['deaths_non_christians_next_week'],
                         'group' => 'non_christians',
                         'type' => 'deaths',
                         'size' => ($stack['location']['deaths_non_christians_next_week'] > 400) ? 2 : 3,
-                        'section_summary' => '',
-                        'prayer' => 'Pray for the ' . $stack['location']['deaths_non_christians_next_week'] . ' people in ' . $stack['location']['name'] . ' who are dying without Jesus in the next week. Pray they get one chance to hear the gospel, or if they have heard it that the Spirit would bring it to mind one more time.'
+                        'section_summary' => 'In ' . $stack['location']['name'] . ', ' . $stack['location']['deaths_non_christians_next_week'] . ' people will die without Jesus in the next week.',
+                        'prayer' => ''
                     ]
                 ];
                 $added = true;
@@ -500,13 +500,13 @@ class PG_Stacker {
                 $deaths_non_christians[] = [
                     'type' => 'population_change_icon_block',
                     'data' => [
-                        'section_label' => 'Dying without Jesus in the next month',
+                        'section_label' => 'Next month',
                         'count' => $stack['location']['deaths_non_christians_next_month'],
                         'group' => 'non_christians',
                         'type' => 'deaths',
                         'size' => ($stack['location']['deaths_non_christians_next_month'] > 400) ? 2 : 3,
-                        'section_summary' => '',
-                        'prayer' => 'Pray for the ' . $stack['location']['deaths_non_christians_next_month'] . ' people in ' . $stack['location']['name'] . ' who are dying without Jesus in the next month. Pray they get one chance to hear the gospel, or if they have heard it that the Spirit would bring it to mind one more time.'
+                        'section_summary' => 'In ' . $stack['location']['name'] . ', ' . $stack['location']['deaths_non_christians_next_month'] . ' will die without Jesus in the next month.',
+                        'prayer' => ''
                     ]
                 ];
                 $added = true;
@@ -525,13 +525,13 @@ class PG_Stacker {
                 $births_non_christians[] = [
                     'type' => 'population_change_icon_block',
                     'data' => [
-                        'section_label' => 'Born to a family without Jesus in the next hour',
+                        'section_label' => 'Next hour',
                         'count' => $stack['location']['births_non_christians_last_hour'],
                         'group' => 'non_christians',
                         'type' => 'births',
                         'size' => ( $stack['location']['births_non_christians_last_hour'] > 400 ) ? 2 : 3,
-                        'section_summary' => '',
-                        'prayer' => 'Pray for the ' . $stack['location']['births_non_christians_last_hour'] . ' babies born in the next hour to families who are far from God in ' . $stack['location']['name'] . '.'
+                        'section_summary' => 'In ' . $stack['location']['name'] . ', ' . $stack['location']['births_non_christians_last_hour'] . ' babies will be born in the next hour to families who are far from God.',
+                        'prayer' => ''
                     ]
                 ];
                 $added = true;
@@ -540,13 +540,13 @@ class PG_Stacker {
                 $births_non_christians[] = [
                     'type' => 'population_change_icon_block',
                     'data' => [
-                        'section_label' => 'Born to a family without Jesus in the next 100 hours',
+                        'section_label' => 'Next 100 hours',
                         'count' => $stack['location']['births_non_christians_last_100'],
                         'group' => 'non_christians',
                         'type' => 'births',
                         'size' => ( $stack['location']['births_non_christians_last_100'] > 400 ) ? 2 : 3,
-                        'section_summary' => '',
-                        'prayer' => 'Pray for the ' . $stack['location']['births_non_christians_last_100'] . ' babies born in the next 100 hours to families who are far from God in ' . $stack['location']['name'] . '.'
+                        'section_summary' => 'In ' . $stack['location']['name'] . ', ' . $stack['location']['births_non_christians_last_100'] . ' babies will be born in the next 100 hours to families who are far from God.',
+                        'prayer' => ''
                     ]
                 ];
                 $added = true;
@@ -555,13 +555,13 @@ class PG_Stacker {
                 $births_non_christians[] = [
                     'type' => 'population_change_icon_block',
                     'data' => [
-                        'section_label' => 'Born to a family without Jesus in the next week',
+                        'section_label' => 'Next week',
                         'count' => $stack['location']['births_non_christians_last_week'],
                         'group' => 'non_christians',
                         'type' => 'births',
                         'size' => ( $stack['location']['births_non_christians_last_week'] > 400 ) ? 2 : 3,
-                        'section_summary' => '',
-                        'prayer' => 'Pray for the ' . $stack['location']['births_non_christians_last_week'] . ' babies born in the next week to families who are far from God in ' . $stack['location']['name'] . '.'
+                        'section_summary' => 'In ' . $stack['location']['name'] . ', ' . $stack['location']['births_non_christians_last_week'] . ' babies will be born in the next week to families who are far from God.',
+                        'prayer' => ''
                     ]
                 ];
                 $added = true;
@@ -570,13 +570,13 @@ class PG_Stacker {
                 $births_non_christians[] = [
                     'type' => 'population_change_icon_block',
                     'data' => [
-                        'section_label' => 'Born to a family without Jesus in the next month',
+                        'section_label' => 'Next month',
                         'count' => $stack['location']['births_non_christians_last_month'],
                         'group' => 'non_christians',
                         'type' => 'births',
                         'size' => ( $stack['location']['births_non_christians_last_month'] > 400 ) ? 2 : 3,
-                        'section_summary' => '',
-                        'prayer' => 'Pray for the ' . $stack['location']['births_non_christians_last_month'] . ' babies born in the next month to families who are far from God in ' . $stack['location']['name'] . '.'
+                        'section_summary' => 'In ' . $stack['location']['name'] . ', ' . $stack['location']['births_non_christians_last_month'] . ' babies will be born in the next month to families who are far from God.',
+                        'prayer' => ''
                     ]
                 ];
                 $added = true;
@@ -903,7 +903,7 @@ class PG_Stacker {
         $blocks[] = [
             'type' => 'verse_block',
             'data' => [
-                'section_label' => 'Pray Scripture',
+                'section_label' => 'Scripture',
                 'icon_color' => 'red',
                 'verse' => 'And this gospel of the kingdom will be preached in the whole world as a testimony to all nations, and then the end will come.',
                 'reference' => 'Matthew 24:14',
@@ -913,7 +913,7 @@ class PG_Stacker {
         $blocks[] = [
             'type' => 'verse_block',
             'data' => [
-                'section_label' => 'Pray Scripture',
+                'section_label' => 'Scripture',
                 'icon_color' => 'red',
                 'verse' => '"Go therefore and make disciples of all nations, baptizing them in the name of the Father and of the Son and of the Holy Spirit, teaching them to observe all that I have commanded you; and lo, I am with you always, to the close of the age."',
                 'reference' => 'Matthew 28:19-20',
@@ -923,7 +923,7 @@ class PG_Stacker {
         $blocks[] = [
             'type' => 'verse_block',
             'data' => [
-                'section_label' => 'Pray Scripture',
+                'section_label' => 'Scripture',
                 'icon_color' => 'green',
                 'verse' => '"For the earth will be filled with the knowledge of the glory of the LORD as the waters cover the sea."',
                 'reference' => 'Habakkuk 2:14',
@@ -933,7 +933,7 @@ class PG_Stacker {
         $blocks[] = [
             'type' => 'verse_block',
             'data' => [
-                'section_label' => 'Pray Scripture',
+                'section_label' => 'Scripture',
                 'icon_color' => 'red',
                 'verse' => '"How then will they call on him in whom they have not believed? And how are they to believe in him of whom they have never heard? And how are they to hear without someone preaching? ... So faith comes from hearing, and hearing through the word of Christ"',
                 'reference' => 'Rom. 10:14,17',
@@ -943,7 +943,7 @@ class PG_Stacker {
         $blocks[] = [
             'type' => 'verse_block',
             'data' => [
-                'section_label' => 'Pray Scripture',
+                'section_label' => 'Scripture',
                 'icon_color' => 'green',
                 'verse' => '"All Scripture is breathed out by God and profitable for teaching, for reproof, for correction, and for training in righteousness, that the man of God may be complete, equipped for every good work"',
                 'reference' => '2 Timothy 3:16-17',
@@ -953,7 +953,7 @@ class PG_Stacker {
         $blocks[] = [
             'type' => 'verse_block',
             'data' => [
-                'section_label' => 'Pray Scripture',
+                'section_label' => 'Scripture',
                 'icon_color' => 'green',
                 'verse' => '"All Scripture is breathed out by God and profitable for teaching, for reproof, for correction, and for training in righteousness, that the man of God may be complete, equipped for every good work"',
                 'reference' => '2 Timothy 3:16-17',
@@ -963,7 +963,7 @@ class PG_Stacker {
         $blocks[] = [
             'type' => 'verse_block',
             'data' => [
-                'section_label' => 'Pray Scripture',
+                'section_label' => 'Scripture',
                 'icon_color' => 'green',
                 'verse' => '"And when they had appointed elders for them in every church, with prayer and fasting they committed them to the Lord in whom they had believed."',
                 'reference' => 'Acts 14:23',
@@ -973,7 +973,7 @@ class PG_Stacker {
         $blocks[] = [
             'type' => 'verse_block',
             'data' => [
-                'section_label' => 'Pray Scripture',
+                'section_label' => 'Scripture',
                 'icon_color' => 'green',
                 'verse' => '"And when they had appointed elders for them in every church, with prayer and fasting they committed them to the Lord in whom they had believed."',
                 'reference' => 'Acts 14:23',
@@ -983,7 +983,7 @@ class PG_Stacker {
         $blocks[] = [
             'type' => 'verse_block',
             'data' => [
-                'section_label' => 'Pray Scripture',
+                'section_label' => 'Scripture',
                 'icon_color' => 'green',
                 'verse' => '"Now when they saw the boldness of Peter and John, and perceived that they were uneducated, common men, they were astonished. And they recognized that they had been with Jesus"',
                 'reference' => 'Acts 4:13',
@@ -993,7 +993,7 @@ class PG_Stacker {
         $blocks[] = [
             'type' => 'verse_block',
             'data' => [
-                'section_label' => 'Pray Scripture',
+                'section_label' => 'Scripture',
                 'icon_color' => 'green',
                 'verse' => '"Now when they saw the boldness of Peter and John, and perceived that they were uneducated, common men, they were astonished. And they recognized that they had been with Jesus"',
                 'reference' => 'Acts 4:13',
@@ -1003,7 +1003,7 @@ class PG_Stacker {
         $blocks[] = [
             'type' => 'verse_block',
             'data' => [
-                'section_label' => 'Pray Scripture',
+                'section_label' => 'Scripture',
                 'icon_color' => 'green',
                 'verse' => '"Day after day, in the temple courts and from house to house, they never stopped teaching and proclaiming the good news"',
                 'reference' => 'Acts 5:42',
@@ -1013,7 +1013,7 @@ class PG_Stacker {
         $blocks[] = [
             'type' => 'verse_block',
             'data' => [
-                'section_label' => 'Pray Scripture',
+                'section_label' => 'Scripture',
                 'icon_color' => 'green',
                 'verse' => '"And there arose on that day a great persecution against the church in Jerusalem, and they were all scattered throughout the regions of Judea and Samaria, except the apostles. ... Now those who were scattered went about preaching the word"',
                 'reference' => 'Acts 8:1b,4',
@@ -1023,7 +1023,7 @@ class PG_Stacker {
         $blocks[] = [
             'type' => 'verse_block',
             'data' => [
-                'section_label' => 'Pray Scripture',
+                'section_label' => 'Scripture',
                 'icon_color' => 'green',
                 'verse' => '"And there arose on that day a great persecution against the church in Jerusalem, and they were all scattered throughout the regions of Judea and Samaria, except the apostles. ... Now those who were scattered went about preaching the word"',
                 'reference' => 'Acts 8:1b,4',
@@ -1033,7 +1033,7 @@ class PG_Stacker {
         $blocks[] = [
             'type' => 'verse_block',
             'data' => [
-                'section_label' => 'Pray Scripture',
+                'section_label' => 'Scripture',
                 'icon_color' => 'green',
                 'verse' => '"And the Lord added to their number day by day those who were being saved. ... And more than ever believers were added to the Lord, multitudes of both men and women, ... And the word of God continued to increase, and the number of disciples multiplied greatly ..."',
                 'reference' => 'Acts 2:47b; 5:14; 6:7',
@@ -1043,7 +1043,7 @@ class PG_Stacker {
         $blocks[] = [
             'type' => 'verse_block',
             'data' => [
-                'section_label' => 'Pray Scripture',
+                'section_label' => 'Scripture',
                 'icon_color' => 'green',
                 'verse' => '"And the Lord added to their number day by day those who were being saved. ... And more than ever believers were added to the Lord, multitudes of both men and women, ... And the word of God continued to increase, and the number of disciples multiplied greatly ..."',
                 'reference' => 'Acts 2:47b; 5:14; 6:7',
@@ -1053,7 +1053,7 @@ class PG_Stacker {
         $blocks[] = [
             'type' => 'verse_block',
             'data' => [
-                'section_label' => 'Pray Scripture',
+                'section_label' => 'Scripture',
                 'icon_color' => 'green',
                 'verse' => '"And the Lord added to their number day by day those who were being saved. ... And the word of God continued to increase, and the number of disciples multiplied greatly ..."',
                 'reference' => 'Acts 2:47b; 5:14; 6:7',
@@ -1063,7 +1063,7 @@ class PG_Stacker {
         $blocks[] = [
             'type' => 'verse_block',
             'data' => [
-                'section_label' => 'Pray Scripture',
+                'section_label' => 'Scripture',
                 'icon_color' => 'green',
                 'verse' => '"And the Lord added to their number day by day those who were being saved. ... And the word of God continued to increase, and the number of disciples multiplied greatly ..."',
                 'reference' => 'Acts 2:47b; 5:14; 6:7',
@@ -1073,7 +1073,7 @@ class PG_Stacker {
         $blocks[] = [
             'type' => 'verse_block',
             'data' => [
-                'section_label' => 'Pray Scripture',
+                'section_label' => 'Scripture',
                 'icon_color' => 'green',
                 'verse' => '"Pray also for me, that whenever I speak, words may be given to me so that I will fearlessly make known the mystery of the gospel."',
                 'reference' => 'Ephesians 6:18',
@@ -1083,7 +1083,7 @@ class PG_Stacker {
         $blocks[] = [
             'type' => 'verse_block',
             'data' => [
-                'section_label' => 'Pray Scripture',
+                'section_label' => 'Scripture',
                 'icon_color' => 'green',
                 'verse' => '"By this everyone will know that you are my disciples, if you love one another."',
                 'reference' => 'John 13:35',
@@ -1141,7 +1141,9 @@ class PG_Stacker {
         $grid_record = $wpdb->get_row( $wpdb->prepare( "
             SELECT
               g.grid_id,
-              g.name,
+              lgn.name,
+              lgn.admin0_name,
+              lgn.full_name,
               g.population,
               g.latitude,
               g.longitude,
@@ -1150,7 +1152,6 @@ class PG_Stacker {
               g.parent_id,
               p.name as parent_name,
               g.admin0_grid_id,
-              gc.name as admin0_name,
               g.admin1_grid_id,
               ga1.name as admin1_name,
               g.admin2_grid_id,
@@ -1167,10 +1168,14 @@ class PG_Stacker {
               g.south_latitude,
               g.east_longitude,
               g.west_longitude,
+              p.longitude as p_longitude,
+              p.latitude as p_latitude,
               p.north_latitude as p_north_latitude,
               p.south_latitude as p_south_latitude,
               p.east_longitude as p_east_longitude,
               p.west_longitude as p_west_longitude,
+              gc.longitude as c_longitude,
+              gc.latitude as c_latitude,
               gc.north_latitude as c_north_latitude,
               gc.south_latitude as c_south_latitude,
               gc.east_longitude as c_east_longitude,
@@ -1196,32 +1201,10 @@ class PG_Stacker {
             LEFT JOIN $wpdb->dt_location_grid as ga5 ON g.admin5_grid_id=ga5.grid_id
             LEFT JOIN $wpdb->dt_location_grid as p ON g.parent_id=p.grid_id
             LEFT JOIN $wpdb->location_grid_facts as lgf ON g.grid_id=lgf.grid_id
+            LEFT JOIN $wpdb->location_grid_names as lgn ON g.grid_id=lgn.grid_id AND lgn.language_code = 'en'
             WHERE g.grid_id = %s
         ", $grid_id ), ARRAY_A );
 
-        // build full name
-        switch ( $grid_record['level_name'] ) {
-            case 'admin1':
-                $full_name = $grid_record['name'] . ', ' . $grid_record['admin0_name'];
-                break;
-            case 'admin2':
-                $full_name = $grid_record['name'] . ', ' . $grid_record['admin1_name'] . ', ' . $grid_record['admin0_name'];
-                break;
-            case 'admin3':
-                $full_name = $grid_record['name'] . ', ' . $grid_record['admin2_name'] . ', ' . $grid_record['admin1_name'] . ', ' . $grid_record['admin0_name'];
-                break;
-            case 'admin4':
-                $full_name = $grid_record['name'] . ', ' . $grid_record['admin3_name'] . ', ' . $grid_record['admin2_name'] . ', ' . $grid_record['admin1_name'] . ', ' . $grid_record['admin0_name'];
-                break;
-            case 'admin5':
-                $full_name = $grid_record['name'] . ', ' . $grid_record['admin4_name'] . ', ' . $grid_record['admin3_name'] . ', ' . $grid_record['admin2_name'] . ', ' . $grid_record['admin1_name'] . ', ' . $grid_record['admin0_name'];
-                break;
-            case 'admin0':
-            default:
-                $full_name = $grid_record['name'];
-                break;
-        }
-        $grid_record = array_merge($grid_record, [ 'full_name' => $full_name ] );
 
         // build the description
         if ( 'admin1' === $grid_record['level_name'] ) {
@@ -1238,16 +1221,21 @@ class PG_Stacker {
 
 
         // format
+        $grid_record['level'] = (int) $grid_record['level'];
         $grid_record['longitude'] = (float) $grid_record['longitude'];
         $grid_record['latitude'] = (float) $grid_record['latitude'];
         $grid_record['north_latitude'] = (float) $grid_record['north_latitude'];
         $grid_record['south_latitude'] = (float) $grid_record['south_latitude'];
         $grid_record['east_longitude'] = (float) $grid_record['east_longitude'];
         $grid_record['west_longitude'] = (float) $grid_record['west_longitude'];
+        $grid_record['p_latitude'] = (float) $grid_record['p_latitude'];
+        $grid_record['p_longitude'] = (float) $grid_record['p_longitude'];
         $grid_record['p_north_latitude'] = (float) $grid_record['p_north_latitude'];
         $grid_record['p_south_latitude'] = (float) $grid_record['p_south_latitude'];
         $grid_record['p_east_longitude'] = (float) $grid_record['p_east_longitude'];
         $grid_record['p_west_longitude'] = (float) $grid_record['p_west_longitude'];
+        $grid_record['c_latitude'] = (float) $grid_record['c_latitude'];
+        $grid_record['c_longitude'] = (float) $grid_record['c_longitude'];
         $grid_record['c_north_latitude'] = (float) $grid_record['c_north_latitude'];
         $grid_record['c_south_latitude'] = (float) $grid_record['c_south_latitude'];
         $grid_record['c_east_longitude'] = (float) $grid_record['c_east_longitude'];

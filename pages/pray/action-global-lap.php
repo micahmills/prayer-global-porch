@@ -184,12 +184,11 @@ class PG_Global_Prayer_App_Lap extends PG_Global_Prayer_App {
                 <div class="row">
                     <div class="col">
                         <p class="text-md-center" id="location-map"></p>
-                        <p class="text-md-center"><button type="button" class="btn btn-link btn-sm" id="show_borders">show detail map</button></p>
                     </div>
                 </div>
-                <div class="w-100"><hr></div>
             </div>
-            <div class="container" id="content"></div>
+            <div class="w-100"><hr></div>
+            <div id="content"></div>
         </section>
 
         <?php

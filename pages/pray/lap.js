@@ -95,6 +95,7 @@ jQuery(document).ready(function(){
   window.time = 0
   window.seconds = 60
   window.pace = 1
+  window.items = 3
 
   /**
    * INITIALIZE
@@ -125,7 +126,8 @@ jQuery(document).ready(function(){
     div.empty()
 
     location_map_wrapper.show()
-    add_map()
+    // add_map()
+    mapbox_border_map()
 
     // LOOP STACK
     jQuery.each(content.list, function(i,block) {
@@ -135,6 +137,12 @@ jQuery(document).ready(function(){
     // FOOTER
     div.append(`<div class="row text-center"><div class="col">Location ID: ${content.location.grid_id}</</div>`)
 
+    var max = window.pace + window.items;
+    var listItems = jQuery('.container.block').length;
+    if (listItems > max) {
+      jQuery('.container.block:nth-child(+n+' + (max) + ')').hide()
+    }
+
     prayer_progress_indicator( window.time ) // SETS THE PRAYER PROGRESS WIDGET
   }
 
@@ -142,7 +150,7 @@ jQuery(document).ready(function(){
     window.time = time_start
     interval = setInterval(function() {
       if (window.time <= window.seconds) {
-        window.time++
+        window.time = window.time + .1
         percent = 1.6666 * ( window.time / window.pace )
         if ( percent > 100 ) {
           percent = 100
@@ -155,28 +163,28 @@ jQuery(document).ready(function(){
         question_panel.show()
         button_text.html('Finished!')
       }
-    }, 1000);
+    }, 100);
   }
 
   /**
    * BLOCK TEMPLATES
    */
-  function add_map() {
-    let rand_select = Math.floor(Math.random() * 3)
-    switch( rand_select ) {
-      case 0:
-        wide_globe()
-        break;
-      case 1:
-        // @todo islands don't look good with this map
-        zoom_globe()
-        break;
-      case 2:
-        // @todo the green dot doesn't show up in the front for asia countries
-        rotating_globe()
-        break;
-    }
-  }
+  // function add_map() {
+  //   let rand_select = Math.floor(Math.random() * 3)
+  //   switch( rand_select ) {
+  //     case 0:
+  //       wide_globe()
+  //       break;
+  //     case 1:
+  //       // @todo islands don't look good with this map
+  //       zoom_globe()
+  //       break;
+  //     case 2:
+  //       // @todo the green dot doesn't show up in the front for asia countries
+  //       rotating_globe()
+  //       break;
+  //   }
+  // }
   function wide_globe(){
     jQuery('#location-map').html(`<div class="chartdiv wide_globe" id="wide_globe"></div>`)
     let content = window.current_content
@@ -474,7 +482,7 @@ jQuery(document).ready(function(){
     })
 
     window.load_map_with_style = ( style ) => {
-      let center = [grid_row.longitude, grid_row.latitude]
+      let center = [grid_row.p_longitude, grid_row.p_latitude]
       mapboxgl.accessToken = jsObject.map_key;
       let map = new mapboxgl.Map({
         container: 'mabox-map',
@@ -554,7 +562,12 @@ jQuery(document).ready(function(){
                 'text-radial-offset': 0.5,
                 'text-justify': 'auto',
                 'icon-image': ['get', 'icon']
-              }
+              },
+              "paint": {
+                "text-color": "#202",
+                "text-halo-color": "#fff",
+                "text-halo-width": 2
+              },
             });
 
             map.on('click', 'parent_collection_fill_click', function (e) {
@@ -572,11 +585,40 @@ jQuery(document).ready(function(){
             });
 
             map.fitBounds([
-              [parseFloat( grid_row.west_longitude), parseFloat(grid_row.south_latitude)], // southwestern corner of the bounds
-              [parseFloat(grid_row.east_longitude), parseFloat(grid_row.north_latitude)] // northeastern corner of the bounds
+              [parseFloat( grid_row.p_west_longitude), parseFloat(grid_row.p_south_latitude)], // southwestern corner of the bounds
+              [parseFloat(grid_row.p_east_longitude), parseFloat(grid_row.p_north_latitude)] // northeastern corner of the bounds
             ], {padding: 25, duration: 5000});
 
           })
+
+        if ( grid_row.level >= 2 ) {
+          jQuery.ajax({
+            url: jsObject.mirror_url + 'low/'+grid_row.admin0_grid_id+'.geojson',
+            dataType: 'json',
+            data: null,
+            cache: true,
+            beforeSend: function (xhr) {
+              if (xhr.overrideMimeType) {
+                xhr.overrideMimeType("application/json");
+              }
+            }
+          })
+            .done(function (geojson) {
+              map.addSource('country_outline', {
+                'type': 'geojson',
+                'data': geojson
+              });
+              map.addLayer({
+                'id': 'country_outline_lines',
+                'type': 'line',
+                'source': 'country_outline',
+                'paint': {
+                  'line-color': '#0080ff',
+                  'line-width': 2
+                }
+              });
+            })
+        }
 
       }) // map load
     }
@@ -655,6 +697,9 @@ jQuery(document).ready(function(){
 
     window.pace = e.currentTarget.value
     window.seconds = e.currentTarget.value * 60
+
+    jQuery('.container.block').show()
+    jQuery('.container.block:nth-child(+n+' + ( parseInt( e.currentTarget.value ) + window.items) + ')').hide()
   })
   pace_open_options.on('show.bs.modal', function () {
     if ( percent < 100 ) {
@@ -742,44 +787,47 @@ jQuery(document).ready(function(){
   }
   function _template_percent_3_circles( data ) {
     div.append(
-      `<div class="row">
-          <div class="col text-center ">
-             <p class="mt-3 mb-3 font-weight-normal one-em uc">${data.section_label}</p>
+      `<div class="container block">
+          <div class="row">
+              <div class="col text-center ">
+                 <p class="mt-3 mb-3 font-weight-normal one-em uc">${data.section_label}</p>
+              </div>
           </div>
-      </div>
-      <div class="row text-center justify-content-center">
-          <div class="col-md-3 col-lg-2">
-            <p class="mt-3 mb-0 font-weight-bold">${data.label_1}</p>
-            <div class="pie" style="--p:${data.percent_1};--b:10px;--c:red;">${data.percent_1}%</div>
-            <p class="mt-3 mb-0 font-weight-normal one-em">${data.population_1}</p>
+          <div class="row text-center justify-content-center">
+              <div class="col-md-3 col-lg-2">
+                <p class="mt-3 mb-0 font-weight-bold">${data.label_1}</p>
+                <div class="pie" style="--p:${data.percent_1};--b:10px;--c:red;">${data.percent_1}%</div>
+                <p class="mt-3 mb-0 font-weight-normal one-em">${data.population_1}</p>
+              </div>
+              <div class="col-md-3 col-lg-2">
+                <p class="mt-3 mb-0 font-weight-bold">${data.label_2}</p>
+                <div class="pie" style="--p:${data.percent_2};--b:10px;--c:orange;">${data.percent_2}%</div>
+                <p class="mt-3 mb-0 font-weight-normal one-em">${data.population_2}</p>
+              </div>
+              <div class="col-md-3 col-lg-2">
+                <p class="mt-3 mb-0 font-weight-bold">${data.label_3}</p>
+                <div class="pie" style="--p:${data.percent_3};--b:10px;--c:green;">${data.percent_3}%</div>
+                <p class="mt-3 mb-0 font-weight-normal one-em">${data.population_3}</p>
+              </div>
           </div>
-          <div class="col-md-3 col-lg-2">
-            <p class="mt-3 mb-0 font-weight-bold">${data.label_2}</p>
-            <div class="pie" style="--p:${data.percent_2};--b:10px;--c:orange;">${data.percent_2}%</div>
-            <p class="mt-3 mb-0 font-weight-normal one-em">${data.population_2}</p>
+          <div class="row text-center">
+            <div class="col">
+               <p class="font-weight-normal">${data.section_summary}</p>
+            </div>
           </div>
-          <div class="col-md-3 col-lg-2">
-            <p class="mt-3 mb-0 font-weight-bold">${data.label_3}</p>
-            <div class="pie" style="--p:${data.percent_3};--b:10px;--c:green;">${data.percent_3}%</div>
-            <p class="mt-3 mb-0 font-weight-normal one-em">${data.population_3}</p>
+          <div class="row text-center justify-content-center">
+            <div class="col-md-8">
+               <p class="mt-3 mb-3 font-weight-normal one-em">${data.prayer}</p>
+            </div>
           </div>
-      </div>
-      <div class="row text-center">
-        <div class="col">
-           <p class="font-weight-normal">${data.section_summary}</p>
-        </div>
-      </div>
-      <div class="row text-center justify-content-center">
-        <div class="col-md-8">
-           <p class="mt-3 mb-3 font-weight-normal one-em">${data.prayer}</p>
-        </div>
-      </div>
-      <div class="w-100"><hr></div>`
+      <div class="w-100"><hr></div>
+    </div>`
     )
   }
   function _template_percent_2_circles( data ) {
     div.append(
-      `<div class="row">
+      `<div class="container block">
+          <div class="row">
           <div class="col text-center ">
              <p class="mt-3 mb-3 font-weight-normal one-em uc">${data.section_label}</p>
           </div>
@@ -806,12 +854,14 @@ jQuery(document).ready(function(){
           <p class="mt-3 mb-3 font-weight-normal one-em">${data.prayer}</p>
         </div>
       </div>
-      <div class="w-100"><hr></div>`
+      <div class="w-100"><hr></div>
+    </div>`
     )
   }
   function _template_percent_3_bar( data ) {
     div.append(
-      `<div class="row">
+      `<div class="container block">
+          <div class="row">
           <div class="col text-center ">
              <p class="font-weight-normal one-em uc">${data.section_label}</p>
           </div>
@@ -843,7 +893,8 @@ jQuery(document).ready(function(){
            <p class="mt-3 mb-3 font-weight-normal one-em">${data.prayer}</p>
         </div>
       </div>
-      <div class="w-100"><hr></div>`
+      <div class="w-100"><hr></div>
+    </div>`
     )
   }
   function _template_100_bodies_chart( data ) {
@@ -865,7 +916,8 @@ jQuery(document).ready(function(){
       i++;
     }
     div.append(
-      `<div class="row">
+      `<div class="container block">
+          <div class="row">
           <div class="col text-center ">
              <p class="mt-3 mb-3 font-weight-normal one-em uc">${data.section_label}</p>
           </div>
@@ -887,7 +939,8 @@ jQuery(document).ready(function(){
            <p class="mt-3 mb-3 font-weight-normal one-em">${data.prayer}</p>
         </div>
       </div>
-      <div class="w-100"><hr></div>`
+      <div class="w-100"><hr></div>
+    </div>`
     )
   }
   function _template_100_bodies_3_chart( data ) {
@@ -910,7 +963,8 @@ jQuery(document).ready(function(){
       i++;
     }
     div.append(
-      `<div class="row">
+      `<div class="container block">
+          <div class="row">
           <div class="col text-center ">
              <p class="mt-3 mb-3 font-weight-normal one-em uc">${data.section_label}</p>
           </div>
@@ -948,7 +1002,8 @@ jQuery(document).ready(function(){
           <p class="mt-3 mb-3 font-weight-normal one-em">${data.prayer}</p>
         </div>
       </div>
-      <div class="w-100"><hr></div>`
+      <div class="w-100"><hr></div>
+    </div>`
     )
   }
   function _template_population_change_icon_block( data ) {
@@ -988,10 +1043,16 @@ jQuery(document).ready(function(){
       i++;
     }
     div.append(
-      `<div class="row">
+      `<div class="container block">
+          <div class="row">
           <div class="col text-center ">
              <p class="mt-3 mb-3 font-weight-normal one-em uc">${data.section_label}</p>
           </div>
+      </div>
+      <div class="row text-center justify-content-center">
+        <div class="col-md-8">
+           <p class="font-weight-normal">${data.section_summary}</p>
+        </div>
       </div>
       <div class="row text-center justify-content-center">
           <div class="col-md-8 col-sm">
@@ -1000,22 +1061,20 @@ jQuery(document).ready(function(){
             </p>
           </div>
       </div>
-      <div class="row text-center">
-        <div class="col">
-           <p class="font-weight-normal">${data.section_summary}</p>
-        </div>
-      </div>
+
       <div class="row text-center justify-content-center">
         <div class="col-md-8">
-           <p class="mt-3 mb-3 font-weight-normal one-em">${data.prayer}</p>
+            <p class="mt-3 mb-3 font-weight-normal one-em">${data.prayer}</p>
         </div>
       </div>
-      <div class="w-100"><hr></div>`
+      <div class="w-100"><hr></div>
+    </div>`
     )
   }
   function _template_4_fact_blocks( data ) {
     div.append(
-      `<div class="row">
+      `<div class="container block">
+          <div class="row">
           <div class="col text-center ">
              <p class="mt-3 mb-3 font-weight-normal one-em uc">${data.section_label}</p>
              <p class="mt-3 mb-3 font-weight-bold two-em">${data.focus_label}</p>
@@ -1058,7 +1117,8 @@ jQuery(document).ready(function(){
            <p class="mt-3 mb-3 font-weight-normal one-em">${data.prayer}</p>
         </div>
       </div>
-      <div class="w-100"><hr></div>`
+      <div class="w-100"><hr></div>
+    </div>`
     )
   }
   function _template_bullet_list_2_column( data ) {
@@ -1068,7 +1128,8 @@ jQuery(document).ready(function(){
         values_list += '<p>'+v+'</p>'
       })
       div.append(
-        `<div class="row">
+        `<div class="container block">
+          <div class="row">
           <div class="col text-center ">
              <p class="mt-3 mb-3 font-weight-normal one-em uc">${data.section_label}</p>
           </div>
@@ -1088,7 +1149,8 @@ jQuery(document).ready(function(){
              <p class="mt-3 mb-3 font-weight-normal one-em">${data.prayer}</p>
           </div>
       </div>
-      <div class="w-100"><hr></div>`)
+      <div class="w-100"><hr></div>
+    </div>`)
     }
   }
   function _template_people_groups_list( data ) {
@@ -1103,7 +1165,8 @@ jQuery(document).ready(function(){
       values_list += '<div class="col-6 col-md-4 col-lg-2 mb-1"><p class="mb-2 text-center">'+image+'</p><p class="text-center"><img src="'+v.progress_image_url+'" class="img-fluid" alt="" /></p><p class="text-center">'+v.description+'</p></div>'
     })
     div.append(
-      `<div class="row">
+      `<div class="container block">
+          <div class="row">
           <div class="col text-center ">
              <p class="mt-3 mb-3 font-weight-normal one-em uc">${data.section_label}</p>
           </div>
@@ -1121,7 +1184,8 @@ jQuery(document).ready(function(){
              <p class="mt-3 mb-3 font-weight-normal one-em">${data.prayer}</p>
           </div>
       </div>
-      <div class="w-100"><hr></div>`)
+      <div class="w-100"><hr></div>
+    </div>`)
   }
   function _template_least_reached_block( data ) {
     let image
@@ -1131,7 +1195,8 @@ jQuery(document).ready(function(){
       image = '<p class="mt-3 mb-3 font-weight-bold six-em"><i class="ion-android-warning red"></i></p>'
     }
     div.append(
-      `<div class="row">
+      `<div class="container block">
+          <div class="row">
           <div class="col text-center ">
              <p class="mt-3 mb-3 font-weight-normal one-em uc">${data.section_label}</p>
              <p class="mt-3 mb-3 font-weight-bold two-em">${data.focus_label}</p>
@@ -1148,7 +1213,8 @@ jQuery(document).ready(function(){
            <p class="mt-3 mb-3 font-weight-normal one-em">${data.prayer}</p>
         </div>
     </div>
-    <div class="w-100"><hr></div>`)
+    <div class="w-100"><hr></div>
+    </div>`)
   }
   function _template_fact_block( data ) {
     let icon = ''
@@ -1164,24 +1230,27 @@ jQuery(document).ready(function(){
       icon = '<p class="mt-3 mb-3 font-weight-bold six-em"><i class="'+iclass+' '+icolor+'"></i></p>'
     }
     div.append(
-      `<div class="row">
-          <div class="col text-center ">
-             <p class="mt-3 mb-3 font-weight-normal one-em uc">${data.section_label}</p>
-             <p class="mt-3 mb-3 font-weight-bold two-em">${data.focus_label}</p>
-            ${icon}
+      `<div class="container block">
+          <div class="row">
+            <div class="col text-center ">
+               <p class="mt-3 mb-3 font-weight-normal one-em uc">${data.section_label}</p>
+               <p class="mt-3 mb-3 font-weight-bold two-em">${data.focus_label}</p>
+              ${icon}
+            </div>
           </div>
-      </div>
-      <div class="row text-center justify-content-center">
-        <div class="col-md-8">
-            <p class="mt-3 mb-3 font-weight-normal one-em">${data.section_summary}</p>
+          <div class="row text-center justify-content-center">
+            <div class="col-md-8">
+                <p class="mt-3 mb-3 font-weight-normal one-em">${data.section_summary}</p>
+            </div>
+          </div>
+          <div class="row text-center justify-content-center">
+            <div class="col-md-8">
+               <p class="mt-3 mb-3 font-weight-normal one-em">${data.prayer}</p>
+            </div>
         </div>
-      </div>
-      <div class="row text-center justify-content-center">
-        <div class="col-md-8">
-           <p class="mt-3 mb-3 font-weight-normal one-em">${data.prayer}</p>
-        </div>
+    <div class="w-100"><hr></div>
     </div>
-    <div class="w-100"><hr></div>`)
+    `)
   }
   function _template_content_block( data ) {
     let icon = ''
@@ -1197,7 +1266,8 @@ jQuery(document).ready(function(){
       icon = '<p class="mt-3 mb-3 font-weight-bold six-em"><i class="'+iclass+' '+icolor+'"></i></p>'
     }
     div.append(
-      `<div class="row">
+      `<div class="container block">
+          <div class="row">
           <div class="col text-center ">
             <p class="mt-3 mb-3 font-weight-normal one-em uc">${data.section_label}</p>
              <p class="mt-3 mb-3 font-weight-bold two-em">${data.focus_label}</p>
@@ -1209,11 +1279,13 @@ jQuery(document).ready(function(){
            <p class="mt-3 mb-3 font-weight-normal one-em">${data.section_summary}</p>
         </div>
       </div>
-      <div class="w-100"><hr></div>`)
+      <div class="w-100"><hr></div>
+    </div>`)
   }
   function _template_prayer_block( data ) {
     div.append(
-      `<div class="row">
+      `<div class="container block">
+          <div class="row">
           <div class="col text-center ">
             <p class="mt-3 mb-3 font-weight-normal one-em uc">${data.section_label}</p>
             <p class="mt-3 mb-3"><i class="ion-android-people ${data.icon_color} six-em" /> <i class="ion-android-people ${data.icon_color} six-em" /> <i class="ion-android-people ${data.icon_color} six-em" /></p>
@@ -1230,13 +1302,15 @@ jQuery(document).ready(function(){
            <p class="mt-3 mb-3 font-weight-normal one-em">${data.prayer}</p>
         </div>
     </div>
-      <div class="w-100"><hr></div>`)
+    <div class="w-100"><hr></div>
+    </div>`)
   }
   function _template_verse_block( data ) {
     let icons = ['ion-android-sync']
     let icon_name = icons[Math.floor(Math.random() * icons.length)]
     div.append(
-      `<div class="row">
+      `<div class="container block">
+          <div class="row">
           <div class="col text-center ">
             <p class="mt-3 mb-3 font-weight-normal one-em uc">${data.section_label}</p>
             <p class="mt-3 mb-3"><img src="${jsObject.image_folder}bible-${data.icon_color}.svg" alt="icon" /></p>
@@ -1253,11 +1327,13 @@ jQuery(document).ready(function(){
            <p class="mt-3 mb-3 font-weight-normal one-em">${data.prayer}</p>
         </div>
     </div>
-      <div class="w-100"><hr></div>`)
+    <div class="w-100"><hr></div>
+    </div>`)
   }
   function _template_photo_block( data ) {
     div.append(
-      `<div class="row">
+      `<div class="container block">
+          <div class="row">
           <div class="col text-center ">
             <p class="mt-3 mb-0 font-weight-normal one-em uc">${data.section_label}</p>
             <p class="mt-0 mb-3 font-weight-normal">${data.location_label}</p>
@@ -1274,6 +1350,8 @@ jQuery(document).ready(function(){
            <p class="mt-3 mb-3 font-weight-normal one-em">${data.prayer}</p>
         </div>
     </div>
-      <div class="w-100"><hr></div>`)
+    <div class="w-100"><hr></div>
+    </div>
+      `)
   }
 })

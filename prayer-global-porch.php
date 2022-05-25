@@ -87,6 +87,7 @@ class Prayer_Global_Porch {
         $wpdb->location_grid_facts = 'location_grid_facts';
         $wpdb->location_grid_cities = 'location_grid_cities';
         $wpdb->location_grid_people_groups = 'location_grid_people_groups';
+        $wpdb->location_grid_names = 'location_grid_names';
 
         require_once( 'global-utilities.php' );
         require_once( 'pages/pray/stacker.php' );

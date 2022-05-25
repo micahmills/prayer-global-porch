@@ -230,3 +230,9 @@ nav {
     margin-bottom:4em;
     border-bottom: 1px solid darkgray;
 }
+.mapboxgl-ctrl-top-right {
+    top: 10px;
+}
+.hidden {
+    display:none;
+}
