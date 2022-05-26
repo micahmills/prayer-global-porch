@@ -119,6 +119,11 @@ class Prayer_Global_Porch {
         require_once( 'pages/profile/magic-link.php' );
         require_once( 'pages/subscribe/magic-link.php' );
 
+
+        require_once( 'charts/charts-loader.php' );
+
+
+
         $this->i18n();
     }
 

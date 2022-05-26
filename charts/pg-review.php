@@ -1,20 +1,16 @@
 <?php
 if ( !defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly.
 
-/**
- * @todo replace all occurrences of the string "template" with a string of your choice
- * @todo also rename in charts-loader.php
- */
 
-class Disciple_Tools_Plugin_Starter_Template_Chart_Template extends DT_Metrics_Chart_Base
+class PG_Charts_Review extends PG_Metrics_Chart_Base
 {
-    public $base_slug = 'disciple-tools-plugin-starter-template-metrics'; // lowercase
-    public $base_title = "Plugin Starter Template Metrics";
+    public $base_slug = 'content'; // lowercase
+    public $base_title = "Content Review";
 
-    public $title = 'Template';
-    public $slug = 'template'; // lowercase
+    public $title = 'Locations';
+    public $slug = 'locations'; // lowercase
     public $js_object_name = 'wp_js_object'; // This object will be loaded into the metrics.js file by the wp_localize_script.
-    public $js_file_name = 'one-page-chart-template.js'; // should be full file name plus extension
+    public $js_file_name = 'pg-review.js'; // should be full file name plus extension
     public $permissions = [ 'dt_all_access_contacts', 'view_project_metrics' ];
 
     public function __construct() {
@@ -27,9 +23,15 @@ class Disciple_Tools_Plugin_Starter_Template_Chart_Template extends DT_Metrics_C
         }
         $url_path = dt_get_url_path();
 
-        // only load scripts if exact url
-        if ( "metrics/$this->base_slug/$this->slug" === $url_path ) {
+        add_filter( 'dt_metrics_menu', [ $this, 'base_menu' ], 20 ); //load menu links
 
+        if ( strpos( $url_path, "review/$this->base_slug/$this->slug" ) === 0 ) {
+            add_filter( 'dt_templates_for_urls', [ $this, 'base_add_url' ] ); // add custom URLs
+            add_action( 'wp_enqueue_scripts', [ $this, 'base_scripts' ], 99 );
+        }
+
+        // only load scripts if exact url
+        if ( "review/$this->base_slug/$this->slug" === $url_path ) {
             add_action( 'wp_enqueue_scripts', [ $this, 'scripts' ], 99 );
         }
     }
