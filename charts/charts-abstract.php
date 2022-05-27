@@ -32,7 +32,6 @@ abstract class PG_Metrics_Chart_Base
                 add_action( 'wp_enqueue_scripts', [ $this, 'base_scripts' ], 99 );
             }
         }
-
     }
 
     /**

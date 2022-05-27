@@ -21,9 +21,9 @@
       <span class="section-header">${localizedObject.translations.title}</span>
 
       <hr style="max-width:100%;">
-      
+
       <div id="chartdiv"></div>
-      
+
       <hr style="max-width:100%;">
 
       <button type="button" onclick="sample_api_call('Yeh successful response from API!')" class="button" id="sample_button">${translations["Sample API Call"]}</button>
@@ -70,7 +70,6 @@
   }
 
   window.sample_api_call = function sample_api_call( button_data ) {
-
 
     let localizedObject = window.wp_js_object // change this object to the one named in ui-menu-and-enqueue.php
 
