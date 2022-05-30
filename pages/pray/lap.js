@@ -726,7 +726,7 @@ jQuery(document).ready(function(){
    */
   function celebrate(){
     div.empty()
-    location_map_wrapper.hide()ç
+    location_map_wrapper.hide()
     celebrate_panel.show()
   }
 
