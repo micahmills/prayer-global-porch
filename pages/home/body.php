@@ -245,7 +245,8 @@ $global_race = pg_global_race_stats();
             <div class="col-md-12">
                 <h2 class="heading mb-3">Join Us</h2>
                 <p class="sub-heading mb-5 pb_color-light-opacity-8">Helping the church pray for the entire world in measurable units as a community.</p>
-                <p><a href="/newest/lap/" role="button" class="btn smoothscroll pb_outline-light btn-xl p-4 rounded-0 pb_font-13 pb_letter-spacing-2">Start Praying</a></p>
+<!--                <p><a href="/newest/lap/" role="button" class="btn smoothscroll pb_outline-light btn-xl p-4 rounded-0 pb_font-13 pb_letter-spacing-2">Start Praying</a></p>-->
+                <p><a href="/prayer_app/subscribe/" role="button" class="btn smoothscroll pb_outline-light btn-xl p-4 rounded-0 pb_font-13 pb_letter-spacing-2">Start Praying</a></p>
             </div>
         </div>
 
@@ -349,17 +350,37 @@ $global_race = pg_global_race_stats();
 </section>
 
 <footer class="pb_footer bg-light" role="contentinfo">
+    <hr style="padding-bottom: 5rem;">
     <div class="container">
-        <div class="row text-center">
-            <div class="col">
-                <ul class="list-inline">
-                    <li class="list-inline-item"><a href="#" class="p-2"><i class="fa fa-facebook"></i></a></li>
-                    <li class="list-inline-item"><a href="#" class="p-2"><i class="fa fa-twitter"></i></a></li>
-                    <li class="list-inline-item"><a href="#" class="p-2"><i class="fa fa-linkedin"></i></a></li>
+        <div class="row " >
+
+            <div class="col-md-3">
+                <ul>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Report a Correction</a></li>
+                    <li><a href="https://gospelambition.org/donate/">Donate</a></li>
                 </ul>
             </div>
+            <div class="col-md-3">
+                <ul>
+                    <li><a href="#">Download Materials</a></li>
+                    <li><a href="/prayer_app/subscribe/">Subscribe for News</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3">
+                <ul>
+                    <li><a href="/newest/lap/">Start Praying</a></li>
+                    <li><a href="/contacts">Login</a></li>
+                    <li><a href="/wp-admin">Admin</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3">
+                <p class="pb_font-14"> Made with &#10084;&#65039; by <a href="https://pray4movements.org">Pray4Movement</a></p>
+            </div>
         </div>
-        <div class="row">
+
+
+        <div class="row" style="padding-top: 5rem;">
             <div class="col text-center">
                 <p class="pb_font-14">&copy; <script>document.write(new Date().getFullYear())</script>. All Rights Reserved.</p>
             </div>
