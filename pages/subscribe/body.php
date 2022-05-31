@@ -7,7 +7,7 @@
             <div class="col-lg-7">
                 <h2 class="mt-0 heading-border-top font-weight-normal">We haven't launched yet!</h2>
                 <p>
-                    We are collecting interest in our project. Leave us your email, so we can alert you when the project goes live (Spring 2022).
+                    We are collecting interest in our project. Leave us your email, so we can alert you when the project goes live. (July 7, 2022).
                 </p>
             </div>
         </div>
