@@ -375,8 +375,10 @@ $global_race = pg_global_race_stats();
                 </ul>
             </div>
             <div class="col-md-3">
-                <p class="pb_font-14">Made with &#10084;&#65039; by <a href="https://pray4movements.org">Pray4Movement</a></p>
-                <p class="pb_font-14">Powered by <a href="https://disciple.tools">Disciple.Tools</a></p>
+                <p class="pb_font-14">
+                    Made with &#10084;&#65039; by <a href="https://pray4movements.org">Pray4Movement</a><br>
+                    Powered by <a href="https://disciple.tools">Disciple.Tools</a>
+                </p>
             </div>
         </div>
 
