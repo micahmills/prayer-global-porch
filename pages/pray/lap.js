@@ -135,7 +135,7 @@ jQuery(document).ready(function(){
     })
 
     // FOOTER
-    div.append(`<div class="row text-center"><div class="col">Location ID: ${content.location.grid_id}</</div>`)
+    div.append(`<div class="row text-center"><div class="col">Location ID: ${content.location.grid_id}</div></div><div class="row text-center"><div class="col" style="padding-bottom:2em;"><button class="btn btn-link" id="correction_button">Correction Needed?</button></div></div>`)
 
     var max = window.pace + window.items;
     var listItems = jQuery('.container.block').length;
@@ -144,6 +144,7 @@ jQuery(document).ready(function(){
     }
 
     prayer_progress_indicator( window.time ) // SETS THE PRAYER PROGRESS WIDGET
+
   }
 
   function prayer_progress_indicator( time_start ) {
@@ -167,24 +168,8 @@ jQuery(document).ready(function(){
   }
 
   /**
-   * BLOCK TEMPLATES
+   * Maps
    */
-  // function add_map() {
-  //   let rand_select = Math.floor(Math.random() * 3)
-  //   switch( rand_select ) {
-  //     case 0:
-  //       wide_globe()
-  //       break;
-  //     case 1:
-  //       // @todo islands don't look good with this map
-  //       zoom_globe()
-  //       break;
-  //     case 2:
-  //       // @todo the green dot doesn't show up in the front for asia countries
-  //       rotating_globe()
-  //       break;
-  //   }
-  // }
   function wide_globe(){
     jQuery('#location-map').html(`<div class="chartdiv wide_globe" id="wide_globe"></div>`)
     let content = window.current_content
@@ -466,16 +451,17 @@ jQuery(document).ready(function(){
 
     content.empty().html(`
         <div id="map-wrapper"><div id='mabox-map'></div>
-          <div id="style-menu">
-          <input id="dt" type="radio" name="rtoggle" value="discipletools/cl1qp8vuf002l15ngm5a7up59" checked="checked">
-          <label for="dt">light</label>
-          <input id="outdoors-v11" type="radio" name="rtoggle" value="mapbox/outdoors-v11">
-          <label for="outdoors-v11">outdoors</label>
-          <input id="satellite-v9" type="radio" name="rtoggle" value="mapbox/satellite-v9">
-          <label for="satellite-v9">satellite</label>
-          <input id="streets-v11" type="radio" name="rtoggle" value="mapbox/streets-v11">
-          <label for="streets-v11">streets</label>
-          </div></div>`)
+<!--          <div id="style-menu">-->
+<!--          <input id="dt" type="radio" name="rtoggle" value="discipletools/cl1qp8vuf002l15ngm5a7up59" checked="checked">-->
+<!--          <label for="dt">light</label>-->
+<!--          <input id="outdoors-v11" type="radio" name="rtoggle" value="mapbox/outdoors-v11">-->
+<!--          <label for="outdoors-v11">outdoors</label>-->
+<!--          <input id="satellite-v9" type="radio" name="rtoggle" value="mapbox/satellite-v9">-->
+<!--          <label for="satellite-v9">satellite</label>-->
+<!--          <input id="streets-v11" type="radio" name="rtoggle" value="mapbox/streets-v11">-->
+<!--          <label for="streets-v11">streets</label>-->
+<!--          </div>-->
+          </div>`)
     jQuery('#style-menu input').on('change', function(e){
       console.log(e.target.value)
       window.load_map_with_style( e.target.value )
@@ -718,6 +704,49 @@ jQuery(document).ready(function(){
   })
   location_show_borders.on('click', function(e) {
     mapbox_border_map()
+  })
+
+  let correction_title = jQuery('#correction_title')
+  let correction_select = jQuery('#correction_select')
+  let correction_response = jQuery('#correction_response')
+  let correction_modal = jQuery('#correction_modal')
+
+  jQuery('#correction_button').on('click', function() {
+    console.log(window.current_content)
+
+    correction_title.html(`<strong>${window.current_content.location.full_name}</strong>`)
+    let section_select = jQuery('#correction_select')
+    section_select.empty()
+    jQuery.each(window.current_content.list, function(i,v){
+      section_select.append(`<option value="${v.type}">${v.data.section_label}</option>`)
+    })
+    section_select.append(`<option value="other">Other</option>`)
+    correction_modal.modal('show')
+  })
+  jQuery('#correction_submit_button').on('click', function(){
+      console.log('submit')
+    let data = {
+      grid_id: window.current_content.location.grid_id,
+      language: 'en',
+      section: correction_select.val(),
+      section_label: jQuery('#correction_select option:selected').text(),
+      response: correction_response.val()
+    }
+    window.api_post( 'correction', data )
+      .done(function(x) {
+        console.log(x)
+      })
+
+    correction_modal.modal('hide')
+    correction_title.empty()
+    correction_select.empty()
+    correction_response.val('')
+  })
+  jQuery('#correction_close').on( 'click', function(){
+    console.log('close')
+    correction_title.empty()
+    correction_select.empty()
+    correction_response.val('')
   })
 
 

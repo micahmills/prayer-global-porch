@@ -36,7 +36,6 @@ class Prayer_Global_Porch_Newest_Lap extends DT_Magic_Url_Base
         wp_redirect( $link );
         exit;
     }
-
 }
 Prayer_Global_Porch_Newest_Lap::instance();
 
@@ -80,9 +79,7 @@ class Prayer_Global_Porch_Newest_Lap_Stats extends DT_Magic_Url_Base
         wp_redirect($link);
         exit;
     }
-
 }
-
 Prayer_Global_Porch_Newest_Lap_Stats::instance();
 
 
@@ -125,8 +122,6 @@ class Prayer_Global_Porch_Newest_Lap_Map extends DT_Magic_Url_Base
         wp_redirect($link);
         exit;
     }
-
 }
-
 Prayer_Global_Porch_Newest_Lap_Map::instance();
 

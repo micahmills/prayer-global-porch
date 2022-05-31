@@ -60,11 +60,13 @@ class PG_Stacker {
 
         $templates = [];
 
+        $section_label = 'Demographics';
+
         // all locations
         $templates[] = [
             'type' => '4_fact_blocks',
             'data' => [
-                'section_label' => 'Demographics',
+                'section_label' => $section_label,
                 'focus_label' => $stack['location']['full_name'],
                 'label_1' => 'Population',
                 'value_1' => $stack['location']['population'],
@@ -89,7 +91,7 @@ class PG_Stacker {
                 $templates[] = [
                     'type' => '4_fact_blocks',
                     'data' => [
-                        'section_label' => 'Demographics',
+                        'section_label' => $section_label,
                         'focus_label' => $stack['location']['full_name'],
                         'label_1' => 'Lost Population',
                         'value_1' => $stack['location']['all_lost'],
@@ -112,7 +114,7 @@ class PG_Stacker {
             $templates[] = [
                 'type' => 'content_block',
                 'data' => [
-                    'section_label' => 'Demographics',
+                    'section_label' => $section_label,
                     'focus_label' => $stack['location']['full_name'],
                     'icon' => 'ion-map',
                     'color' => 'red',
@@ -125,7 +127,7 @@ class PG_Stacker {
             $templates[] = [
                 'type' => '4_fact_blocks',
                 'data' => [
-                    'section_label' => 'Demographics',
+                    'section_label' => $section_label,
                     'focus_label' => $stack['location']['full_name'],
                     'label_1' => 'Believers',
                     'value_1' => $stack['location']['believers'],
@@ -146,7 +148,7 @@ class PG_Stacker {
             $templates[] = [
                 'type' => 'content_block',
                 'data' => [
-                    'section_label' => 'Demographics',
+                    'section_label' => $section_label,
                     'focus_label' => $stack['location']['full_name'],
                     'icon' => 'ion-map',
                     'color' => 'orange',

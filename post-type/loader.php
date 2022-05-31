@@ -17,16 +17,28 @@ add_filter( 'dt_post_type_modules', function( $modules ){
         "name" => "Laps",
         "enabled" => true,
         "locked" => true,
-        "prerequisites" => [ "contacts_base" ],
+        "prerequisites" => ['contacts_base'],
         "post_type" => "laps",
         "description" => "Prayer Laps"
     ];
+    $modules["feedback_base"] = [
+        "name" => "Feedback",
+        "enabled" => true,
+        "locked" => true,
+        "prerequisites" => ['contacts_base'],
+        "post_type" => "feedback",
+        "description" => "Feedback"
+    ];
+
 
     return $modules;
 }, 20, 1 );
 
-require_once 'module-base.php';
+require_once 'laps.php';
 Prayer_Global_Laps_Post_Type::instance();
+
+require_once 'feedback.php';
+Prayer_Global_Feedback_Post_Type::instance();
 
 
 function prayer_global_list_languages(){

@@ -177,6 +177,29 @@ class PG_Global_Prayer_App_Lap extends PG_Global_Prayer_App {
                 </div>
             </div>
         </div>
+        <div class="modal fade" id="correction_modal" tabindex="-1" role="dialog" aria-labelledby="correction_modal_label" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Thank you! Leave us a correction below.</h5>
+                        <button type="button" id="correction_close" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p><span id="correction_title"></span></p>
+                        <p>
+                            Section:<br>
+                            <select class="form-control"  id="correction_select"></select>
+                        </p>
+                        <p>
+                            Correction Requested:<br>
+                            <textarea class="form-control" id="correction_response" rows="3"></textarea></p>
+                        <p><button type="button" class="btn btn-primary" id="correction_submit_button">Submit</button></p>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- content section -->
         <section>
@@ -229,6 +252,8 @@ class PG_Global_Prayer_App_Lap extends PG_Global_Prayer_App {
                 return $result;
             case 'refresh':
                 return $this->get_new_location();
+            case 'correction':
+                return $this->save_correction(  $params['parts'], $params['data'] );
             case 'ip_location':
                 return $this->get_ip_location();
             default:
@@ -285,6 +310,44 @@ class PG_Global_Prayer_App_Lap extends PG_Global_Prayer_App {
         $id = dt_report_insert( $args, true, false );
 
         return $this->get_new_location();
+    }
+
+    public function save_correction( $parts, $data ) {
+
+        if ( !isset( $parts['post_id'], $parts['root'], $parts['type'], $data['grid_id'] ) ) {
+            return new WP_Error( __METHOD__, "Missing parameters", [ 'status' => 400 ] );
+        }
+
+        // prayer location log
+//        $args = [
+//
+//            // lap information
+//            'post_id' => $parts['post_id'],
+//            'post_type' => 'laps',
+//            'type' => $parts['root'],
+//            'subtype' => $parts['type'],
+//
+//            // prayer information
+//            'value' => $data['pace'] ?? 1,
+//            'grid_id' => $data['grid_id'],
+//
+//            // user information
+//            'payload' => [
+//                'user_location' => $data['user']['label'],
+//                'user_language' => 'en' // @todo expand for other languages
+//            ],
+//            'lng' => $data['user']['lng'],
+//            'lat' => $data['user']['lat'],
+//            'level' => $data['user']['level'],
+//            'label' => $data['user']['country'],
+//            'hash' => $data['user']['hash'],
+//        ];
+//        if ( is_user_logged_in() ) {
+//            $args['user_id'] = get_current_user_id();
+//        }
+//        $id = dt_report_insert( $args, true, false );
+
+        return true;
     }
 
     /**
