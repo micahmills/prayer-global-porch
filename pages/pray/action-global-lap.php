@@ -187,15 +187,16 @@ class PG_Global_Prayer_App_Lap extends PG_Global_Prayer_App {
                         </button>
                     </div>
                     <div class="modal-body">
-                        <p><span id="correction_title"></span></p>
+                        <p><span id="correction_title" class="correction_field"></span></p>
                         <p>
                             Section:<br>
-                            <select class="form-control" id="correction_select"></select>
+                            <select class="form-control correction_field" id="correction_select"></select>
                         </p>
                         <p>
                             Correction Requested:<br>
-                            <textarea class="form-control" id="correction_response" rows="3"></textarea></p>
-                        <p><button type="button" class="btn btn-primary" id="correction_submit_button">Submit</button></p>
+                            <textarea class="form-control correction_field" id="correction_response" rows="3"></textarea></p>
+                        <p><button type="button" class="btn btn-primary" id="correction_submit_button">Submit</button> <span class="loading-spinner correction_modal_spinner"></span></p>
+                        <p id="correction_error" class="correction_field"></p>
                     </div>
                 </div>
             </div>
@@ -257,10 +258,10 @@ class PG_Global_Prayer_App_Lap extends PG_Global_Prayer_App {
             case 'log':
                 $result = $this->save_log( $params['parts'], $params['data'] );
                 return $result;
-            case 'refresh':
-                return $this->get_new_location();
             case 'correction':
                 return $this->save_correction(  $params['parts'], $params['data'] );
+            case 'refresh':
+                return $this->get_new_location();
             case 'ip_location':
                 return $this->get_ip_location();
             default:
@@ -319,42 +320,76 @@ class PG_Global_Prayer_App_Lap extends PG_Global_Prayer_App {
         return $this->get_new_location();
     }
 
+    /**
+     * @param $parts
+     * @param $data
+     * @return array|false|int|WP_Error
+     */
     public function save_correction( $parts, $data ) {
 
         if ( !isset( $parts['post_id'], $parts['root'], $parts['type'], $data['grid_id'] ) ) {
             return new WP_Error( __METHOD__, "Missing parameters", [ 'status' => 400 ] );
         }
 
-        // prayer location log
-//        $args = [
-//
-//            // lap information
-//            'post_id' => $parts['post_id'],
-//            'post_type' => 'laps',
-//            'type' => $parts['root'],
-//            'subtype' => $parts['type'],
-//
-//            // prayer information
-//            'value' => $data['pace'] ?? 1,
-//            'grid_id' => $data['grid_id'],
-//
-//            // user information
-//            'payload' => [
-//                'user_location' => $data['user']['label'],
-//                'user_language' => 'en' // @todo expand for other languages
-//            ],
-//            'lng' => $data['user']['lng'],
-//            'lat' => $data['user']['lat'],
-//            'level' => $data['user']['level'],
-//            'label' => $data['user']['country'],
-//            'hash' => $data['user']['hash'],
-//        ];
+        if ( empty( $data['section_label'] ) ) {
+            $title = $data['current_content']['location']['full_name'];
+        } else {
+            $title = $data['current_content']['location']['full_name'] . ' (' . $data['section_label'] . ')';
+        }
+
+        $current_location_list = 'SECTIONS AVAILABLE DURING REPORT' . PHP_EOL . PHP_EOL;
+        foreach( $data['current_content']['list'] as $list ) {
+            $current_location_list .= strtoupper( $list['type'] ) . PHP_EOL;
+            foreach( $list['data'] as $k => $v ){
+                $current_location_list .= $k . ': ' . $v . PHP_EOL;
+            }
+            $current_location_list .= PHP_EOL;
+        }
+
+        $user_location = 'USER LOCATION' . PHP_EOL . PHP_EOL;
+        foreach( $data['user'] as $uk => $uv ) {
+            $user_location .= $uk . ': ' . $uv . PHP_EOL;
+        }
+        $user_location .= PHP_EOL . 'https://maps.google.com/maps?q='.$data['user']['lat'].','.$data['user']['lng'] .'&ll='.$data['user']['lat'].','.$data['user']['lng'] .'&z=7' .  PHP_EOL;
+
+        $fields = [
+            // lap information
+            'title' => $title,
+            'type' => 'location',
+            'status' => 'new',
+            'payload' => maybe_serialize( $data ),
+            'response' => $data['response'],
+            'location_grid_meta' => [
+                'values' => [
+                    'grid_id' => $data['grid_id']
+                ]
+            ],
+            'user_hash' => $data['user']['hash'],
+            'notes' => [
+                'Current_Location' => $current_location_list,
+                'User_Location' => $user_location,
+            ]
+        ];
+
+        if ( is_user_logged_in() ) {
+            $contact_id = Disciple_Tools_users::get_contact_for_user( get_current_user_id() );
+            if ( ! empty( $contact_id ) && ! is_wp_error( $contact_id ) ) {
+                $fields['contacts'] = [
+                    'values' => [
+                        [ 'value' => $contact_id ],
+                    ]
+                ];
+            }
+        }
+
+        $result = DT_Posts::create_post( 'feedback', $fields, true, false );
+
 //        if ( is_user_logged_in() ) {
 //            $args['user_id'] = get_current_user_id();
 //        }
 //        $id = dt_report_insert( $args, true, false );
 
-        return true;
+        return $result;
     }
 
     /**

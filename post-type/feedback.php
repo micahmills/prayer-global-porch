@@ -94,137 +94,159 @@ class Prayer_Global_Feedback_Post_Type extends DT_Module_Base {
     public function dt_custom_fields_settings( $fields, $post_type ){
         if ( $post_type === $this->post_type ){
 
+            $fields['type'] = [
+                'name'        => __( 'Type', 'prayer-global' ),
+                'description' => __( 'Type of Lap', 'prayer-global' ),
+                'type'        => 'key_select',
+                'default'     => [
+                    'location' => [
+                        'label' => __( 'Location', 'prayer-global' ),
+                        'description' => __( 'Custom laps', 'prayer-global' ),
+                    ],
+                    'general'   => [
+                        'label' => __( 'General', 'prayer-global' ),
+                        'description' => __( 'Do not manually create! System creates new laps when ready.', 'prayer-global' ),
+                    ]
+                ],
+                'tile'     => 'status',
+                'icon' => get_template_directory_uri() . '/dt-assets/images/nametag.svg',
+                "default_color" => "#366184",
+                "show_in_table" => 1,
+            ];
+            $fields['status'] = [
+                'name'        => __( 'Status', 'prayer-global' ),
+                'description' => __( 'Set the current status.', 'prayer-global' ),
+                'type'        => 'key_select',
+                'default'     => [
+                    'new'   => [
+                        'label' => __( 'New', 'prayer-global' ),
+                        'description' => __( 'Is new', 'prayer-global' ),
+                        'color' => "red"
+                    ],
+                    'in_progress'   => [
+                        'label' => __( 'In Progress', 'prayer-global' ),
+                        'description' => __( 'Active and assigned', 'prayer-global' ),
+                        'color' => "orange"
+                    ],
+                    'closed_fixed' => [
+                        'label' => __( 'Closed (Fixed)', 'prayer-global' ),
+                        'description' => __( 'Closed and feedback implemented.', 'prayer-global' ),
+                        'color' => "green"
+                    ],
+                    'closed_ignore' => [
+                        'label' => __( 'Closed (Denied)', 'prayer-global' ),
+                        'description' => __( 'Closed and feedback not implemented.', 'prayer-global' ),
+                        'color' => "green"
+                    ],
+                ],
+                'tile'     => 'status',
+                'icon' => get_template_directory_uri() . '/dt-assets/images/status.svg',
+                "default_color" => "#366184",
+                "show_in_table" => 2,
+                "in_create_form" => true,
+            ];
+            $fields['assigned_to'] = [
+                'name'        => __( 'Assigned To', 'prayer-global' ),
+                'description' => __( "Select the main person who is responsible for reporting on this record.", 'prayer-global' ),
+                'type'        => 'user_select',
+                'default'     => '',
+                'tile' => 'status',
+                'icon' => get_template_directory_uri() . '/dt-assets/images/assigned-to.svg',
+                "show_in_table" => 16,
+            ];
+            $fields['contacts'] = [
+                "name" => __( 'Reporter', 'prayer-global' ),
+                "description" => '',
+                "type" => "connection",
+                "post_type" => "contacts",
+                "p2p_direction" => "to",
+                "p2p_key" => $this->post_type."_to_contacts",
+                "tile" => "status",
+                'icon' => get_template_directory_uri() . "/dt-assets/images/group-type.svg",
+                'create-icon' => get_template_directory_uri() . "/dt-assets/images/add-contact.svg",
+                "show_in_table" => 35
+            ];
+
+            $fields['payload'] = [
+                'name'        => __( 'Payload', 'disciple_tools' ),
+                'description' => _x( 'Raw response from reporter', 'Optional Documentation', 'disciple_tools' ),
+                'type'        => 'textarea',
+                'default' => '',
+                'hidden' => false,
+            ];
+
+            $fields['user_hash'] = [
+                'name'        => __( 'User Hash', 'disciple_tools' ),
+                'description' => _x( 'User identifier', 'Optional Documentation', 'disciple_tools' ),
+                'type'        => 'text',
+                'default' => '',
+                'hidden' => false,
+            ];
+            $fields['response'] = [
+                'name'        => __( 'Response', 'disciple_tools' ),
+                'description' => _x( 'Response', 'Optional Documentation', 'disciple_tools' ),
+                'type'        => 'textarea',
+                'default' => '',
+                'tile' => 'status',
+                'icon' => get_template_directory_uri() . '/dt-assets/images/assigned-to.svg',
+                "show_in_table" => 16,
+            ];
+
+            // add location fields
+            $fields['location_grid'] = [
+                'name'        => __( 'Locations', 'disciple_tools' ),
+                'description' => _x( 'The general location where this contact is located.', 'Optional Documentation', 'disciple_tools' ),
+                'type'        => 'location',
+                'mapbox'    => false,
+                "in_create_form" => true,
+                "tile" => "details",
+                "icon" => get_template_directory_uri() . "/dt-assets/images/location.svg?v=2",
+            ];
+            $fields['location_grid_meta'] = [
+                'name'        => __( 'Locations or Address', 'disciple_tools' ),
+                'type'        => 'location_meta',
+                "tile"      => "details",
+                'mapbox'    => false,
+                'hidden' => true,
+                "in_create_form" => true,
+                "icon" => get_template_directory_uri() . "/dt-assets/images/map-marker-multiple.svg?v=2",
+            ];
+            $fields["contact_address"] = [
+                "name" => __( 'Address', 'disciple_tools' ),
+                "icon" => get_template_directory_uri() . "/dt-assets/images/house.svg?v=2",
+                "type" => "communication_channel",
+                "tile" => "details",
+                'mapbox'    => false,
+                "customizable" => false
+            ];
+            if ( DT_Mapbox_API::get_key() ){
+                $fields["contact_address"]["custom_display"] = true;
+                $fields["contact_address"]["mapbox"] = true;
+                $fields["contact_address"]["hidden"] = true;
+                unset( $fields["contact_address"]["tile"] );
+                $fields["location_grid"]["mapbox"] = true;
+                $fields["location_grid"]["hidden"] = true;
+                $fields["location_grid_meta"]["mapbox"] = true;
+                $fields["location_grid_meta"]["hidden"] = false;
+            }
 
 
-//            $fields['type'] = [
-//                'name'        => __( 'Type', 'prayer-global' ),
-//                'description' => __( 'Type of Lap', 'prayer-global' ),
-//                'type'        => 'key_select',
-//                'default'     => [
-//                    'custom' => [
-//                        'label' => __( 'Custom', 'prayer-global' ),
-//                        'description' => __( 'Custom laps', 'prayer-global' ),
-//                    ],
-//                    'global'   => [
-//                        'label' => __( 'Global (Auto)', 'prayer-global' ),
-//                        'description' => __( 'Do not manually create! System creates new laps when ready.', 'prayer-global' ),
-//                    ]
-//                ],
-//                'tile'     => 'status',
-//                'icon' => get_template_directory_uri() . '/dt-assets/images/nametag.svg',
-//                "default_color" => "#366184",
-//                "show_in_table" => 1,
-//            ];
-//            $fields['status'] = [
-//                'name'        => __( 'Status', 'prayer-global' ),
-//                'description' => __( 'Set the current status.', 'prayer-global' ),
-//                'type'        => 'key_select',
-//                'default'     => [
-//                    'active'   => [
-//                        'label' => __( 'Active', 'prayer-global' ),
-//                        'description' => __( 'Is active.', 'prayer-global' ),
-//                        'color' => "#FFA500"
-//                    ],
-//                    'complete' => [
-//                        'label' => __( 'Complete', 'prayer-global' ),
-//                        'description' => __( 'No longer active.', 'prayer-global' ),
-//                        'color' => "#4CAF50"
-//                    ],
-//                    'inactive' => [
-//                        'label' => __( 'Inactive', 'prayer-global' ),
-//                        'description' => __( 'No longer active.', 'prayer-global' ),
-//                        'color' => "#F43636"
-//                    ],
-//                ],
-//                'tile'     => 'status',
-//                'icon' => get_template_directory_uri() . '/dt-assets/images/status.svg',
-//                "default_color" => "#366184",
-//                "show_in_table" => 2,
-//                "in_create_form" => true,
-//            ];
-//            $fields['assigned_to'] = [
-//                'name'        => __( 'Assigned To', 'prayer-global' ),
-//                'description' => __( "Select the main person who is responsible for reporting on this record.", 'prayer-global' ),
-//                'type'        => 'user_select',
-//                'default'     => '',
-//                'tile' => 'status',
-//                'icon' => get_template_directory_uri() . '/dt-assets/images/assigned-to.svg',
-//                "show_in_table" => 16,
-//            ];
-//
-//
-//
-//            /**
-//             * Common and recommended fields
-//             */
-//            $fields['start_date'] = [
-//                'name'        => __( 'Start Date', 'prayer-global' ),
-//                'description' => '',
-//                'type'        => 'date',
-//                'default'     => time(),
-//                'tile' => 'details',
-//                'icon' => get_template_directory_uri() . '/dt-assets/images/date-start.svg',
-//            ];
-//            $fields['end_date'] = [
-//                'name'        => __( 'End Date', 'prayer-global' ),
-//                'description' => '',
-//                'type'        => 'date',
-//                'default'     => '',
-//                'tile' => 'details',
-//                'icon' => get_template_directory_uri() . '/dt-assets/images/date-end.svg',
-//            ];
-//            $fields['start_time'] = [
-//                'name'        => __( 'Start time', 'prayer-global' ),
-//                'description' => '',
-//                'type'        => 'number',
-//                'default'     => '',
-//                "hidden" => true,
-//            ];
-//            $fields['end_time'] = [
-//                'name'        => __( 'End Time', 'prayer-global' ),
-//                'description' => '',
-//                'type'        => 'number',
-//                'default'     => '',
-//                "hidden" => true,
-//            ];
-//
-//
-//
-//            $fields['prayer_app_custom_magic_key'] = [
-//                'name'        => __( 'Custom Key', 'prayer-global' ),
-//                'description' => '',
-//                'type'        => 'text',
-//                'default'     => substr( md5( rand( 10000, 100000 ) ), 0, 3 ) . substr( md5( rand( 10000, 100000 ) ), 0, 3 ),
-//                'tile' => 'details',
-//            ];
-//
-//            $fields['contacts'] = [
-//                "name" => __( 'Contacts', 'prayer-global' ),
-//                "description" => '',
-//                "type" => "connection",
-//                "post_type" => "contacts",
-//                "p2p_direction" => "to",
-//                "p2p_key" => $this->post_type."_to_contacts",
-//                "tile" => "other",
-//                'icon' => get_template_directory_uri() . "/dt-assets/images/group-type.svg",
-//                'create-icon' => get_template_directory_uri() . "/dt-assets/images/add-contact.svg",
-//                "show_in_table" => 35
-//            ];
+
         }
 
         if ( $post_type === "contacts" ){
-//            $fields[$this->post_type] = [
-//                "name" => $this->plural_name,
-//                "description" => '',
-//                "type" => "connection",
-//                "post_type" => $this->post_type,
-//                "p2p_direction" => "from",
-//                "p2p_key" => $this->post_type."_to_contacts",
-//                "tile" => "other",
-//                'icon' => get_template_directory_uri() . "/dt-assets/images/group-type.svg",
-//                'create-icon' => get_template_directory_uri() . "/dt-assets/images/add-group.svg",
-//                "show_in_table" => 35
-//            ];
+            $fields[$this->post_type] = [
+                "name" => $this->plural_name,
+                "description" => '',
+                "type" => "connection",
+                "post_type" => $this->post_type,
+                "p2p_direction" => "from",
+                "p2p_key" => $this->post_type."_to_contacts",
+                "tile" => "other",
+                'icon' => get_template_directory_uri() . "/dt-assets/images/group-type.svg",
+                'create-icon' => get_template_directory_uri() . "/dt-assets/images/add-group.svg",
+                "show_in_table" => 35
+            ];
         }
 
         return $fields;

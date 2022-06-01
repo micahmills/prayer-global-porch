@@ -51,32 +51,29 @@ class Prayer_Global_Porch_Newest_Lap_Stats extends DT_Magic_Url_Base
 
     private static $_instance = null;
 
-    public static function instance()
-    {
-        if (is_null(self::$_instance)) {
+    public static function instance() {
+        if (is_null( self::$_instance )) {
             self::$_instance = new self();
         }
         return self::$_instance;
     } // End instance()
 
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct();
 
         $url = dt_get_url_path();
 
-        if (substr($url, 0, strlen($this->url_token)) !== $this->root . '/' . $this->type) {
+        if (substr( $url, 0, strlen( $this->url_token ) ) !== $this->root . '/' . $this->type) {
             return;
         }
 
         $this->redirect();
     }
 
-    public function redirect()
-    {
+    public function redirect() {
         $current_lap = pg_current_global_lap();
         $link = '/prayer_app/global/' . $current_lap['key'] . '/stats';
-        wp_redirect($link);
+        wp_redirect( $link );
         exit;
     }
 }
@@ -94,32 +91,29 @@ class Prayer_Global_Porch_Newest_Lap_Map extends DT_Magic_Url_Base
 
     private static $_instance = null;
 
-    public static function instance()
-    {
-        if (is_null(self::$_instance)) {
+    public static function instance() {
+        if (is_null( self::$_instance )) {
             self::$_instance = new self();
         }
         return self::$_instance;
     } // End instance()
 
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct();
 
         $url = dt_get_url_path();
 
-        if (substr($url, 0, strlen($this->url_token)) !== $this->root . '/' . $this->type) {
+        if (substr( $url, 0, strlen( $this->url_token ) ) !== $this->root . '/' . $this->type) {
             return;
         }
 
         $this->redirect();
     }
 
-    public function redirect()
-    {
+    public function redirect() {
         $current_lap = pg_current_global_lap();
         $link = '/prayer_app/global/' . $current_lap['key'] . '/map';
-        wp_redirect($link);
+        wp_redirect( $link );
         exit;
     }
 }
