@@ -675,7 +675,7 @@ jQuery(document).ready(function(){
         window.time = 0
         window.current_content = window.next_content
         load_location()
-      }, 1200);
+      }, 3000);
   })
   pace_buttons.on('click', function(e) {
     pace_buttons.removeClass('btn-secondary').addClass('btn-outline-secondary')
@@ -741,7 +741,6 @@ jQuery(document).ready(function(){
       response: correction_response.val(),
 
     }
-    console.log(data)
 
     if ( ! data.response ) {
       correction_error.html(`You must enter a correction in order to submit.`)
@@ -774,7 +773,9 @@ jQuery(document).ready(function(){
   function celebrate(){
     div.empty()
     location_map_wrapper.hide()
-    celebrate_panel.show()
+    let rint = Math.floor(Math.random() * 9) + 1
+    celebrate_panel.html(`<p style="padding-top:2em;"><h1>Great Job!<br>Prayer Added!</h1></p>
+<p><img width="400px" src="${jsObject.image_folder}celebrate${rint}.gif" class="img-fluid celebrate-image" alt="photo" /></p>`).show()
   }
 
 

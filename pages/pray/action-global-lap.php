@@ -131,11 +131,7 @@ class PG_Global_Prayer_App_Lap extends PG_Global_Prayer_App {
                     <button type="button" class="btn btn-secondary question question__yes" id="question__yes_next">Yes & Next</button>
                 </div>
             </div>
-            <div class="container celebrate " id="celebrate-panel">
-                <div class="text-center">
-                    <img src="https://via.placeholder.com/600x400?text=Celebrate+Animation" class="img-fluid celebrate-image" alt="photo" />
-                </div>
-            </div>
+            <div class="container celebrate text-center" id="celebrate-panel"></div>
             <div class="w-100" ></div>
             <div class="container decision" id="decision-panel">
                 <div class="btn-group decision_button_group" role="group" aria-label="Decision Button">
