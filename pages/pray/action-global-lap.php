@@ -210,6 +210,7 @@ class PG_Global_Prayer_App_Lap extends PG_Global_Prayer_App {
             <div class="w-100"><hr></div>
             <div id="content"></div>
             <div class="container">
+                <div class="row text-center pb-4"><div class="col"><button type="button" class="btn btn-outline-primary" id="more_prayer_fuel">Show More Prayer Fuel</button></div></div>
                 <div class="row text-center">
                     <div class="col" style="padding-bottom:2em;">
                         <button class="btn btn-link" id="correction_button">Correction Needed?</button>

@@ -27,7 +27,6 @@ class PG_Stacker {
 
         // adds and shuffles for variation
         self::_faith_status( $stack );
-        self::_photos( $stack );
         self::_population_change( $stack );
         self::_least_reached( $stack );
         self::_key_city( $stack );
@@ -39,12 +38,11 @@ class PG_Stacker {
         // adds to top
         self::_demographics( $stack );
         self::_prayers( $stack, 1 );
+        self::_photos( $stack, 2 );
 
         // adds to bottom
         self::_cities( $stack );
-        self::_people_groups( $stack ); // @todo disabled because it was adding 100ms to the processing. Investigate why.
-
-        // @todo  prioritize limit number of items
+        self::_people_groups( $stack );
 
 //        dt_write_log(__METHOD__ . ' END');
 
@@ -671,7 +669,10 @@ class PG_Stacker {
         return $stack;
     }
 
-    private static function _photos( &$stack ) {
+    private static function _photos( &$stack, int $position ) {
+        if ( empty( $position ) ) {
+            $position = 2;
+        }
         $images = pg_images( $stack['location']['grid_id'], true );
 
         if ( ! empty( $images['photos'] ) ) {
@@ -727,12 +728,13 @@ class PG_Stacker {
                 ]
             ];
 
-           $stack['list'][] = $template;
+            $stack['list'] = array_merge(array_slice($stack['list'], 0, $position), [ $template ], array_slice($stack['list'], $position));
+            dt_write_log($template);
+            dt_write_log($stack);
         }
 
         return $stack;
     }
-
     private static function _prayers( &$stack, int $position ) {
 
         if ( empty( $position ) ) {

@@ -88,6 +88,8 @@ jQuery(document).ready(function(){
   let location_show_borders = jQuery('#show_borders')
   let location_map_wrapper = jQuery('#location-map')
 
+  let more_prayer_fuel = jQuery('#more_prayer_fuel')
+
   let i
 
   let interval
@@ -105,6 +107,10 @@ jQuery(document).ready(function(){
     window.next_content = jsObject.next_content
     load_location()
     ip_location()
+    more_prayer_fuel.on('click', function(){
+      jQuery('.container.block').show()
+      jQuery('#more_prayer_fuel').hide()
+    })
   }
   initialize_location() // initialize prayer framework
 
@@ -135,7 +141,6 @@ jQuery(document).ready(function(){
     })
 
     // FOOTER
-    div.append(`<div class="row text-center"><div class="col">Location ID: ${content.location.grid_id}</div></div>`)
 
     var max = window.pace + window.items;
     var listItems = jQuery('.container.block').length;
@@ -450,29 +455,15 @@ jQuery(document).ready(function(){
     console.log(grid_row)
 
     content.empty().html(`
-        <div id="map-wrapper"><div id='mabox-map'></div>
-<!--          <div id="style-menu">-->
-<!--          <input id="dt" type="radio" name="rtoggle" value="discipletools/cl1qp8vuf002l15ngm5a7up59" checked="checked">-->
-<!--          <label for="dt">light</label>-->
-<!--          <input id="outdoors-v11" type="radio" name="rtoggle" value="mapbox/outdoors-v11">-->
-<!--          <label for="outdoors-v11">outdoors</label>-->
-<!--          <input id="satellite-v9" type="radio" name="rtoggle" value="mapbox/satellite-v9">-->
-<!--          <label for="satellite-v9">satellite</label>-->
-<!--          <input id="streets-v11" type="radio" name="rtoggle" value="mapbox/streets-v11">-->
-<!--          <label for="streets-v11">streets</label>-->
-<!--          </div>-->
-          </div>`)
-    jQuery('#style-menu input').on('change', function(e){
-      console.log(e.target.value)
-      window.load_map_with_style( e.target.value )
-    })
+        <div id="map-wrapper"><div id='mabox-map'></div></div>`)
 
-    window.load_map_with_style = ( style ) => {
+
+    window.load_map_with_style = ( ) => {
       let center = [grid_row.p_longitude, grid_row.p_latitude]
       mapboxgl.accessToken = jsObject.map_key;
       let map = new mapboxgl.Map({
         container: 'mabox-map',
-        style: 'mapbox://styles/'+style,
+        style: 'mapbox://styles/discipletools/cl1qp8vuf002l15ngm5a7up59',
         center: center,
         minZoom: 0,
         zoom: 1
@@ -608,7 +599,7 @@ jQuery(document).ready(function(){
 
       }) // map load
     }
-    window.load_map_with_style('discipletools/cl1qp8vuf002l15ngm5a7up59') // initialize map
+    window.load_map_with_style() // initialize map
   }
 
 
@@ -773,9 +764,12 @@ jQuery(document).ready(function(){
   function celebrate(){
     div.empty()
     location_map_wrapper.hide()
+    more_prayer_fuel.show()
+
     let rint = Math.floor(Math.random() * 9) + 1
     celebrate_panel.html(`<p style="padding-top:2em;"><h1>Great Job!<br>Prayer Added!</h1></p>
-<p><img width="400px" src="${jsObject.image_folder}celebrate${rint}.gif" class="img-fluid celebrate-image" alt="photo" /></p>`).show()
+    <p><img width="400px" src="${jsObject.image_folder}celebrate${rint}.gif" class="img-fluid celebrate-image" alt="photo" /></p>`).show()
+
   }
 
 
