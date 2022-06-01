@@ -369,7 +369,7 @@ $global_race = pg_global_race_stats();
             <div class="col-md-3">
                 <ul>
                     <li><a href="#">Contact Us</a></li>
-                    <li><a href="#">Report a Correction</a></li>
+<!--                    <li><a href="#">Report a Correction</a></li>-->
                     <li><a href="https://gospelambition.org/donate/">Donate</a></li>
                 </ul>
             </div>
