@@ -118,7 +118,19 @@ $global_race = pg_global_race_stats();
 </section>
 <!-- END section -->
 
-
+<style>
+    #video-link-icon {
+        border:1px solid white;
+        padding: 1.5rem 1.9rem;
+        color:white;
+        cursor: pointer;
+    }
+    #video-link-icon:hover {
+        color: black;
+        border-color: black;
+        background-color: white;
+    }
+</style>
 <section class="pb_sm_py_cover text-center cover-bg-black cover-bg-opacity-4" style="background-image: url(<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/images/1900x1200_img_2.jpg)">
     <div class="container">
         <div class="row align-items-center">
@@ -126,7 +138,7 @@ $global_race = pg_global_race_stats();
                 <h2 class="heading mb-3">Moravian Prayer Challenge</h2>
                 <p class="sub-heading mb-5 pb_color-light-opacity-8">What is the Moravian Prayer Challenge? Who are the Moravians? Watch this video and find out.</p>
                 <div class="text-center">
-                    <a data-toggle="modal" data-target="#demo_video"></a><i class="ion-videocamera pb_font-60 border-gray rounded-circle" id="video-link-icon" style="border:1px solid #868e96; padding: 1.5rem 1.9rem; cursor: pointer;"></i>
+                    <a data-toggle="modal" data-target="#demo_video"></a><i class="ion-videocamera pb_font-60 border-gray rounded-circle" id="video-link-icon"></i>
                 </div>
             </div>
         </div>
