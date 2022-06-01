@@ -229,9 +229,6 @@ class Prayer_Global_Feedback_Post_Type extends DT_Module_Base {
                 $fields["location_grid_meta"]["mapbox"] = true;
                 $fields["location_grid_meta"]["hidden"] = false;
             }
-
-
-
         }
 
         if ( $post_type === "contacts" ){

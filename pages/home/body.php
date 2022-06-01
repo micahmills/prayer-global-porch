@@ -1,9 +1,4 @@
 <?php require_once( trailingslashit( plugin_dir_path( __DIR__ ) ) . '/assets/nav.php' ) ?>
-<?php
-$current_global_lap = pg_current_global_lap();
-$current_global_stats = pg_global_stats_by_lap_number($current_global_lap['lap_number']);
-$global_race = pg_global_race_stats();
-?>
 
 <section class="pb_cover_v1 text-left cover-bg-black cover-bg-opacity-4" style="background-image: url(<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/images/map_background.jpg)" id="section-home">
     <div class="container">
@@ -26,7 +21,7 @@ $global_race = pg_global_race_stats();
         <div class="row">
             <div class="col-md text-center pb_sm_py_cover">
                 <h2 class=" mb-3 heading" style="color:#212529">Current Lap</h2>
-                <h3 class="mt-0 heading-border-top pb_font-30"><?php echo $current_global_stats['time_elapsed'] ?></h3>
+                <h3 class="mt-0 heading-border-top pb_font-30" id="current_time_elapsed"><span class="loading-spinner active"></span></h3>
                 <br>
             </div>
         </div>
@@ -35,7 +30,7 @@ $global_race = pg_global_race_stats();
                 <div class="media pb_media_v2 d-block text-center mb-3">
                     <div class="icon border border-gray rounded-circle d-flex mr-3 display-4 mx-auto mb-4"><i class="text-primary ion-ios-body-outline"></i></div>
                     <div class="media-body">
-                        <h3 class="mt-0 pb_font-45"><?php echo $current_global_stats['participants'] ?></h3>
+                        <h3 class="mt-0 pb_font-45" id="current_participants"><span class="loading-spinner active"></span></h3>
                         <h3 class="mt-0 pb_font-20">Prayer Warriors</h3>
                     </div>
                 </div>
@@ -44,7 +39,7 @@ $global_race = pg_global_race_stats();
                 <div class="media pb_media_v2 d-block text-center mb-3">
                     <div class="icon border border-gray rounded-circle d-block mr-3 display-4 mx-auto mb-4"><i class="text-primary ion-earth"></i></div>
                     <div class="media-body">
-                        <h3 class="mt-0 pb_font-45"><?php echo $current_global_stats['completed'] ?></h3>
+                        <h3 class="mt-0 pb_font-45" id="current_completed"><span class="loading-spinner active"></span></h3>
                         <h3 class="mt-0 pb_font-20">Covered</h3>
                     </div>
                 </div>
@@ -53,7 +48,7 @@ $global_race = pg_global_race_stats();
                 <div class="media pb_media_v2 d-block text-center  mb-3">
                     <div class="icon border border-gray rounded-circle d-flex mr-3 display-4 mx-auto mb-4"><i class="text-primary ion-android-alarm-clock"></i></i></div>
                     <div class="media-body">
-                        <h3 class="mt-0 pb_font-45"><?php echo $current_global_stats['remaining'] ?></h3>
+                        <h3 class="mt-0 pb_font-45" id="current_remaining"><span class="loading-spinner active"></span></h3>
                         <h3 class="mt-0 pb_font-20">Remaining</h3>
                     </div>
                 </div>
@@ -72,7 +67,7 @@ $global_race = pg_global_race_stats();
         <div class="row">
             <div class="col-md text-center pb_sm_py_cover">
                 <h2 class=" mb-3 heading" style="color:#212529">Global Race</h2>
-                <h3 class="mt-0 heading-border-top pb_font-30"><?php echo $global_race['time_elapsed'] ?></h3>
+                <h3 class="mt-0 heading-border-top pb_font-30" id="global_time_elapsed"><span class="loading-spinner active"></span></h3>
                 <br>
             </div>
         </div>
@@ -81,7 +76,7 @@ $global_race = pg_global_race_stats();
                 <div class="media pb_media_v2 d-block text-center mb-3">
                     <div class="icon border border-gray rounded-circle d-flex mr-3 display-4 mx-auto mb-4"><i class="text-primary ion-ios-body-outline"></i></div>
                     <div class="media-body">
-                        <h3 class="mt-0 pb_font-45"><?php echo $global_race['participants'] ?></h3>
+                        <h3 class="mt-0 pb_font-45" id="global_participants"><span class="loading-spinner active"></span></h3>
                         <h3 class="mt-0 pb_font-20">Prayer Warriors</h3>
                     </div>
                 </div>
@@ -90,7 +85,7 @@ $global_race = pg_global_race_stats();
                 <div class="media pb_media_v2 d-block text-center  mb-3">
                     <div class="icon border border-gray rounded-circle d-flex mr-3 display-4 mx-auto mb-4"><i class="text-primary ion-android-alarm-clock"></i></i></div>
                     <div class="media-body">
-                        <h3 class="mt-0 pb_font-45"><?php echo $global_race['minutes_prayed'] ?></h3>
+                        <h3 class="mt-0 pb_font-45" id="global_minutes_prayed"><span class="loading-spinner active"></span></h3>
                         <h3 class="mt-0 pb_font-20">Minutes Prayed</h3>
                     </div>
                 </div>
@@ -99,7 +94,7 @@ $global_race = pg_global_race_stats();
                 <div class="media pb_media_v2 d-block text-center mb-3">
                     <div class="icon border border-gray rounded-circle d-block mr-3 display-4 mx-auto mb-4"><i class="text-primary ion-earth"></i></div>
                     <div class="media-body">
-                        <h3 class="mt-0 pb_font-45"><?php echo $current_global_stats['lap_number'] ?></h3>
+                        <h3 class="mt-0 pb_font-45" id="global_lap_number"><span class="loading-spinner active"></span></h3>
                         <h3 class="mt-0 pb_font-20">Laps</h3>
                     </div>
                 </div>
@@ -119,17 +114,7 @@ $global_race = pg_global_race_stats();
 <!-- END section -->
 
 <style>
-    #video-link-icon {
-        border:1px solid white;
-        padding: 1.5rem 1.9rem;
-        color:white;
-        cursor: pointer;
-    }
-    #video-link-icon:hover {
-        color: black;
-        border-color: black;
-        background-color: white;
-    }
+
 </style>
 <section class="pb_sm_py_cover text-center cover-bg-black cover-bg-opacity-4" style="background-image: url(<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/images/1900x1200_img_2.jpg)">
     <div class="container">
@@ -364,36 +349,35 @@ $global_race = pg_global_race_stats();
 <footer class="pb_footer bg-light" role="contentinfo">
     <hr style="padding-bottom: 5rem;">
     <div class="container">
-        <div class="row " >
-
-            <div class="col-md-3">
-                <ul>
-                    <li><a href="#">Contact Us</a></li>
-<!--                    <li><a href="#">Report a Correction</a></li>-->
-                    <li><a href="https://gospelambition.org/donate/">Donate</a></li>
-                </ul>
-            </div>
-            <div class="col-md-3">
-                <ul>
-                    <li><a href="#">Download Materials</a></li>
-                    <li><a href="/prayer_app/subscribe/">Subscribe for News</a></li>
-                </ul>
-            </div>
-            <div class="col-md-3">
-                <ul>
-                    <li><a href="/newest/lap/">Start Praying</a></li>
-                    <li><a href="/contacts">Login</a></li>
-                    <li><a href="/wp-admin">Admin</a></li>
-                </ul>
-            </div>
+        <div class="row" >
             <div class="col-md-3">
                 <p class="pb_font-14">
                     Made with &#10084;&#65039; by <a href="https://pray4movements.org">Pray4Movement</a><br>
                     Powered by <a href="https://disciple.tools">Disciple.Tools</a>
                 </p>
             </div>
-        </div>
+            <div class="col-md-3">
+                <ul style="list-style: none;">
+                    <li><a href="/newest/lap/">Start Praying</a></li>
+                    <li><a href="#">Download Materials</a></li>
+                    <li><a href="/prayer_app/subscribe/">Subscribe for News</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3">
+                <ul style="list-style: none;">
+                    <li><a href="#">Contact Us</a></li>
+                    <!--                    <li><a href="#">Report a Correction</a></li>-->
+                    <li><a href="https://gospelambition.org/donate/">Donate</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3">
+                <ul style="list-style: none;">
+                    <li><a href="/contacts">DT Login</a></li>
+                    <li><a href="/wp-admin">WP Admin</a></li>
+                </ul>
+            </div>
 
+        </div>
 
         <div class="row" style="padding-top: 5rem;">
             <div class="col text-center">

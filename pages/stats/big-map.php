@@ -132,10 +132,10 @@ class Prayer_Global_Porch_Stats_Big_Map extends DT_Magic_Url_Base
                             <a href="/" class="navbar-brand">Prayer.Global</a>
                         </div>
                         <div class="cell small-9 medium-2 center hide-for-small-only">
-                            <span class="two-em lap-title">Race Map</span>
+                            <span class="two-em lap-title">Big Map</span>
                         </div>
                         <div class="cell small-9 medium-4 show-for-small-only">
-                            <span class="two-em lap-title"><strong>Race Map</strong></span>
+                            <span class="two-em lap-title"><strong>Big Map</strong></span>
                         </div>
                         <div class="cell small-3 medium-5 hide-for-small-only" id="nav-list">
                             <ul>
@@ -174,8 +174,8 @@ class Prayer_Global_Porch_Stats_Big_Map extends DT_Magic_Url_Base
             </ul>
             <hr>
             <ul class="navbar-nav two-em">
-                <li class="nav-item"><a class="nav-link" href="/stats_app/big_list/">Race List</a></li>
-                <li class="nav-item"><a class="nav-link" href="/stats_app/big_map/">Race Map</a></li>
+                <li class="nav-item"><a class="nav-link" href="/stats_app/big_list/">Big List</a></li>
+                <li class="nav-item"><a class="nav-link" href="/stats_app/big_map/">Big Map</a></li>
             </ul>
         </div>
         <div class="off-canvas position-right " id="offcanvas_location_details" data-close-on-click="true" data-content-overlay="false" data-off-canvas>
@@ -188,7 +188,7 @@ class Prayer_Global_Porch_Stats_Big_Map extends DT_Magic_Url_Base
             <hr>
             <div class="grid-x grid-padding-x center">
                 <div class="cell">
-                    <span class="three-em lap-title">Race Map</span>
+                    <span class="three-em lap-title">Big Map</span>
                     <hr>
                 </div>
                 <div class="cell small-6 medium-3">

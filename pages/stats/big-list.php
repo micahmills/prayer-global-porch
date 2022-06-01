@@ -110,7 +110,7 @@ class Prayer_Global_Porch_Stats_Big_List extends DT_Magic_Url_Base
             <div class="container pb-4">
                 <div class="row">
                     <div class="col-md text-center">
-                        <span class="two-em lap-title">Race List</span>
+                        <span class="two-em lap-title">Big List</span>
                     </div>
                 </div>
             </div>
