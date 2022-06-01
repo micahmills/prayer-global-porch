@@ -135,7 +135,7 @@ jQuery(document).ready(function(){
     })
 
     // FOOTER
-    div.append(`<div class="row text-center"><div class="col">Location ID: ${content.location.grid_id}</div></div><div class="row text-center"><div class="col" style="padding-bottom:2em;"><button class="btn btn-link" id="correction_button">Correction Needed?</button></div></div>`)
+    div.append(`<div class="row text-center"><div class="col">Location ID: ${content.location.grid_id}</div></div>`)
 
     var max = window.pace + window.items;
     var listItems = jQuery('.container.block').length;
@@ -715,12 +715,11 @@ jQuery(document).ready(function(){
     console.log(window.current_content)
 
     correction_title.html(`<strong>${window.current_content.location.full_name}</strong>`)
-    let section_select = jQuery('#correction_select')
-    section_select.empty()
+    correction_select.empty()
     jQuery.each(window.current_content.list, function(i,v){
-      section_select.append(`<option value="${v.type}">${v.data.section_label}</option>`)
+      correction_select.append(`<option value="${v.type}">${v.data.section_label}</option>`)
     })
-    section_select.append(`<option value="other">Other</option>`)
+    correction_select.append(`<option value="other">Other</option>`)
     correction_modal.modal('show')
   })
   jQuery('#correction_submit_button').on('click', function(){

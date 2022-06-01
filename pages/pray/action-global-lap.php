@@ -190,7 +190,7 @@ class PG_Global_Prayer_App_Lap extends PG_Global_Prayer_App {
                         <p><span id="correction_title"></span></p>
                         <p>
                             Section:<br>
-                            <select class="form-control"  id="correction_select"></select>
+                            <select class="form-control" id="correction_select"></select>
                         </p>
                         <p>
                             Correction Requested:<br>
@@ -212,6 +212,13 @@ class PG_Global_Prayer_App_Lap extends PG_Global_Prayer_App {
             </div>
             <div class="w-100"><hr></div>
             <div id="content"></div>
+            <div class="container">
+                <div class="row text-center">
+                    <div class="col" style="padding-bottom:2em;">
+                        <button class="btn btn-link" id="correction_button">Correction Needed?</button>
+                    </div>
+                </div>
+            </div>
         </section>
 
         <?php
