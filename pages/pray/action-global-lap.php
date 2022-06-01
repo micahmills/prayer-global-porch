@@ -341,6 +341,9 @@ class PG_Global_Prayer_App_Lap extends PG_Global_Prayer_App {
         foreach( $data['current_content']['list'] as $list ) {
             $current_location_list .= strtoupper( $list['type'] ) . PHP_EOL;
             foreach( $list['data'] as $k => $v ){
+                if ( is_array( $v ) ) {
+                    $v = serialize( $v );
+                }
                 $current_location_list .= $k . ': ' . $v . PHP_EOL;
             }
             $current_location_list .= PHP_EOL;
@@ -361,7 +364,9 @@ class PG_Global_Prayer_App_Lap extends PG_Global_Prayer_App {
             'response' => $data['response'],
             'location_grid_meta' => [
                 'values' => [
-                    'grid_id' => $data['grid_id']
+                    [
+                        'grid_id' => $data['grid_id']
+                    ]
                 ]
             ],
             'user_hash' => $data['user']['hash'],
@@ -370,6 +375,7 @@ class PG_Global_Prayer_App_Lap extends PG_Global_Prayer_App {
                 'User_Location' => $user_location,
             ]
         ];
+        dt_write_log($fields);
 
         if ( is_user_logged_in() ) {
             $contact_id = Disciple_Tools_users::get_contact_for_user( get_current_user_id() );
