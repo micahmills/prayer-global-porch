@@ -173,7 +173,7 @@ class PG_Stacker {
                 'percent_3' => $stack['location']['percent_believers'],
                 'population_3' => $stack['location']['believers'],
                 'section_summary' => '',
-                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['all_lost'].' lost neighbors around them.',
+                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['all_lost'].' neighbors around them.',
             ]
         ];
         $templates[] = [
@@ -672,7 +672,7 @@ class PG_Stacker {
                     'section_label' => 'Least Reached',
                     'focus_label' => $stack['least_reached']['name'],
                     'image_url' => pg_jp_image( 'pid3', $stack['least_reached']['PeopleID3'] ), // ion icons from /pages/fonts/ionicons/
-                    'section_summary' => 'The '.$stack['least_reached']['name'].' people in ' . $stack['location']['full_name'] . ' are a least reached people group, according to Joshua Project. They are classified as '.$stack['least_reached']['AffinityBloc'].' and speak '.$stack['least_reached']['PrimaryLanguageName'].'. Primarily, they follow '.$stack['least_reached']['PrimaryReligion'].' and '.$stack['least_reached']['PercentEvangelical'].'% are suspected of being believers.',
+                    'section_summary' => 'The '.$stack['least_reached']['name'].' people in ' . $stack['location']['full_name'] . ' are a least reached people group, according to Joshua Project. They are classified as '.$stack['least_reached']['AffinityBloc'].' and speak '.$stack['least_reached']['PrimaryLanguageName'].'. Primarily, they follow '.$stack['least_reached']['PrimaryReligion'].' and '. number_format( (float) $stack['least_reached']['PercentEvangelical'], 1 ).'% are suspected of being believers.',
                     'prayer' => 'Pray that the ' . $stack['location']['believers'] . ' believers in ' . $stack['location']['full_name'] . ' to boldly witnesses to the '.$stack['least_reached']['name'].' near them.'
                 ]
             ];
