@@ -153,7 +153,7 @@
             <div class="col-lg-7">
                 <h2 class="mt-0 heading-border-top font-weight-normal">What are Prayer Laps?</h2>
                 <p>
-                    One prayer lap is when there has been (at least) a 1 minute prayer covering over every populated place in the world.
+                    One prayer lap is when there has been (at least) a one-minute prayer covering over every populated place in the world.
                 </p>
             </div>
         </div>
@@ -170,7 +170,7 @@
                         <a data-toggle="collapse" data-parent="#prayer_accordian_" href="#prayer_accordian_1" aria-expanded="true" aria-controls="prayer_accordian_1" class="pb_font-18 uppercase">How it works</a>
                         <div id="prayer_accordian_1" class="collapse show" role="tabpanel">
                             <p>
-                                <span class="black">&#9312;</span> Click on "<a href="/newest/lap/">Start Praying</a>".
+                                <span class="black">&#9312;</span> Click on "Start Praying". <a href="/newest/lap/"><i class="ion-android-open"></i></a>
                             </p>
                             <p>
                                 <strong class="black">&#9313;</strong> Use the demographics, guided prayers, faith status, images, and maps to pray for the location for one minute.
