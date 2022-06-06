@@ -62,6 +62,16 @@ class PG_Stacker {
         $section_label = 'Demographics';
 
         // all locations
+        $templates[] = [
+            'type' => 'content_block',
+            'data' => [
+                'section_label' => $section_label,
+                'focus_label' => $stack['location']['full_name'],
+                'icon' => 'ion-map',
+                'color' => 'green',
+                'section_summary' => 'The ' . $stack['location']['admin_level_name'] . ' of <strong>' . $stack['location']['full_name'] . '</strong> has a population of <strong>' . $stack['location']['population'] . '</strong>.<br><br> We estimate ' . $stack['location']['name'] . ' has <strong>' . $stack['location']['believers'] . '</strong> people who might know Jesus, <strong>' . $stack['location']['christian_adherents'] . '</strong> people who might know about Jesus culturally, and <strong>' . $stack['location']['non_christians'] . '</strong> people who do not know Jesus.<br><br>This is <strong>1</strong> believer for every <strong>' .  $stack['location']['lost_per_believer'] . '</strong> neighbors who need Jesus.',
+            ]
+        ];
 
         if ( $stack['location']['percent_non_christians'] > 50 ) {
 
@@ -133,8 +143,10 @@ class PG_Stacker {
         }
 
 
-        $template = $templates[array_rand( $templates )];
-        $stack['list'] = array_merge( [ $template ], $stack['list'] );
+        if ( ! empty( $templates ) ) {
+            $template = $templates[array_rand( $templates )];
+            $stack['list'] = array_merge( [ $template ], $stack['list'] );
+        }
 
         return $stack;
     }
