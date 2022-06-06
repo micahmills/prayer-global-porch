@@ -60,7 +60,7 @@ class PG_Global_Prayer_App_Completed extends PG_Global_Prayer_App {
         global $wpdb;
 
         $parts = $this->parts;
-        $lap_stats = pg_global_stats_by_key($parts['public_key']);
+        $lap_stats = pg_global_stats_by_key( $parts['public_key'] );
 
         if ( empty( $lap_stats['end_time'] ) ) {
             $lap_stats['end_time'] = time();
@@ -108,7 +108,7 @@ class PG_Global_Prayer_App_Completed extends PG_Global_Prayer_App {
                 <div class="row ">
                     <div class="col text-center">
                         <h2 class="heading mb-5">Lap <?php echo esc_attr( $lap_stats['lap_number'] ) ?> Completed!</h2>
-                        <a href="<?php echo '/'. $this->parts['root'] . '/' . $this->parts['type'] . '/' . $this->parts['public_key'] . '/map' ?>" style="background-color:rgba(255,255,255,.7);" role="button" class="btn smoothscroll btn-xl pb_font-25 p-4 rounded-0 pb_letter-spacing-2">View Map</a>
+                        <a href="<?php echo esc_url( '/'. $this->parts['root'] . '/' . $this->parts['type'] . '/' . $this->parts['public_key'] . '/map' ) ?>" style="background-color:rgba(255,255,255,.7);" role="button" class="btn smoothscroll btn-xl pb_font-25 p-4 rounded-0 pb_letter-spacing-2">View Map</a>
                         <a href="/newest/lap/" style="background-color:rgba(255,255,255,.7);" role="button" class="btn smoothscroll pb_font-25 btn-xl pb_font-13 p-4 rounded-0 pb_letter-spacing-2">Go To The Current Lap</a> <br>
                         <hr style="border:1px solid white;margin-top:5vh;">
                     </div>
@@ -124,8 +124,8 @@ class PG_Global_Prayer_App_Completed extends PG_Global_Prayer_App {
                     <div class="col-md-6 justify-content-end">
                         <h2 class="heading mb-3">Pace</h2>
                         <div class="sub-heading pl-4">
-                            <p class="mb-0">Start: <?php echo esc_attr( date( 'M j, Y', $lap_stats['start_time'] ) ) ?></p>
-                            <p class="mb-0">End: <?php echo esc_attr( ( $lap_stats['end_time'] ) ? date( 'M j, Y', $lap_stats['end_time'] ) : 'ongoing' ) ?></p>
+                            <p class="mb-0">Start: <?php echo esc_attr( gmdate( 'M j, Y', $lap_stats['start_time'] ) ) ?></p>
+                            <p class="mb-0">End: <?php echo esc_attr( ( $lap_stats['end_time'] ) ? gmdate( 'M j, Y', $lap_stats['end_time'] ) : 'ongoing' ) ?></p>
                             <p class="mb-0"><?php echo esc_attr( $lap_stats['time_elapsed'] ) ?></p>
                         </div>
                     </div>
@@ -147,7 +147,7 @@ class PG_Global_Prayer_App_Completed extends PG_Global_Prayer_App {
                             <ol>
                                 <?php
                                 if ( ! empty( $participant_locations ) ) {
-                                    foreach( $participant_locations as $location ) {
+                                    foreach ( $participant_locations as $location ) {
                                         ?>
                                         <li class="mb-0"><?php echo esc_html( $location['location'] ) ?></li>
                                         <?php

@@ -12,8 +12,7 @@ class PG_Custom_Prayer_App_Map extends PG_Custom_Prayer_App {
         return self::$_instance;
     }
 
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct();
 
 
@@ -74,7 +73,7 @@ class PG_Custom_Prayer_App_Map extends PG_Custom_Prayer_App {
                 'grid_data' => [],
                 'participants' => [],
                 'stats' => pg_custom_lap_stats_by_post_id( $this->parts['post_id'] ),
-                'image_folder' => plugin_dir_url(__DIR__) . 'assets/images/',
+                'image_folder' => plugin_dir_url( __DIR__ ) . 'assets/images/',
                 'translations' => [
                     'add' => __( 'Add Magic', 'prayer-global' ),
                 ],
@@ -82,8 +81,8 @@ class PG_Custom_Prayer_App_Map extends PG_Custom_Prayer_App {
         </script>
         <link href="https://fonts.googleapis.com/css?family=Crimson+Text:400,400i,600|Montserrat:200,300,400" rel="stylesheet">
         <link rel="stylesheet" href="<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/fonts/ionicons/css/ionicons.min.css">
-        <link rel="stylesheet" href="<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/basic.css?ver=<?php echo fileatime( trailingslashit( plugin_dir_path( __DIR__ ) ) . 'assets/basic.css' ) ?>" type="text/css" media="all">
-        <link rel="stylesheet" href="<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) ) ?>heatmap.css?ver=<?php echo fileatime( trailingslashit( plugin_dir_path( __FILE__ ) ) . 'heatmap.css' ) ?>" type="text/css" media="all">
+        <link rel="stylesheet" href="<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/basic.css?ver=<?php echo esc_attr( fileatime( trailingslashit( plugin_dir_path( __DIR__ ) ) . 'assets/basic.css' ) ) ?>" type="text/css" media="all">
+        <link rel="stylesheet" href="<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) ) ?>heatmap.css?ver=<?php echo esc_attr( fileatime( trailingslashit( plugin_dir_path( __FILE__ ) ) . 'heatmap.css' ) ) ?>" type="text/css" media="all">
         <?php
     }
 
@@ -111,10 +110,10 @@ class PG_Custom_Prayer_App_Map extends PG_Custom_Prayer_App {
 
                         </div>
                         <div class="cell small-9 medium-4 center hide-for-small-only">
-                            <span class="two-em"><?php echo $lap_stats['title'] ?></span>
+                            <span class="two-em"><?php echo esc_html( $lap_stats['title'] ) ?></span>
                         </div>
                         <div class="cell small-9 medium-4 show-for-small-only">
-                            <span class="two-em"><strong><?php echo $lap_stats['title'] ?></strong></span>
+                            <span class="two-em"><strong><?php echo esc_html( $lap_stats['title'] ) ?></strong></span>
                         </div>
                         <div class="cell small-3 medium-4" style="text-align:right;">
                             <button type="button" data-toggle="offcanvas_menu"><i class="fi-list three-em"></i></button>
@@ -139,7 +138,7 @@ class PG_Custom_Prayer_App_Map extends PG_Custom_Prayer_App {
             <button type="button" data-toggle="offcanvas_menu"><i class="ion-chevron-right three-em"></i></button>
             <hr>
             <ul class="navbar-nav two-em">
-                <li class="nav-item"><a class="nav-link btn smoothscroll pb_outline-dark" style="text-transform: capitalize;" href="/prayer_app/custom/<?php echo $lap_stats['key'] ?>/">Start Praying</a></li>
+                <li class="nav-item"><a class="nav-link btn smoothscroll pb_outline-dark" style="text-transform: capitalize;" href="/prayer_app/custom/<?php echo esc_html( $lap_stats['key'] ) ?>/">Start Praying</a></li>
             </ul>
             <hr>
             <ul class="navbar-nav two-em">
@@ -157,7 +156,7 @@ class PG_Custom_Prayer_App_Map extends PG_Custom_Prayer_App {
             <hr>
             <div class="grid-x grid-padding-x center">
                 <div class="cell">
-                    <span class="three-em"><?php echo $lap_stats['title'] ?></span>
+                    <span class="three-em"><?php echo esc_html( $lap_stats['title'] ) ?></span>
                     <hr>
                 </div>
                 <div class="cell small-6 medium-3">
@@ -215,9 +214,9 @@ class PG_Custom_Prayer_App_Map extends PG_Custom_Prayer_App {
             return new WP_Error( __METHOD__, "Missing parameters", [ 'status' => 400 ] );
         }
 
-        switch( $params['action'] ) {
+        switch ( $params['action'] ) {
             case 'get_stats':
-                return pg_custom_lap_stats_by_post_id( $params['parts']['post_id']);
+                return pg_custom_lap_stats_by_post_id( $params['parts']['post_id'] );
             case 'get_grid':
                 return $this->get_grid( $params['parts'] );
             case 'get_grid_details':
@@ -225,7 +224,7 @@ class PG_Custom_Prayer_App_Map extends PG_Custom_Prayer_App {
             case 'get_participants':
                 return $this->get_participants( $params['parts'] );
             default:
-                return new WP_Error(__METHOD__, 'missing action parameter' );
+                return new WP_Error( __METHOD__, 'missing action parameter' );
         }
 
     }
@@ -283,7 +282,7 @@ class PG_Custom_Prayer_App_Map extends PG_Custom_Prayer_App {
         ", $parts['post_id'] ), ARRAY_A );
         $participants = [];
         if ( ! empty( $participants_raw ) ) {
-            foreach( $participants_raw as $p ) {
+            foreach ( $participants_raw as $p ) {
                 if ( ! empty( $p['longitude'] ) ) {
                     $participants[] = [
                         'longitude' => (float) $p['longitude'],

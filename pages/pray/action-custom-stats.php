@@ -58,7 +58,7 @@ class PG_Custom_Prayer_App_Stats extends PG_Custom_Prayer_App {
 
     public function body(){
         $parts = $this->parts;
-        $lap_stats = pg_global_stats_by_key($parts['public_key']);
+        $lap_stats = pg_global_stats_by_key( $parts['public_key'] );
 
         global $wpdb;
         if ( empty( $lap_stats['end_time'] ) ) {
@@ -123,8 +123,8 @@ class PG_Custom_Prayer_App_Stats extends PG_Custom_Prayer_App {
                     <div class="col-md-6 justify-content-end">
                         <h2 class="heading mb-3">Pace</h2>
                         <div class="sub-heading pl-4">
-                            <p class="mb-0">Start: <?php echo esc_attr( date( 'M j, Y', $lap_stats['start_time'] ) ) ?></p>
-                            <p class="mb-0">End: <?php echo esc_attr( ( $lap_stats['end_time'] ) ? date( 'M j, Y', $lap_stats['end_time'] ) : 'ongoing' ) ?></p>
+                            <p class="mb-0">Start: <?php echo esc_attr( gmdate( 'M j, Y', $lap_stats['start_time'] ) ) ?></p>
+                            <p class="mb-0">End: <?php echo esc_attr( ( $lap_stats['end_time'] ) ? gmdate( 'M j, Y', $lap_stats['end_time'] ) : 'ongoing' ) ?></p>
                             <p class="mb-0"><?php echo esc_attr( $lap_stats['time_elapsed'] ) ?></p>
                         </div>
                     </div>
@@ -146,7 +146,7 @@ class PG_Custom_Prayer_App_Stats extends PG_Custom_Prayer_App {
                             <ol>
                                 <?php
                                 if ( ! empty( $participant_locations ) ) {
-                                    foreach( $participant_locations as $location ) {
+                                    foreach ( $participant_locations as $location ) {
                                         ?>
                                         <li class="mb-0"><?php echo esc_html( $location['location'] ) ?></li>
                                         <?php

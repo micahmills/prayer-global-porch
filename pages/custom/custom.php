@@ -57,7 +57,7 @@ class Prayer_Global_Laps_Custom_Link extends DT_Magic_Url_Base {
             exit;
         }
 
-        $completed = get_post_meta( $this->parts['post_id'],  'end_time', true );
+        $completed = get_post_meta( $this->parts['post_id'], 'end_time', true );
         if ( $completed ) {
             add_action( 'dt_blank_body', [ $this, 'completed_body' ] );
         } else {
@@ -76,8 +76,7 @@ class Prayer_Global_Laps_Custom_Link extends DT_Magic_Url_Base {
         return [];
     }
 
-    public function dt_settings_apps_list( $apps_list )
-    {
+    public function dt_settings_apps_list( $apps_list ) {
         $apps_list[$this->meta_key] = [
             'key' => $this->meta_key,
             'url_base' => $this->root . '/' . $this->type,
@@ -92,10 +91,10 @@ class Prayer_Global_Laps_Custom_Link extends DT_Magic_Url_Base {
     public function header_javascript(){
         require_once( trailingslashit( plugin_dir_path( __DIR__ ) ) . 'assets/header.php' );
 
-        $completed = get_post_meta( $this->parts['post_id'],  'end_time', true );
+        $completed = get_post_meta( $this->parts['post_id'], 'end_time', true );
         if ( ! $completed ) {
             ?>
-            <script src="<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) ) ?>prayer.js?ver=<?php echo fileatime( trailingslashit( plugin_dir_path( __FILE__ ) ) . 'prayer.js' ) ?>"></script>
+            <script src="<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) ) ?>prayer.js?ver=<?php echo esc_attr( fileatime( trailingslashit( plugin_dir_path( __FILE__ ) )  . 'prayer.js' ) ) ?>"></script>
             <script>
                 let jsObject = [<?php echo json_encode([
                     'map_key' => DT_Mapbox_API::get_key(),
@@ -112,8 +111,8 @@ class Prayer_Global_Laps_Custom_Link extends DT_Magic_Url_Base {
                     'next_content' => $this->get_new_location( $this->parts ),
                 ]) ?>][0]
             </script>
-            <script type="text/javascript" src="<?php echo DT_Mapbox_API::$mapbox_gl_js ?>"></script>
-            <link rel="stylesheet" href="<?php echo DT_Mapbox_API::$mapbox_gl_css ?>" type="text/css" media="all">
+            <script type="text/javascript" src="<?php echo esc_url( DT_Mapbox_API::$mapbox_gl_js ) ?>"></script>
+            <link rel="stylesheet" href="<?php echo esc_url( DT_Mapbox_API::$mapbox_gl_css ) ?>" type="text/css" media="all">
             <?php
         }
 
@@ -160,7 +159,7 @@ class Prayer_Global_Laps_Custom_Link extends DT_Magic_Url_Base {
 
         $params = dt_recursive_sanitize_array( $params );
 
-        switch( $params['action'] ) {
+        switch ( $params['action'] ) {
             case 'log':
                 $result = $this->save_log( $params['parts'], $params['data'] );
                 return $result;
@@ -209,7 +208,7 @@ class Prayer_Global_Laps_Custom_Link extends DT_Magic_Url_Base {
         // subtract prayed places
         $list_prayed = $this->_query_prayed_list( $post_id );
         if ( ! empty( $list_prayed ) ) {
-            foreach( $list_prayed as $grid_id ) {
+            foreach ( $list_prayed as $grid_id ) {
                 if ( isset( $list_4770[$grid_id] ) ) {
                     unset( $list_4770[$grid_id] );
                 }
@@ -218,8 +217,8 @@ class Prayer_Global_Laps_Custom_Link extends DT_Magic_Url_Base {
 
         if ( empty( $list_4770 ) ) {
             $time = time();
-            $date = date( 'Y-m-d H:m:s', time() );
-            DT_Posts::update_post('laps', $post_id, [ 'status' => 'complete', 'end_date' => $date, 'end_time' => $time ], false, false );
+            $date = gmdate( 'Y-m-d H:m:s', time() );
+            DT_Posts::update_post( 'laps', $post_id, [ 'status' => 'complete', 'end_date' => $date, 'end_time' => $time ], false, false );
             if ( dt_is_rest() ) { // signal new lap to rest request
                 return false;
             } else { // if first load on finished lap, redirect to new lap
@@ -240,7 +239,7 @@ class Prayer_Global_Laps_Custom_Link extends DT_Magic_Url_Base {
 
         $global_list_prayed = Prayer_Global_Prayer_App::instance()->_query_prayed_list(); // positive list of global locations prayed for
         if ( ! empty( $global_list_prayed ) && in_array( $grid_id, $global_list_prayed ) /* in_array means the global list has already prayed for this location */ ) {
-            foreach( $list_4770 as $index => $custom_grid_id ) {
+            foreach ( $list_4770 as $index => $custom_grid_id ) {
                 if ( ! isset( $global_list_prayed[$custom_grid_id] ) ) {
                     $grid_id = $list_4770[$index];
                 }
@@ -259,12 +258,12 @@ class Prayer_Global_Laps_Custom_Link extends DT_Magic_Url_Base {
                     FROM $wpdb->dt_reports
                     WHERE post_id = %d
                       AND type = 'prayer_app'
-                      AND subtype = 'custom';"
-            , $post_id ) );
+                      AND subtype = 'custom';",
+        $post_id ) );
 
         $list = [];
-        if ( ! empty( $raw_list) ) {
-            foreach( $raw_list as $item ) {
+        if ( ! empty( $raw_list ) ) {
+            foreach ( $raw_list as $item ) {
                 $list[$item] = $item;
             }
         }

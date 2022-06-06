@@ -260,7 +260,7 @@ class Prayer_Global_Feedback_Post_Type extends DT_Module_Base {
         if ( $post_type === $this->post_type && $section === "other" ) {
             // hide opposite key app
             $post = DT_Posts::get_post( $this->post_type, get_the_ID() );
-            dt_write_log($post);
+            dt_write_log( $post );
             if ( isset( $post['type']['key'] ) && $post['type']['key'] === 'global' ) {
                 ?>
                 <script>
@@ -329,9 +329,9 @@ class Prayer_Global_Feedback_Post_Type extends DT_Module_Base {
 
     // filter at the start of post creation
     public function dt_post_create_fields( $fields, $post_type ){
-        if ( $post_type === $this->post_type ){
-
-        }
+//        if ( $post_type === $this->post_type ){
+//
+//        }
         return $fields;
     }
 
@@ -339,9 +339,9 @@ class Prayer_Global_Feedback_Post_Type extends DT_Module_Base {
     public function dt_post_created( $post_type, $post_id, $initial_fields ){
 
         // creates initial global lap
-        if ( $post_type === $this->post_type && isset( $initial_fields['type'] ) && 'global' === $initial_fields['type'] ){
-
-        }
+//        if ( $post_type === $this->post_type && isset( $initial_fields['type'] ) && 'global' === $initial_fields['type'] ){
+//
+//        }
     }
 
     private static function get_my_status(){

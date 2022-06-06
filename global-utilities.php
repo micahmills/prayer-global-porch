@@ -4,16 +4,16 @@ function pg_generate_key() {
     return substr( md5( mt_rand( 10000, 100000 ).time() ), 0, 3 ) . substr( md5( mt_rand( 10000, 100000 ).time() ), 10, 3 );
 }
 function pg_grid_images_json(){
-    return get_option('pg_grid_images_json');
+    return get_option( 'pg_grid_images_json' );
 }
 function pg_jp_images_json(){
-    return get_option('pg_jp_images_json');
+    return get_option( 'pg_jp_images_json' );
 }
 function pg_grid_images_version(){
-    return get_option('pg_grid_images_version');
+    return get_option( 'pg_grid_images_version' );
 }
 function pg_jp_images_version(){
-    return get_option('pg_jp_images_version');
+    return get_option( 'pg_jp_images_version' );
 }
 function pg_current_global_lap() : array {
     /**
@@ -23,7 +23,7 @@ function pg_current_global_lap() : array {
      *  [key] => d7dcd4
      *  [start_time] => 1651269768
      */
-    $lap = get_option('pg_current_global_lap');
+    $lap = get_option( 'pg_current_global_lap' );
     return $lap;
 }
 
@@ -182,19 +182,19 @@ function pg_get_global_lap_by_lap_number( $lap_number ) {
 }
 function pg_global_stats_by_lap_number( $lap_number ) {
     $data = pg_get_global_lap_by_lap_number( $lap_number );
-    _pg_global_stats_builder_query($data );
+    _pg_global_stats_builder_query( $data );
     return _pg_stats_builder( $data );
 }
 function pg_global_stats_by_key( $key ) {
     $data = pg_get_global_lap_by_key( $key );
-    _pg_global_stats_builder_query($data );
+    _pg_global_stats_builder_query( $data );
     return _pg_stats_builder( $data );
 }
 function pg_global_race_stats() {
     $data = pg_get_global_race();
     $current_lap = pg_current_global_lap();
     $data['number_of_laps'] = $current_lap['lap_number'];
-    _pg_global_stats_builder_query($data );
+    _pg_global_stats_builder_query( $data );
     return _pg_stats_builder( $data );
 }
 function _pg_global_stats_builder_query( &$data ) {
@@ -215,7 +215,7 @@ function _pg_global_stats_builder_query( &$data ) {
 }
 function pg_custom_lap_stats_by_post_id( $post_id ) {
     $data = pg_get_custom_lap_by_post_id( $post_id );
-    _pg_custom_stats_builder_query($data );
+    _pg_custom_stats_builder_query( $data );
     return _pg_stats_builder( $data );
 }
 function _pg_custom_stats_builder_query( &$data ) {
@@ -245,7 +245,7 @@ function _pg_stats_builder( $data ) : array {
     $time_difference = $data['end_time'] - $data['start_time'];
     $days = floor( $time_difference / 60 / 60 / 24 );
     $hours = floor( ( $time_difference / 60 / 60 ) - ( $days * 24 ) );
-    $minutes =  floor( ( $time_difference / 60 ) - ( $hours * 60 ) - ( $days * 24 * 60 )  );
+    $minutes = floor( ( $time_difference / 60 ) - ( $hours * 60 ) - ( $days * 24 * 60 ) );
     if ( empty( $days ) && empty( $hours ) ){
         $data['time_elapsed'] = "$minutes minutes";
         $data['time_elapsed_small'] = $minutes."m";
@@ -270,7 +270,7 @@ function _pg_stats_builder( $data ) : array {
     $completed = (int) $data['locations_completed'];
     $data['completed'] = number_format( $completed );
     $data['completed_int'] = $completed;
-    $completed_percent = ROUND( $completed / 4770 * 100, 0);
+    $completed_percent = ROUND( $completed / 4770 * 100, 0 );
     if ( 100 < $completed_percent ) {
         $completed_percent = 100;
     }
@@ -295,7 +295,7 @@ function _pg_stats_builder( $data ) : array {
     $seconds_prayed = $minutes_prayed * 60;
     $days = floor( $seconds_prayed / 60 / 60 / 24 );
     $hours = floor( ( $seconds_prayed / 60 / 60 ) - ( $days * 24 ) );
-    $minutes =  floor( ( $seconds_prayed / 60 ) - ( $hours * 60 ) - ( $days * 24 * 60 )  );
+    $minutes = floor( ( $seconds_prayed / 60 ) - ( $hours * 60 ) - ( $days * 24 * 60 ) );
     if ( empty( $days ) && empty( $hours ) ){
         $data['minutes_prayed_formatted'] = "$minutes minutes";
         $data['minutes_prayed_formatted_small'] = $minutes."m";
@@ -313,8 +313,8 @@ function _pg_stats_builder( $data ) : array {
         $data['minutes_prayed_formatted'] = "$days days, $hours hours, $minutes minutes";
         $data['minutes_prayed_formatted_small'] = $days."d, ".$hours."h, ".$minutes."m";
     }
-    $data['start_time_formatted'] = date('M d, Y', $data['start_time'] );
-    $data['end_time_formatted'] = date('M d, Y', $data['end_time'] );
+    $data['start_time_formatted'] = gmdate( 'M d, Y', $data['start_time'] );
+    $data['end_time_formatted'] = gmdate( 'M d, Y', $data['end_time'] );
 
 //    dt_write_log(__METHOD__);
 //    dt_write_log($data);
@@ -351,13 +351,13 @@ function pg_query_4770_locations() {
     );
 
     $list = [];
-    if ( ! empty( $raw_list) ) {
-        foreach( $raw_list as $item ) {
+    if ( ! empty( $raw_list ) ) {
+        foreach ( $raw_list as $item ) {
             $list[$item] = $item;
         }
     }
 
-    set_transient( __METHOD__, $list, 60*60*12 );
+    set_transient( __METHOD__, $list, 60 *60 *12 );
 
     return $list;
 }
@@ -398,7 +398,7 @@ function pg_jp_image( $type, $id ) {
     $base_url = pg_jp_image_url();
     $image_list = pg_jp_images_json();
 
-    switch( $type ) {
+    switch ( $type ) {
         case 'pid3':
             if ( isset( $image_list['pid3'][$id] ) ) {
                 return $base_url . 'pid3/' . $image_list['pid3'][$id];
@@ -437,10 +437,10 @@ function pg_images( $grid_id = null, $full_urls = false ) {
     if ( is_null( $grid_id ) ) {
         if ( $full_urls ) {
             $base_url = pg_grid_image_url();
-            unset($image_list['version'] );
-            foreach( $image_list as $i0 => $v0 ) {
-                foreach( $v0 as $i1 => $v1 ) {
-                    foreach( $v1 as $i2 => $v2 ) {
+            unset( $image_list['version'] );
+            foreach ( $image_list as $i0 => $v0 ) {
+                foreach ( $v0 as $i1 => $v1 ) {
+                    foreach ( $v1 as $i2 => $v2 ) {
                         $image_list[$i0][$i1][$i2] = $base_url . $i0 .'/'. $i1 . '/' . $v2;
                     }
                 }
@@ -452,8 +452,8 @@ function pg_images( $grid_id = null, $full_urls = false ) {
     // single grid_id
     if ( $full_urls ) {
         $base_url = pg_grid_image_url();
-        foreach( $image_list[$grid_id] as $i1 => $v1 ) {
-            foreach( $v1 as $i2 => $v2 ) {
+        foreach ( $image_list[$grid_id] as $i1 => $v1 ) {
+            foreach ( $v1 as $i2 => $v2 ) {
                 $image_list[$grid_id][$i1][$i2] = $base_url . $grid_id .'/'. $i1 . '/' . $v2;
             }
         }
@@ -481,7 +481,7 @@ function pg_is_lap_complete( $post_id ) {
     $complete = get_post_meta( $post_id, 'lap_completed', true );
     if ( ! $complete ) {
         global $wpdb;
-        $count = $wpdb->get_var($wpdb->prepare( "SELECT COUNT( DISTINCT( grid_id ) ) FROM $wpdb->dt_reports WHERE post_id = %d AND type = 'prayer_app' AND subtype = 'custom'", $post_id) );
+        $count = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT( DISTINCT( grid_id ) ) FROM $wpdb->dt_reports WHERE post_id = %d AND type = 'prayer_app' AND subtype = 'custom'", $post_id ) );
         if ( $count >= 4770 ){
             update_post_meta( $post_id, 'lap_completed', time() );
             return true;

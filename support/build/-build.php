@@ -1,10 +1,11 @@
 <?php
+// @phpcs:disable
 // Builds a balanced states view of the world.
 // Extend PHP limits for large processing
-ini_set('memory_limit', '50000M');
+ini_set( 'memory_limit', '50000M' );
 
 // define database connection
-if ( ! file_exists( 'connect_params.json') ) {
+if ( ! file_exists( 'connect_params.json' ) ) {
     $content = '{"host": "","username": "","password": "","database": ""}';
     file_put_contents( 'connect_params.json', $content );
 }
@@ -14,8 +15,8 @@ if ( empty( $params['host'] ) ) {
 Please, open the connect_params.json file and add host, username, password, and database information.' . PHP_EOL;
     die();
 }
-$con = mysqli_connect( $params['host'], $params['username'], $params['password'], $params['database']);
-if (!$con) {
+$con = mysqli_connect( $params['host'], $params['username'], $params['password'], $params['database'] );
+if ( !$con) {
     echo 'mysqli Connection FAILED. Check parameters inside connect_params.json file.' . PHP_EOL;
     die();
 }

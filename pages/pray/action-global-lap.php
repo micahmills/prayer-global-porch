@@ -87,18 +87,18 @@ class PG_Global_Prayer_App_Lap extends PG_Global_Prayer_App {
                     'translations' => [
                         'add' => __( 'Add Magic', 'prayer-global' ),
                     ],
-                    'nope' => plugin_dir_url(__DIR__) . 'assets/images/nope.jpg',
+                    'nope' => plugin_dir_url( __DIR__ ) . 'assets/images/nope.jpg',
                     'images_url' => pg_grid_image_url(),
-                    'image_folder' => plugin_dir_url(__DIR__) . 'assets/images/',
+                    'image_folder' => plugin_dir_url( __DIR__ ) . 'assets/images/',
                     'start_content' => $this->get_new_location(),
                     'next_content' => $this->get_new_location(),
                 ]) ?>][0]
             </script>
-            <script type="text/javascript" src="<?php echo DT_Mapbox_API::$mapbox_gl_js ?>"></script>
-            <link rel="stylesheet" href="<?php echo DT_Mapbox_API::$mapbox_gl_css ?>" type="text/css" media="all">
-            <link rel="stylesheet" href="<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/basic.css?ver=<?php echo fileatime( trailingslashit( plugin_dir_path( __DIR__ ) ) . 'assets/basic.css' ) ?>" type="text/css" media="all">
-            <link rel="stylesheet" href="<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) ) ?>lap.css?ver=<?php echo fileatime( trailingslashit( plugin_dir_path( __FILE__ ) ) . 'lap.css' ) ?>" type="text/css" media="all">
-            <script src="<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) ) ?>lap.js?ver=<?php echo fileatime( trailingslashit( plugin_dir_path( __FILE__ ) ) . 'lap.js' ) ?>"></script>
+            <script type="text/javascript" src="<?php echo esc_url( DT_Mapbox_API::$mapbox_gl_js ) ?>"></script>
+            <link rel="stylesheet" href="<?php echo esc_url( DT_Mapbox_API::$mapbox_gl_css ) ?>" type="text/css" media="all">
+            <link rel="stylesheet" href="<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/basic.css?ver=<?php echo esc_attr( fileatime( trailingslashit( plugin_dir_path( __DIR__ ) ) . 'assets/basic.css' ) ) ?>" type="text/css" media="all">
+            <link rel="stylesheet" href="<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) ) ?>lap.css?ver=<?php echo esc_attr( fileatime( trailingslashit( plugin_dir_path( __FILE__ ) ) . 'lap.css' ) ) ?>" type="text/css" media="all">
+            <script src="<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) ) ?>lap.js?ver=<?php echo esc_attr( fileatime( trailingslashit( plugin_dir_path( __FILE__ ) ) . 'lap.js' ) ) ?>"></script>
             <?php
         }
     }
@@ -251,12 +251,12 @@ class PG_Global_Prayer_App_Lap extends PG_Global_Prayer_App {
 
         $params = dt_recursive_sanitize_array( $params );
 
-        switch( $params['action'] ) {
+        switch ( $params['action'] ) {
             case 'log':
                 $result = $this->save_log( $params['parts'], $params['data'] );
                 return $result;
             case 'correction':
-                return $this->save_correction(  $params['parts'], $params['data'] );
+                return $this->save_correction( $params['parts'], $params['data'] );
             case 'refresh':
                 return $this->get_new_location();
             case 'ip_location':
@@ -335,9 +335,9 @@ class PG_Global_Prayer_App_Lap extends PG_Global_Prayer_App {
         }
 
         $current_location_list = 'SECTIONS AVAILABLE DURING REPORT' . PHP_EOL . PHP_EOL;
-        foreach( $data['current_content']['list'] as $list ) {
+        foreach ( $data['current_content']['list'] as $list ) {
             $current_location_list .= strtoupper( $list['type'] ) . PHP_EOL;
-            foreach( $list['data'] as $k => $v ){
+            foreach ( $list['data'] as $k => $v ){
                 if ( is_array( $v ) ) {
                     $v = serialize( $v );
                 }
@@ -347,7 +347,7 @@ class PG_Global_Prayer_App_Lap extends PG_Global_Prayer_App {
         }
 
         $user_location = 'USER LOCATION' . PHP_EOL . PHP_EOL;
-        foreach( $data['user'] as $uk => $uv ) {
+        foreach ( $data['user'] as $uk => $uv ) {
             $user_location .= $uk . ': ' . $uv . PHP_EOL;
         }
         $user_location .= PHP_EOL . 'https://maps.google.com/maps?q='.$data['user']['lat'].','.$data['user']['lng'] .'&ll='.$data['user']['lat'].','.$data['user']['lng'] .'&z=7' .  PHP_EOL;
@@ -372,7 +372,7 @@ class PG_Global_Prayer_App_Lap extends PG_Global_Prayer_App {
                 'User_Location' => $user_location,
             ]
         ];
-        dt_write_log($fields);
+        dt_write_log( $fields );
 
         if ( is_user_logged_in() ) {
             $contact_id = Disciple_Tools_users::get_contact_for_user( get_current_user_id() );
@@ -406,7 +406,7 @@ class PG_Global_Prayer_App_Lap extends PG_Global_Prayer_App {
         // subtract prayed places
         $list_prayed = $this->_query_prayed_list();
         if ( ! empty( $list_prayed ) ) {
-            foreach( $list_prayed as $grid_id ) {
+            foreach ( $list_prayed as $grid_id ) {
                 if ( isset( $list_4770[$grid_id] ) ) {
                     unset( $list_4770[$grid_id] );
                 }
@@ -440,12 +440,12 @@ class PG_Global_Prayer_App_Lap extends PG_Global_Prayer_App {
                     FROM $wpdb->dt_reports
                     WHERE
                           timestamp >= %d
-                      AND type = 'prayer_app'"
-            , $current_lap['start_time'] ) );
+                      AND type = 'prayer_app'",
+        $current_lap['start_time'] ) );
 
         $list = [];
-        if ( ! empty( $raw_list) ) {
-            foreach( $raw_list as $item ) {
+        if ( ! empty( $raw_list ) ) {
+            foreach ( $raw_list as $item ) {
                 $list[$item] = $item;
             }
         }
@@ -470,7 +470,7 @@ class PG_Global_Prayer_App_Lap extends PG_Global_Prayer_App {
         $key = pg_generate_key();
 
         $time = time();
-        $date = date( 'Y-m-d H:m:s', time() );
+        $date = gmdate( 'Y-m-d H:m:s', time() );
 
         $fields = [];
         $fields['title'] = 'Global #' . $next_global_lap_number;
@@ -480,11 +480,11 @@ class PG_Global_Prayer_App_Lap extends PG_Global_Prayer_App {
         $fields['start_time'] = $time;
         $fields['global_lap_number'] = $next_global_lap_number;
         $fields['prayer_app_global_magic_key'] = $key;
-        $new_post = DT_Posts::create_post('laps', $fields, false, false );
+        $new_post = DT_Posts::create_post( 'laps', $fields, false, false );
         if ( is_wp_error( $new_post ) ) {
             // @handle error
-            dt_write_log('failed to create');
-            dt_write_log($new_post);
+            dt_write_log( 'failed to create' );
+            dt_write_log( $new_post );
             exit;
         }
 
@@ -496,10 +496,10 @@ class PG_Global_Prayer_App_Lap extends PG_Global_Prayer_App {
             'key' => $key,
             'start_time' => $time,
         ];
-        update_option('pg_current_global_lap', $lap, true );
+        update_option( 'pg_current_global_lap', $lap, true );
 
         // close previous lap
-        DT_Posts::update_post('laps', $previous_lap['post_id'], [ 'status' => 'complete', 'end_date' => $date, 'end_time' => $time ], false, false );
+        DT_Posts::update_post( 'laps', $previous_lap['post_id'], [ 'status' => 'complete', 'end_date' => $date, 'end_time' => $time ], false, false );
 
         return $new_post['ID'];
     }
@@ -507,8 +507,8 @@ class PG_Global_Prayer_App_Lap extends PG_Global_Prayer_App {
     public function get_ip_location() {
         $response = DT_Ipstack_API::get_location_grid_meta_from_current_visitor();
         if ( $response ) {
-            $response['hash'] = hash('sha256', serialize( $response ) . mt_rand(1000000,10000000000000000) );
-            $array = array_reverse( explode(', ', $response['label'] ) );
+            $response['hash'] = hash( 'sha256', serialize( $response ) . mt_rand( 1000000, 10000000000000000 ) );
+            $array = array_reverse( explode( ', ', $response['label'] ) );
             $response['country'] = $array[0] ?? '';
         }
         return $response;

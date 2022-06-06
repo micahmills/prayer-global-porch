@@ -83,13 +83,13 @@ class Prayer_Global_Porch_Stats_Big_List extends DT_Magic_Url_Base
                 'translations' => [
                     'add' => __( 'Add Magic', 'prayer-global' ),
                 ],
-                'nope' => plugin_dir_url(__DIR__) . 'assets/images/nope.jpg',
+                'nope' => plugin_dir_url( __DIR__ ) . 'assets/images/nope.jpg',
                 'images_url' => pg_grid_image_url(),
-                'image_folder' => plugin_dir_url(__DIR__) . 'assets/images/',
+                'image_folder' => plugin_dir_url( __DIR__ ) . 'assets/images/',
             ]) ?>][0]
         </script>
-        <script src="<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) ) ?>big-list.js?ver=<?php echo fileatime( trailingslashit( plugin_dir_path( __FILE__ ) ) . 'big-list.js' ) ?>"></script>
-        <link rel="stylesheet" href="<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/basic.css?ver=<?php echo fileatime( trailingslashit( plugin_dir_path( __DIR__ ) ) . 'assets/basic.css' ) ?>" type="text/css" media="all">
+        <script src="<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) ) ?>big-list.js?ver=<?php echo esc_attr( fileatime( trailingslashit( plugin_dir_path( __FILE__ ) ) . 'big-list.js' ) ) ?>"></script>
+        <link rel="stylesheet" href="<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/basic.css?ver=<?php echo esc_attr( fileatime( trailingslashit( plugin_dir_path( __DIR__ ) ) . 'assets/basic.css' ) ) ?>" type="text/css" media="all">
         <style>
             section {
                 margin-top: 110px;
@@ -152,7 +152,7 @@ class Prayer_Global_Porch_Stats_Big_List extends DT_Magic_Url_Base
             return new WP_Error( __METHOD__, "Missing parameters", [ 'status' => 400 ] );
         }
 
-        switch( $params['action'] ) {
+        switch ( $params['action'] ) {
             case 'get_global_list':
                 return $this->get_global_list();
         }
@@ -165,8 +165,8 @@ class Prayer_Global_Porch_Stats_Big_List extends DT_Magic_Url_Base
 
          $data = [];
 
-         $results = $wpdb->get_results(
-             "
+        $results = $wpdb->get_results(
+            "
                 SELECT pm.post_id, p.post_title, pm2.meta_value as lap_number, pm3.meta_value as lap_key, pm4.meta_value as start_time, pm5.meta_value as end_time
                 FROM $wpdb->posts p
                 JOIN $wpdb->postmeta pm ON pm.post_id=p.ID AND pm.meta_key = 'type' AND pm.meta_value = 'global'
@@ -178,10 +178,10 @@ class Prayer_Global_Porch_Stats_Big_List extends DT_Magic_Url_Base
                 ORDER BY pm2.meta_value DESC
              ", ARRAY_A );
 
-         foreach( $results as $row ) {
-             $row['stats'] = pg_global_stats_by_lap_number($row['lap_number']);
-             $data[] = $row;
-         }
+        foreach ( $results as $row ) {
+            $row['stats'] = pg_global_stats_by_lap_number( $row['lap_number'] );
+            $data[] = $row;
+        }
 
          return $data;
     }

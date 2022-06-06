@@ -79,7 +79,7 @@ class Prayer_Global_Porch_Home extends DT_Magic_Url_Base
                 'translations' => [
                     'add' => __( 'Add Magic', 'prayer-global' ),
                 ],
-                'image_folder' => plugin_dir_url(__DIR__) . 'assets/images/',
+                'image_folder' => plugin_dir_url( __DIR__ ) . 'assets/images/',
             ]) ?>][0]
 
             console.log(jsObject)
@@ -165,7 +165,7 @@ class Prayer_Global_Porch_Home extends DT_Magic_Url_Base
         $params = dt_recursive_sanitize_array( $params );
 
         $current_global_lap = pg_current_global_lap();
-        $current_global_stats = pg_global_stats_by_lap_number($current_global_lap['lap_number']);
+        $current_global_stats = pg_global_stats_by_lap_number( $current_global_lap['lap_number'] );
         $global_race = pg_global_race_stats();
 
         return [

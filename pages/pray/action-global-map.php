@@ -12,8 +12,7 @@ class PG_Global_Prayer_App_Map extends PG_Global_Prayer_App {
         return self::$_instance;
     }
 
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct();
 
 
@@ -73,8 +72,8 @@ class PG_Global_Prayer_App_Map extends PG_Global_Prayer_App {
                 'parts' => $this->parts,
                 'grid_data' => [],
                 'participants' => [],
-                'stats' => pg_global_stats_by_key($this->parts['public_key']),
-                'image_folder' => plugin_dir_url(__DIR__) . 'assets/images/',
+                'stats' => pg_global_stats_by_key( $this->parts['public_key'] ),
+                'image_folder' => plugin_dir_url( __DIR__ ) . 'assets/images/',
                 'translations' => [
                     'add' => __( 'Add Magic', 'prayer-global' ),
                 ],
@@ -82,14 +81,14 @@ class PG_Global_Prayer_App_Map extends PG_Global_Prayer_App {
         </script>
         <link href="https://fonts.googleapis.com/css?family=Crimson+Text:400,400i,600|Montserrat:200,300,400" rel="stylesheet">
         <link rel="stylesheet" href="<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/fonts/ionicons/css/ionicons.min.css">
-        <link rel="stylesheet" href="<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/basic.css?ver=<?php echo fileatime( trailingslashit( plugin_dir_path( __DIR__ ) ) . 'assets/basic.css' ) ?>" type="text/css" media="all">
+        <link rel="stylesheet" href="<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/basic.css?ver=<?php echo esc_attr( fileatime( trailingslashit( plugin_dir_path( __DIR__ ) ) . 'assets/basic.css' ) ) ?>" type="text/css" media="all">
         <link rel="stylesheet" href="<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) ) ?>heatmap.css?ver=<?php echo fileatime( trailingslashit( plugin_dir_path( __FILE__ ) ) . 'heatmap.css' ) ?>" type="text/css" media="all">
         <?php
     }
 
     public function body(){
         $parts = $this->parts;
-        $lap_stats = pg_global_stats_by_key($parts['public_key']);
+        $lap_stats = pg_global_stats_by_key( $parts['public_key'] );
         DT_Mapbox_API::geocoder_scripts();
         ?>
         <style id="custom-style"></style>
@@ -111,10 +110,10 @@ class PG_Global_Prayer_App_Map extends PG_Global_Prayer_App {
                             <a href="/" class="navbar-brand">Prayer.Global</a>
                         </div>
                         <div class="cell small-9 medium-4 center hide-for-small-only">
-                            <span class="two-em">Lap <?php echo $lap_stats['lap_number'] ?></span>
+                            <span class="two-em">Lap <?php echo esc_html( $lap_stats['lap_number'] ) ?></span>
                         </div>
                         <div class="cell small-9 medium-4 show-for-small-only">
-                            <span class="two-em"><strong>Lap <?php echo $lap_stats['lap_number'] ?></strong></span>
+                            <span class="two-em"><strong>Lap <?php echo esc_html( $lap_stats['lap_number'] ) ?></strong></span>
                         </div>
                         <div class="cell small-3 medium-4 show-for-medium" id="nav-list">
                             <ul>
@@ -172,7 +171,7 @@ class PG_Global_Prayer_App_Map extends PG_Global_Prayer_App {
             <hr>
             <div class="grid-x grid-padding-x center">
                 <div class="cell">
-                    <span class="three-em">Lap <?php echo $lap_stats['lap_number'] ?></span>
+                    <span class="three-em">Lap <?php echo esc_html( $lap_stats['lap_number'] ) ?></span>
                     <hr>
                 </div>
                 <div class="cell small-6 medium-3">
@@ -220,7 +219,7 @@ class PG_Global_Prayer_App_Map extends PG_Global_Prayer_App {
         wp_enqueue_script( 'heatmap-js', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'heatmap.js', [
             'jquery',
             'mapbox-gl'
-        ], filemtime( plugin_dir_path( __FILE__ ) .'heatmap.js' ), true );
+        ], esc_attr( filemtime( plugin_dir_path( __FILE__ ) .'heatmap.js' ) ), true );
     }
 
     public function endpoint( WP_REST_Request $request ) {
@@ -230,9 +229,9 @@ class PG_Global_Prayer_App_Map extends PG_Global_Prayer_App {
             return new WP_Error( __METHOD__, "Missing parameters", [ 'status' => 400 ] );
         }
 
-        switch( $params['action'] ) {
+        switch ( $params['action'] ) {
             case 'get_stats':
-                return pg_global_stats_by_key($params['parts']['public_key']);
+                return pg_global_stats_by_key( $params['parts']['public_key'] );
             case 'get_grid':
                 return $this->get_grid( $params['parts'] );
             case 'get_grid_details':
@@ -240,14 +239,14 @@ class PG_Global_Prayer_App_Map extends PG_Global_Prayer_App {
             case 'get_participants':
                 return $this->get_participants( $params['parts'] );
             default:
-                return new WP_Error(__METHOD__, 'missing action parameter' );
+                return new WP_Error( __METHOD__, 'missing action parameter' );
         }
 
     }
 
     public function get_grid( $parts ) {
         global $wpdb;
-        $lap_stats = pg_global_stats_by_key($parts['public_key']);
+        $lap_stats = pg_global_stats_by_key( $parts['public_key'] );
 
         // map grid
         $data_raw = $wpdb->get_results( $wpdb->prepare( "
@@ -288,7 +287,7 @@ class PG_Global_Prayer_App_Map extends PG_Global_Prayer_App {
 
     public function get_participants( $parts ){
         global $wpdb;
-        $lap_stats = pg_global_stats_by_key($parts['public_key']);
+        $lap_stats = pg_global_stats_by_key( $parts['public_key'] );
 
         $participants_raw = $wpdb->get_results( $wpdb->prepare( "
            SELECT r.lng as longitude, r.lat as latitude
@@ -300,7 +299,7 @@ class PG_Global_Prayer_App_Map extends PG_Global_Prayer_App {
         ", $lap_stats['start_time'], $lap_stats['end_time'] ), ARRAY_A );
         $participants = [];
         if ( ! empty( $participants_raw ) ) {
-            foreach( $participants_raw as $p ) {
+            foreach ( $participants_raw as $p ) {
                 if ( ! empty( $p['longitude'] ) ) {
                     $participants[] = [
                         'longitude' => (float) $p['longitude'],

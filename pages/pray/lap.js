@@ -97,7 +97,7 @@ jQuery(document).ready(function(){
   window.time = 0
   window.seconds = 60
   window.pace = 1
-  window.items = 3
+  window.items = 4
 
   /**
    * INITIALIZE

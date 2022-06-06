@@ -91,7 +91,7 @@ class Prayer_Global_Porch_Stats_Big_Map extends DT_Magic_Url_Base
                 'grid_data' => [],
                 'participants' => [],
                 'stats' => pg_global_race_stats(),
-                'image_folder' => plugin_dir_url(__DIR__) . 'assets/images/',
+                'image_folder' => plugin_dir_url( __DIR__ ) . 'assets/images/',
                 'translations' => [
                     'add' => __( 'Add Magic', 'prayer-global' ),
                 ],
@@ -99,8 +99,8 @@ class Prayer_Global_Porch_Stats_Big_Map extends DT_Magic_Url_Base
         </script>
         <link href="https://fonts.googleapis.com/css?family=Crimson+Text:400,400i,600|Montserrat:200,300,400" rel="stylesheet">
         <link rel="stylesheet" href="<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/fonts/ionicons/css/ionicons.min.css">
-        <link rel="stylesheet" href="<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/basic.css?ver=<?php echo fileatime( trailingslashit( plugin_dir_path( __DIR__ ) ) . 'assets/basic.css' ) ?>" type="text/css" media="all">
-        <link rel="stylesheet" href="<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>pray/heatmap.css?ver=<?php echo fileatime( trailingslashit( plugin_dir_path( __DIR__ ) ) . 'pray/heatmap.css' ) ?>" type="text/css" media="all">
+        <link rel="stylesheet" href="<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/basic.css?ver=<?php echo esc_attr( fileatime( trailingslashit( plugin_dir_path( __DIR__ ) ) . 'assets/basic.css' ) ) ?>" type="text/css" media="all">
+        <link rel="stylesheet" href="<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>pray/heatmap.css?ver=<?php echo esc_attr( fileatime( trailingslashit( plugin_dir_path( __DIR__ ) ) . 'pray/heatmap.css' ) ) ?>" type="text/css" media="all">
         <?php
     }
 
@@ -155,9 +155,9 @@ class Prayer_Global_Porch_Stats_Big_Map extends DT_Magic_Url_Base
                 <div id="foot_block">
                     <div class="grid-x grid-padding-x">
                         <div class="cell center"><button type="button" data-toggle="offcanvas_stats"><i class="ion-chevron-up two-em"></i></button></div>
-                        <div class="cell small-6 medium-3 center"><strong>Warriors</strong> <i class="fi-marker" style="color:blue;"></i><br><span class="one-em"><?php echo $lap_stats['participants'] ?></span></div>
-                        <div class="cell small-6 medium-3 center"><strong>Minutes Prayed</strong><br><span class="one-em"><?php echo $lap_stats['minutes_prayed'] ?></span></div>
-                        <div class="cell small-6 medium-3 center"><strong>World Prayer Coverage</strong><br><span class="one-em"><?php echo $finished_laps ?> times</span></div>
+                        <div class="cell small-6 medium-3 center"><strong>Warriors</strong> <i class="fi-marker" style="color:blue;"></i><br><span class="one-em"><?php echo esc_html( $lap_stats['participants'] ) ?></span></div>
+                        <div class="cell small-6 medium-3 center"><strong>Minutes Prayed</strong><br><span class="one-em"><?php echo esc_html( $lap_stats['minutes_prayed'] ) ?></span></div>
+                        <div class="cell small-6 medium-3 center"><strong>World Prayer Coverage</strong><br><span class="one-em"><?php echo esc_html( $finished_laps ) ?> times</span></div>
                         <div class="cell small-6 medium-3 center"><strong>Pace</strong><br><span class="one-em time_elapsed" id="time_elapsed"></span></div>
                     </div>
                 </div>
@@ -193,19 +193,19 @@ class Prayer_Global_Porch_Stats_Big_Map extends DT_Magic_Url_Base
                 </div>
                 <div class="cell small-6 medium-3">
                     <p class="stats-title">Warriors</p>
-                    <p class="stats-figure"><?php echo $lap_stats['participants'] ?></p>
+                    <p class="stats-figure"><?php echo esc_html( $lap_stats['participants'] ) ?></p>
                 </div>
                 <div class="cell small-6 medium-3">
                     <p class="stats-title">Minutes Prayed</p>
-                    <p class="stats-figure"><?php echo $lap_stats['minutes_prayed'] ?></p>
+                    <p class="stats-figure"><?php echo esc_html( $lap_stats['minutes_prayed'] ) ?></p>
                 </div>
                 <div class="cell small-6 medium-3">
                     <p class="stats-title">World Prayer Coverage</p>
-                    <p class="stats-figure"><?php echo $finished_laps ?> times</p>
+                    <p class="stats-figure"><?php echo esc_html( $finished_laps ) ?> times</p>
                 </div>
                 <div class="cell small-6 medium-3">
                     <p class="stats-title">Pace</p>
-                    <p class="stats-figure"><?php echo $lap_stats['time_elapsed'] ?></p>
+                    <p class="stats-figure"><?php echo esc_html( $lap_stats['time_elapsed'] ) ?></p>
                 </div>
             </div>
         </div>
@@ -245,7 +245,7 @@ class Prayer_Global_Porch_Stats_Big_Map extends DT_Magic_Url_Base
             return new WP_Error( __METHOD__, "Missing parameters", [ 'status' => 400 ] );
         }
 
-        switch( $params['action'] ) {
+        switch ( $params['action'] ) {
             case 'get_stats':
                 return pg_global_race_stats();
             case 'get_grid':
@@ -255,7 +255,7 @@ class Prayer_Global_Porch_Stats_Big_Map extends DT_Magic_Url_Base
             case 'get_participants':
                 return $this->get_participants( $params['parts'] );
             default:
-                return new WP_Error(__METHOD__, 'missing action parameter' );
+                return new WP_Error( __METHOD__, 'missing action parameter' );
         }
 
     }
@@ -315,7 +315,7 @@ class Prayer_Global_Porch_Stats_Big_Map extends DT_Magic_Url_Base
         ", $lap_stats['start_time'], $lap_stats['end_time'] ), ARRAY_A );
         $participants = [];
         if ( ! empty( $participants_raw ) ) {
-            foreach( $participants_raw as $p ) {
+            foreach ( $participants_raw as $p ) {
                 if ( ! empty( $p['longitude'] ) ) {
                     $participants[] = [
                         'longitude' => (float) $p['longitude'],

@@ -263,7 +263,7 @@ class Prayer_Global_Laps_Post_Type extends DT_Module_Base {
         if ( $post_type === $this->post_type && $section === "other" ) {
             // hide opposite key app
             $post = DT_Posts::get_post( $this->post_type, get_the_ID() );
-                dt_write_log($post);
+                dt_write_log( $post );
             if ( isset( $post['type']['key'] ) && $post['type']['key'] === 'global' ) {
                 ?>
                 <script>
@@ -343,7 +343,7 @@ class Prayer_Global_Laps_Post_Type extends DT_Module_Base {
                 $fields["prayer_app_custom_magic_key"] = substr( md5( rand( 10000, 100000 ) ), 0, 3 ) . substr( md5( rand( 10000, 100000 ) ), 0, 3 );
             }
             if ( ! isset( $fields["start_date"] ) || empty( $fields["start_date"] ) ){
-                $fields["start_date"] = date('Y-m-d H:m:s', time() );
+                $fields["start_date"] = gmdate( 'Y-m-d H:m:s', time() );
             }
             if ( ! isset( $fields["start_time"] ) || empty( $fields["start_time"] ) ){
                 $fields["start_time"] = time();
@@ -357,7 +357,7 @@ class Prayer_Global_Laps_Post_Type extends DT_Module_Base {
 
         // creates initial global lap
         if ( $post_type === $this->post_type && isset( $initial_fields['type'] ) && 'global' === $initial_fields['type'] ){
-            $lap = get_option('pg_current_global_lap');
+            $lap = get_option( 'pg_current_global_lap' );
             if ( empty( $lap ) ) {
                 $post = DT_Posts::get_post( $this->post_type, $post_id, false, false );
                 update_post_meta( $post_id, 'global_lap_number', 1 );
@@ -375,11 +375,10 @@ class Prayer_Global_Laps_Post_Type extends DT_Module_Base {
                     'lap_number' => 1,
                     'post_id' => $post['ID'],
                     'key' => $post['prayer_app_global_magic_key'],
-                    'start_time' =>  $post['start_time'],
+                    'start_time' => $post['start_time'],
                 ];
-                update_option('pg_current_global_lap', $lap, true );
+                update_option( 'pg_current_global_lap', $lap, true );
             }
-
         }
     }
 

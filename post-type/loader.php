@@ -17,7 +17,7 @@ add_filter( 'dt_post_type_modules', function( $modules ){
         "name" => "Laps",
         "enabled" => true,
         "locked" => true,
-        "prerequisites" => ['contacts_base'],
+        "prerequisites" => [ 'contacts_base' ],
         "post_type" => "laps",
         "description" => "Prayer Laps"
     ];
@@ -25,7 +25,7 @@ add_filter( 'dt_post_type_modules', function( $modules ){
         "name" => "Feedback",
         "enabled" => true,
         "locked" => true,
-        "prerequisites" => ['contacts_base'],
+        "prerequisites" => [ 'contacts_base' ],
         "post_type" => "feedback",
         "description" => "Feedback"
     ];

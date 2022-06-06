@@ -20,17 +20,16 @@ class PG_Stacker {
         for ($i = 1; $i <= $stack['location']['percent_believers']; $i++) {
             $status[] = 'believers';
         }
-        $stack['favor'] = $status[array_rand($status)];
+        $stack['favor'] = $status[array_rand( $status )];
 
         // build full stack
         $stack['list'] = [];
 
         // adds and shuffles for variation
-        self::_faith_status( $stack );
         self::_population_change( $stack );
         self::_least_reached( $stack );
         self::_key_city( $stack );
-        shuffle($stack['list']);
+        shuffle( $stack['list'] );
 
         // inserts into shuffled array specific array positions
         self::_verses( $stack, 3 );
@@ -39,6 +38,7 @@ class PG_Stacker {
         self::_demographics( $stack );
         self::_prayers( $stack, 1 );
         self::_photos( $stack, 2 );
+        self::_faith_status( $stack, 3 );
 
         // adds to bottom
         self::_cities( $stack );
@@ -79,35 +79,12 @@ class PG_Stacker {
                 'value_4' => $stack['location']['primary_language'],
                 'size_4' => 'two-em',
                 'section_summary' => '',
-                'prayer' => ''
+                'prayer' => 'We estimate there is <strong>1</strong> believer for every <strong>'. $stack['location']['lost_per_believer'] .'</strong> neighbors who need Jesus.'
             ]
         ];
 
 
         if ( $stack['location']['percent_non_christians'] > 50 ) {
-            if ( $stack['location']['all_lost_int'] / 5000 ) {
-                $templates[] = [
-                    'type' => '4_fact_blocks',
-                    'data' => [
-                        'section_label' => $section_label,
-                        'focus_label' => $stack['location']['full_name'],
-                        'label_1' => 'Lost Population',
-                        'value_1' => $stack['location']['all_lost'],
-                        'size_1' => 'two-em',
-                        'label_2' => 'New Churches Needed',
-                        'value_2' => number_format( ceil( $stack['location']['all_lost_int'] / 5000 ) ),
-                        'size_2' => 'two-em',
-                        'label_3' => 'Dominant Religion',
-                        'value_3' => $stack['location']['primary_religion'],
-                        'size_3' => 'two-em',
-                        'label_4' => 'Language',
-                        'value_4' => $stack['location']['primary_language'],
-                        'size_4' => 'two-em',
-                        'section_summary' => '',
-                        'prayer' => ''
-                    ]
-                ];
-            }
 
             $templates[] = [
                 'type' => 'content_block',
@@ -121,7 +98,7 @@ class PG_Stacker {
             ];
 
         }
-        if ( $stack['location']['percent_christian_adherents'] > 50  ) {
+        if ( $stack['location']['percent_christian_adherents'] > 50 ) {
             $templates[] = [
                 'type' => '4_fact_blocks',
                 'data' => [
@@ -140,7 +117,7 @@ class PG_Stacker {
                     'value_4' => $stack['location']['primary_language'],
                     'size_4' => 'two-em',
                     'section_summary' => '',
-                    'prayer' => 'Pray that every disciple become an active harvest worker.'
+                    'prayer' => 'We estimate there is <strong>1</strong> believer for every <strong>'. $stack['location']['lost_per_believer'] .'</strong> neighbors who need Jesus.'
                 ]
             ];
             $templates[] = [
@@ -156,17 +133,21 @@ class PG_Stacker {
         }
 
 
-        $template = $templates[array_rand($templates)];
+        $template = $templates[array_rand( $templates )];
         $stack['list'] = array_merge( [ $template ], $stack['list'] );
 
         return $stack;
     }
 
-    private static function _faith_status( &$stack ) {
+    private static function _faith_status( &$stack, int $position ) {
 
-        $faith_status = [];
+        if ( empty( $position ) ) {
+            $position = 3;
+        }
 
-        $faith_status[] = [
+        $templates = [];
+
+        $templates[] = [
             'type' => 'percent_3_circles',
             'data' => [
                 'section_label' => 'Faith Status',
@@ -183,8 +164,25 @@ class PG_Stacker {
                 'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['all_lost'].' lost neighbors around them.',
             ]
         ];
+        $templates[] = [
+            'type' => 'percent_3_circles',
+            'data' => [
+                'section_label' => 'Demographics',
+                'label_1' => "Don't Know Jesus",
+                'percent_1' => $stack['location']['percent_non_christians'],
+                'population_1' => $stack['location']['non_christians'],
+                'label_2' => 'Know About Jesus',
+                'percent_2' => $stack['location']['percent_christian_adherents'],
+                'population_2' => $stack['location']['christian_adherents'],
+                'label_3' => 'Know Jesus',
+                'percent_3' => $stack['location']['percent_believers'],
+                'population_3' => $stack['location']['believers'],
+                'section_summary' => '',
+                'prayer' => 'The '.$stack['location']['admin_level_name'].' of <strong>'.$stack['location']['full_name'].'</strong> has a population of <strong>'.$stack['location']['population'].'</strong>. We estimate there is <strong>1</strong> believer for every <strong>'. $stack['location']['lost_per_believer'] .'</strong> neighbors who need Jesus.',
+            ]
+        ];
         if ( $stack['location']['percent_non_christians'] > $stack['location']['percent_christian_adherents']) {
-            $faith_status[] = [
+            $templates[] = [
                 'type' => 'percent_3_circles',
                 'data' => [
                     'section_label' => 'Faith Status',
@@ -201,7 +199,7 @@ class PG_Stacker {
                     'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' lost neighbors around them.',
                 ]
             ];
-            $faith_status[] = [
+            $templates[] = [
                 'type' => 'percent_2_circles',
                 'data' => [
                     'section_label' => 'Faith Status',
@@ -217,8 +215,8 @@ class PG_Stacker {
                 ]
             ];
         }
-       else {
-           $faith_status[] = [
+        else {
+            $templates[] = [
                'type' => 'percent_3_circles',
                'data' => [
                    'section_label' => 'Faith Status',
@@ -234,8 +232,8 @@ class PG_Stacker {
                    'section_summary' => '',
                    'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' encourage the '.$stack['location']['christian_adherents'].' cultural Christians around them to read and obey the Word.',
                ]
-           ];
-           $faith_status[] = [
+            ];
+            $templates[] = [
                'type' => 'percent_2_circles',
                'data' => [
                    'section_label' => 'Faith Status',
@@ -249,27 +247,30 @@ class PG_Stacker {
                    'section_summary' => '',
                    'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' encourage the '.$stack['location']['christian_adherents'].' cultural Christians around them to read and obey the Word.',
                ]
-           ];
-       }
+            ];
+        }
 
-        $faith_status[] = [
-            'type' => 'percent_3_bar',
-            'data' => [
-                'section_label' => 'Faith Status',
-                'label_1' => "Don't",
-                'percent_1' => $stack['location']['percent_non_christians'],
-                'population_1' => $stack['location']['non_christians'],
-                'label_2' => 'Know About',
-                'percent_2' => $stack['location']['percent_christian_adherents'],
-                'population_2' => $stack['location']['christian_adherents'],
-                'label_3' => 'Know',
-                'percent_3' => $stack['location']['percent_believers'],
-                'population_3' => $stack['location']['believers'],
-                'section_summary' => '',
-                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['all_lost'].' lost neighbors around them.',
-            ]
-        ];
-        $faith_status[] = [
+        if ( $stack['location']['percent_non_christians'] < 85 ) {
+            $templates[] = [
+                'type' => 'percent_3_bar',
+                'data' => [
+                    'section_label' => 'Faith Status',
+                    'label_1' => "Don't",
+                    'percent_1' => $stack['location']['percent_non_christians'],
+                    'population_1' => $stack['location']['non_christians'],
+                    'label_2' => 'Know About',
+                    'percent_2' => $stack['location']['percent_christian_adherents'],
+                    'population_2' => $stack['location']['christian_adherents'],
+                    'label_3' => 'Know',
+                    'percent_3' => $stack['location']['percent_believers'],
+                    'population_3' => $stack['location']['believers'],
+                    'section_summary' => '',
+                    'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['all_lost'].' lost neighbors around them.',
+                ]
+            ];
+        }
+
+        $templates[] = [
             'type' => '100_bodies_chart',
             'data' => [
                 'section_label' => 'Faith Status',
@@ -280,7 +281,7 @@ class PG_Stacker {
                 'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['all_lost'].' lost neighbors around them.',
             ]
         ];
-        $faith_status[] = [
+        $templates[] = [
             'type' => '100_bodies_3_chart',
             'data' => [
                 'section_label' => 'Faith Status',
@@ -298,15 +299,15 @@ class PG_Stacker {
             ]
         ];
 
-        $stack['list'][] = $faith_status[array_rand($faith_status)];
+        $stack['list'] = array_merge( array_slice( $stack['list'], 0, $position ), array( $templates[array_rand( $templates )] ), array_slice( $stack['list'], $position ) );
 
         return $stack;
     }
 
     private static function _population_change( &$stack ) {
 
-        $types = ['births', 'deaths' ];
-        $type = $types[array_rand($types)];
+        $types = [ 'births', 'deaths' ];
+        $type = $types[array_rand( $types )];
 
         // deaths non christians
         if ( 'christian_adherents' === $stack['favor'] && 'deaths' === $type ) {
@@ -322,7 +323,7 @@ class PG_Stacker {
                         'count' => $stack['location']['deaths_christian_adherents_next_hour'],
                         'group' => 'christian_adherents',
                         'type' => 'deaths',
-                        'size' => ($stack['location']['deaths_christian_adherents_next_hour'] > 400) ? 2 : 3,
+                        'size' => ( $stack['location']['deaths_christian_adherents_next_hour'] > 400 ) ? 2 : 3,
                         'section_summary' => 'In ' . $stack['location']['name'] . ', ' . $stack['location']['deaths_christian_adherents_next_hour'] . ' people are dying without a personal relationship with Jesus in the next hour.',
                         'prayer' => ''
                     ]
@@ -337,7 +338,7 @@ class PG_Stacker {
                         'count' => $stack['location']['deaths_christian_adherents_next_100'],
                         'group' => 'christian_adherents',
                         'type' => 'deaths',
-                        'size' => ($stack['location']['deaths_christian_adherents_next_100'] > 400) ? 2 : 3,
+                        'size' => ( $stack['location']['deaths_christian_adherents_next_100'] > 400 ) ? 2 : 3,
                         'section_summary' => 'In ' . $stack['location']['name'] . ', ' . $stack['location']['deaths_christian_adherents_next_100'] . ' people are dying without a personal relationship with Jesus in the next 100 hours.',
                         'prayer' => ''
                     ]
@@ -352,7 +353,7 @@ class PG_Stacker {
                         'count' => $stack['location']['deaths_christian_adherents_next_week'],
                         'group' => 'christian_adherents',
                         'type' => 'deaths',
-                        'size' => ($stack['location']['deaths_christian_adherents_next_week'] > 400) ? 2 : 3,
+                        'size' => ( $stack['location']['deaths_christian_adherents_next_week'] > 400 ) ? 2 : 3,
                         'section_summary' => 'In ' . $stack['location']['name'] . ', ' . $stack['location']['deaths_christian_adherents_next_week'] . ' people are dying without a personal relationship with Jesus in the next week.',
                         'prayer' => ''
                     ]
@@ -367,7 +368,7 @@ class PG_Stacker {
                         'count' => $stack['location']['deaths_christian_adherents_next_month'],
                         'group' => 'christian_adherents',
                         'type' => 'deaths',
-                        'size' => ($stack['location']['deaths_christian_adherents_next_month'] > 400) ? 2 : 3,
+                        'size' => ( $stack['location']['deaths_christian_adherents_next_month'] > 400 ) ? 2 : 3,
                         'section_summary' => 'In ' . $stack['location']['name'] . ', ' . $stack['location']['deaths_christian_adherents_next_month'] . ' people are dying without a personal relationship with Jesus in the next month.',
                         'prayer' => ''
                     ]
@@ -376,7 +377,7 @@ class PG_Stacker {
             }
 
             if ( $added ) {
-                $stack['list'][] = $deaths_christian_adherents[array_rand($deaths_christian_adherents)];
+                $stack['list'][] = $deaths_christian_adherents[array_rand( $deaths_christian_adherents )];
             }
         }
 
@@ -445,7 +446,7 @@ class PG_Stacker {
                 $added = true;
             }
             if ( $added ) {
-                $stack['list'][] = $births_christian_adherents[array_rand($births_christian_adherents)];
+                $stack['list'][] = $births_christian_adherents[array_rand( $births_christian_adherents )];
             }
         }
 
@@ -461,7 +462,7 @@ class PG_Stacker {
                         'count' => $stack['location']['deaths_non_christians_next_hour'],
                         'group' => 'non_christians',
                         'type' => 'deaths',
-                        'size' => ($stack['location']['deaths_non_christians_next_hour'] > 400) ? 2 : 3,
+                        'size' => ( $stack['location']['deaths_non_christians_next_hour'] > 400 ) ? 2 : 3,
                         'section_summary' => 'In ' . $stack['location']['name'] . ', ' . $stack['location']['deaths_non_christians_next_hour'] . ' people will die without Jesus in the next hour.',
                         'prayer' => ''
                     ]
@@ -476,7 +477,7 @@ class PG_Stacker {
                         'count' => $stack['location']['deaths_non_christians_next_100'],
                         'group' => 'non_christians',
                         'type' => 'deaths',
-                        'size' => ($stack['location']['deaths_non_christians_next_100'] > 400) ? 2 : 3,
+                        'size' => ( $stack['location']['deaths_non_christians_next_100'] > 400 ) ? 2 : 3,
                         'section_summary' => 'In ' . $stack['location']['name'] . ', ' . $stack['location']['deaths_non_christians_next_100'] . ' people will die without Jesus in the next 100 hours.',
                         'prayer' => ''
                     ]
@@ -491,7 +492,7 @@ class PG_Stacker {
                         'count' => $stack['location']['deaths_non_christians_next_week'],
                         'group' => 'non_christians',
                         'type' => 'deaths',
-                        'size' => ($stack['location']['deaths_non_christians_next_week'] > 400) ? 2 : 3,
+                        'size' => ( $stack['location']['deaths_non_christians_next_week'] > 400 ) ? 2 : 3,
                         'section_summary' => 'In ' . $stack['location']['name'] . ', ' . $stack['location']['deaths_non_christians_next_week'] . ' people will die without Jesus in the next week.',
                         'prayer' => ''
                     ]
@@ -506,7 +507,7 @@ class PG_Stacker {
                         'count' => $stack['location']['deaths_non_christians_next_month'],
                         'group' => 'non_christians',
                         'type' => 'deaths',
-                        'size' => ($stack['location']['deaths_non_christians_next_month'] > 400) ? 2 : 3,
+                        'size' => ( $stack['location']['deaths_non_christians_next_month'] > 400 ) ? 2 : 3,
                         'section_summary' => 'In ' . $stack['location']['name'] . ', ' . $stack['location']['deaths_non_christians_next_month'] . ' will die without Jesus in the next month.',
                         'prayer' => ''
                     ]
@@ -515,7 +516,7 @@ class PG_Stacker {
             }
 
             if ( $added ) {
-                $stack['list'][] = $deaths_non_christians[array_rand($deaths_non_christians)];
+                $stack['list'][] = $deaths_non_christians[array_rand( $deaths_non_christians )];
             }
         }
 
@@ -585,9 +586,8 @@ class PG_Stacker {
             }
 
             if ( $added ) {
-                $stack['list'][] = $births_non_christians[array_rand($births_non_christians)];
+                $stack['list'][] = $births_non_christians[array_rand( $births_non_christians )];
             }
-
         }
 
         return $stack;
@@ -601,7 +601,7 @@ class PG_Stacker {
             foreach ($stack['cities'] as $city) {
                 $values[] = $city['name'] . ' - (pop ' . $city['population'] . ')';
             }
-            if (!empty($values)) {
+            if ( !empty( $values )) {
                 $stack['list'][] = [
                     'type' => 'bullet_list_2_column',
                     'data' => [
@@ -612,7 +612,6 @@ class PG_Stacker {
                     ]
                 ];
             }
-
         }
         return $stack;
     }
@@ -621,7 +620,7 @@ class PG_Stacker {
         if ( ! empty( $stack['cities'] ) ) {
             // focus block
             $cities = $stack['cities'];
-            shuffle($cities);
+            shuffle( $cities );
             $content = 'Pray that God raises up new churches in the city of '.$cities[0]['full_name'].'.';
             if ( isset( $cities[0] ) && ! empty( $cities[0] ) ) {
                 if ( $cities[0]['population_int'] > 0 ) {
@@ -715,7 +714,7 @@ class PG_Stacker {
                 ],
             ];
 
-            $image_url = $images['photos'][array_rand( $images['photos'])];
+            $image_url = $images['photos'][array_rand( $images['photos'] )];
             $text_index = array_rand( $text );
             $template = [
                 'type' => 'photo_block',
@@ -728,7 +727,7 @@ class PG_Stacker {
                 ]
             ];
 
-            $stack['list'] = array_merge(array_slice($stack['list'], 0, $position), [ $template ], array_slice($stack['list'], $position));
+            $stack['list'] = array_merge( array_slice( $stack['list'], 0, $position ), [ $template ], array_slice( $stack['list'], $position ) );
         }
 
         return $stack;
@@ -891,7 +890,7 @@ class PG_Stacker {
             ]
         ];
 
-        $stack['list'] = array_merge(array_slice($stack['list'], 0, $position), array( $blocks[array_rand($blocks)] ), array_slice($stack['list'], $position));
+        $stack['list'] = array_merge( array_slice( $stack['list'], 0, $position ), array( $blocks[array_rand( $blocks )] ), array_slice( $stack['list'], $position ) );
 
         return $stack;
     }
@@ -1096,7 +1095,7 @@ class PG_Stacker {
         ];
 
 
-        $stack['list'] = array_merge(array_slice($stack['list'], 0, $position), array($blocks[array_rand($blocks, 1)]), array_slice($stack['list'], $position));
+        $stack['list'] = array_merge( array_slice( $stack['list'], 0, $position ), array( $blocks[array_rand( $blocks, 1 )] ), array_slice( $stack['list'], $position ) );
         return $stack;
     }
 
@@ -1107,7 +1106,7 @@ class PG_Stacker {
 
             // people group list
             $values = [];
-            foreach( $stack['people_groups'] as $group ) {
+            foreach ( $stack['people_groups'] as $group ) {
                 if ( isset( $image_list['pid3'][$group['PeopleID3']] ) ) {
                     $image = $base_url . 'pid3/' . $image_list['pid3'][$group['PeopleID3']];
                 } else {
@@ -1221,7 +1220,7 @@ class PG_Stacker {
             $admin_level_name = 'county';
             $admin_level_name_plural = 'counties';
         }
-        $grid_record = array_merge($grid_record, [ 'admin_level_name' => $admin_level_name, 'admin_level_name_plural' => $admin_level_name_plural ] );
+        $grid_record = array_merge( $grid_record, [ 'admin_level_name' => $admin_level_name, 'admin_level_name_plural' => $admin_level_name_plural ] );
 
 
         // format
@@ -1256,7 +1255,7 @@ class PG_Stacker {
         $grid_record['non_christians_int'] = (int) $grid_record['non_christians'];
         $grid_record['non_christians'] = number_format( intval( $grid_record['non_christians'] ) );
         $grid_record['percent_believers_full'] = (float) $grid_record['percent_believers'];
-        $grid_record['percent_believers'] = round( (float) $grid_record['percent_believers'], 2);
+        $grid_record['percent_believers'] = round( (float) $grid_record['percent_believers'], 2 );
         $grid_record['percent_christian_adherents_full'] = (float) $grid_record['percent_christian_adherents'];
         $grid_record['percent_christian_adherents'] = round( (float) $grid_record['percent_christian_adherents'], 2 );
         $grid_record['percent_non_christians_full'] = (float) $grid_record['percent_non_christians'];
@@ -1336,7 +1335,7 @@ class PG_Stacker {
 
         $least_reached = [];
         if ( ! empty( $people_groups ) ) {
-            foreach( $people_groups as $pg ) {
+            foreach ( $people_groups as $pg ) {
                 if ( 'Y' === $pg['LeastReached'] ) {
                     $least_reached = $pg; // get first least reached group
                     break;
@@ -1344,7 +1343,7 @@ class PG_Stacker {
             }
         }
 
-        $people_groups = array_slice($people_groups, 0, 5, true); // trim to first 5 shuffled results
+        $people_groups = array_slice( $people_groups, 0, 5, true ); // trim to first 5 shuffled results
 
         // cities
         $cities = $wpdb->get_results($wpdb->prepare( "
@@ -1388,69 +1387,69 @@ class PG_Stacker {
         $non_christians = $grid_record['non_christians_int'];
         $not_believers = $non_christians + $christian_adherents;
 
-        switch( $type ) {
+        switch ( $type ) {
             case 'births_non_christians_last_hour':
-                $return_value = ( $birth_rate * ( $not_believers / 1000 ) ) / 365 / 24 ;
+                $return_value = ( $birth_rate * ( $not_believers / 1000 ) ) / 365 / 24;
                 break;
             case 'births_non_christians_last_100':
-                $return_value = ( $birth_rate * ( $not_believers / 1000 ) ) / 365 / 24 * 100 ;
+                $return_value = ( $birth_rate * ( $not_believers / 1000 ) ) / 365 / 24 * 100;
                 break;
             case 'births_non_christians_last_week':
-                $return_value = ( $birth_rate * ( $not_believers / 1000 ) ) / 365 * 7 ;
+                $return_value = ( $birth_rate * ( $not_believers / 1000 ) ) / 365 * 7;
                 break;
             case 'births_non_christians_last_month':
-                $return_value = ( $birth_rate * ( $not_believers / 1000 ) ) / 365 * 30 ;
+                $return_value = ( $birth_rate * ( $not_believers / 1000 ) ) / 365 * 30;
                 break;
             case 'births_non_christians_last_year':
                 $return_value = ( $birth_rate * ( $not_believers / 1000 ) );
                 break;
 
             case 'deaths_non_christians_next_hour':
-                $return_value = ( $death_rate * ( $not_believers / 1000 ) ) / 365 / 24 ;
+                $return_value = ( $death_rate * ( $not_believers / 1000 ) ) / 365 / 24;
                 break;
             case 'deaths_non_christians_next_100':
-                $return_value = ( $death_rate * ( $not_believers / 1000 ) ) / 365 / 24 * 100 ;
+                $return_value = ( $death_rate * ( $not_believers / 1000 ) ) / 365 / 24 * 100;
                 break;
             case 'deaths_non_christians_next_week':
                 $return_value = ( $death_rate * ( $not_believers / 1000 ) ) / 365 * 7;
                 break;
             case 'deaths_non_christians_next_month':
-                $return_value =  ( $death_rate * ( $not_believers / 1000 ) ) / 365 * 30 ;
+                $return_value = ( $death_rate * ( $not_believers / 1000 ) ) / 365 * 30;
                 break;
             case 'deaths_non_christians_next_year':
-                $return_value =  ( $death_rate * ( $not_believers / 1000 ) );
+                $return_value = ( $death_rate * ( $not_believers / 1000 ) );
                 break;
 
             case 'births_christian_adherents_last_hour':
-                $return_value = ( $birth_rate * ( $christian_adherents / 1000 ) ) / 365 / 24 ;
+                $return_value = ( $birth_rate * ( $christian_adherents / 1000 ) ) / 365 / 24;
                 break;
             case 'births_christian_adherents_last_100':
-                $return_value = ( $birth_rate * ( $christian_adherents / 1000 ) ) / 365 / 24 * 100 ;
+                $return_value = ( $birth_rate * ( $christian_adherents / 1000 ) ) / 365 / 24 * 100;
                 break;
             case 'births_christian_adherents_last_week':
-                $return_value = ( $birth_rate * ( $christian_adherents / 1000 ) ) / 365 * 7 ;
+                $return_value = ( $birth_rate * ( $christian_adherents / 1000 ) ) / 365 * 7;
                 break;
             case 'births_christian_adherents_last_month':
-                $return_value = ( $birth_rate * ( $christian_adherents / 1000 ) ) / 365 * 30 ;
+                $return_value = ( $birth_rate * ( $christian_adherents / 1000 ) ) / 365 * 30;
                 break;
             case 'births_christian_adherents_last_year':
                 $return_value = ( $birth_rate * ( $christian_adherents / 1000 ) );
                 break;
 
             case 'deaths_christian_adherents_next_hour':
-                $return_value = ( $death_rate * ( $christian_adherents / 1000 ) ) / 365 / 24 ;
+                $return_value = ( $death_rate * ( $christian_adherents / 1000 ) ) / 365 / 24;
                 break;
             case 'deaths_christian_adherents_next_100':
-                $return_value = ( $death_rate * ( $christian_adherents / 1000 ) ) / 365 / 24 * 100 ;
+                $return_value = ( $death_rate * ( $christian_adherents / 1000 ) ) / 365 / 24 * 100;
                 break;
             case 'deaths_christian_adherents_next_week':
                 $return_value = ( $death_rate * ( $christian_adherents / 1000 ) ) / 365 * 7;
                 break;
             case 'deaths_christian_adherents_next_month':
-                $return_value =  ( $death_rate * ( $christian_adherents / 1000 ) ) / 365 * 30 ;
+                $return_value = ( $death_rate * ( $christian_adherents / 1000 ) ) / 365 * 30;
                 break;
             case 'deaths_christian_adherents_next_year':
-                $return_value =  ( $death_rate * ( $christian_adherents / 1000 ) );
+                $return_value = ( $death_rate * ( $christian_adherents / 1000 ) );
                 break;
 
             case 'population_growth_status':

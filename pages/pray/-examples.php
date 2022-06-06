@@ -110,7 +110,7 @@ function example_templates( $stack ) {
             'count' => $stack['location']['deaths_non_christians_next_hour'],
             'group' => 'non_christians',
             'type' => 'deaths',
-            'size' => (1000 > 400) ? 2 : 3, // 2 or 3
+            'size' => ( 1000 > 400 ) ? 2 : 3, // 2 or 3
             'section_summary' => '',
             'prayer' => ''
         ]

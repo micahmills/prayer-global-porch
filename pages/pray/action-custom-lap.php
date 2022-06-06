@@ -79,9 +79,9 @@ class PG_Custom_Prayer_App_Lap extends PG_Custom_Prayer_App {
                 'translations' => [
                     'add' => __( 'Add Magic', 'prayer-global' ),
                 ],
-                'nope' => plugin_dir_url(__DIR__) . 'assets/images/nope.jpg',
+                'nope' => plugin_dir_url( __DIR__ ) . 'assets/images/nope.jpg',
                 'images_url' => pg_grid_image_url(),
-                'image_folder' => plugin_dir_url(__DIR__) . 'assets/images/',
+                'image_folder' => plugin_dir_url( __DIR__ ) . 'assets/images/',
                 'start_content' => $this->get_new_location( $this->parts['post_id'] ),
                 'next_content' => $this->get_new_location( $this->parts['post_id'] ),
             ]) ?>][0]
@@ -214,7 +214,7 @@ class PG_Custom_Prayer_App_Lap extends PG_Custom_Prayer_App {
 
         $params = dt_recursive_sanitize_array( $params );
 
-        switch( $params['action'] ) {
+        switch ( $params['action'] ) {
             case 'log':
                 $result = $this->save_log( $params['parts'], $params['data'] );
                 return $result;
@@ -289,7 +289,7 @@ class PG_Custom_Prayer_App_Lap extends PG_Custom_Prayer_App {
         // subtract prayed places
         $list_prayed = $this->_query_prayed_list( $post_id );
         if ( ! empty( $list_prayed ) ) {
-            foreach( $list_prayed as $grid_id ) {
+            foreach ( $list_prayed as $grid_id ) {
                 if ( isset( $list_4770[$grid_id] ) ) {
                     unset( $list_4770[$grid_id] );
                 }
@@ -321,12 +321,12 @@ class PG_Custom_Prayer_App_Lap extends PG_Custom_Prayer_App {
                       post_id = %d
                       AND type = 'prayer_app'
                       AND subtype = 'custom'
-                      "
-            , $post_id ) );
+                      ",
+        $post_id ) );
 
         $list = [];
-        if ( ! empty( $raw_list) ) {
-            foreach( $raw_list as $item ) {
+        if ( ! empty( $raw_list ) ) {
+            foreach ( $raw_list as $item ) {
                 $list[$item] = $item;
             }
         }
@@ -337,8 +337,8 @@ class PG_Custom_Prayer_App_Lap extends PG_Custom_Prayer_App {
     public function get_ip_location() {
         $response = DT_Ipstack_API::get_location_grid_meta_from_current_visitor();
         if ( $response ) {
-            $response['hash'] = hash('sha256', serialize( $response ). mt_rand(1000000,10000000000000000) );
-            $array = array_reverse( explode(', ', $response['label'] ) );
+            $response['hash'] = hash( 'sha256', serialize( $response ). mt_rand( 1000000, 10000000000000000 ) );
+            $array = array_reverse( explode( ', ', $response['label'] ) );
             $response['country'] = $array[0] ?? '';
         }
         return $response;

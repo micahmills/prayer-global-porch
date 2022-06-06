@@ -141,7 +141,7 @@ class Prayer_Global_Tab_General {
             'src' => array()
         );
         $fields = pg_fields();
-        if ( isset( $_POST['pg_settings_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['pg_settings_nonce'] ) ), 'pg_settings' ) ) {
+        if ( isset( $_POST['pg_settings_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['pg_settings_nonce'] ) ), 'pg_settings' ) && isset( $_POST['list'] ) ) {
             $saved_fields = $fields;
 
             $post_list = dt_recursive_sanitize_array( $_POST['list'] );
@@ -221,21 +221,21 @@ class Prayer_Global_Tab_General {
 
     public function meta_box_build() {
         $grid_url = pg_grid_json_url();
-        $grid_json = json_decode( wp_remote_retrieve_body( wp_remote_get($grid_url) ), true  );
+        $grid_json = json_decode( wp_remote_retrieve_body( wp_remote_get( $grid_url ) ), true );
         $grid_images_version = pg_grid_images_version();
         if ( isset( $_POST['pg_build_settings_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['pg_build_settings_nonce'] ) ), 'pg_build_settings' ) && isset( $_POST['grid_db'] ) ) {
-            update_option('pg_grid_images_json', $grid_json, true );
-            update_option('pg_grid_images_version', $grid_json['version']);
+            update_option( 'pg_grid_images_json', $grid_json, true );
+            update_option( 'pg_grid_images_version', $grid_json['version'] );
             $grid_images_version = pg_grid_images_version();
         }
         $grid_update_needed = ( $grid_images_version == $grid_json['version'] );
 
         $jp_url = pg_jp_json_url();
-        $jp_json = json_decode( wp_remote_retrieve_body( wp_remote_get($jp_url) ), true  );
+        $jp_json = json_decode( wp_remote_retrieve_body( wp_remote_get( $jp_url ) ), true );
         $jp_images_version = pg_jp_images_version();
         if ( isset( $_POST['pg_build_settings_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['pg_build_settings_nonce'] ) ), 'pg_build_settings' ) && isset( $_POST['jp_db'] ) ) {
-            update_option('pg_jp_images_json', $jp_json, true );
-            update_option('pg_jp_images_version', $jp_json['version']);
+            update_option( 'pg_jp_images_json', $jp_json, true );
+            update_option( 'pg_jp_images_version', $jp_json['version'] );
             $jp_images_version = pg_jp_images_version();
         }
         $jp_update_needed = ( $jp_images_version == $jp_json['version'] );
@@ -253,9 +253,9 @@ class Prayer_Global_Tab_General {
                 <tr>
                     <td>
                         <strong>Grid Images Database</strong><br>
-                        Your Version: <?php echo $grid_images_version ?><br>
-                        Live Version : <?php echo $grid_json['version'] ?? 'Unknown' ?><br>
-                         Update: <?php echo  ($grid_update_needed) ? 'No' : '<strong>YES. PLEASE REBUILD THE DATABASE</strong>' ?><br><br>
+                        Your Version: <?php echo esc_attr( $grid_images_version ) ?><br>
+                        Live Version : <?php echo esc_attr( $grid_json['version'] ?? 'Unknown' ) ?><br>
+                         Update: <?php echo ( $grid_update_needed ) ? 'No' : '<strong>YES. PLEASE REBUILD THE DATABASE</strong>' ?><br><br>
                     </td>
                 </tr>
                 <tr>
@@ -266,9 +266,9 @@ class Prayer_Global_Tab_General {
                 <tr>
                     <td>
                         <strong>Joshua Project Database</strong><br>
-                        Your Version: <?php echo $jp_images_version ?><br>
-                        Live Version : <?php echo $jp_json['version'] ?? 'Unknown' ?><br>
-                         Update: <?php echo  ($jp_update_needed) ? 'No' : '<strong>YES. PLEASE REBUILD THE DATABASE</strong>' ?><br><br>
+                        Your Version: <?php echo esc_attr( $jp_images_version ) ?><br>
+                        Live Version : <?php echo esc_html( $jp_json['version'] ?? 'Unknown' ) ?><br>
+                         Update: <?php echo ( $jp_update_needed ) ? 'No' : '<strong>YES. PLEASE REBUILD THE DATABASE</strong>' ?><br><br>
                     </td>
                 </tr>
                 <tr>
