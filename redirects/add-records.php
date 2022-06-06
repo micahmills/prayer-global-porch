@@ -296,7 +296,7 @@ class Prayer_Global_Add extends DT_Magic_Url_Base
             array('id' => '10621', 'site_id' => 'be51c701162c8b66d285b9831644bcf3432ecee4bb44fb891ad07d3b0b90948a', 'site_record_id' => null, 'site_object_id' => null, 'action' => 'leading_1', 'category' => 'leading', 'lng' => '-78.5127', 'lat' => '-0.2232', 'level' => '', 'label' => 'Pichincha, Ecuador', 'grid_id' => '100073984', 'payload' => 'a:8:{s:13:"language_code";s:2:"es";s:13:"language_name";s:7:"Spanish";s:7:"session";s:1:"1";s:10:"group_size";s:1:"1";s:4:"note";s:41:"is leading a group of 1 through session 1";s:13:"location_type";s:2:"ip";s:7:"country";s:7:"Ecuador";s:9:"unique_id";s:64:"70311646460f6c1f4f96b5b5409388a4617a0c79e352f9b5b454527b5c75f0a4";}', 'timestamp' => '1600744820', 'hash' => '21f82d3a7ca104412f7d31fad716b6717defc95d879b5c152616b0caf5158bef')
         );
 
-        return $wp_3_dt_movement_log[mt_rand( 0, 200 )];
+        return $wp_3_dt_movement_log[array_rand($wp_3_dt_movement_log)];
 
     }
 

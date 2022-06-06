@@ -262,7 +262,7 @@ class Prayer_Global_Porch_Stats_Big_Map extends DT_Magic_Url_Base
 
     public function get_grid( $parts ) {
         global $wpdb;
-        $lap_stats = pg_get_global_race();
+        $lap_stats = pg_global_race_stats();
 
         // map grid
         $data_raw = $wpdb->get_results( $wpdb->prepare( "
@@ -303,7 +303,7 @@ class Prayer_Global_Porch_Stats_Big_Map extends DT_Magic_Url_Base
 
     public function get_participants( $parts ){
         global $wpdb;
-        $lap_stats = pg_get_global_race();
+        $lap_stats = pg_global_race_stats();
 
         $participants_raw = $wpdb->get_results( $wpdb->prepare( "
            SELECT r.lng as longitude, r.lat as latitude

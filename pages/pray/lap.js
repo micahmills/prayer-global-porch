@@ -766,7 +766,7 @@ jQuery(document).ready(function(){
     location_map_wrapper.hide()
     more_prayer_fuel.show()
 
-    let rint = Math.floor(Math.random() * 9) + 1
+    let rint = Math.floor(Math.random() * 13) + 1
     celebrate_panel.html(`<p style="padding-top:2em;"><h1>Great Job!<br>Prayer Added!</h1></p>
     <p><img width="400px" src="${jsObject.image_folder}celebrate${rint}.gif" class="img-fluid celebrate-image" alt="photo" /></p>`).show()
 
