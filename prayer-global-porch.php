@@ -109,8 +109,6 @@ class Prayer_Global_Porch {
         require_once( 'pages/pray/magic-global.php' );
         require_once( 'pages/pray/magic-custom.php' );
 
-//        require_once( 'pages/pray/custom.php' );
-
         // stats_app
         require_once( 'pages/stats/big-list.php' );
         require_once( 'pages/stats/big-map.php' );
@@ -119,10 +117,7 @@ class Prayer_Global_Porch {
         require_once( 'pages/profile/magic-link.php' );
         require_once( 'pages/subscribe/magic-link.php' );
 
-
         require_once( 'charts/charts-loader.php' );
-
-
 
         $this->i18n();
     }

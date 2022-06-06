@@ -61,28 +61,6 @@ class PG_Stacker {
         $section_label = 'Demographics';
 
         // all locations
-        $templates[] = [
-            'type' => '4_fact_blocks',
-            'data' => [
-                'section_label' => $section_label,
-                'focus_label' => $stack['location']['full_name'],
-                'label_1' => 'Population',
-                'value_1' => $stack['location']['population'],
-                'size_1' => 'two-em',
-                'label_2' => 'Population Growth',
-                'value_2' => $stack['location']['population_growth_status'],
-                'size_2' => 'two-em',
-                'label_3' => 'Dominant Religion',
-                'value_3' => $stack['location']['primary_religion'],
-                'size_3' => 'two-em',
-                'label_4' => 'Language',
-                'value_4' => $stack['location']['primary_language'],
-                'size_4' => 'two-em',
-                'section_summary' => '',
-                'prayer' => 'We estimate there is <strong>1</strong> believer for every <strong>'. $stack['location']['lost_per_believer'] .'</strong> neighbors who need Jesus.'
-            ]
-        ];
-
 
         if ( $stack['location']['percent_non_christians'] > 50 ) {
 
@@ -96,6 +74,27 @@ class PG_Stacker {
                     'section_summary' => 'The '.$stack['location']['admin_level_name'].' of <strong>'.$stack['location']['full_name'].'</strong> has a population of <strong>'.$stack['location']['population'].'</strong>.<br><br> We estimate '.$stack['location']['name'].' has <strong>'.$stack['location']['believers'].'</strong> people who might know Jesus, <strong>'.$stack['location']['christian_adherents'].'</strong> people who might know about Jesus culturally, and <strong>'.$stack['location']['non_christians'].'</strong> people who do not know Jesus.<br><br>This is <strong>1</strong> believer for every <strong>'. $stack['location']['lost_per_believer'] .'</strong> neighbors who need Jesus.',
                 ]
             ];
+            $templates[] = [
+                'type' => '4_fact_blocks',
+                'data' => [
+                    'section_label' => $section_label,
+                    'focus_label' => $stack['location']['full_name'],
+                    'label_1' => 'Population',
+                    'value_1' => $stack['location']['population'],
+                    'size_1' => 'two-em',
+                    'label_2' => 'Believers',
+                    'value_2' => $stack['location']['believers'],
+                    'size_2' => 'two-em',
+                    'label_3' => 'Dominant Religion',
+                    'value_3' => $stack['location']['primary_religion'],
+                    'size_3' => 'two-em',
+                    'label_4' => 'Language',
+                    'value_4' => $stack['location']['primary_language'],
+                    'size_4' => 'two-em',
+                    'section_summary' => '',
+                    'prayer' => 'We estimate there is <strong>1</strong> believer for every <strong>'. $stack['location']['lost_per_believer'] .'</strong> neighbors who need Jesus.'
+                ]
+            ];
 
         }
         if ( $stack['location']['percent_christian_adherents'] > 50 ) {
@@ -104,14 +103,14 @@ class PG_Stacker {
                 'data' => [
                     'section_label' => $section_label,
                     'focus_label' => $stack['location']['full_name'],
-                    'label_1' => 'Believers',
-                    'value_1' => $stack['location']['believers'],
+                    'label_1' => 'Non-Christians',
+                    'value_1' => $stack['location']['non_christians'],
                     'size_1' => 'two-em',
                     'label_2' => 'Cultural Christians',
                     'value_2' => $stack['location']['christian_adherents'],
                     'size_2' => 'two-em',
-                    'label_3' => 'Non-Christians',
-                    'value_3' => $stack['location']['non_christians'],
+                    'label_3' => 'Believers',
+                    'value_3' => $stack['location']['believers'],
                     'size_3' => 'two-em',
                     'label_4' => 'Language',
                     'value_4' => $stack['location']['primary_language'],
