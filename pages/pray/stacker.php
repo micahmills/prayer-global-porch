@@ -29,10 +29,11 @@ class PG_Stacker {
         self::_population_change( $stack );
         self::_least_reached( $stack );
         self::_key_city( $stack );
+        self::_verses( $stack );
         shuffle( $stack['list'] );
 
         // inserts into shuffled array specific array positions
-        self::_verses( $stack, 3 );
+
 
         // adds to top
         self::_demographics( $stack );
@@ -894,15 +895,11 @@ class PG_Stacker {
         return $stack;
     }
 
-    private static function _verses( &$stack, int $position ) {
+    private static function _verses( &$stack, $position = false ) {
 
-        if ( empty( $position ) ) {
-            $position = 4;
-        }
+        $templates = [];
 
-        $blocks = [];
-
-        $blocks[] = [
+        $templates[] = [
             'type' => 'verse_block',
             'data' => [
                 'section_label' => 'Scripture',
@@ -912,7 +909,7 @@ class PG_Stacker {
                 'prayer' => 'Pray the gospel is preached in ' . $stack['location']['name'] . '.',
             ]
         ];
-        $blocks[] = [
+        $templates[] = [
             'type' => 'verse_block',
             'data' => [
                 'section_label' => 'Scripture',
@@ -922,7 +919,7 @@ class PG_Stacker {
                 'prayer' => 'Pray the gospel is preached in to all nations including ' . $stack['location']['name'] . '.',
             ]
         ];
-        $blocks[] = [
+        $templates[] = [
             'type' => 'verse_block',
             'data' => [
                 'section_label' => 'Scripture',
@@ -932,7 +929,7 @@ class PG_Stacker {
                 'prayer' => 'Pray knowledge of the glory of the Lord fills ' . $stack['location']['full_name'] . '.',
             ]
         ];
-        $blocks[] = [
+        $templates[] = [
             'type' => 'verse_block',
             'data' => [
                 'section_label' => 'Scripture',
@@ -942,7 +939,7 @@ class PG_Stacker {
                 'prayer' => 'Open the hearts and lips of Your '.$stack['location']['believers'].' people in '.$stack['location']['name'].' to humbly and boldly and broadly share Your Good News for the glory of Your name.',
             ]
         ];
-        $blocks[] = [
+        $templates[] = [
             'type' => 'verse_block',
             'data' => [
                 'section_label' => 'Scripture',
@@ -952,7 +949,7 @@ class PG_Stacker {
                 'prayer' => 'May Your Word, O God, be the foundational source of truth and discernment for all matters of faith and practice and shepherding among the people of '.$stack['location']['full_name'].'.',
             ]
         ];
-        $blocks[] = [
+        $templates[] = [
             'type' => 'verse_block',
             'data' => [
                 'section_label' => 'Scripture',
@@ -962,7 +959,7 @@ class PG_Stacker {
                 'prayer' => 'We pray against competing spiritual authorities '.$stack['location']['name'].' and ask that as biblical understanding increases that love, dependence upon, and obedience to You would correspondingly increase.',
             ]
         ];
-        $blocks[] = [
+        $templates[] = [
             'type' => 'verse_block',
             'data' => [
                 'section_label' => 'Scripture',
@@ -972,7 +969,7 @@ class PG_Stacker {
                 'prayer' => 'Father, just as the earliest church-planting efforts included the appointment of local leaders over those young congregations, we pray for qualified locals to humbly serve and lead Your Church in '.$stack['location']['full_name'].'.',
             ]
         ];
-        $blocks[] = [
+        $templates[] = [
             'type' => 'verse_block',
             'data' => [
                 'section_label' => 'Scripture',
@@ -982,7 +979,7 @@ class PG_Stacker {
                 'prayer' => 'Lord we ask for the appointment of local leaders in '.$stack['location']['name'].' who would passionately give themselves to prayer and the ministry of Your Word.',
             ]
         ];
-        $blocks[] = [
+        $templates[] = [
             'type' => 'verse_block',
             'data' => [
                 'section_label' => 'Scripture',
@@ -992,7 +989,7 @@ class PG_Stacker {
                 'prayer' => 'Lord, while we acknowledge the value of education and training, we affirm the superior value of abiding in and being with You. We pray for the '.$stack['location']['believers'].' believers in '.$stack['location']['name'].' that they abide in You.',
             ]
         ];
-        $blocks[] = [
+        $templates[] = [
             'type' => 'verse_block',
             'data' => [
                 'section_label' => 'Scripture',
@@ -1002,7 +999,7 @@ class PG_Stacker {
                 'prayer' => 'Lord, we ask You to raise up men and women of godly character as lay leaders to serve and shepherd Your people. Let not formal training, diplomas, or titles be the ultimate criteria for influence or a bottleneck to spiritual maturity or church growth.',
             ]
         ];
-        $blocks[] = [
+        $templates[] = [
             'type' => 'verse_block',
             'data' => [
                 'section_label' => 'Scripture',
@@ -1012,7 +1009,7 @@ class PG_Stacker {
                 'prayer' => 'Father, give to the '.$stack['location']['believers'].' believers in '.$stack['location']['name'].' the same fire and passion for the truth of your Son, as the early church. May the message jump from one house to another house throughout the entire '.$stack['location']['admin_level_name'].'.',
             ]
         ];
-        $blocks[] = [
+        $templates[] = [
             'type' => 'verse_block',
             'data' => [
                 'section_label' => 'Scripture',
@@ -1022,7 +1019,7 @@ class PG_Stacker {
                 'prayer' => 'Father, we ask You to give the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' a collective vision to preach Your word and plant Your church, even in the face of persecution.',
             ]
         ];
-        $blocks[] = [
+        $templates[] = [
             'type' => 'verse_block',
             'data' => [
                 'section_label' => 'Scripture',
@@ -1032,7 +1029,7 @@ class PG_Stacker {
                 'prayer' => 'Father, we know the expansion of your church is not a job reserved for foreign missionaries or paid staff or specifically gifted individuals. We affirm that you gave the Great Commission to your Bride and we pray that the church of '.$stack['location']['full_name'].' powerfully proclaim you even in persecution.',
             ]
         ];
-        $blocks[] = [
+        $templates[] = [
             'type' => 'verse_block',
             'data' => [
                 'section_label' => 'Scripture',
@@ -1042,7 +1039,7 @@ class PG_Stacker {
                 'prayer' => 'O Lord, in Jesus’ name, we pray for this kind of rapid reproduction in '.$stack['location']['full_name'].'. May Your word increase and may disciples multiply.',
             ]
         ];
-        $blocks[] = [
+        $templates[] = [
             'type' => 'verse_block',
             'data' => [
                 'section_label' => 'Scripture',
@@ -1052,7 +1049,7 @@ class PG_Stacker {
                 'prayer' => 'O Lord, in Jesus’ name, we pray for this kind of rapid reproduction in '.$stack['location']['full_name'].'. May Your word increase and may disciples multiply.',
             ]
         ];
-        $blocks[] = [
+        $templates[] = [
             'type' => 'verse_block',
             'data' => [
                 'section_label' => 'Scripture',
@@ -1062,7 +1059,7 @@ class PG_Stacker {
                 'prayer' => 'Bless Your church in '.$stack['location']['full_name'].' with spiritual gifts, godly leaders, unity in the faith and in the knowledge of Your Son, integrity, and an interdependence that nurtures the church in love.',
             ]
         ];
-        $blocks[] = [
+        $templates[] = [
             'type' => 'verse_block',
             'data' => [
                 'section_label' => 'Scripture',
@@ -1072,7 +1069,7 @@ class PG_Stacker {
                 'prayer' => 'For the good of '.$stack['location']['full_name'].' and the glory of Your name, we pray for healthy churches here that are characterized by worship in spirit and truth, love-motivated gospel-sharing, intentional discipleship, and genuine life-on-life community.',
             ]
         ];
-        $blocks[] = [
+        $templates[] = [
             'type' => 'verse_block',
             'data' => [
                 'section_label' => 'Scripture',
@@ -1082,7 +1079,7 @@ class PG_Stacker {
                 'prayer' => 'Father, we pray every disciple in '.$stack['location']['name'].' boldly proclaim the mystery of the gospel.',
             ]
         ];
-        $blocks[] = [
+        $templates[] = [
             'type' => 'verse_block',
             'data' => [
                 'section_label' => 'Scripture',
@@ -1093,8 +1090,14 @@ class PG_Stacker {
             ]
         ];
 
+        if ( empty( $position ) ) {
+            $template = $templates[array_rand( $templates )];
+            $stack['list'] = array_merge( [ $template ], $stack['list'] );
+        } else {
+            $stack['list'] = array_merge( array_slice( $stack['list'], 0, $position ), array( $templates[array_rand( $templates, 1 )] ), array_slice( $stack['list'], $position ) );
+        }
 
-        $stack['list'] = array_merge( array_slice( $stack['list'], 0, $position ), array( $blocks[array_rand( $blocks, 1 )] ), array_slice( $stack['list'], $position ) );
+
         return $stack;
     }
 
