@@ -149,3 +149,9 @@
     animation: spin 1s infinite linear;
     display: inline-block;
 }
+.uppercase {
+    text-transform: uppercase;
+}
+.black {
+    color: black;
+}

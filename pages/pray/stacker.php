@@ -729,8 +729,6 @@ class PG_Stacker {
             ];
 
             $stack['list'] = array_merge(array_slice($stack['list'], 0, $position), [ $template ], array_slice($stack['list'], $position));
-            dt_write_log($template);
-            dt_write_log($stack);
         }
 
         return $stack;

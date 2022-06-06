@@ -153,7 +153,7 @@
             <div class="col-lg-7">
                 <h2 class="mt-0 heading-border-top font-weight-normal">What are Prayer Laps?</h2>
                 <p>
-                    One prayer lap equals a complete series of community prayers covering every populated place in the world.
+                    One prayer lap is when there has been (at least) a 1 minute prayer covering over every populated place in the world.
                 </p>
             </div>
         </div>
@@ -165,65 +165,91 @@
                 </div>
             </div>
             <div class="col-lg-5 pl-md-5 pl-sm-0">
-                <div id="exampleAccordion" class="pb_accordion" data-children=".item">
+                <div id="prayer_accordian_" class="pb_accordion" data-children=".item">
                     <div class="item">
-                        <a data-toggle="collapse" data-parent="#exampleAccordion" href="#exampleAccordion1" aria-expanded="true" aria-controls="exampleAccordion1" class="pb_font-18">How it works</a>
-                        <div id="exampleAccordion1" class="collapse show" role="tabpanel">
+                        <a data-toggle="collapse" data-parent="#prayer_accordian_" href="#prayer_accordian_1" aria-expanded="true" aria-controls="prayer_accordian_1" class="pb_font-18 uppercase">How it works</a>
+                        <div id="prayer_accordian_1" class="collapse show" role="tabpanel">
                             <p>
-                                We have identified 4,770 administrative divisions into which the countries of the world are divided. This website guides prayer warriors to pray over these specific locations.
+                                <span class="black">&#9312;</span> Click on "<a href="/newest/lap/">Start Praying</a>".
                             </p>
                             <p>
-                                When our community prays for the "kingdom to come" over one of these divisions for one minute or more, then we mark that location as covered for that prayer lap.
+                                <strong class="black">&#9313;</strong> Use the demographics, guided prayers, faith status, images, and maps to pray for the location for one minute.
                             </p>
                             <p>
-                                Once all the divisions of the world have been prayed for, then we close that prayer lap, start a new lap, and reset the master clock.
+                                <strong class="black">&#9314;</strong> Once the one-minute timer has ended, you will be asked if you prayed for this location, if you click "Yes", then your prayer will be added to the community prayer coverage for the world.
                             </p>
                             <p>
-                                We hope that our community completes each prayer lap faster than the previous. Can you imagine a global community praying forever place in the world every 10 minutes? We dream that.
+                                <strong class="black">&#9315;</strong> Pray for another location or end your prayer session.
                             </p>
                             <p>
-                                <br>
+                                <br><hr>
                             </p>
                         </div>
                     </div>
                     <div class="item">
-                        <a data-toggle="collapse" data-parent="#exampleAccordion" href="#exampleAccordion2" aria-expanded="false" aria-controls="exampleAccordion2" class="pb_font-18">Moravian Prayer Challenge</a>
-                        <div id="exampleAccordion2" class="collapse" role="tabpanel">
+                        <a data-toggle="collapse" data-parent="#prayer_accordian_" href="#prayer_accordian_2" aria-expanded="false" aria-controls="prayer_accordian_2" class="pb_font-18 uppercase">Moravian Prayer Challenge</a>
+                        <div id="prayer_accordian_2" class="collapse" role="tabpanel">
                             <p>
                                 Inspired by the <a href="https://www.christianitytoday.com/history/issues/issue-1/prayer-meeting-that-lasted-100-years.html">Moravians</a>, who prayed non-stop for 100 years,
                                 we have crafted this website to help the church pray for the entire world in measurable units, as a community, and to know at the end when we have finished ... and are ready to start
                                 another lap.
                             </p>
                             <p>
-                                Once every location in the world has been prayed for, we finish a lap. The prayer map resets and we try to pray over the world again
+                                Once every location in the world has been prayed for (we finish a lap), then the prayer map resets, and we try to pray over the world again
                                 ... maybe faster.
                             </p>
                             <p>
                                 The Moravians had one person praying every hour of every day for 100 years. This was roughly 876,000 hours of prayer, or 52,560,000 minutes of prayer for the world. We are humbled by this extraordinary commitment to praying for the world.
                             </p>
                             <p>
-                                <br>
+                                <br><hr>
                             </p>
                         </div>
                     </div>
                     <div class="item">
-                        <a data-toggle="collapse" data-parent="#exampleAccordion" href="#exampleAccordion3" aria-expanded="false" aria-controls="exampleAccordion3" class="pb_font-18">Extraordinary Prayer for Movement</a>
-                        <div id="exampleAccordion3" class="collapse" role="tabpanel">
-                            <p>Based upon research, extraordinary prayer is found at the root of all modern disciple multiplying movements.</p>
-                            <p>Prayer.Global seeks to encourage in creative ways extraordinary prayer for the fulfillment of the Great Commission in our generation.</p>
+                        <a data-toggle="collapse" data-parent="#prayer_accordian_" href="#prayer_accordian_3" aria-expanded="false" aria-controls="prayer_accordian_3" class="pb_font-18 uppercase">Maps & Lists</a>
+                        <div id="prayer_accordian_3" class="collapse" role="tabpanel">
                             <p>
-                                <br>
+                                <strong class="black">Current Map</strong> <a href="/newest/map"><i class="ion-android-open"></i></a>
+                            </p>
+                            <p>
+                                The current map shows what has been covered so far in the active prayer map.
+                            </p>
+                            <p>
+                                <strong class="black">Big Map</strong> <a href="/stats_app/big_map/"><i class="ion-android-open"></i></a>
+                            </p>
+                            <p>
+                                The Big map shows the number of laps, number of minutes, and number of prayer warriors for the entire challenge.
+                            </p>
+                            <p>
+                                <strong class="black">Big List</strong> <a href="/stats_app/big_list/"><i class="ion-android-open"></i></a>
+                            </p>
+                            <p>
+                                The Big List shows each of the laps accomplished so far and some of the statistics for those individual laps.
+                            </p>
+                            <p>
+                                <br><hr>
                             </p>
                         </div>
                     </div>
                     <div class="item">
-                        <a data-toggle="collapse" data-parent="#exampleAccordion" href="#exampleAccordion4" aria-expanded="false" aria-controls="exampleAccordion4" class="pb_font-18">Historic Moment</a>
-                        <div id="exampleAccordion4" class="collapse" role="tabpanel">
-                            <p>Never before in the history of the human race have we been able to coordinate a global community of people to pray for the kingdom to come on earth as it is in heaven IN REALTIME!</p>
-                            <p>It has always pleased the Lord to use current technologies for the advance of his kingdom. Remembering, written language was a technology advancement. The printing press to distribute bibles was a technology advancement.</p>
-                            <p>God is now using global travel and global communication to take the gospel to the ends of the earth. Our heart is to add to that globally coordinated prayer for the kingdom.</p>
+                        <a data-toggle="collapse" data-parent="#prayer_accordian_" href="#prayer_accordian_4" aria-expanded="false" aria-controls="prayer_accordian_4" class="pb_font-18 uppercase">Historic Moment</a>
+                        <div id="prayer_accordian_4" class="collapse" role="tabpanel">
                             <p>
-                                <br>
+                                Never before in the history of the human race have we been able to coordinate a global community of people to pray for the kingdom to come on earth as it is in heaven <u>IN REALTIME</u>!
+                            </p>
+                            <p>
+                                We know it has always pleased the Lord to use current technologies for the advance of his kingdom. (Written language, Roman Roads, Printing Presses, etc.)
+                                And God is now using global travel and global communication to take the gospel to the ends of the earth.
+                            </p>
+                            <p>
+                                We also know, based upon research, that "extraordinary prayer" is found at the root of all modern disciple multiplying movements.
+                            </p>
+                            <p>
+                                So ... Prayer.Global seeks to encourage extraordinary prayer for the fulfillment of the Great Commission using technology.
+                            </p>
+                            <p>
+                                <br><hr>
                             </p>
                         </div>
                     </div>
@@ -241,7 +267,7 @@
         <div class="row align-items-center">
             <div class="col-md-12">
                 <h2 class="heading mb-3">Join Us</h2>
-                <p class="sub-heading mb-5 pb_color-light-opacity-8">Helping the church pray for the entire world in measurable units as a community.</p>
+                <p class="sub-heading mb-5 pb_color-light-opacity-8">Cover the world in extra-ordinary prayer.</p>
 <!--                <p><a href="/newest/lap/" role="button" class="btn smoothscroll pb_outline-light btn-xl p-4 rounded-0 pb_font-13 pb_letter-spacing-2">Start Praying</a></p>-->
                 <p><a href="/prayer_app/subscribe/" role="button" class="btn smoothscroll pb_outline-light btn-xl p-4 rounded-0 pb_font-13 pb_letter-spacing-2">Start Praying</a></p>
             </div>
