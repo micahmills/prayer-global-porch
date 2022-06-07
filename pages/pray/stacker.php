@@ -6,10 +6,11 @@ class PG_Stacker {
     public static $show_all = false;
 
     public static function build_location_stack( $grid_id ) {
-//        dt_write_log(__METHOD__ . ' BEGIN');
+
         // get queries
         $stack = self::_stack_query( $grid_id );
 
+        // setup favors and icon color fields
         $status = [];
         for ($i = 1; $i <= $stack['location']['percent_christian_adherents']; $i++) {
             $status[] = 'christian_adherents';
@@ -21,6 +22,13 @@ class PG_Stacker {
             $status[] = 'believers';
         }
         $stack['favor'] = $status[array_rand( $status )];
+        if ( 'christian_adherents' === $stack['favor'] ) {
+            $stack['icon_color'] = 'red';
+        } else if ( 'non_christians' === $stack['favor'] ) {
+            $stack['icon_color'] = 'orange';
+        } else { // believers
+            $stack['icon_color'] = 'green';
+        }
 
         // build full stack
         $stack['list'] = [];
@@ -32,9 +40,6 @@ class PG_Stacker {
         self::_verses( $stack );
         shuffle( $stack['list'] );
 
-        // inserts into shuffled array specific array positions
-
-
         // adds to top
         self::_demographics( $stack );
         self::_prayers( $stack, 1 );
@@ -44,8 +49,6 @@ class PG_Stacker {
         // adds to bottom
         self::_cities( $stack );
         self::_people_groups( $stack );
-
-//        dt_write_log(__METHOD__ . ' END');
 
         $reduced_stack = [];
         $reduced_stack['list'] = $stack['list'];
@@ -151,18 +154,19 @@ class PG_Stacker {
         return $stack;
     }
 
-    private static function _faith_status( &$stack, int $position ) {
+    private static function _faith_status( &$stack, $position = false ) {
 
-        if ( empty( $position ) ) {
-            $position = 3;
-        }
+        $section_label = 'Faith Status';
+
+        $text_list = PG_Stacker_Text::faith_status_text( $stack );
+        $text = $text_list[$stack['favor']][array_rand( $text_list[$stack['favor']] ) ];
 
         $templates = [];
 
         $templates[] = [
             'type' => 'percent_3_circles',
             'data' => [
-                'section_label' => 'Faith Status',
+                'section_label' => $section_label,
                 'label_1' => "Don't Know Jesus",
                 'percent_1' => $stack['location']['percent_non_christians'],
                 'population_1' => $stack['location']['non_christians'],
@@ -173,130 +177,24 @@ class PG_Stacker {
                 'percent_3' => $stack['location']['percent_believers'],
                 'population_3' => $stack['location']['believers'],
                 'section_summary' => '',
-                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['all_lost'].' neighbors around them.',
+                'prayer' => $text['prayer'],
             ]
         ];
-        $templates[] = [
-            'type' => 'percent_3_circles',
-            'data' => [
-                'section_label' => 'Demographics',
-                'label_1' => "Don't Know Jesus",
-                'percent_1' => $stack['location']['percent_non_christians'],
-                'population_1' => $stack['location']['non_christians'],
-                'label_2' => 'Know About Jesus',
-                'percent_2' => $stack['location']['percent_christian_adherents'],
-                'population_2' => $stack['location']['christian_adherents'],
-                'label_3' => 'Know Jesus',
-                'percent_3' => $stack['location']['percent_believers'],
-                'population_3' => $stack['location']['believers'],
-                'section_summary' => '',
-                'prayer' => 'The '.$stack['location']['admin_level_name'].' of <strong>'.$stack['location']['full_name'].'</strong> has a population of <strong>'.$stack['location']['population'].'</strong>. We estimate there is <strong>1</strong> believer for every <strong>'. $stack['location']['lost_per_believer'] .'</strong> neighbors who need Jesus.',
-            ]
-        ];
-        if ( $stack['location']['percent_non_christians'] > $stack['location']['percent_christian_adherents']) {
-            $templates[] = [
-                'type' => 'percent_3_circles',
-                'data' => [
-                    'section_label' => 'Faith Status',
-                    'label_1' => "Don't Know Jesus",
-                    'percent_1' => $stack['location']['percent_non_christians'],
-                    'population_1' => $stack['location']['non_christians'],
-                    'label_2' => 'Know About Jesus',
-                    'percent_2' => $stack['location']['percent_christian_adherents'],
-                    'population_2' => $stack['location']['christian_adherents'],
-                    'label_3' => 'Know Jesus',
-                    'percent_3' => $stack['location']['percent_believers'],
-                    'population_3' => $stack['location']['believers'],
-                    'section_summary' => '',
-                    'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' lost neighbors around them.',
-                ]
-            ];
-            $templates[] = [
-                'type' => 'percent_2_circles',
-                'data' => [
-                    'section_label' => 'Faith Status',
-                    'label_1' => "Don't Know Jesus",
-                    'percent_1' => $stack['location']['percent_non_christians'],
-                    'population_1' => $stack['location']['non_christians'],
-                    'color_1' => 'red',
-                    'label_2' => 'Know Jesus',
-                    'percent_2' => $stack['location']['percent_believers'],
-                    'population_2' => $stack['location']['believers'],
-                    'section_summary' => '',
-                    'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['non_christians'].' lost neighbors around them.',
-                ]
-            ];
-        }
-        else {
-            $templates[] = [
-               'type' => 'percent_3_circles',
-               'data' => [
-                   'section_label' => 'Faith Status',
-                   'label_1' => "Don't Know Jesus",
-                   'percent_1' => $stack['location']['percent_non_christians'],
-                   'population_1' => $stack['location']['non_christians'],
-                   'label_2' => 'Know About Jesus',
-                   'percent_2' => $stack['location']['percent_christian_adherents'],
-                   'population_2' => $stack['location']['christian_adherents'],
-                   'label_3' => 'Know Jesus',
-                   'percent_3' => $stack['location']['percent_believers'],
-                   'population_3' => $stack['location']['believers'],
-                   'section_summary' => '',
-                   'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' encourage the '.$stack['location']['christian_adherents'].' cultural Christians around them to read and obey the Word.',
-               ]
-            ];
-            $templates[] = [
-               'type' => 'percent_2_circles',
-               'data' => [
-                   'section_label' => 'Faith Status',
-                   'label_1' => "Know About Jesus",
-                   'percent_1' => $stack['location']['percent_christian_adherents'],
-                   'population_1' => $stack['location']['christian_adherents'],
-                   'color_1' => 'orange',
-                   'label_2' => 'Know Jesus',
-                   'percent_2' => $stack['location']['percent_believers'],
-                   'population_2' => $stack['location']['believers'],
-                   'section_summary' => '',
-                   'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' encourage the '.$stack['location']['christian_adherents'].' cultural Christians around them to read and obey the Word.',
-               ]
-            ];
-        }
-
-        if ( $stack['location']['percent_non_christians'] < 85 ) {
-            $templates[] = [
-                'type' => 'percent_3_bar',
-                'data' => [
-                    'section_label' => 'Faith Status',
-                    'label_1' => "Don't",
-                    'percent_1' => $stack['location']['percent_non_christians'],
-                    'population_1' => $stack['location']['non_christians'],
-                    'label_2' => 'Know About',
-                    'percent_2' => $stack['location']['percent_christian_adherents'],
-                    'population_2' => $stack['location']['christian_adherents'],
-                    'label_3' => 'Know',
-                    'percent_3' => $stack['location']['percent_believers'],
-                    'population_3' => $stack['location']['believers'],
-                    'section_summary' => '',
-                    'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['all_lost'].' lost neighbors around them.',
-                ]
-            ];
-        }
-
         $templates[] = [
             'type' => '100_bodies_chart',
             'data' => [
-                'section_label' => 'Faith Status',
+                'section_label' => $section_label,
                 'percent_1' => $stack['location']['percent_non_christians'],
                 'percent_2' => $stack['location']['percent_christian_adherents'],
                 'percent_3' => $stack['location']['percent_believers'],
                 'section_summary' => '',
-                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['all_lost'].' lost neighbors around them.',
+                'prayer' => $text['prayer'],
             ]
         ];
         $templates[] = [
             'type' => '100_bodies_3_chart',
             'data' => [
-                'section_label' => 'Faith Status',
+                'section_label' => $section_label,
                 'label_1' => "Don't know Jesus",
                 'percent_1' => $stack['location']['percent_non_christians'],
                 'population_1' => $stack['location']['non_christians'],
@@ -307,11 +205,38 @@ class PG_Stacker {
                 'percent_3' => $stack['location']['percent_believers'],
                 'population_3' => $stack['location']['believers'],
                 'section_summary' => '',
-                'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['all_lost'].' lost neighbors around them.',
+                'prayer' => $text['prayer'],
             ]
         ];
 
-        $stack['list'] = array_merge( array_slice( $stack['list'], 0, $position ), array( $templates[array_rand( $templates )] ), array_slice( $stack['list'], $position ) );
+
+        if ( $stack['location']['percent_non_christians'] < 85 ) {
+            $templates[] = [
+                'type' => 'percent_3_bar',
+                'data' => [
+                    'section_label' => $section_label,
+                    'label_1' => "Don't",
+                    'percent_1' => $stack['location']['percent_non_christians'],
+                    'population_1' => $stack['location']['non_christians'],
+                    'label_2' => 'Know About',
+                    'percent_2' => $stack['location']['percent_christian_adherents'],
+                    'population_2' => $stack['location']['christian_adherents'],
+                    'label_3' => 'Know',
+                    'percent_3' => $stack['location']['percent_believers'],
+                    'population_3' => $stack['location']['believers'],
+                    'section_summary' => '',
+                    'prayer' => $text['prayer'],
+                ]
+            ];
+        }
+
+        if ( empty( $position ) ) {
+            $stack['list'] = array_merge( [ $templates[array_rand( $templates )] ], $stack['list'] );
+        } else {
+            $stack['list'] = array_merge( array_slice( $stack['list'], 0, $position ), array( $templates[array_rand( $templates )] ), array_slice( $stack['list'], $position ) );
+        }
+
+
 
         return $stack;
     }
@@ -606,6 +531,7 @@ class PG_Stacker {
     }
 
     private static function _cities( &$stack ) {
+
         if ( ! empty( $stack['cities'] ) ) {
 
             // cities list
@@ -613,296 +539,141 @@ class PG_Stacker {
             foreach ($stack['cities'] as $city) {
                 $values[] = $city['name'] . ' - (pop ' . $city['population'] . ')';
             }
-            if ( !empty( $values )) {
+            if ( ! empty( $values )) {
+
+                $text_list = PG_Stacker_Text::cities_text( $stack );
+                $text = $text_list[array_rand( $text_list ) ];
+
                 $stack['list'][] = [
                     'type' => 'bullet_list_2_column',
                     'data' => [
-                        'section_label' => 'Top Cities',
+                        'section_label' => 'Cities in ' . $stack['location']['name'],
                         'values' => $values,
                         'section_summary' => '',
-                        'prayer' => ''
+                        'prayer' => $text['prayer'],
                     ]
                 ];
             }
         }
+
         return $stack;
     }
 
-    private static function _key_city( &$stack ) {
+    private static function _key_city( &$stack, $position = false ) {
+
         if ( ! empty( $stack['cities'] ) ) {
-            // focus block
+
             $cities = $stack['cities'];
             shuffle( $cities );
-            $content = 'Pray that God raises up new churches in the city of '.$cities[0]['full_name'].'.';
-            if ( isset( $cities[0] ) && ! empty( $cities[0] ) ) {
-                if ( $cities[0]['population_int'] > 0 ) {
-                    $per_person = 0;
-                    if ( $cities[0]['population_int'] > 10000 ) {
-                        $per_person = 1000;
-                    }
-                    else if ( $cities[0]['population_int'] > 100 ) {
-                        $per_person = 100;
-                    }
-                    if ( $per_person ) {
-                        $churches_needed = number_format( $cities[0]['population_int'] / $per_person );
-                        $content = 'Pray that God raises up '.$churches_needed.' churches in '.$cities[0]['full_name'].' to reach its '.$cities[0]['population'].' citizens.';
-                    }
-                }
 
-                $stack['list'][] = [
+            if ( isset( $cities[0] ) && ! empty( $cities[0] ) ) {
+
+                $text_list = PG_Stacker_Text::key_city_text( $stack, $cities[0] );
+                $text = $text_list[array_rand( $text_list ) ];
+
+                $template = [
                     'type' => 'content_block',
                     'data' => [
-                        'section_label' => 'Key City',
+                        'section_label' => 'Focus City',
                         'focus_label' => 'Pray for the city of ' . $cities[0]['name'],
                         'icon' => 'ion-map', // ion icons from /pages/fonts/ionicons/
                         'color' => 'green',
-                        'section_summary' => $content,
+                        'section_summary' => $text['section_summary'],
                     ]
                 ];
+
+                if ( empty( $position ) ) {
+                    $stack['list'] = array_merge( [ $template ], $stack['list'] );
+                } else {
+                    $stack['list'] = array_merge( array_slice( $stack['list'], 0, $position ), [ $template ], array_slice( $stack['list'], $position ) );
+                }
             }
         }
+
         return $stack;
     }
 
-    private static function _least_reached( &$stack ) {
+    private static function _least_reached( &$stack, $position = false ) {
+
         if ( ! empty( $stack['least_reached'] ) ) {
-            $stack['list'][] = [
+
+            $text_list = PG_Stacker_Text::least_reached_text( $stack );
+            $text = $text_list[array_rand( $text_list ) ];
+
+            $template = [
                 'type' => 'least_reached_block',
                 'data' => [
                     'section_label' => 'Least Reached',
                     'focus_label' => $stack['least_reached']['name'],
                     'image_url' => pg_jp_image( 'pid3', $stack['least_reached']['PeopleID3'] ), // ion icons from /pages/fonts/ionicons/
-                    'section_summary' => 'The '.$stack['least_reached']['name'].' people in ' . $stack['location']['full_name'] . ' are a least reached people group, according to Joshua Project. They are classified as '.$stack['least_reached']['AffinityBloc'].' and speak '.$stack['least_reached']['PrimaryLanguageName'].'. Primarily, they follow '.$stack['least_reached']['PrimaryReligion'].' and '. number_format( (float) $stack['least_reached']['PercentEvangelical'], 1 ).'% are suspected of being believers.',
-                    'prayer' => 'Pray that the ' . $stack['location']['believers'] . ' believers in ' . $stack['location']['full_name'] . ' to boldly witnesses to the '.$stack['least_reached']['name'].' near them.'
+                    'section_summary' => $text['section_summary'],
+                    'prayer' => $text['prayer'],
                 ]
             ];
+
+            if ( empty( $position ) ) {
+                $stack['list'] = array_merge( [ $template ], $stack['list'] );
+            } else {
+                $stack['list'] = array_merge( array_slice( $stack['list'], 0, $position ), [ $template ], array_slice( $stack['list'], $position ) );
+            }
         }
+
         return $stack;
     }
 
-    private static function _photos( &$stack, int $position ) {
-        if ( empty( $position ) ) {
-            $position = 2;
-        }
+    private static function _photos( &$stack, $position = false ) {
+
         $images = pg_images( $stack['location']['grid_id'], true );
 
         if ( ! empty( $images['photos'] ) ) {
 
-            $text = [
-                [
-                    'section_label' => 'One Shot Prayer Walk',
-                    'section_summary' => 'What people, places, activities or culture do you see? <br>Do you see conditions of education, economy, religion, environment? <br>How could you pray for that?',
-                    'prayer' => 'Spirit, what do you want prayed for '.$stack['location']['full_name'].'?',
-                ],
-                [
-                    'section_label' => 'One Shot Prayer Walk',
-                    'section_summary' => 'What people, places, activities or culture do you see? <br>Do you see conditions of education, economy, religion, environment? <br>How could you pray for that?',
-                    'prayer' => 'Spirit, what do you want prayed for '.$stack['location']['full_name'].'?',
-                ],
-                [
-                    'section_label' => 'One Shot Prayer Walk',
-                    'section_summary' => 'What people, places, activities or culture do you see? <br>Do you see condition of education, economy, religion, environment? <br>How could you pray for that?',
-                    'prayer' => 'Spirit, what do you want prayed for '.$stack['location']['full_name'].'?',
-                ],
-                [
-                    'section_label' => 'One Shot Prayer Walk',
-                    'section_summary' => 'What people, places, activities or culture do you see? <br>Do you see conditions of education, economy, religion, environment? <br>How could you pray for that?',
-                    'prayer' => 'Spirit, what do you want prayed for the people of '.$stack['location']['full_name'].'?',
-                ],
-                [
-                    'section_label' => 'One Shot Prayer Walk',
-                    'section_summary' => 'What people, places, activities or culture do you see? <br>Do you see conditions of education, economy, religion, environment? <br>How could you pray for that?',
-                    'prayer' => 'Spirit, what do you want prayed for the people of '.$stack['location']['full_name'].'?',
-                ],
-                [
-                    'section_label' => 'One Shot Prayer Walk',
-                    'section_summary' => 'What people, places, activities or culture do you see? <br>Do you see conditions of education, economy, religion, environment? <br>How could you pray for that?',
-                    'prayer' => 'Spirit, what do you want prayed for '.$stack['location']['full_name'].'?',
-                ],
-                [
-                    'section_label' => 'One Shot Prayer Walk',
-                    'section_summary' => 'What people, places, activities or culture do you see? <br>Do you see conditions of education, economy, religion, environment? <br>How could you pray for that?',
-                    'prayer' => 'Spirit, what do you want prayed for '.$stack['location']['full_name'].'?',
-                ],
-            ];
+            $text_list = PG_Stacker_Text::photos_text( $stack );
+            $text = $text_list[array_rand( $text_list ) ];
 
             $image_url = $images['photos'][array_rand( $images['photos'] )];
-            $text_index = array_rand( $text );
             $template = [
                 'type' => 'photo_block',
                 'data' => [
-                    'section_label' => $text[$text_index]['section_label'],
+                    'section_label' => 'One Shot Prayer Walk',
                     'location_label' => 'Photo from the ' . $stack['location']['admin_level_name'] . ' of ' . $stack['location']['full_name'],
                     'url' => $image_url,
-                    'section_summary' => $text[$text_index]['section_summary'],
-                    'prayer' => $text[$text_index]['prayer'],
+                    'section_summary' => $text['section_summary'],
+                    'prayer' => $text['prayer'],
                 ]
             ];
 
-            $stack['list'] = array_merge( array_slice( $stack['list'], 0, $position ), [ $template ], array_slice( $stack['list'], $position ) );
+            if ( empty( $position ) ) {
+                $stack['list'] = array_merge( [ $template ], $stack['list'] );
+            } else {
+                $stack['list'] = array_merge( array_slice( $stack['list'], 0, $position ), [ $template ], array_slice( $stack['list'], $position ) );
+            }
         }
 
         return $stack;
     }
-    private static function _prayers( &$stack, int $position ) {
+
+    private static function _prayers( &$stack, $position = false ) {
+
+        $section_label = 'Movement Prayer';
+
+        $text_list = PG_Stacker_Text::prayer_text( $stack );
+        $text = $text_list[$stack['favor']][array_rand( $text_list[$stack['favor']] ) ];
+        $icon = $stack['icon_color'];
+
+        $template = [
+            'type' => 'prayer_block',
+            'data' => [
+                'section_label' => $section_label,
+                'icon_color' => $icon,
+                'prayer' => $text['prayer'],
+            ]
+        ];
 
         if ( empty( $position ) ) {
-            $position = 4;
+            $stack['list'] = array_merge( [ $template ], $stack['list'] );
+        } else {
+            $stack['list'] = array_merge( array_slice( $stack['list'], 0, $position ), [ $template ], array_slice( $stack['list'], $position ) );
         }
-
-        $blocks = [];
-
-        if ( 'non_believers' === $stack['favor'] ) {
-            $blocks[] = [
-                'type' => 'prayer_block',
-                'data' => [
-                    'section_label' => 'Movement Prayer',
-                    'icon_color' => 'red',
-                    'verse' => 'Don’t you have a saying, ‘It’s still four months until harvest’? I tell you, open your eyes and look at the fields! They are ripe for harvest.',
-                    'reference' => 'John 4:35',
-                    'prayer' => 'Pray for consistent and clear Kingdom vision casting and modeling by movement catalysts and leaders. Ask that all in movements love God and others, worship in Spirit and truth, and share the Good News with those who have not yet heard.',
-                ]
-            ];
-        }
-
-        else if ( 'christian_adherents' === $stack['favor'] ) {
-            $blocks[] = [
-                'type' => 'prayer_block',
-                'data' => [
-                    'section_label' => 'Movement Prayer',
-                    'icon_color' => 'orange',
-                    'verse' => 'Don’t you have a saying, ‘It’s still four months until harvest’? I tell you, open your eyes and look at the fields! They are ripe for harvest.',
-                    'reference' => 'John 4:35',
-                    'prayer' => 'Pray for consistent and clear Kingdom vision casting and modeling by movement catalysts and leaders. Ask that all in movements love God and others, worship in Spirit and truth, and share the Good News with those who have not yet heard.',
-                ]
-            ];
-        }
-
-        else if ( 'believers' === $stack['favor'] ) {
-            $blocks[] = [
-                'type' => 'prayer_block',
-                'data' => [
-                    'section_label' => 'Movement Prayer',
-                    'icon_color' => 'green',
-                    'verse' => 'I am the vine; you are the branches. If you remain in me and I in you, you will bear much fruit; apart from me you can do nothing.',
-                    'reference' => 'John 15:5',
-                    'prayer' => 'Pray that every disciple and leader in movements would remain rooted in abiding with Jesus. Ask that ministry activities not distract from this.',
-                ]
-            ];
-        }
-
-        $blocks[] = [
-            'type' => 'prayer_block',
-            'data' => [
-                'section_label' => 'Movement Prayer',
-                'icon_color' => 'green',
-                'verse' => 'Father, even as we pray for people of '.$stack['location']['name'].' and long to see disciples made and multiplied, we cry out for a prayer movement to stir inside and outside of '.$stack['location']['full_name'].'.',
-                'reference' => '',
-                'prayer' => '',
-            ]
-        ];
-        $blocks[] = [
-            'type' => 'prayer_block',
-            'data' => [
-                'section_label' => 'Movement Prayer',
-                'icon_color' => 'green',
-                'verse' => 'Lord, stir the hearts of Your people to agree with You and with one another in strong faith, passion, and perseverance to see You build Your Church in '.$stack['location']['full_name'].'.',
-                'reference' => '',
-                'prayer' => '',
-            ]
-        ];
-        $blocks[] = [
-            'type' => 'prayer_block',
-            'data' => [
-                'section_label' => 'Movement Prayer',
-                'icon_color' => 'green',
-                'verse' => 'Lord we pray you unite believers to pray at all times in the Spirit, with all prayer and supplication, for spiritual breakthrough and protection and transformation throughout '.$stack['location']['full_name'].' in this generation.',
-                'reference' => '',
-                'prayer' => '',
-            ]
-        ];
-        $blocks[] = [
-            'type' => 'prayer_block',
-            'data' => [
-                'section_label' => 'Movement Prayer',
-                'icon_color' => 'orange',
-                'verse' => 'Lord, help the people of '.$stack['location']['full_name'].' to discover the essence of being a disciple, making disciples, and how to plant churches that multiply.',
-                'reference' => '',
-                'prayer' => '',
-            ]
-        ];
-        $blocks[] = [
-            'type' => 'prayer_block',
-            'data' => [
-                'section_label' => 'Movement Prayer',
-                'icon_color' => 'red',
-                'verse' => 'God, please help the people of '.$stack['location']['full_name'].' to become disciples who hear from you and then obey you.',
-                'reference' => '',
-                'prayer' => '',
-            ]
-        ];
-        $blocks[] = [
-            'type' => 'prayer_block',
-            'data' => [
-                'section_label' => 'Movement Prayer',
-                'icon_color' => 'green',
-                'verse' => 'Father, we pray that the people of '.$stack['location']['full_name'].' that they will learn to study the Bible, understand it, obey it, and share it.',
-                'reference' => '',
-                'prayer' => '',
-            ]
-        ];
-        $blocks[] = [
-            'type' => 'prayer_block',
-            'data' => [
-                'section_label' => 'Movement Prayer',
-                'icon_color' => 'green',
-                'verse' => 'God, we pray both the men and women of '.$stack['location']['full_name'].' that they will find ways to meet in groups of two or three to encourage and correct one another from your Word.',
-                'reference' => '',
-                'prayer' => '',
-            ]
-        ];
-        $blocks[] = [
-            'type' => 'prayer_block',
-            'data' => [
-                'section_label' => 'Movement Prayer',
-                'icon_color' => 'green',
-                'verse' => 'Lord, we pray for the believers in '.$stack['location']['full_name'].' to be more like Jesus, which is the greatest blessing we can offer them.',
-                'reference' => '',
-                'prayer' => '',
-            ]
-        ];
-        $blocks[] = [
-            'type' => 'prayer_block',
-            'data' => [
-                'section_label' => 'Movement Prayer',
-                'icon_color' => 'green',
-                'verse' => 'God, we pray for the believers in '.$stack['location']['full_name'].' that they will know how easy it is to spend an hour in prayer with you, and will do it.',
-                'reference' => '',
-                'prayer' => '',
-            ]
-        ];
-        $blocks[] = [
-            'type' => 'prayer_block',
-            'data' => [
-                'section_label' => 'Movement Prayer',
-                'icon_color' => 'green',
-                'verse' => 'Father, we pray for the believers in '.$stack['location']['full_name'].' to be good stewards of their relationships.',
-                'reference' => '',
-                'prayer' => '',
-            ]
-        ];
-        $blocks[] = [
-            'type' => 'prayer_block',
-            'data' => [
-                'section_label' => 'Movement Prayer',
-                'icon_color' => 'green',
-                'verse' => 'God, we pray for the believers in '.$stack['location']['full_name'].' to be generous so that they would be worthy of greater investment by you.',
-                'reference' => 'Matthew 25:28',
-                'prayer' => '',
-            ]
-        ];
-
-        $stack['list'] = array_merge( array_slice( $stack['list'], 0, $position ), array( $blocks[array_rand( $blocks )] ), array_slice( $stack['list'], $position ) );
 
         return $stack;
     }

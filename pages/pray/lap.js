@@ -787,9 +787,6 @@ jQuery(document).ready(function(){
       case 'percent_3_bar':
         _template_percent_3_bar( block.data )
         break;
-      case 'percent_2_circles':
-        _template_percent_2_circles( block.data )
-        break;
       case '100_bodies_chart':
         _template_100_bodies_chart( block.data )
         break;
@@ -862,40 +859,6 @@ jQuery(document).ready(function(){
                <p class="mt-3 mb-3 font-weight-normal one-em">${data.prayer}</p>
             </div>
           </div>
-      <div class="w-100"><hr></div>
-    </div>`
-    )
-  }
-  function _template_percent_2_circles( data ) {
-    div.append(
-      `<div class="container block">
-          <div class="row">
-          <div class="col text-center ">
-             <p class="mt-3 mb-3 font-weight-normal one-em uc">${data.section_label}</p>
-          </div>
-      </div>
-      <div class="row text-center justify-content-center">
-          <div class="col-md-3 col-lg-2">
-            <p class="mt-3 mb-0 font-weight-bold">${data.label_1}</p>
-            <div class="pie" style="--p:${data.percent_1};--b:10px;--c:${data.color_1};">${data.percent_1}%</div>
-            <p class="mt-3 mb-0 font-weight-normal one-em">${data.population_1}</p>
-          </div>
-          <div class="col-md-3 col-lg-2">
-            <p class="mt-3 mb-0 font-weight-bold">${data.label_2}</p>
-            <div class="pie" style="--p:${data.percent_2};--b:10px;--c:green;">${data.percent_2}%</div>
-            <p class="mt-3 mb-0 font-weight-normal one-em">${data.population_2}</p>
-          </div>
-      </div>
-      <div class="row text-center">
-        <div class="col">
-           <p class="font-weight-normal">${data.section_summary}</p>
-        </div>
-      </div>
-      <div class="row text-center justify-content-center">
-        <div class="col-md-8">
-          <p class="mt-3 mb-3 font-weight-normal one-em">${data.prayer}</p>
-        </div>
-      </div>
       <div class="w-100"><hr></div>
     </div>`
     )
@@ -1335,16 +1298,10 @@ jQuery(document).ready(function(){
       </div>
       <div class="row text-center justify-content-center">
         <div class="col-md-8">
-           <p class="mt-3 mb-3 font-weight-bold two-em">${data.verse}</p>
-           <p class="mt-0 mb-3 font-italic">${data.reference}</p>
+           <p class="mt-3 mb-3 font-weight-bold two-em">${data.prayer}</p>
         </div>
       </div>
-      <div class="row text-center justify-content-center">
-        <div class="col-md-8">
-           <p class="mt-3 mb-3 font-weight-normal one-em">${data.prayer}</p>
-        </div>
-    </div>
-    <div class="w-100"><hr></div>
+      <div class="w-100"><hr></div>
     </div>`)
   }
   function _template_verse_block( data ) {
@@ -1383,7 +1340,7 @@ jQuery(document).ready(function(){
       </div>
       <div class="row text-center">
         <div class="col">
-           <p><img src="${data.url}" class="img-fluid" alt="prayer photo" /></p>
+           <p><img src="${data.url}" class="img-fluid" alt="prayer photo" style="max-height:700px" /></p>
         </div>
       </div>
       <div class="row text-center justify-content-center">
