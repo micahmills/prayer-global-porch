@@ -60,23 +60,16 @@ class PG_Stacker {
 
     private static function _demographics( &$stack ) {
 
+        $section_label = 'Demographics';
+        $icon = $stack['icon_color'];
+
         $templates = [];
 
-        $section_label = 'Demographics';
-
-        // all locations
-        $templates[] = [
-            'type' => 'content_block',
-            'data' => [
-                'section_label' => $section_label,
-                'focus_label' => $stack['location']['full_name'],
-                'icon' => 'ion-map',
-                'color' => 'green',
-                'section_summary' => 'The ' . $stack['location']['admin_level_name'] . ' of <strong>' . $stack['location']['full_name'] . '</strong> has a population of <strong>' . $stack['location']['population'] . '</strong>.<br><br> We estimate ' . $stack['location']['name'] . ' has <strong>' . $stack['location']['believers'] . '</strong> people who might know Jesus, <strong>' . $stack['location']['christian_adherents'] . '</strong> people who might know about Jesus culturally, and <strong>' . $stack['location']['non_christians'] . '</strong> people who do not know Jesus.<br><br>This is <strong>1</strong> believer for every <strong>' .  $stack['location']['lost_per_believer'] . '</strong> neighbors who need Jesus.',
-            ]
-        ];
-
-        if ( $stack['location']['percent_non_christians'] > 50 ) {
+        $types = [ 'content_block', '4_fact_blocks' ]; // @todo maybe add knowledge about economy or average wealth
+        $type = $types[array_rand( $types )];
+        if ( 'content_block' === $type ) {
+            $text_list = PG_Stacker_Text::demogrphics_content_text( $stack );
+            $text = $text_list[$stack['favor']][array_rand( $text_list[$stack['favor']] ) ];
 
             $templates[] = [
                 'type' => 'content_block',
@@ -84,10 +77,15 @@ class PG_Stacker {
                     'section_label' => $section_label,
                     'focus_label' => $stack['location']['full_name'],
                     'icon' => 'ion-map',
-                    'color' => 'red',
-                    'section_summary' => 'The '.$stack['location']['admin_level_name'].' of <strong>'.$stack['location']['full_name'].'</strong> has a population of <strong>'.$stack['location']['population'].'</strong>.<br><br> We estimate '.$stack['location']['name'].' has <strong>'.$stack['location']['believers'].'</strong> people who might know Jesus, <strong>'.$stack['location']['christian_adherents'].'</strong> people who might know about Jesus culturally, and <strong>'.$stack['location']['non_christians'].'</strong> people who do not know Jesus.<br><br>This is <strong>1</strong> believer for every <strong>'. $stack['location']['lost_per_believer'] .'</strong> neighbors who need Jesus.',
+                    'color' => $icon,
+                    'section_summary' => $text['section_summary']
                 ]
             ];
+        }
+        else {
+            $text_list = PG_Stacker_Text::demogrphics_4_fact_text( $stack );
+            $text = $text_list[$stack['favor']][array_rand( $text_list[$stack['favor']] ) ];
+
             $templates[] = [
                 'type' => '4_fact_blocks',
                 'data' => [
@@ -106,12 +104,9 @@ class PG_Stacker {
                     'value_4' => $stack['location']['primary_language'],
                     'size_4' => 'two-em',
                     'section_summary' => '',
-                    'prayer' => 'We estimate there is <strong>1</strong> believer for every <strong>'. $stack['location']['lost_per_believer'] .'</strong> neighbors who need Jesus.'
+                    'prayer' => $text['prayer']
                 ]
             ];
-
-        }
-        if ( $stack['location']['percent_christian_adherents'] > 50 ) {
             $templates[] = [
                 'type' => '4_fact_blocks',
                 'data' => [
@@ -130,26 +125,13 @@ class PG_Stacker {
                     'value_4' => $stack['location']['primary_language'],
                     'size_4' => 'two-em',
                     'section_summary' => '',
-                    'prayer' => 'We estimate there is <strong>1</strong> believer for every <strong>'. $stack['location']['lost_per_believer'] .'</strong> neighbors who need Jesus.'
-                ]
-            ];
-            $templates[] = [
-                'type' => 'content_block',
-                'data' => [
-                    'section_label' => $section_label,
-                    'focus_label' => $stack['location']['full_name'],
-                    'icon' => 'ion-map',
-                    'color' => 'orange',
-                    'section_summary' => 'The ' . $stack['location']['admin_level_name'] . ' of <strong>' . $stack['location']['full_name'] . '</strong> has a population of <strong>' . $stack['location']['population'] . '</strong>.<br><br> We estimate ' . $stack['location']['name'] . ' has <strong>' . $stack['location']['believers'] . '</strong> people who might know Jesus, <strong>' . $stack['location']['christian_adherents'] . '</strong> people who might know about Jesus culturally, and <strong>' . $stack['location']['non_christians'] . '</strong> people who do not know Jesus.<br><br>This is <strong>1</strong> believer for every <strong>' .  $stack['location']['lost_per_believer'] . '</strong> neighbors who need Jesus.',
+                    'prayer' => $text['prayer']
                 ]
             ];
         }
 
 
-        if ( ! empty( $templates ) ) {
-            $template = $templates[array_rand( $templates )];
-            $stack['list'] = array_merge( [ $template ], $stack['list'] );
-        }
+        $stack['list'] = array_merge( [ $templates[array_rand( $templates )] ], $stack['list'] );
 
         return $stack;
     }
@@ -243,8 +225,6 @@ class PG_Stacker {
         } else {
             $stack['list'] = array_merge( array_slice( $stack['list'], 0, $position ), array( $templates[array_rand( $templates )] ), array_slice( $stack['list'], $position ) );
         }
-
-
 
         return $stack;
     }
@@ -688,208 +668,31 @@ class PG_Stacker {
 
     private static function _verses( &$stack, $position = false ) {
 
-        $templates = [];
+        $section_label = 'Scripture';
 
-        $templates[] = [
+        $text_list = PG_Stacker_Text::verse_text( $stack );
+        $text = $text_list[$stack['favor']][array_rand( $text_list[$stack['favor']] ) ];
+        $icon = $stack['icon_color'];
+
+        $template = [
             'type' => 'verse_block',
             'data' => [
-                'section_label' => 'Scripture',
-                'icon_color' => 'red',
+                'section_label' => $section_label,
+                'icon_color' => $icon,
                 'verse' => 'And this gospel of the kingdom will be preached in the whole world as a testimony to all nations, and then the end will come.',
                 'reference' => 'Matthew 24:14',
-                'prayer' => 'Pray the gospel is preached in ' . $stack['location']['name'] . '.',
-            ]
-        ];
-        $templates[] = [
-            'type' => 'verse_block',
-            'data' => [
-                'section_label' => 'Scripture',
-                'icon_color' => 'red',
-                'verse' => '"Go therefore and make disciples of all nations, baptizing them in the name of the Father and of the Son and of the Holy Spirit, teaching them to observe all that I have commanded you; and lo, I am with you always, to the close of the age."',
-                'reference' => 'Matthew 28:19-20',
-                'prayer' => 'Pray the gospel is preached in to all nations including ' . $stack['location']['name'] . '.',
-            ]
-        ];
-        $templates[] = [
-            'type' => 'verse_block',
-            'data' => [
-                'section_label' => 'Scripture',
-                'icon_color' => 'green',
-                'verse' => '"For the earth will be filled with the knowledge of the glory of the LORD as the waters cover the sea."',
-                'reference' => 'Habakkuk 2:14',
-                'prayer' => 'Pray knowledge of the glory of the Lord fills ' . $stack['location']['full_name'] . '.',
-            ]
-        ];
-        $templates[] = [
-            'type' => 'verse_block',
-            'data' => [
-                'section_label' => 'Scripture',
-                'icon_color' => 'red',
-                'verse' => '"How then will they call on him in whom they have not believed? And how are they to believe in him of whom they have never heard? And how are they to hear without someone preaching? ... So faith comes from hearing, and hearing through the word of Christ"',
-                'reference' => 'Rom. 10:14,17',
-                'prayer' => 'Open the hearts and lips of Your '.$stack['location']['believers'].' people in '.$stack['location']['name'].' to humbly and boldly and broadly share Your Good News for the glory of Your name.',
-            ]
-        ];
-        $templates[] = [
-            'type' => 'verse_block',
-            'data' => [
-                'section_label' => 'Scripture',
-                'icon_color' => 'green',
-                'verse' => '"All Scripture is breathed out by God and profitable for teaching, for reproof, for correction, and for training in righteousness, that the man of God may be complete, equipped for every good work"',
-                'reference' => '2 Timothy 3:16-17',
-                'prayer' => 'May Your Word, O God, be the foundational source of truth and discernment for all matters of faith and practice and shepherding among the people of '.$stack['location']['full_name'].'.',
-            ]
-        ];
-        $templates[] = [
-            'type' => 'verse_block',
-            'data' => [
-                'section_label' => 'Scripture',
-                'icon_color' => 'green',
-                'verse' => '"All Scripture is breathed out by God and profitable for teaching, for reproof, for correction, and for training in righteousness, that the man of God may be complete, equipped for every good work"',
-                'reference' => '2 Timothy 3:16-17',
-                'prayer' => 'We pray against competing spiritual authorities '.$stack['location']['name'].' and ask that as biblical understanding increases that love, dependence upon, and obedience to You would correspondingly increase.',
-            ]
-        ];
-        $templates[] = [
-            'type' => 'verse_block',
-            'data' => [
-                'section_label' => 'Scripture',
-                'icon_color' => 'green',
-                'verse' => '"And when they had appointed elders for them in every church, with prayer and fasting they committed them to the Lord in whom they had believed."',
-                'reference' => 'Acts 14:23',
-                'prayer' => 'Father, just as the earliest church-planting efforts included the appointment of local leaders over those young congregations, we pray for qualified locals to humbly serve and lead Your Church in '.$stack['location']['full_name'].'.',
-            ]
-        ];
-        $templates[] = [
-            'type' => 'verse_block',
-            'data' => [
-                'section_label' => 'Scripture',
-                'icon_color' => 'green',
-                'verse' => '"And when they had appointed elders for them in every church, with prayer and fasting they committed them to the Lord in whom they had believed."',
-                'reference' => 'Acts 14:23',
-                'prayer' => 'Lord we ask for the appointment of local leaders in '.$stack['location']['name'].' who would passionately give themselves to prayer and the ministry of Your Word.',
-            ]
-        ];
-        $templates[] = [
-            'type' => 'verse_block',
-            'data' => [
-                'section_label' => 'Scripture',
-                'icon_color' => 'green',
-                'verse' => '"Now when they saw the boldness of Peter and John, and perceived that they were uneducated, common men, they were astonished. And they recognized that they had been with Jesus"',
-                'reference' => 'Acts 4:13',
-                'prayer' => 'Lord, while we acknowledge the value of education and training, we affirm the superior value of abiding in and being with You. We pray for the '.$stack['location']['believers'].' believers in '.$stack['location']['name'].' that they abide in You.',
-            ]
-        ];
-        $templates[] = [
-            'type' => 'verse_block',
-            'data' => [
-                'section_label' => 'Scripture',
-                'icon_color' => 'green',
-                'verse' => '"Now when they saw the boldness of Peter and John, and perceived that they were uneducated, common men, they were astonished. And they recognized that they had been with Jesus"',
-                'reference' => 'Acts 4:13',
-                'prayer' => 'Lord, we ask You to raise up men and women of godly character as lay leaders to serve and shepherd Your people. Let not formal training, diplomas, or titles be the ultimate criteria for influence or a bottleneck to spiritual maturity or church growth.',
-            ]
-        ];
-        $templates[] = [
-            'type' => 'verse_block',
-            'data' => [
-                'section_label' => 'Scripture',
-                'icon_color' => 'green',
-                'verse' => '"Day after day, in the temple courts and from house to house, they never stopped teaching and proclaiming the good news"',
-                'reference' => 'Acts 5:42',
-                'prayer' => 'Father, give to the '.$stack['location']['believers'].' believers in '.$stack['location']['name'].' the same fire and passion for the truth of your Son, as the early church. May the message jump from one house to another house throughout the entire '.$stack['location']['admin_level_name'].'.',
-            ]
-        ];
-        $templates[] = [
-            'type' => 'verse_block',
-            'data' => [
-                'section_label' => 'Scripture',
-                'icon_color' => 'green',
-                'verse' => '"And there arose on that day a great persecution against the church in Jerusalem, and they were all scattered throughout the regions of Judea and Samaria, except the apostles. ... Now those who were scattered went about preaching the word"',
-                'reference' => 'Acts 8:1b,4',
-                'prayer' => 'Father, we ask You to give the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' a collective vision to preach Your word and plant Your church, even in the face of persecution.',
-            ]
-        ];
-        $templates[] = [
-            'type' => 'verse_block',
-            'data' => [
-                'section_label' => 'Scripture',
-                'icon_color' => 'green',
-                'verse' => '"And there arose on that day a great persecution against the church in Jerusalem, and they were all scattered throughout the regions of Judea and Samaria, except the apostles. ... Now those who were scattered went about preaching the word"',
-                'reference' => 'Acts 8:1b,4',
-                'prayer' => 'Father, we know the expansion of your church is not a job reserved for foreign missionaries or paid staff or specifically gifted individuals. We affirm that you gave the Great Commission to your Bride and we pray that the church of '.$stack['location']['full_name'].' powerfully proclaim you even in persecution.',
-            ]
-        ];
-        $templates[] = [
-            'type' => 'verse_block',
-            'data' => [
-                'section_label' => 'Scripture',
-                'icon_color' => 'green',
-                'verse' => '"And the Lord added to their number day by day those who were being saved. ... And more than ever believers were added to the Lord, multitudes of both men and women, ... And the word of God continued to increase, and the number of disciples multiplied greatly ..."',
-                'reference' => 'Acts 2:47b; 5:14; 6:7',
-                'prayer' => 'O Lord, in Jesus’ name, we pray for this kind of rapid reproduction in '.$stack['location']['full_name'].'. May Your word increase and may disciples multiply.',
-            ]
-        ];
-        $templates[] = [
-            'type' => 'verse_block',
-            'data' => [
-                'section_label' => 'Scripture',
-                'icon_color' => 'green',
-                'verse' => '"And the Lord added to their number day by day those who were being saved. ... And more than ever believers were added to the Lord, multitudes of both men and women, ... And the word of God continued to increase, and the number of disciples multiplied greatly ..."',
-                'reference' => 'Acts 2:47b; 5:14; 6:7',
-                'prayer' => 'O Lord, in Jesus’ name, we pray for this kind of rapid reproduction in '.$stack['location']['full_name'].'. May Your word increase and may disciples multiply.',
-            ]
-        ];
-        $templates[] = [
-            'type' => 'verse_block',
-            'data' => [
-                'section_label' => 'Scripture',
-                'icon_color' => 'green',
-                'verse' => '"And the Lord added to their number day by day those who were being saved. ... And the word of God continued to increase, and the number of disciples multiplied greatly ..."',
-                'reference' => 'Acts 2:47b; 5:14; 6:7',
-                'prayer' => 'Bless Your church in '.$stack['location']['full_name'].' with spiritual gifts, godly leaders, unity in the faith and in the knowledge of Your Son, integrity, and an interdependence that nurtures the church in love.',
-            ]
-        ];
-        $templates[] = [
-            'type' => 'verse_block',
-            'data' => [
-                'section_label' => 'Scripture',
-                'icon_color' => 'green',
-                'verse' => '"And the Lord added to their number day by day those who were being saved. ... And the word of God continued to increase, and the number of disciples multiplied greatly ..."',
-                'reference' => 'Acts 2:47b; 5:14; 6:7',
-                'prayer' => 'For the good of '.$stack['location']['full_name'].' and the glory of Your name, we pray for healthy churches here that are characterized by worship in spirit and truth, love-motivated gospel-sharing, intentional discipleship, and genuine life-on-life community.',
-            ]
-        ];
-        $templates[] = [
-            'type' => 'verse_block',
-            'data' => [
-                'section_label' => 'Scripture',
-                'icon_color' => 'green',
-                'verse' => '"Pray also for me, that whenever I speak, words may be given to me so that I will fearlessly make known the mystery of the gospel."',
-                'reference' => 'Ephesians 6:18',
-                'prayer' => 'Father, we pray every disciple in '.$stack['location']['name'].' boldly proclaim the mystery of the gospel.',
-            ]
-        ];
-        $templates[] = [
-            'type' => 'verse_block',
-            'data' => [
-                'section_label' => 'Scripture',
-                'icon_color' => 'green',
-                'verse' => '"By this everyone will know that you are my disciples, if you love one another."',
-                'reference' => 'John 13:35',
-                'prayer' => 'Lord, stir the hearts of Your people in '.$stack['location']['full_name'].' to agree with You and with one another in strong love that their '. number_format( $stack['location']['non_christians_int'] + $stack['location']['christian_adherents_int'] ) .' neighbors might know that they are yours.',
+                'prayer' => $text['prayer'],
             ]
         ];
 
         if ( empty( $position ) ) {
-            $template = $templates[array_rand( $templates )];
             $stack['list'] = array_merge( [ $template ], $stack['list'] );
         } else {
-            $stack['list'] = array_merge( array_slice( $stack['list'], 0, $position ), array( $templates[array_rand( $templates, 1 )] ), array_slice( $stack['list'], $position ) );
+            $stack['list'] = array_merge( array_slice( $stack['list'], 0, $position ), [ $template ], array_slice( $stack['list'], $position ) );
         }
 
-
         return $stack;
+
     }
 
     private static function _people_groups( &$stack ) {
@@ -1094,7 +897,7 @@ class PG_Stacker {
 
         // build people groups list
         $people_groups = $wpdb->get_results($wpdb->prepare( "
-            SELECT lgpg.*, FORMAT(lgpg.population, 0) as population, 'current' as query_level
+            SELECT DISTINCT lgpg.*, FORMAT(lgpg.population, 0) as population, 'current' as query_level
                 FROM $wpdb->location_grid_people_groups lgpg
                 WHERE
                     lgpg.longitude < %d AND /* east */
@@ -1103,12 +906,12 @@ class PG_Stacker {
                     lgpg.latitude > %d AND /* south */
                     lgpg.admin0_grid_id = %d AND
                     lgpg.PrimaryReligion != 'Christianity'
-                ORDER BY lgpg.LeastReached DESC, lgpg.population DESC
-                LIMIT 10
+                ORDER BY lgpg.LeastReached DESC
+                LIMIT 20
         ", $grid_record['east_longitude'], $grid_record['west_longitude'], $grid_record['north_latitude'], $grid_record['south_latitude'], $grid_record['admin0_grid_id'] ), ARRAY_A );
         if ( empty( $people_groups ) ) {
             $people_groups = $wpdb->get_results($wpdb->prepare( "
-                SELECT lgpg.*, FORMAT(lgpg.population, 0) as population, 'parent' as query_level
+                SELECT DISTINCT lgpg.*, FORMAT(lgpg.population, 0) as population, 'parent' as query_level
                     FROM $wpdb->location_grid_people_groups lgpg
                     WHERE
                         lgpg.longitude < %d AND /* east */
@@ -1117,8 +920,8 @@ class PG_Stacker {
                         lgpg.latitude > %d AND /* south */
                         lgpg.admin0_grid_id = %d AND
                         lgpg.PrimaryReligion != 'Christianity'
-                    ORDER BY lgpg.LeastReached DESC, lgpg.population DESC
-                    LIMIT 10
+                    ORDER BY lgpg.LeastReached DESC
+                    LIMIT 20
             ", $grid_record['p_east_longitude'], $grid_record['p_west_longitude'], $grid_record['p_north_latitude'], $grid_record['p_south_latitude'], $grid_record['admin0_grid_id'] ), ARRAY_A );
         }
         if ( empty( $people_groups ) ) {
@@ -1128,9 +931,10 @@ class PG_Stacker {
 
         $least_reached = [];
         if ( ! empty( $people_groups ) ) {
-            foreach ( $people_groups as $pg ) {
+            foreach ( $people_groups as $i => $pg ) {
                 if ( 'Y' === $pg['LeastReached'] ) {
                     $least_reached = $pg; // get first least reached group
+                    unset( $people_groups[$i] );
                     break;
                 }
             }

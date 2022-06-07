@@ -1043,11 +1043,18 @@ jQuery(document).ready(function(){
       icon_size = 'two-em'
     }
 
+    let font_size = '2em'
+    if ( data.count > 1000 ) {
+      font_size = '1em'
+    } else if ( data.count < 20 ) {
+      font_size = '3em'
+    }
+
     // build icon list
     let icon_list = ''
     i = 0
     while ( i < data.count ) {
-      icon_list += '<i class="'+icon+' '+icon_color+' '+icon_size+'"></i>';
+      icon_list += '<i class="'+icon+' '+icon_color+'"></i>';
       i++;
     }
     div.append(
@@ -1064,8 +1071,8 @@ jQuery(document).ready(function(){
       </div>
       <div class="row text-center justify-content-center">
           <div class="col-md-8 col-sm">
-            <p class="mt-0 mb-1 font-weight-normal icon-block">
-              ${icon_list} (${data.count})
+            <p class="mt-0 mb-1 font-weight-normal icon-block" style="font-size: ${font_size};">
+              ${icon_list} <span style="font-size:.5em;vertical-align:middle;">(${data.count})</span>
             </p>
           </div>
       </div>
