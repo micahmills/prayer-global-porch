@@ -208,7 +208,15 @@ class PG_Stacker {
                 'prayer' => $text['prayer'],
             ]
         ];
-
+        $templates[] = [
+            'type' => 'lost_per_believer',
+            'data' => [
+                'section_label' => $section_label,
+                'label_1' => "One disciple of Jesus for every " . $stack['location']['lost_per_believer_int'] . " lost neighbors",
+                'lost_per_believer' => $stack['location']['lost_per_believer_int'],
+                'prayer' => $text['prayer'],
+            ]
+        ];
 
         if ( $stack['location']['percent_non_christians'] < 85 ) {
             $templates[] = [

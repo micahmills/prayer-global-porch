@@ -820,6 +820,9 @@ jQuery(document).ready(function(){
       case 'prayer_block':
         _template_prayer_block( block.data )
         break;
+      case 'lost_per_believer':
+        _template_lost_per_believer_block( block.data )
+        break;
       default:
         break;
     }
@@ -1328,6 +1331,46 @@ jQuery(document).ready(function(){
     </div>
     <div class="w-100"><hr></div>
     </div>`)
+  }
+  function _template_lost_per_believer_block( data ) {
+      let bodies_1 = ''
+      i = 0
+      while ( i < data.lost_per_believer ) {
+        bodies_1 += '<i class="ion-ios-body red"></i>';
+        i++;
+      }
+      let font_size = '2em'
+      if ( data.lost_per_believer > 1000 ) {
+        font_size = '1em'
+      } else if ( data.lost_per_believer < 20 ) {
+        font_size = '3em'
+      }
+      div.append(
+        `<div class="container block">
+          <div class="row">
+          <div class="col text-center ">
+             <p class="mt-3 mb-3 font-weight-normal one-em uc">${data.section_label}</p>
+          </div>
+      </div>
+      <div class="row text-center justify-content-center">
+          <div class="col-md-9 col-sm">
+            <p class="mt-3 mb-0  one-em">${data.label_1}</p>
+            <p class="mt-0 mb-0 font-weight-normal">
+              <i class="ion-ios-body green three-em"></i>
+            </p>
+            <p class="mt-0 mb-3 font-weight-normal" style="font-size: ${font_size};">
+              ${bodies_1}
+            </p>
+          </div>
+      </div>
+      <div class="row text-center justify-content-center">
+        <div class="col-md-8">
+          <p class="mt-3 mb-3 font-weight-normal one-em">${data.prayer}</p>
+        </div>
+      </div>
+      <div class="w-100"><hr></div>
+    </div>`
+    )
   }
   function _template_photo_block( data ) {
     div.append(
