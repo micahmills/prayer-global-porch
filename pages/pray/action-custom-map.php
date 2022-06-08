@@ -60,6 +60,12 @@ class PG_Custom_Prayer_App_Map extends PG_Custom_Prayer_App {
         return $allowed_css;
     }
 
+    public function _header() {
+        wp_head();
+        $this->header_style();
+        $this->header_javascript();
+    }
+
     public function header_javascript(){
         ?>
         <script>
