@@ -82,6 +82,7 @@ class Prayer_Global_Porch_Stats_Big_Map extends DT_Magic_Url_Base
     }
 
     public function _header() {
+        wp_head();
         $this->header_style();
         $this->header_javascript();
     }
