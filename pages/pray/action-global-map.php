@@ -40,6 +40,9 @@ class PG_Global_Prayer_App_Map extends PG_Global_Prayer_App {
         add_filter( 'dt_magic_url_base_allowed_js', [ $this, 'dt_magic_url_base_allowed_js' ], 10, 1 );
 
         add_action( 'wp_enqueue_scripts', [ $this, '_wp_enqueue_scripts' ], 100 );
+
+        add_filter( "dt_override_header_meta", function (){ return true;
+        }, 100, 1 );
     }
 
     public function dt_magic_url_base_allowed_js( $allowed_js ) {
@@ -58,6 +61,11 @@ class PG_Global_Prayer_App_Map extends PG_Global_Prayer_App {
         $allowed_css[] = 'heatmap-css';
         $allowed_css[] = 'site-css';
         return $allowed_css;
+    }
+
+    public function _header() {
+        $this->header_style();
+        $this->header_javascript();
     }
 
     public function header_javascript(){

@@ -51,6 +51,9 @@ class Prayer_Global_Porch_Stats_Big_List extends DT_Magic_Url_Base
 
             add_filter( 'dt_magic_url_base_allowed_css', [ $this, 'dt_magic_url_base_allowed_css' ], 10, 1 );
             add_filter( 'dt_magic_url_base_allowed_js', [ $this, 'dt_magic_url_base_allowed_js' ], 10, 1 );
+
+            add_filter( "dt_override_header_meta", function (){ return true;
+            }, 100, 1 );
         }
 
         if ( dt_is_rest() ) {
@@ -65,6 +68,11 @@ class Prayer_Global_Porch_Stats_Big_List extends DT_Magic_Url_Base
 
     public function dt_magic_url_base_allowed_css( $allowed_css ) {
         return [];
+    }
+
+    public function _header() {
+        $this->header_style();
+        $this->header_javascript();
     }
 
     public function header_javascript(){

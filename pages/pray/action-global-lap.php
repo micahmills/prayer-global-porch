@@ -63,6 +63,7 @@ class PG_Global_Prayer_App_Lap extends PG_Global_Prayer_App {
         return [];
     }
 
+
     public function header_javascript(){
         require_once( trailingslashit( plugin_dir_path( __DIR__ ) ) . 'assets/header.php' );
 

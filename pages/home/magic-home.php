@@ -24,6 +24,10 @@ class Prayer_Global_Porch_Home extends DT_Magic_Url_Base
         $url = dt_get_url_path();
         if ( empty( $url ) && ! dt_is_rest() ) {
 
+
+            add_filter( "dt_override_header_meta", function (){ return true;
+            }, 100, 1 );
+
             // register url and access
             add_action( "template_redirect", [ $this, 'theme_redirect' ] );
             add_filter( 'dt_blank_access', function (){ return true;
@@ -58,6 +62,11 @@ class Prayer_Global_Porch_Home extends DT_Magic_Url_Base
 
     public function dt_magic_url_base_allowed_css( $allowed_css ) {
         return [];
+    }
+
+    public function _header() {
+        $this->header_style();
+        $this->header_javascript();
     }
 
     public function header_javascript(){

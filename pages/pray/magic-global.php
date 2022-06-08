@@ -58,6 +58,9 @@ class PG_Global_Prayer_App extends DT_Magic_Url_Base {
             return;
         }
 
+        add_filter( "dt_override_header_meta", function (){ return true;
+        }, 1000, 1 );
+
         // load different actions
         if ( empty( $this->parts['action'] ) ) {
             $current_lap = pg_current_global_lap();
@@ -144,6 +147,11 @@ class PG_Global_Prayer_App extends DT_Magic_Url_Base {
                 }
                 return new WP_Error( __METHOD__, "Class not loaded: PG_Global_Prayer_App_Lap", [ 'status' => 400 ] );
         }
+    }
+
+    public function _header() {
+        $this->header_style();
+        $this->header_javascript();
     }
 
 }
