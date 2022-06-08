@@ -165,4 +165,4 @@ class PG_Global_Prayer_App_Stats extends PG_Global_Prayer_App {
     }
 
 }
-Prayer_Global_Prayer_App_Stats::instance();
+PG_Global_Prayer_App_Stats::instance();
