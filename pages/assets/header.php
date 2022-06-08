@@ -1,5 +1,7 @@
-<meta name="description" content="Covering the world in prayer for disciple making movements using a creative, community-driven prayer coordination app.">
-
+<?php
+global $wp;
+$current_url = home_url( add_query_arg( array(), $wp->request ) );
+?>
 <meta name="apple-mobile-web-app-title" content="Prayer.Global">
 <link rel="apple-touch-icon" sizes="180x180" href="<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ); ?>assets/images/favicons/apple-touch-icon.png">
 
@@ -17,6 +19,13 @@
 <meta name="theme-color" content="#ff5a32">
 
 <link rel="manifest" href="<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ); ?>assets/images/favicons/site.webmanifest">
+
+<meta property="og:url"                content="<?php echo esc_url( $current_url ) ?>" />
+<meta property="og:type"               content="app" />
+<meta property="og:title"              content="Prayer.Global" />
+<meta property="og:description"        content="Join us in covering the world in prayer for disciple making using a creative, community-driven prayer coordination app." />
+<meta property="og:image"              content="<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ); ?>assets/images/favicons/prayer-global-og.png" />
+<meta name="description" content="Join us in covering the world in prayer for disciple making using a creative, community-driven prayer coordination app.">
 
 <link href="https://fonts.googleapis.com/css?family=Crimson+Text:400,400i,600|Montserrat:200,300,400" rel="stylesheet">
 
