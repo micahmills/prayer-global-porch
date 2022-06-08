@@ -111,6 +111,12 @@ jQuery(document).ready(function(){
       jQuery('.container.block').show()
       jQuery('#more_prayer_fuel').hide()
     })
+
+    setTimeout(function() {
+      jQuery('.tutorial').animate({
+        opacity: "toggle"
+      })
+    }, 5000);
   }
   initialize_location() // initialize prayer framework
 

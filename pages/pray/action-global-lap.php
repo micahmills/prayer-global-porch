@@ -142,8 +142,9 @@ class PG_Global_Prayer_App_Lap extends PG_Global_Prayer_App {
                 </div>
             </div>
             <div class="w-100" ></div>
-            <div class="container">
-                <h3 class="mt-3 font-weight-normal text-center" id="location-name"></h3>
+            <div class="container justify-content-center mt-3">
+                <h3 class="mt-0 font-weight-normal text-center tutorial" id="tutorial-location">Start praying for</h3>
+                <h3 class="mt-0 font-weight-normal text-center" id="location-name"></h3>
             </div>
         </nav>
 
