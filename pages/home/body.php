@@ -7,8 +7,8 @@
                 <h2 class="heading mb-3">Cover the World in Prayer</h2>
                 <div class="sub-heading">
                     <p class="mb-5">Community driven, movement-focused, saturation prayer.</p>
-<!--                    <p><a href="/newest/lap/" style="background-color:rgba(255,255,255,.7);" role="button" class="btn smoothscroll pb_font-25 btn-xl pb_font-13 p-4 rounded-0 pb_letter-spacing-2">Start Praying</a></p>-->
-                    <p><a href="/prayer_app/subscribe/" style="background-color:rgba(255,255,255,.7);" role="button" class="btn smoothscroll pb_font-25 btn-xl pb_font-13 p-4 rounded-0 pb_letter-spacing-2">Start Praying</a></p>
+                    <p><a href="/newest/lap/" style="background-color:rgba(255,255,255,.7);" role="button" class="btn smoothscroll pb_font-25 btn-xl pb_font-13 p-4 rounded-0 pb_letter-spacing-2">Start Praying</a></p>
+<!--                    <p><a href="/prayer_app/subscribe/" style="background-color:rgba(255,255,255,.7);" role="button" class="btn smoothscroll pb_font-25 btn-xl pb_font-13 p-4 rounded-0 pb_letter-spacing-2">Start Praying</a></p>-->
                 </div>
             </div>
         </div>
@@ -60,8 +60,8 @@
         <div class="row">
             <div class="col-md text-center">
                 <a href="/newest/map/" role="button" class="btn smoothscroll pb_outline-dark btn-xl pb_font-13 p-4 rounded-0 pb_letter-spacing-2">Current Map</a>
-<!--                <a href="/newest/lap/" role="button" class="btn smoothscroll pb_outline-dark btn-xl pb_font-13 p-4 rounded-0 pb_letter-spacing-2">Start Praying</a>-->
-                <a href="/prayer_app/subscribe/" role="button" class="btn smoothscroll pb_outline-dark btn-xl pb_font-13 p-4 rounded-0 pb_letter-spacing-2">Start Praying</a>
+                <a href="/newest/lap/" role="button" class="btn smoothscroll pb_outline-dark btn-xl pb_font-13 p-4 rounded-0 pb_letter-spacing-2">Start Praying</a>
+<!--                <a href="/prayer_app/subscribe/" role="button" class="btn smoothscroll pb_outline-dark btn-xl pb_font-13 p-4 rounded-0 pb_letter-spacing-2">Start Praying</a>-->
             </div>
         </div>
         <div class="row">
@@ -268,8 +268,8 @@
             <div class="col-md-12">
                 <h2 class="heading mb-3">Join Us</h2>
                 <p class="sub-heading mb-5 pb_color-light-opacity-8">Cover the world in extra-ordinary prayer.</p>
-<!--                <p><a href="/newest/lap/" role="button" class="btn smoothscroll pb_outline-light btn-xl p-4 rounded-0 pb_font-13 pb_letter-spacing-2">Start Praying</a></p>-->
-                <p><a href="/prayer_app/subscribe/" role="button" class="btn smoothscroll pb_outline-light btn-xl p-4 rounded-0 pb_font-13 pb_letter-spacing-2">Start Praying</a></p>
+                <p><a href="/newest/lap/" role="button" class="btn smoothscroll pb_outline-light btn-xl p-4 rounded-0 pb_font-13 pb_letter-spacing-2">Start Praying</a></p>
+<!--                <p><a href="/prayer_app/subscribe/" role="button" class="btn smoothscroll pb_outline-light btn-xl p-4 rounded-0 pb_font-13 pb_letter-spacing-2">Start Praying</a></p>-->
             </div>
         </div>
 
