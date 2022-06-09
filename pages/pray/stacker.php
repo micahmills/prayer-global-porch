@@ -943,7 +943,18 @@ class PG_Stacker {
         $people_groups = array_slice( $people_groups, 0, 5, true ); // trim to first 5 shuffled results
 
         // cities
-        $cities = $wpdb->get_results($wpdb->prepare( "
+        $cities = [];
+        $where = '';
+        if ( 0 === $grid_record['level']  ) {
+            $where = ' WHERE lgpg.admin0_grid_id = '.$grid_record['grid_id'].' ';
+        } else if ( 1 === $grid_record['level'] ) {
+            $where = ' WHERE lgpg.admin1_grid_id = '.$grid_record['grid_id'].' ';
+        } else if ( 2 === $grid_record['level'] ) {
+            $where = ' WHERE lgpg.admin2_grid_id = '.$grid_record['grid_id'].' ';
+        }
+        if ( ! empty( $where ) ) {
+            // @phpcs:disable
+            $cities = $wpdb->get_results( "
             SELECT
                    lgpg.id,
                    lgpg.geonameid,
@@ -956,15 +967,12 @@ class PG_Stacker {
                    lgpg.population as population_int,
                    FORMAT(lgpg.population, 0) as population
                 FROM $wpdb->location_grid_cities lgpg
-                WHERE
-                    lgpg.longitude < %d AND /* east */
-                    lgpg.longitude >  %d AND /* west */
-                    lgpg.latitude < %d AND /* north */
-                    lgpg.latitude > %d AND /* south */
-                    lgpg.admin0_grid_id = %d
+                $where
                 ORDER BY lgpg.population DESC
                 LIMIT 5
-        ", $grid_record['east_longitude'], $grid_record['west_longitude'], $grid_record['north_latitude'], $grid_record['south_latitude'], $grid_record['admin0_grid_id'] ), ARRAY_A );
+        ", ARRAY_A );
+            // @phpcs:enable
+        }
 
 
         return [
