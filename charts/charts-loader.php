@@ -23,8 +23,8 @@ class PG_Charts_Loader
         require_once( 'charts-abstract.php' );
 
 
-        require_once( 'pg-review.php' );
-        new PG_Charts_Review();
+//        require_once( 'pg-review.php' );
+//        new PG_Charts_Review();
 
     } // End __construct
 
