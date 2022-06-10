@@ -826,6 +826,9 @@ jQuery(document).ready(function(){
       case 'prayer_block':
         _template_prayer_block( block.data )
         break;
+      case 'basic_block':
+        _template_basic_block( block.data )
+        break;
       case 'lost_per_believer':
         _template_lost_per_believer_block( block.data )
         break;
@@ -1226,17 +1229,41 @@ jQuery(document).ready(function(){
       </div>
       <div class="row text-center justify-content-center">
         <div class="col-md-8">
-            <p class="mt-3 mb-3 font-weight-normal one-em">${data.section_summary}</p>
-        </div>
-      </div>
-      <div class="row text-center justify-content-center">
-        <div class="col-md-8">
-           <p class="mt-3 mb-3 font-weight-normal one-em">${data.prayer}</p>
+           <p class="mt-3 mb-3 font-weight-bold two-em">${data.prayer}</p>
         </div>
     </div>
     <div class="w-100"><hr></div>
     </div>`)
   }
+  // function _template_least_reached_block_v1( data ) {
+  //   let image
+  //   if ( data.image_url ) {
+  //     image = '<p class="mt-3 mb-3"><img src="'+data.image_url+'" class="img-fluid" alt="" /></p>'
+  //   } else {
+  //     image = '<p class="mt-3 mb-3 font-weight-bold six-em"><i class="ion-android-warning red"></i></p>'
+  //   }
+  //   div.append(
+  //     `<div class="container block">
+  //         <div class="row">
+  //         <div class="col text-center ">
+  //            <p class="mt-3 mb-3 font-weight-normal one-em uc">${data.section_label}</p>
+  //            <p class="mt-3 mb-3 font-weight-bold two-em">${data.focus_label}</p>
+  //           ${image}
+  //         </div>
+  //     </div>
+  //     <div class="row text-center justify-content-center">
+  //       <div class="col-md-8">
+  //           <p class="mt-3 mb-3 font-weight-normal one-em">${data.section_summary}</p>
+  //       </div>
+  //     </div>
+  //     <div class="row text-center justify-content-center">
+  //       <div class="col-md-8">
+  //          <p class="mt-3 mb-3 font-weight-bold two-em">${data.prayer}</p>
+  //       </div>
+  //   </div>
+  //   <div class="w-100"><hr></div>
+  //   </div>`)
+  // }
   function _template_fact_block( data ) {
     let icon = ''
     if ( typeof data.icon !== 'undefined' ) {
@@ -1390,8 +1417,7 @@ jQuery(document).ready(function(){
       `<div class="container block">
           <div class="row">
           <div class="col text-center ">
-            <p class="mt-3 mb-0 font-weight-normal one-em uc">${data.section_label}</p>
-            <p class="mt-0 mb-3 font-weight-normal">${data.location_label}</p>
+            <p class="mt-3 mb-3 font-weight-normal one-em uc">${data.section_label}</p>
           </div>
       </div>
       <div class="row text-center">
@@ -1409,4 +1435,37 @@ jQuery(document).ready(function(){
     </div>
       `)
   }
+  function _template_basic_block( data ) {
+    let display = 'none'
+    if ( data.reference ) {
+      display = 'block'
+    }
+    div.append(
+      `<div class="container block">
+          <div class="row">
+          <div class="col text-center ">
+            <p class="mt-3 mb-3 font-weight-normal one-em uc">${data.section_label}</p>
+          </div>
+      </div>
+      <div class="row text-center justify-content-center">
+        <div class="col-md-8">
+           <p class="mt-3 mb-3 font-weight-bold two-em">${data.prayer}</p>
+        </div>
+      </div>
+
+      <div class="row text-center justify-content-center ${data.id}" style="display:${display}">
+        <div class="col-md-8">
+           <p class="mt-3 mb-3 font-weight-bold"><button type="button" class="btn btn-outline-dark btn-sm" onclick="jQuery('#${data.id}').show();jQuery('.${data.id}').hide();" >${data.reference}</button></p>
+        </div>
+      </div>
+       <div class="row text-center justify-content-center" style="display:none;" id="${data.id}" >
+        <div class="col-md-8">
+           <p class="mt-3 mb-0 font-weight-normal font-italic two-em">${data.verse}</p>
+           <p class="mt-0 mb-3 font-weight-normal">${data.reference}</p>
+        </div>
+      </div>
+      <div class="w-100"><hr></div>
+    </div>`)
+  }
+
 })

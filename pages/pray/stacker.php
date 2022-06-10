@@ -42,30 +42,42 @@ class PG_Stacker {
 
         // get queries
         $stack = self::_stack_query( $grid_id );
-
         // build full stack
         $stack['list'] = [];
 
-        // adds and shuffles for variation
-//        self::_population_change( $stack );
-//        self::_least_reached( $stack );
-//        self::_key_city( $stack );
-        self::_prayers( $stack );
-        self::_prayers( $stack );
-        self::_prayers( $stack );
-        self::_verses( $stack );
-        self::_verses( $stack );
-        self::_verses( $stack );
+        $text_list = PG_Stacker_Text::block_text( $stack );
+        $text_list_favored = PG_Stacker_Text::block_text_favored( $stack, $stack['location']['favor'] );
+        $lists = array_merge( $text_list, $text_list_favored );
+
+        $text_religion = PG_Stacker_Text::block_text_religion( $stack );
+        if ( ! empty( $text_religion ) ) {
+            $lists = array_merge( $lists, $text_religion );
+        }
+
+
+        foreach( $lists as $key => $list ) {
+
+            $text = $list[array_rand( $list )];
+            $stack['list'][] = [
+                'type' => 'basic_block',
+                'data' => [
+                    'section_label' => $text['section_label'],
+                    'prayer' => $text['prayer'],
+                    'verse' => $text['verse'],
+                    'reference' => $text['reference'],
+                    'id' => hash( 'sha256', serialize( $text ) . microtime() )
+                ]
+            ];
+        }
+
         shuffle( $stack['list'] );
 
-        // adds to top
-//        self::_demographics( $stack );
+        // insert
+        self::_photos( $stack, 2 );
+//        self::_faith_status( $stack, 5 );
+        self::_least_reached( $stack, 8 );
 
-
-//        self::_photos( $stack, 2 );
-//        self::_faith_status( $stack, 3 );
-
-        // adds to bottom
+        // add to end
 //        self::_cities( $stack );
 //        self::_people_groups( $stack );
 
@@ -219,25 +231,25 @@ class PG_Stacker {
             ]
         ];
 
-        if ( $stack['location']['percent_non_christians'] < 85 ) {
-            $templates[] = [
-                'type' => 'percent_3_bar',
-                'data' => [
-                    'section_label' => $section_label,
-                    'label_1' => "Don't",
-                    'percent_1' => $stack['location']['percent_non_christians'],
-                    'population_1' => $stack['location']['non_christians'],
-                    'label_2' => 'Know About',
-                    'percent_2' => $stack['location']['percent_christian_adherents'],
-                    'population_2' => $stack['location']['christian_adherents'],
-                    'label_3' => 'Know',
-                    'percent_3' => $stack['location']['percent_believers'],
-                    'population_3' => $stack['location']['believers'],
-                    'section_summary' => '',
-                    'prayer' => $text['prayer'],
-                ]
-            ];
-        }
+//        if ( $stack['location']['percent_non_christians'] < 85 ) {
+//            $templates[] = [
+//                'type' => 'percent_3_bar',
+//                'data' => [
+//                    'section_label' => $section_label,
+//                    'label_1' => "Don't",
+//                    'percent_1' => $stack['location']['percent_non_christians'],
+//                    'population_1' => $stack['location']['non_christians'],
+//                    'label_2' => 'Know About',
+//                    'percent_2' => $stack['location']['percent_christian_adherents'],
+//                    'population_2' => $stack['location']['christian_adherents'],
+//                    'label_3' => 'Know',
+//                    'percent_3' => $stack['location']['percent_believers'],
+//                    'population_3' => $stack['location']['believers'],
+//                    'section_summary' => '',
+//                    'prayer' => $text['prayer'],
+//                ]
+//            ];
+//        }
 
         if ( empty( $position ) ) {
             $stack['list'] = array_merge( [ $templates[array_rand( $templates )] ], $stack['list'] );
