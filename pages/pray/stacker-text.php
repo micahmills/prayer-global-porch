@@ -351,8 +351,8 @@ class PG_Stacker_Text {
                 [
                     'section_label' => 'Language',
                     'prayer' => 'Father, please provide access to your Word in ' . $stack['location']['primary_language'] . '. Provide translators, printers, books sellers, and app developers the resources and skill to get your Word to '.$stack['location']['name'].'.',
-                    'reference' => '',
-                    'verse' => '',
+                    'verse' => 'And this gospel of the kingdom will be preached in the whole world as a testimony to all nations, and then the end will come.',
+                    'reference' => 'Matthew 24:14',
                 ],
             ],
             'population' => [
@@ -361,6 +361,12 @@ class PG_Stacker_Text {
                     'prayer' => 'Pour your Spirit out on the '.$stack['location']['population'].' citizens of '.$stack['location']['name'].', so that they might know your name and the name of your Son.',
                     'reference' => '',
                     'verse' => '',
+                ],
+                [
+                    'section_label' => 'Population',
+                    'prayer' => 'Pour your Spirit out on the '.$stack['location']['population'].' citizens of '.$stack['location']['name'].', so that they might know your name and the name of your Son.',
+                    'verse' => 'And this gospel of the kingdom will be preached in the whole world as a testimony to all nations, and then the end will come.',
+                    'reference' => 'Matthew 24:14',
                 ],
             ],
 
@@ -418,8 +424,8 @@ class PG_Stacker_Text {
                         [
                             'section_label' => 'Cultural Christians',
                             'prayer' => 'Over '.$stack['location']['percent_christian_adherents'].' percent of the people of '.$stack['location']['name'].' know about your son, Jesus, through their culture, but, Lord, send your Spirit to show them how to make you first in all things ... love, family, finances, future hope, and all things',
-                            'reference' => '',
-                            'verse' => '',
+                            'verse' => 'And this gospel of the kingdom will be preached in the whole world as a testimony to all nations, and then the end will come.',
+                            'reference' => 'Matthew 24:14',
                         ],
                     ],
                 ];
