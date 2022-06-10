@@ -1454,7 +1454,7 @@ jQuery(document).ready(function(){
       </div>
 
       <div class="row text-center justify-content-center ${data.id}" style="display:${display}">
-        <div class="col-md-8 mt-3 mb-3 font-weight-bold text-center">
+        <div class="col mt-3 mb-3 font-weight-bold text-center">
            <button type="button" class="btn btn-outline-dark btn-sm" onclick="jQuery('#${data.id}').show();jQuery('.${data.id}').hide();" >${data.reference}</button>
         </div>
       </div>
