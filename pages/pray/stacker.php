@@ -10,26 +10,6 @@ class PG_Stacker {
         // get queries
         $stack = self::_stack_query( $grid_id );
 
-        // setup favors and icon color fields
-        $status = [];
-        for ($i = 1; $i <= $stack['location']['percent_christian_adherents']; $i++) {
-            $status[] = 'christian_adherents';
-        }
-        for ($i = 1; $i <= $stack['location']['percent_non_christians']; $i++) {
-            $status[] = 'non_christians';
-        }
-        for ($i = 1; $i <= $stack['location']['percent_believers']; $i++) {
-            $status[] = 'believers';
-        }
-        $stack['favor'] = $status[array_rand( $status )];
-        if ( 'christian_adherents' === $stack['favor'] ) {
-            $stack['icon_color'] = 'red';
-        } else if ( 'non_christians' === $stack['favor'] ) {
-            $stack['icon_color'] = 'orange';
-        } else { // believers
-            $stack['icon_color'] = 'green';
-        }
-
         // build full stack
         $stack['list'] = [];
 
@@ -58,10 +38,49 @@ class PG_Stacker {
         return $stack;
     }
 
+    public static function build_location_stack_v2( $grid_id ) {
+
+        // get queries
+        $stack = self::_stack_query( $grid_id );
+
+        // build full stack
+        $stack['list'] = [];
+
+        // adds and shuffles for variation
+//        self::_population_change( $stack );
+//        self::_least_reached( $stack );
+//        self::_key_city( $stack );
+        self::_prayers( $stack );
+        self::_prayers( $stack );
+        self::_prayers( $stack );
+        self::_verses( $stack );
+        self::_verses( $stack );
+        self::_verses( $stack );
+        shuffle( $stack['list'] );
+
+        // adds to top
+//        self::_demographics( $stack );
+
+
+//        self::_photos( $stack, 2 );
+//        self::_faith_status( $stack, 3 );
+
+        // adds to bottom
+//        self::_cities( $stack );
+//        self::_people_groups( $stack );
+
+        $reduced_stack = [];
+        $reduced_stack['list'] = $stack['list'];
+        $reduced_stack['location'] = $stack['location'];
+        $stack = $reduced_stack;
+
+        return $stack;
+    }
+
     private static function _demographics( &$stack ) {
 
         $section_label = 'Demographics';
-        $icon = $stack['icon_color'];
+        $icon = $stack['location']['icon_color'];
 
         $templates = [];
 
@@ -69,7 +88,7 @@ class PG_Stacker {
         $type = $types[array_rand( $types )];
         if ( 'content_block' === $type ) {
             $text_list = PG_Stacker_Text::demogrphics_content_text( $stack );
-            $text = $text_list[$stack['favor']][array_rand( $text_list[$stack['favor']] ) ];
+            $text = $text_list[$stack['location']['favor']][array_rand( $text_list[$stack['location']['favor']] ) ];
 
             $templates[] = [
                 'type' => 'content_block',
@@ -84,7 +103,7 @@ class PG_Stacker {
         }
         else {
             $text_list = PG_Stacker_Text::demogrphics_4_fact_text( $stack );
-            $text = $text_list[$stack['favor']][array_rand( $text_list[$stack['favor']] ) ];
+            $text = $text_list[$stack['location']['favor']][array_rand( $text_list[$stack['location']['favor']] ) ];
 
             $templates[] = [
                 'type' => '4_fact_blocks',
@@ -141,7 +160,7 @@ class PG_Stacker {
         $section_label = 'Faith Status';
 
         $text_list = PG_Stacker_Text::faith_status_text( $stack );
-        $text = $text_list[$stack['favor']][array_rand( $text_list[$stack['favor']] ) ];
+        $text = $text_list[$stack['location']['favor']][array_rand( $text_list[$stack['location']['favor']] ) ];
 
         $templates = [];
 
@@ -235,7 +254,7 @@ class PG_Stacker {
         $type = $types[array_rand( $types )];
 
         // deaths non christians
-        if ( 'christian_adherents' === $stack['favor'] && 'deaths' === $type ) {
+        if ( 'christian_adherents' === $stack['location']['favor'] && 'deaths' === $type ) {
 
             // deaths christian adherents
             $deaths_christian_adherents = [];
@@ -307,7 +326,7 @@ class PG_Stacker {
         }
 
         // births christian adherents
-        else if ( 'christian_adherents' === $stack['favor'] && 'births' === $type ) {
+        else if ( 'christian_adherents' === $stack['location']['favor'] && 'births' === $type ) {
             $births_christian_adherents = [];
             $added = false;
             if ( $stack['location']['births_christian_adherents_last_hour'] ) {
@@ -375,7 +394,7 @@ class PG_Stacker {
             }
         }
 
-        else if ( 'non_christians' === $stack['favor'] && 'deaths' === $type ) {
+        else if ( 'non_christians' === $stack['location']['favor'] && 'deaths' === $type ) {
             $deaths_non_christians = [];
             $added = false;
 
@@ -446,7 +465,7 @@ class PG_Stacker {
         }
 
         // births non christians
-        else if ( 'non_christians' === $stack['favor'] && 'births' === $type ) {
+        else if ( 'non_christians' === $stack['location']['favor'] && 'births' === $type ) {
             $births_non_christians = [];
             $added = false;
             if ( $stack['location']['births_non_christians_last_hour'] ) {
@@ -645,8 +664,8 @@ class PG_Stacker {
         $section_label = 'Movement Prayer';
 
         $text_list = PG_Stacker_Text::prayer_text( $stack );
-        $text = $text_list[$stack['favor']][array_rand( $text_list[$stack['favor']] ) ];
-        $icon = $stack['icon_color'];
+        $text = $text_list[$stack['location']['favor']][array_rand( $text_list[$stack['location']['favor']] ) ];
+        $icon = $stack['location']['icon_color'];
 
         $template = [
             'type' => 'prayer_block',
@@ -671,8 +690,8 @@ class PG_Stacker {
         $section_label = 'Scripture';
 
         $text_list = PG_Stacker_Text::verse_text( $stack );
-        $text = $text_list[$stack['favor']][array_rand( $text_list[$stack['favor']] ) ];
-        $icon = $stack['icon_color'];
+        $text = $text_list[$stack['location']['favor']][array_rand( $text_list[$stack['location']['favor']] ) ];
+        $icon = $stack['location']['icon_color'];
 
         $template = [
             'type' => 'verse_block',
@@ -894,6 +913,25 @@ class PG_Stacker {
         $grid_record['births_christian_adherents_last_month'] = self::_get_pace( 'births_christian_adherents_last_month', $grid_record );
         $grid_record['births_christian_adherents_last_year'] = self::_get_pace( 'births_christian_adherents_last_year', $grid_record );
 
+        $status = [];
+        for ($i = 1; $i <= $grid_record['percent_christian_adherents']; $i++) {
+            $status[] = 'christian_adherents';
+        }
+        for ($i = 1; $i <= $grid_record['percent_non_christians']; $i++) {
+            $status[] = 'non_christians';
+        }
+        for ($i = 1; $i <= $grid_record['percent_believers']; $i++) {
+            $status[] = 'believers';
+        }
+        $grid_record['favor'] = $status[array_rand( $status )];
+
+        if ( 'christian_adherents' === $grid_record['favor'] ) {
+            $grid_record['icon_color'] = 'red';
+        } else if ( 'non_christians' === $grid_record['favor'] ) {
+            $grid_record['icon_color'] = 'orange';
+        } else { // believers
+            $grid_record['icon_color'] = 'green';
+        }
 
         // build people groups list
         $people_groups = $wpdb->get_results($wpdb->prepare( "
