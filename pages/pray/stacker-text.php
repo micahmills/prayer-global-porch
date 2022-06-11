@@ -124,7 +124,6 @@ class PG_Stacker_Text {
 
     }
 
-
     public static function faith_status_text( $stack ) : array {
 
         return [
@@ -275,7 +274,7 @@ class PG_Stacker_Text {
 
     }
 
-    public static function demogrphics_content_text( $stack ) : array {
+    public static function demographics_content_text( $stack ) : array {
 
         return [
             /**
@@ -335,6 +334,21 @@ class PG_Stacker_Text {
             ]
         ];
 
+    }
+
+    /**
+     * v2
+     */
+
+    public static function _language_prayers() {
+        return [
+            [
+                'verse' => "",
+                'reference' => 'Acts 8:1b,4',
+                'prayer' => 'Father, we know the expansion of your church is not a job reserved for foreign missionaries or paid staff or specifically gifted individuals. We affirm that you gave the Great Commission to your Bride and we pray that the church of '.$stack['location']['full_name'].' powerfully proclaim you even in persecution.',
+
+            ],
+        ]
     }
 
 
