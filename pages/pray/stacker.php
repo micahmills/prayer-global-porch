@@ -87,7 +87,7 @@ class PG_Stacker {
         $types = [ 'content_block', '4_fact_blocks' ]; // @todo maybe add knowledge about economy or average wealth
         $type = $types[array_rand( $types )];
         if ( 'content_block' === $type ) {
-            $text_list = PG_Stacker_Text::demogrphics_content_text( $stack );
+            $text_list = PG_Stacker_Text::demographics_content_text( $stack );
             $text = $text_list[$stack['location']['favor']][array_rand( $text_list[$stack['location']['favor']] ) ];
 
             $templates[] = [
