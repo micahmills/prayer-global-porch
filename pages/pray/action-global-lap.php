@@ -429,8 +429,9 @@ class PG_Global_Prayer_App_Lap extends PG_Global_Prayer_App {
         shuffle( $list_4770 );
         $grid_id = $list_4770[0];
 
-        $content = PG_Stacker::build_location_stack( $grid_id );
-        return $content;
+//        return PG_Stacker::build_location_stack( $grid_id );
+        return PG_Stacker::build_location_stack_v2( $grid_id );
+
     }
 
     public static function _query_prayed_list() {

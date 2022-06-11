@@ -8,31 +8,11 @@ class PG_Stacker_Text {
          */
         return [
             [
-                'section_summary' => 'What people, places, activities or culture do you see? <br>Do you see conditions of education, economy, religion, or environment?',
-                'prayer' => 'Spirit, what do you want prayed for '.$stack['location']['full_name'].'?',
-            ],
-            [
-                'section_summary' => 'What people, places, activities or culture do you see? <br>Do you see conditions of education, economy, religion, or environment? <br>How could you pray for that?',
-                'prayer' => 'Spirit, what do you want prayed for '.$stack['location']['full_name'].'?',
-            ],
-            [
-                'section_summary' => 'What people, places, activities or culture do you see? <br>Do you see conditions of education, economy, religion, or environment?',
+                'section_summary' => 'What people, places, activities or culture could you pray for in this photo?',
                 'prayer' => '',
             ],
             [
-                'section_summary' => 'What people, places, activities or culture do you see? <br>Do you see conditions of education, economy, religion, or environment?',
-                'prayer' => 'Spirit, what do you want prayed for the people of '.$stack['location']['full_name'].'?',
-            ],
-            [
-                'section_summary' => 'What people, places, activities or culture do you see? <br>Do you see conditions of education, economy, religion, or environment?',
-                'prayer' => '',
-            ],
-            [
-                'section_summary' => 'What people, places, activities or culture do you see? <br>Do you see conditions of education, economy, religion, or environment? <br>How could you pray for that?',
-                'prayer' => 'Spirit, what do you want prayed for '.$stack['location']['full_name'].'?',
-            ],
-            [
-                'section_summary' => 'What people, places, activities or culture do you see? <br>Do you see conditions of education, economy, religion, or environment? <br>How could you pray for that?',
+                'section_summary' => 'What conditions of education, economy, religion, or environment could you pray for here?',
                 'prayer' => '',
             ],
         ];
@@ -43,13 +23,17 @@ class PG_Stacker_Text {
          * Least Reached Block
          */
         return [
+//            [
+//                'section_summary' => 'The '.$stack['least_reached']['name'].' people in ' . $stack['location']['full_name'] . ' are a least reached people group, according to Joshua Project. They are classified as '.$stack['least_reached']['AffinityBloc'].' and speak '.$stack['least_reached']['PrimaryLanguageName'].'. Primarily, they follow '.$stack['least_reached']['PrimaryReligion'].' and '. number_format( (float) $stack['least_reached']['PercentEvangelical'], 1 ).'% are suspected of being believers.',
+//                'prayer' => 'Pray that the ' . $stack['location']['believers'] . ' believers in ' . $stack['location']['full_name'] . ' to boldly witnesses to the '.$stack['least_reached']['name'].' near them.',
+//            ],
             [
-                'section_summary' => 'The '.$stack['least_reached']['name'].' people in ' . $stack['location']['full_name'] . ' are a least reached people group, according to Joshua Project. They are classified as '.$stack['least_reached']['AffinityBloc'].' and speak '.$stack['least_reached']['PrimaryLanguageName'].'. Primarily, they follow '.$stack['least_reached']['PrimaryReligion'].' and '. number_format( (float) $stack['least_reached']['PercentEvangelical'], 1 ).'% are suspected of being believers.',
-                'prayer' => 'Pray that the ' . $stack['location']['believers'] . ' believers in ' . $stack['location']['full_name'] . ' to boldly witnesses to the '.$stack['least_reached']['name'].' near them.',
+                'section_summary' => '',
+                'prayer' => 'Lord we ask you on behalf of the '.$stack['least_reached']['name'].' people. '. number_format( (float) $stack['least_reached']['PercentEvangelical'], 1 ).'% are known to us to be believers. Oh God, share with them the great gift of your son Jesus and your kingdom.',
             ],
             [
-                'section_summary' => 'The '.$stack['least_reached']['name'].' people in ' . $stack['location']['full_name'] . ' are a least reached people group, according to Joshua Project. They are classified as '.$stack['least_reached']['AffinityBloc'].' and speak '.$stack['least_reached']['PrimaryLanguageName'].'. Primarily, they follow '.$stack['least_reached']['PrimaryReligion'].' and '. number_format( (float) $stack['least_reached']['PercentEvangelical'], 1 ).'% are suspected of being believers.',
-                'prayer' => 'Pray God send bold witnesses to the '.$stack['least_reached']['name'].'.',
+                'section_summary' => '',
+                'prayer' => 'Lord, please remember the '.$stack['least_reached']['name'].' people. You said you wanted worshippers of every tongue and tribe and nation, yet we know of no worshippers among them.',
             ],
         ];
     }
@@ -148,10 +132,12 @@ class PG_Stacker_Text {
              */
             'believers' => [
                 [
-                    'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['all_lost'].' neighbors around them.',
+//                    'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['all_lost'].' neighbors around them.',
+                    'prayer' => '',
                 ],
                 [
                     'prayer' => 'The '.$stack['location']['admin_level_name'].' of <strong>'.$stack['location']['full_name'].'</strong> has a population of <strong>'.$stack['location']['population'].'</strong>. We estimate there is <strong>1</strong> believer for every <strong>'. $stack['location']['lost_per_believer'] .'</strong> neighbors who need Jesus.',
+                    'prayer' => '',
                 ],
             ],
             /**
@@ -160,6 +146,7 @@ class PG_Stacker_Text {
             'christian_adherents' => [
                 [
                     'prayer' => 'Lord, help the people of '.$stack['location']['full_name'].' to discover the essence of being a disciple, making disciples, and how to plant churches that multiply.',
+                    'prayer' => '',
                 ],
             ],
             /**
@@ -167,7 +154,8 @@ class PG_Stacker_Text {
              */
             'non_christians' => [
                 [
-                    'prayer' => 'God, please help the people of '.$stack['location']['full_name'].' to become disciples who hear from you and then obey you.',
+//                    'prayer' => 'God, please help the people of '.$stack['location']['full_name'].' to become disciples who hear from you and then obey you.',
+                    'prayer' => '',
                 ],
             ]
         ];
@@ -364,4 +352,296 @@ class PG_Stacker_Text {
     }
 
 
+    public static function block_text( $stack ) {
+
+        return [
+            'language' => [
+                [
+                    'section_label' => 'Language',
+                    'prayer' => 'Father, please raise up apostles, evangelists and preachers in '.$stack['location']['name'].' who can speak your gospel boldly and clearly in ' . $stack['location']['primary_language'] . '.',
+                    'reference' => '',
+                    'verse' => '',
+                ],
+                [
+                    'section_label' => 'Language',
+                    'prayer' => 'Father, please provide access to your Word in ' . $stack['location']['primary_language'] . '. Provide translators, printers, books sellers, and app developers the resources and skill to get your Word to '.$stack['location']['name'].'.',
+                    'verse' => 'And this gospel of the kingdom will be preached in the whole world as a testimony to all nations, and then the end will come.',
+                    'reference' => 'Matthew 24:14',
+                ],
+            ],
+            'population' => [
+                [
+                    'section_label' => 'Population',
+                    'prayer' => 'Pour your Spirit out on the '.$stack['location']['population'].' citizens of '.$stack['location']['name'].', so that they might know your name and the name of your Son.',
+                    'reference' => '',
+                    'verse' => '',
+                ],
+                [
+                    'section_label' => 'Population',
+                    'prayer' => 'Pour your Spirit out on the '.$stack['location']['population'].' citizens of '.$stack['location']['name'].', so that they might know your name and the name of your Son.',
+                    'verse' => 'And this gospel of the kingdom will be preached in the whole world as a testimony to all nations, and then the end will come.',
+                    'reference' => 'Matthew 24:14',
+                ],
+            ],
+
+        ];
+    }
+
+    public static function block_text_religion( $stack ) {
+
+        if ( 'Christianity' === $stack['location']['primary_religion'] ) {
+            return false;
+        }
+
+        return [
+            'religion' => [
+                [
+                    'section_label' => 'Primary Religion',
+                    'prayer' => 'Father give the '.$stack['location']['believers'].' believers in '.$stack['location']['name'].' the skill to communicate your gospel to those who follow '.$stack['location']['primary_religion'].' around them.',
+                    'reference' => '',
+                    'verse' => '',
+                ],
+            ],
+        ];
+    }
+
+    public static function block_text_favored( $stack, $favor ) {
+
+        switch( $favor ) {
+            case 'non_christians':
+                return [
+                    'majority_non_christians' => [
+                        [
+                            'section_label' => 'Non Christians',
+                            'prayer' => 'Over '.$stack['location']['percent_non_christians'].' percent of the people of '.$stack['location']['name'].' are far from Jesus. Lord, please send your gospel to them through the internet or radio or television today!',
+                            'reference' => '',
+                            'verse' => '',
+                        ],
+                        [
+                            'section_label' => 'Non Christians',
+                            'prayer' => "If you don't have mercy on the ".$stack['location']['non_christians']." people in ".$stack['location']['name']." who are far from you, how can they find you? If you don't send someoen to them, how with they hear?",
+                            'reference' => 'Romans 10:14',
+                            'verse' => 'How, then, can they call on the one they have not believed in? And how can they believe in the one of whom they have not heard? And how can they hear without someone preaching to them?',
+                        ],
+                    ],
+                ];
+                break;
+            case 'christian_adherents':
+                return [
+                    'majority_christian_adherent' => [
+                        [
+                            'section_label' => 'Cultural Christians',
+                            'prayer' => "Spirit, consider the ".$stack['location']['christian_adherents']." cultural christians in ".$stack['location']['name']." . You promised to convict of sin, righteousness and judgement. Please show mercy and don't leave them idle and distant from Jesus.",
+                            'reference' => '',
+                            'verse' => '',
+                        ],
+                        [
+                            'section_label' => 'Cultural Christians',
+                            'prayer' => 'Over '.$stack['location']['percent_christian_adherents'].' percent of the people of '.$stack['location']['name'].' know about your son, Jesus, through their culture, but, Lord, send your Spirit to show them how to make you first in all things ... love, family, finances, future hope, and all things',
+                            'verse' => 'And this gospel of the kingdom will be preached in the whole world as a testimony to all nations, and then the end will come.',
+                            'reference' => 'Matthew 24:14',
+                        ],
+                    ],
+                ];
+                break;
+            case 'believers':
+            default:
+            return [
+                'believers' => [
+                    [
+                        'section_label' => 'Believers',
+                        'prayer' => 'Father, encourage the '.$stack['location']['believers'].' believers in '.$stack['location']['name'].' to be faithful to meet and be of one mind.',
+                        'reference' => '1 Corinthians 1:10',
+                        'verse' => 'I appeal to you, brothers and sisters, in the name of the Lord Jesus Christ, that all of the you agree with one another in what you say and that there be no divisions among you.',
+                    ],
+                ]
+            ];
+                break;
+        }
+
+
+    }
+
+
 }
+
+/**
+ * (
+[location] => Array
+        (
+        [grid_id] => 100219785
+        [name] => Saiha
+        [admin0_name] => India
+        [full_name] => Saiha, Mizoram, India
+        [population] => 22,700
+        [latitude] => 22.3794
+        [longitude] => 93.0146
+        [country_code] => IN
+        [admin0_code] => IND
+        [parent_id] => 100219370
+        [parent_name] => Mizoram
+        [admin0_grid_id] => 100219347
+        [admin1_grid_id] => 100219370
+        [admin1_name] => Mizoram
+        [admin2_grid_id] => 100219785
+        [admin2_name] => Saiha
+        [admin3_grid_id] =>
+        [admin3_name] =>
+        [admin4_grid_id] =>
+        [admin4_name] =>
+        [admin5_grid_id] =>
+        [admin5_name] =>
+        [level] => 2
+        [level_name] => admin2
+        [north_latitude] => 22.8106
+        [south_latitude] => 21.9462
+        [east_longitude] => 93.2093
+        [west_longitude] => 92.827
+        [p_longitude] => 92.8362
+        [p_latitude] => 23.3068
+        [p_north_latitude] => 24.5208
+        [p_south_latitude] => 21.9462
+        [p_east_longitude] => 93.4447
+        [p_west_longitude] => 92.2594
+        [c_longitude] => 82.8007
+        [c_latitude] => 21.1278
+        [c_north_latitude] => 35.5013
+        [c_south_latitude] => 6.75426
+        [c_east_longitude] => 97.4152
+        [c_west_longitude] => 68.1862
+        [peer_locations] => 8
+        [birth_rate] => 18.7
+        [death_rate] => 7.2
+        [growth_rate] => 1.115
+        [believers] => 250
+        [christian_adherents] => 275
+        [non_christians] => 22,175
+        [primary_language] => Hindi
+        [primary_religion] => Hinduism
+        [percent_believers] => 1.1
+        [percent_christian_adherents] => 1.21
+        [percent_non_christians] => 97.69
+        [admin_level_name] => county
+        [admin_level_name_plural] => counties
+        [population_int] => 22700
+        [believers_int] => 250
+        [christian_adherents_int] => 275
+        [non_christians_int] => 22175
+        [percent_believers_full] => 1.1
+        [percent_christian_adherents_full] => 1.21333
+        [percent_non_christians_full] => 97.6867
+        [all_lost_int] => 22450
+        [all_lost] => 22,450
+        [lost_per_believer_int] => 90
+        [lost_per_believer] => 90
+        [population_growth_status] => Significant Growth
+        [deaths_non_christians_next_hour] => 0
+        [deaths_non_christians_next_100] => 1
+        [deaths_non_christians_next_week] => 3
+        [deaths_non_christians_next_month] => 13
+        [deaths_non_christians_next_year] => 161
+        [births_non_christians_last_hour] => 0
+        [births_non_christians_last_100] => 4
+        [births_non_christians_last_week] => 8
+        [births_non_christians_last_month] => 34
+        [births_non_christians_last_year] => 419
+        [deaths_christian_adherents_next_hour] => 0
+        [deaths_christian_adherents_next_100] => 0
+        [deaths_christian_adherents_next_week] => 0
+        [deaths_christian_adherents_next_month] => 0
+        [deaths_christian_adherents_next_year] => 1
+        [births_christian_adherents_last_hour] => 0
+        [births_christian_adherents_last_100] => 0
+        [births_christian_adherents_last_week] => 0
+        [births_christian_adherents_last_month] => 0
+        [births_christian_adherents_last_year] => 5
+        [favor] => non_christians
+        [icon_color] => orange
+)
+
+[cities] => Array
+(
+    [0] => Array
+        (
+            [id] => 28641
+            [geonameid] => 1257771
+            [name] => Saiha
+            [full_name] => Saiha, Mizoram, India
+            [admin0_name] => India
+            [latitude] => 22.4918
+            [longitude] => 92.9814
+            [timezone] => Asia/Kolkata
+            [population_int] => 22654
+            [population] => 22,654
+        )
+
+    )
+
+[people_groups] => Array
+(
+    [1] => Array
+    (
+        [id] => 6301
+        [name] => Halam Rupini
+        [longitude] => 92.7058
+        [latitude] => 23.724
+        [lg_name] => Aizawl
+        [lg_full_name] => Aizawl, Aizawl, Mizoram, India
+        [admin0_name] => India
+        [admin0_grid_id] => 100219347
+        [admin1_grid_id] => 100219370
+        [admin2_grid_id] => 100219779
+        [admin3_grid_id] => 100221497
+        [admin4_grid_id] =>
+        [admin5_grid_id] =>
+        [population] => 4,500
+        [JPScale] => 2
+        [LeastReached] => N
+        [PrimaryLanguageName] => Kok Borok
+        [PrimaryReligion] => Hinduism
+        [PercentAdherents] => 44.854
+        [PercentEvangelical] => 0
+        [PeopleCluster] => South Asia Tribal - other
+        [AffinityBloc] => South Asian Peoples
+        [PeopleID3] => 19763
+        [ROP3] => 115791
+        [ROG3] => IN
+        [pg_unique_key] => IN_19763_115791
+        [query_level] => parent
+    )
+
+)
+
+[least_reached] => Array
+    (
+        [id] => 5939
+        [name] => Chakma
+        [longitude] => 92.7688
+        [latitude] => 23.7962
+        [lg_name] => Aizawl
+        [lg_full_name] => Aizawl, Aizawl, Mizoram, India
+        [admin0_name] => India
+        [admin0_grid_id] => 100219347
+        [admin1_grid_id] => 100219370
+        [admin2_grid_id] => 100219779
+        [admin3_grid_id] => 100221497
+        [admin4_grid_id] =>
+        [admin5_grid_id] =>
+        [population] => 217,000
+        [JPScale] => 1
+        [LeastReached] => Y
+        [PrimaryLanguageName] => Chakma
+        [PrimaryReligion] => Buddhism
+        [PercentAdherents] => 4.914
+        [PercentEvangelical] => 0
+        [PeopleCluster] => South Asia Tribal - other
+        [AffinityBloc] => South Asian Peoples
+        [PeopleID3] => 11293
+        [ROP3] => 101976
+        [ROG3] => IN
+        [pg_unique_key] => IN_11293_101976
+        [query_level] => parent
+    )
+
+)
+ */
