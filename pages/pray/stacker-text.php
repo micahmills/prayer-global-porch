@@ -336,130 +336,146 @@ class PG_Stacker_Text {
 
     }
 
-    /**
-     * v2
-     */
 
-    public static function _language_prayers() {
-        return [
-            [
-                'verse' => "",
-                'reference' => 'Acts 8:1b,4',
-                'prayer' => 'Father, we know the expansion of your church is not a job reserved for foreign missionaries or paid staff or specifically gifted individuals. We affirm that you gave the Great Commission to your Bride and we pray that the church of '.$stack['location']['full_name'].' powerfully proclaim you even in persecution.',
+//    public static function block_text( $stack ) {
+//
+//        return [
+//            'language' => [
+//                [
+//                    'section_label' => 'Language',
+//                    'prayer' => 'Father, please raise up apostles, evangelists and preachers in '.$stack['location']['name'].' who can speak your gospel boldly and clearly in ' . $stack['location']['primary_language'] . '.',
+//                    'reference' => '',
+//                    'verse' => '',
+//                ],
+//                [
+//                    'section_label' => 'Language',
+//                    'prayer' => 'Father, please provide access to your Word in ' . $stack['location']['primary_language'] . '. Provide translators, printers, books sellers, and app developers the resources and skill to get your Word to '.$stack['location']['name'].'.',
+//                    'verse' => 'And this gospel of the kingdom will be preached in the whole world as a testimony to all nations, and then the end will come.',
+//                    'reference' => 'Matthew 24:14',
+//                ],
+//            ],
+//            'population' => [
+//                [
+//                    'section_label' => 'Population',
+//                    'prayer' => 'Pour your Spirit out on the '.$stack['location']['population'].' citizens of '.$stack['location']['name'].', so that they might know your name and the name of your Son.',
+//                    'reference' => '',
+//                    'verse' => '',
+//                ],
+//                [
+//                    'section_label' => 'Population',
+//                    'prayer' => 'Pour your Spirit out on the '.$stack['location']['population'].' citizens of '.$stack['location']['name'].', so that they might know your name and the name of your Son.',
+//                    'verse' => 'And this gospel of the kingdom will be preached in the whole world as a testimony to all nations, and then the end will come.',
+//                    'reference' => 'Matthew 24:14',
+//                ],
+//            ],
+//
+//        ];
+//    }
 
-            ],
-        ]
-    }
+//    public static function block_text_religion( $stack ) {
+//
+//        if ( 'Christianity' === $stack['location']['primary_religion'] ) {
+//            return false;
+//        }
+//
+//        return [
+//            'religion' => [
+//                [
+//                    'section_label' => 'Primary Religion',
+//                    'prayer' => 'Father give the '.$stack['location']['believers'].' believers in '.$stack['location']['name'].' the skill to communicate your gospel to those who follow '.$stack['location']['primary_religion'].' around them.',
+//                    'reference' => '',
+//                    'verse' => '',
+//                ],
+//            ],
+//        ];
+//    }
 
+    public static function _faith_status_focused_prayers( $lists, $stack ) {
 
-    public static function block_text( $stack ) {
-
-        return [
-            'language' => [
-                [
-                    'section_label' => 'Language',
-                    'prayer' => 'Father, please raise up apostles, evangelists and preachers in '.$stack['location']['name'].' who can speak your gospel boldly and clearly in ' . $stack['location']['primary_language'] . '.',
-                    'reference' => '',
-                    'verse' => '',
-                ],
-                [
-                    'section_label' => 'Language',
-                    'prayer' => 'Father, please provide access to your Word in ' . $stack['location']['primary_language'] . '. Provide translators, printers, books sellers, and app developers the resources and skill to get your Word to '.$stack['location']['name'].'.',
-                    'verse' => 'And this gospel of the kingdom will be preached in the whole world as a testimony to all nations, and then the end will come.',
-                    'reference' => 'Matthew 24:14',
-                ],
-            ],
-            'population' => [
-                [
-                    'section_label' => 'Population',
-                    'prayer' => 'Pour your Spirit out on the '.$stack['location']['population'].' citizens of '.$stack['location']['name'].', so that they might know your name and the name of your Son.',
-                    'reference' => '',
-                    'verse' => '',
-                ],
-                [
-                    'section_label' => 'Population',
-                    'prayer' => 'Pour your Spirit out on the '.$stack['location']['population'].' citizens of '.$stack['location']['name'].', so that they might know your name and the name of your Son.',
-                    'verse' => 'And this gospel of the kingdom will be preached in the whole world as a testimony to all nations, and then the end will come.',
-                    'reference' => 'Matthew 24:14',
-                ],
-            ],
-
-        ];
-    }
-
-    public static function block_text_religion( $stack ) {
-
-        if ( 'Christianity' === $stack['location']['primary_religion'] ) {
-            return false;
-        }
-
-        return [
-            'religion' => [
-                [
-                    'section_label' => 'Primary Religion',
-                    'prayer' => 'Father give the '.$stack['location']['believers'].' believers in '.$stack['location']['name'].' the skill to communicate your gospel to those who follow '.$stack['location']['primary_religion'].' around them.',
-                    'reference' => '',
-                    'verse' => '',
-                ],
-            ],
-        ];
-    }
-
-    public static function block_text_favored( $stack, $favor ) {
-
-        switch( $favor ) {
+        switch( $stack['location']['favor'] ) {
             case 'non_christians':
-                return [
-                    'majority_non_christians' => [
-                        [
-                            'section_label' => 'Non Christians',
-                            'prayer' => 'Over '.$stack['location']['percent_non_christians'].' percent of the people of '.$stack['location']['name'].' are far from Jesus. Lord, please send your gospel to them through the internet or radio or television today!',
-                            'reference' => '',
-                            'verse' => '',
-                        ],
-                        [
-                            'section_label' => 'Non Christians',
-                            'prayer' => "If you don't have mercy on the ".$stack['location']['non_christians']." people in ".$stack['location']['name']." who are far from you, how can they find you? If you don't send someoen to them, how with they hear?",
-                            'reference' => 'Romans 10:14',
-                            'verse' => 'How, then, can they call on the one they have not believed in? And how can they believe in the one of whom they have not heard? And how can they hear without someone preaching to them?',
-                        ],
+                return array_merge( $lists, [
+                    [
+                        'section_label' => 'Non Christians',
+                        'prayer' => 'Over '.$stack['location']['percent_non_christians'].' percent of the people of '.$stack['location']['name'].' are far from Jesus. Lord, please send your gospel to them through the internet or radio or television today!',
+                        'reference' => '',
+                        'verse' => '',
                     ],
-                ];
+                    [
+                        'section_label' => 'Non Christians',
+                        'prayer' => "If you don't have mercy on the ".$stack['location']['non_christians']." people in ".$stack['location']['name']." who are far from you, how can they find you? If you don't send someoen to them, how with they hear?",
+                        'reference' => 'Romans 10:14',
+                        'verse' => 'How, then, can they call on the one they have not believed in? And how can they believe in the one of whom they have not heard? And how can they hear without someone preaching to them?',
+                    ],
+                ] );
                 break;
             case 'christian_adherents':
-                return [
-                    'majority_christian_adherent' => [
-                        [
-                            'section_label' => 'Cultural Christians',
-                            'prayer' => "Spirit, consider the ".$stack['location']['christian_adherents']." cultural christians in ".$stack['location']['name']." . You promised to convict of sin, righteousness and judgement. Please show mercy and don't leave them idle and distant from Jesus.",
-                            'reference' => '',
-                            'verse' => '',
-                        ],
-                        [
-                            'section_label' => 'Cultural Christians',
-                            'prayer' => 'Over '.$stack['location']['percent_christian_adherents'].' percent of the people of '.$stack['location']['name'].' know about your son, Jesus, through their culture, but, Lord, send your Spirit to show them how to make you first in all things ... love, family, finances, future hope, and all things',
-                            'verse' => 'And this gospel of the kingdom will be preached in the whole world as a testimony to all nations, and then the end will come.',
-                            'reference' => 'Matthew 24:14',
-                        ],
-                    ],
-                ];
-                break;
-            case 'believers':
-            default:
-            return [
-                'believers' => [
+                return array_merge( $lists, [
                     [
-                        'section_label' => 'Believers',
-                        'prayer' => 'Father, encourage the '.$stack['location']['believers'].' believers in '.$stack['location']['name'].' to be faithful to meet and be of one mind.',
-                        'reference' => '1 Corinthians 1:10',
-                        'verse' => 'I appeal to you, brothers and sisters, in the name of the Lord Jesus Christ, that all of the you agree with one another in what you say and that there be no divisions among you.',
+                        'section_label' => 'Cultural Christians',
+                        'prayer' => "Spirit, consider the ".$stack['location']['christian_adherents']." cultural christians in ".$stack['location']['name']." . You promised to convict of sin, righteousness and judgement. Please show mercy and don't leave them idle and distant from Jesus.",
+                        'reference' => '',
+                        'verse' => '',
                     ],
-                ]
-            ];
+                    [
+                        'section_label' => 'Cultural Christians',
+                        'prayer' => 'Over '.$stack['location']['percent_christian_adherents'].' percent of the people of '.$stack['location']['name'].' know about your son, Jesus, through their culture, but, Lord, send your Spirit to show them how to make you first in all things ... love, family, finances, future hope, and all things',
+                        'verse' => 'And this gospel of the kingdom will be preached in the whole world as a testimony to all nations, and then the end will come.',
+                        'reference' => 'Matthew 24:14',
+                    ],
+                ]);
                 break;
+            default:
+            return $lists;
+            break;
         }
 
+    }
 
+    public static function _language_prayers( $lists, $stack ) {
+        $list = [
+            [
+                'section_label' => 'Language',
+                'prayer' => 'Father, please raise up apostles, evangelists and preachers in '.$stack['location']['name'].' who can speak your gospel boldly and clearly in ' . $stack['location']['primary_language'] . '.',
+                'reference' => '',
+                'verse' => '',
+            ],
+            [
+                'section_label' => 'Language',
+                'prayer' => 'Father, please provide access to your Word in ' . $stack['location']['primary_language'] . '. Provide translators, printers, books sellers, and app developers the resources and skill to get your Word to '.$stack['location']['name'].'.',
+                'verse' => 'And this gospel of the kingdom will be preached in the whole world as a testimony to all nations, and then the end will come.',
+                'reference' => 'Matthew 24:14',
+            ],
+        ];
+        return $list[array_rand( $list )];
+    }
+
+    public static function _population_prayers( $lists, $stack ) {
+        return array_merge( $lists, [
+            [
+                'section_label' => 'Population',
+                'prayer' => 'Pour your Spirit out on the '.$stack['location']['population'].' citizens of '.$stack['location']['name'].', so that they might know your name and the name of your Son.',
+                'reference' => '',
+                'verse' => '',
+            ],
+            [
+                'section_label' => 'Population',
+                'prayer' => 'Pour your Spirit out on the '.$stack['location']['population'].' citizens of '.$stack['location']['name'].', so that they might know your name and the name of your Son.',
+                'verse' => 'And this gospel of the kingdom will be preached in the whole world as a testimony to all nations, and then the end will come.',
+                'reference' => 'Matthew 24:14',
+            ],
+        ] );
+    }
+
+    public static function _religion_prayers( $lists, $stack ) {
+        return array_merge( $lists, [
+            [
+                'section_label' => 'Primary Religion',
+                'prayer' => 'Father give the '.$stack['location']['believers'].' believers in '.$stack['location']['name'].' the skill to communicate your gospel to those who follow '.$stack['location']['primary_religion'].' around them.',
+                'reference' => '',
+                'verse' => '',
+            ],
+        ] );
     }
 
 

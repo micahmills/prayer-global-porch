@@ -142,6 +142,10 @@ progress {
     text-decoration: none;
     color:black;
 }
+#nav-list li a.highlight {
+    border: 1px black solid;
+    border-radius: 4px;
+}
 #nav-list li a.highlight:hover {
     background:black;
     color:white;

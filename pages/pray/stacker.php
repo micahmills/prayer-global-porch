@@ -5,6 +5,11 @@ class PG_Stacker {
 
     public static $show_all = false;
 
+    /**
+     * More raw data
+     * @param $grid_id
+     * @return array
+     */
     public static function build_location_stack( $grid_id ) {
 
         // get queries
@@ -38,6 +43,11 @@ class PG_Stacker {
         return $stack;
     }
 
+    /**
+     * More guided
+     * @param $grid_id
+     * @return array
+     */
     public static function build_location_stack_v2( $grid_id ) {
 
         // get queries
@@ -45,17 +55,15 @@ class PG_Stacker {
         // build full stack
         $stack['list'] = [];
 
-        $text_list = PG_Stacker_Text::block_text( $stack );
-        $text_list_favored = PG_Stacker_Text::block_text_favored( $stack, $stack['location']['favor'] );
-        $lists = array_merge( $text_list, $text_list_favored );
+        $lists = [];
+        PG_Stacker_Text::_language_prayers( $lists, $stack );
+//        PG_Stacker_Text::_population_prayers( $lists, $stack );
+//        PG_Stacker_Text::_religion_prayers( $lists, $stack );
+//        PG_Stacker_Text::_faith_status_focused_prayers( $lists, $stack );
 
-        $text_religion = PG_Stacker_Text::block_text_religion( $stack );
-        if ( ! empty( $text_religion ) ) {
-            $lists = array_merge( $lists, $text_religion );
-        }
+        dt_write_log($lists);
 
-
-        foreach( $lists as $key => $list ) {
+        foreach( $lists as $list ) {
 
             $text = $list[array_rand( $list )];
             $stack['list'][] = [
@@ -72,7 +80,7 @@ class PG_Stacker {
 
         shuffle( $stack['list'] );
 
-        // insert
+
         self::_photos( $stack, 2 );
 //        self::_faith_status( $stack, 5 );
         self::_least_reached( $stack, 8 );

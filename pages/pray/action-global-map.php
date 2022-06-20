@@ -123,7 +123,8 @@ class PG_Global_Prayer_App_Map extends PG_Global_Prayer_App {
                         </div>
                         <div class="cell small-3 medium-4 show-for-medium" id="nav-list">
                             <ul>
-                                <li><a href="/newest/lap/" class="highlight">Start Praying</a></li>
+<!--                                <li><a href="/newest/lap/" class="highlight">Start Praying</a></li>-->
+                                <li><a href="/prayer_app/subscribe/" class="highlight">Start Praying</a></li>
                                 <li><a href="/#section-about">About</a></li>
                                 <li><a href="/#section-lap">Prayer Laps</a></li>
                                 <li><a href="/">Home</a></li>
