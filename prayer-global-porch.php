@@ -114,8 +114,11 @@ class Prayer_Global_Porch {
         require_once( 'pages/stats/big-list.php' );
         require_once( 'pages/stats/big-map.php' );
 
+        require_once( 'pages/media/magic-media.php' );
+
         // user
-        require_once( 'pages/profile/magic-link.php' );
+        require_once( 'pages/user/user-link.php' );
+
         require_once( 'pages/subscribe/magic-link.php' );
 
         require_once( 'charts/charts-loader.php' );

@@ -16,6 +16,154 @@
 </section>
 <!-- END section -->
 
+<section class="pb_section" data-section="about" id="section-about">
+    <div class="container">
+        <div class="row justify-content-md-center text-center mb-5">
+            <div class="col-lg-7">
+                <h2 class="mt-0 heading-border-top font-weight-normal">About</h2>
+                <p>
+<!--                    One prayer lap is when there has been (at least) a one-minute prayer covering over every populated place in the world.-->
+                    Prayer.Global seeks to encourage extraordinary prayer for the fulfillment of the Great Commission using technology.
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-7">
+                <div class="images right">
+                    <img class="img1 img-fluid" src="<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/images/pray-4770.jpg" alt="image">
+                    <img class="img2" src="<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/images/dark-map.jpg" alt="image">
+                </div>
+            </div>
+            <div class="col-lg-5 pl-md-5 pl-sm-0">
+                <div id="prayer_accordion_" class="pb_accordion" data-children=".item">
+                    <div class="item">
+                        <a data-toggle="collapse" data-parent="#prayer_accordion_" href="#prayer_accordion_1" aria-expanded="true" aria-controls="prayer_accordion_1" class="pb_font-18 uppercase">Historic Moment</a>
+                        <div id="prayer_accordion_1" class="collapse show" role="tabpanel">
+                            <p>
+                                Never before in the history of the human race have we been able to coordinate a global community of people to pray for the kingdom to come on earth as it is in heaven <u>IN REALTIME</u>!
+                            </p>
+                            <p>
+                                We know it has always pleased the Lord to use current technologies for the advance of his kingdom. (Written language, Roman Roads, Printing Presses, etc.)
+                                And God is now using global travel and global communication to take the gospel to the ends of the earth.
+                            </p>
+                            <p>
+                                We also know, based upon research, that "extraordinary prayer" is found at the root of all modern disciple multiplying movements.
+                            </p>
+                            <p>
+                                <br><hr>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <a data-toggle="collapse" data-parent="#prayer_accordion_" href="#prayer_accordion_2" aria-expanded="false" aria-controls="prayer_accordion_2" class="pb_font-18 uppercase">How it works</a>
+                        <div id="prayer_accordion_2" class="collapse" role="tabpanel">
+                            <p>
+                                <span class="black">&#9312;</span> Click on "Start Praying". <a href="/newest/lap/"><i class="ion-android-open"></i></a>
+                            </p>
+                            <p>
+                                <strong class="black">&#9313;</strong> Use the demographics, guided prayers, faith status, images, and maps to pray for the location for one minute.
+                            </p>
+                            <p>
+                                <strong class="black">&#9314;</strong> Once the one-minute timer has ended, you will be asked if you prayed for this location, if you click "Yes", then your prayer will be added to the community prayer coverage for the world.
+                            </p>
+                            <p>
+                                <strong class="black">&#9315;</strong> Pray for another location or end your prayer session.
+                            </p>
+                            <p>
+                                <br><hr>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <a data-toggle="collapse" data-parent="#prayer_accordion_" href="#prayer_accordion_3" aria-expanded="false" aria-controls="prayer_accordion_3" class="pb_font-18 uppercase">Moravian Prayer Challenge</a>
+                        <div id="prayer_accordion_3" class="collapse" role="tabpanel">
+                            <p>
+                                Inspired by the <a href="https://www.christianitytoday.com/history/issues/issue-1/prayer-meeting-that-lasted-100-years.html">Moravians</a>, who prayed non-stop for 100 years,
+                                we have crafted this website to help the church pray for the entire world in measurable units, as a community, and to know at the end when we have finished ... and are ready to start
+                                another lap.
+                            </p>
+                            <p>
+                                Once every location in the world has been prayed for (we finish a lap), then the prayer map resets, and we try to pray over the world again
+                                ... maybe faster.
+                            </p>
+                            <p>
+                                The Moravians had one person praying every hour of every day for 100 years. This was roughly 876,000 hours of prayer, or 52,560,000 minutes of prayer for the world. We are humbled by this extraordinary commitment to praying for the world.
+                            </p>
+                            <p>
+                                <br><hr>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <a data-toggle="collapse" data-parent="#prayer_accordion_" href="#prayer_accordion_4" aria-expanded="false" aria-controls="prayer_accordion_4" class="pb_font-18 uppercase">Maps & Lists</a>
+                        <div id="prayer_accordion_4" class="collapse" role="tabpanel">
+                            <p>
+                                <strong class="black">Current Map</strong> <a href="/newest/map"><i class="ion-android-open"></i></a>
+                            </p>
+                            <p>
+                                The current map shows what has been covered so far in the active prayer map.
+                            </p>
+                            <p>
+                                <strong class="black">Big Map</strong> <a href="/stats_app/big_map/"><i class="ion-android-open"></i></a>
+                            </p>
+                            <p>
+                                The Big map shows the number of laps, number of minutes, and number of prayer warriors for the entire challenge.
+                            </p>
+                            <p>
+                                <strong class="black">Big List</strong> <a href="/stats_app/big_list/"><i class="ion-android-open"></i></a>
+                            </p>
+                            <p>
+                                The Big List shows each of the laps accomplished so far and some of the statistics for those individual laps.
+                            </p>
+                            <p>
+                                <br><hr>
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+<!-- END section -->
+
+
+<style></style>
+<section class="pb_sm_py_cover text-center cover-bg-black cover-bg-opacity-4" id="section-challenge" style="background-image: url(<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/images/1900x1200_img_2.jpg)">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-12">
+                <h2 class="heading mb-3">Moravian Prayer Challenge</h2>
+                <p class="sub-heading mb-5 pb_color-light-opacity-8">What is the Moravian Prayer Challenge? Who are the Moravians? Watch this video and find out.</p>
+                <div class="text-center">
+                    <a data-toggle="modal" data-target="#demo_video"></a><i class="ion-videocamera pb_font-60 border-gray rounded-circle" id="video-link-icon"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="modal fade"  tabindex="-1" role="dialog" aria-labelledby="demo_video" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Prayer.Global Intro</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END section -->
+
+
 <section class="pb_section pb_section_v1" data-section="lap" id="section-lap">
     <div class="container">
         <div class="row">
@@ -60,7 +208,7 @@
         <div class="row">
             <div class="col-md text-center">
                 <a href="/newest/map/" role="button" class="btn smoothscroll pb_outline-dark btn-xl pb_font-13 p-4 rounded-0 pb_letter-spacing-2">Current Map</a>
-<!--                <a href="/newest/lap/" role="button" class="btn smoothscroll pb_outline-dark btn-xl pb_font-13 p-4 rounded-0 pb_letter-spacing-2">Start Praying</a>-->
+                <!--                <a href="/newest/lap/" role="button" class="btn smoothscroll pb_outline-dark btn-xl pb_font-13 p-4 rounded-0 pb_letter-spacing-2">Start Praying</a>-->
                 <a href="/prayer_app/subscribe/" role="button" class="btn smoothscroll pb_outline-dark btn-xl pb_font-13 p-4 rounded-0 pb_letter-spacing-2">Start Praying</a>
             </div>
         </div>
@@ -113,157 +261,10 @@
 </section>
 <!-- END section -->
 
-<style>
 
-</style>
-<section class="pb_sm_py_cover text-center cover-bg-black cover-bg-opacity-4" style="background-image: url(<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/images/1900x1200_img_2.jpg)">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-md-12">
-                <h2 class="heading mb-3">Moravian Prayer Challenge</h2>
-                <p class="sub-heading mb-5 pb_color-light-opacity-8">What is the Moravian Prayer Challenge? Who are the Moravians? Watch this video and find out.</p>
-                <div class="text-center">
-                    <a data-toggle="modal" data-target="#demo_video"></a><i class="ion-videocamera pb_font-60 border-gray rounded-circle" id="video-link-icon"></i>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<div class="modal fade" id="demo_video" tabindex="-1" role="dialog" aria-labelledby="demo_video" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Prayer.Global Intro</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body"></div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- END section -->
-
-<section class="pb_section" data-section="about" id="section-about">
-    <div class="container">
-        <div class="row justify-content-md-center text-center mb-5">
-            <div class="col-lg-7">
-                <h2 class="mt-0 heading-border-top font-weight-normal">What are Prayer Laps?</h2>
-                <p>
-                    One prayer lap is when there has been (at least) a one-minute prayer covering over every populated place in the world.
-                </p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-7">
-                <div class="images right">
-                    <img class="img1 img-fluid" src="<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/images/pray-4770.jpg" alt="image">
-                    <img class="img2" src="<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/images/dark-map.jpg" alt="image">
-                </div>
-            </div>
-            <div class="col-lg-5 pl-md-5 pl-sm-0">
-                <div id="prayer_accordian_" class="pb_accordion" data-children=".item">
-                    <div class="item">
-                        <a data-toggle="collapse" data-parent="#prayer_accordian_" href="#prayer_accordian_1" aria-expanded="true" aria-controls="prayer_accordian_1" class="pb_font-18 uppercase">How it works</a>
-                        <div id="prayer_accordian_1" class="collapse show" role="tabpanel">
-                            <p>
-                                <span class="black">&#9312;</span> Click on "Start Praying". <a href="/newest/lap/"><i class="ion-android-open"></i></a>
-                            </p>
-                            <p>
-                                <strong class="black">&#9313;</strong> Use the demographics, guided prayers, faith status, images, and maps to pray for the location for one minute.
-                            </p>
-                            <p>
-                                <strong class="black">&#9314;</strong> Once the one-minute timer has ended, you will be asked if you prayed for this location, if you click "Yes", then your prayer will be added to the community prayer coverage for the world.
-                            </p>
-                            <p>
-                                <strong class="black">&#9315;</strong> Pray for another location or end your prayer session.
-                            </p>
-                            <p>
-                                <br><hr>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <a data-toggle="collapse" data-parent="#prayer_accordian_" href="#prayer_accordian_2" aria-expanded="false" aria-controls="prayer_accordian_2" class="pb_font-18 uppercase">Moravian Prayer Challenge</a>
-                        <div id="prayer_accordian_2" class="collapse" role="tabpanel">
-                            <p>
-                                Inspired by the <a href="https://www.christianitytoday.com/history/issues/issue-1/prayer-meeting-that-lasted-100-years.html">Moravians</a>, who prayed non-stop for 100 years,
-                                we have crafted this website to help the church pray for the entire world in measurable units, as a community, and to know at the end when we have finished ... and are ready to start
-                                another lap.
-                            </p>
-                            <p>
-                                Once every location in the world has been prayed for (we finish a lap), then the prayer map resets, and we try to pray over the world again
-                                ... maybe faster.
-                            </p>
-                            <p>
-                                The Moravians had one person praying every hour of every day for 100 years. This was roughly 876,000 hours of prayer, or 52,560,000 minutes of prayer for the world. We are humbled by this extraordinary commitment to praying for the world.
-                            </p>
-                            <p>
-                                <br><hr>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <a data-toggle="collapse" data-parent="#prayer_accordian_" href="#prayer_accordian_3" aria-expanded="false" aria-controls="prayer_accordian_3" class="pb_font-18 uppercase">Maps & Lists</a>
-                        <div id="prayer_accordian_3" class="collapse" role="tabpanel">
-                            <p>
-                                <strong class="black">Current Map</strong> <a href="/newest/map"><i class="ion-android-open"></i></a>
-                            </p>
-                            <p>
-                                The current map shows what has been covered so far in the active prayer map.
-                            </p>
-                            <p>
-                                <strong class="black">Big Map</strong> <a href="/stats_app/big_map/"><i class="ion-android-open"></i></a>
-                            </p>
-                            <p>
-                                The Big map shows the number of laps, number of minutes, and number of prayer warriors for the entire challenge.
-                            </p>
-                            <p>
-                                <strong class="black">Big List</strong> <a href="/stats_app/big_list/"><i class="ion-android-open"></i></a>
-                            </p>
-                            <p>
-                                The Big List shows each of the laps accomplished so far and some of the statistics for those individual laps.
-                            </p>
-                            <p>
-                                <br><hr>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <a data-toggle="collapse" data-parent="#prayer_accordian_" href="#prayer_accordian_4" aria-expanded="false" aria-controls="prayer_accordian_4" class="pb_font-18 uppercase">Historic Moment</a>
-                        <div id="prayer_accordian_4" class="collapse" role="tabpanel">
-                            <p>
-                                Never before in the history of the human race have we been able to coordinate a global community of people to pray for the kingdom to come on earth as it is in heaven <u>IN REALTIME</u>!
-                            </p>
-                            <p>
-                                We know it has always pleased the Lord to use current technologies for the advance of his kingdom. (Written language, Roman Roads, Printing Presses, etc.)
-                                And God is now using global travel and global communication to take the gospel to the ends of the earth.
-                            </p>
-                            <p>
-                                We also know, based upon research, that "extraordinary prayer" is found at the root of all modern disciple multiplying movements.
-                            </p>
-                            <p>
-                                So ... Prayer.Global seeks to encourage extraordinary prayer for the fulfillment of the Great Commission using technology.
-                            </p>
-                            <p>
-                                <br><hr>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-</section>
-<!-- END section -->
 
 <section class="pb_sm_py_cover text-center cover-bg-black cover-bg-opacity-4" style="background-image: url(<?php echo esc_url( trailingslashit( plugin_dir_url( dirname( __FILE__ ) ) ) ) ?>assets/images/1900x1200_img_3.jpg)">
     <div class="container">
-
         <div class="row align-items-center">
             <div class="col-md-12">
                 <h2 class="heading mb-3">Join Us</h2>
@@ -372,34 +373,33 @@
     </div>
 </section>
 
-<footer class="pb_footer bg-light" role="contentinfo">
-    <hr style="padding-bottom: 5rem;">
+<footer class="pb_footer bg-light" role="contentinfo"  style="background-image: url(<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/images/1900x1200_img_2.jpg);">
     <div class="container">
         <div class="row" >
             <div class="col-md-3">
                 <p class="pb_font-14">
-                    Made with &#10084;&#65039; by <a href="https://pray4movements.org">Pray4Movement</a><br>
-                    Powered by <a href="https://disciple.tools">Disciple.Tools</a>
+                    Made with &#10084;&#65039; by <a class="white" href="https://pray4movements.org">Pray4Movement</a><br>
+                    Powered by <a class="white" href="https://disciple.tools">Disciple.Tools</a>
                 </p>
             </div>
             <div class="col-md-3">
                 <ul style="list-style: none;">
-                    <li><a href="/newest/lap/">Start Praying</a></li>
-                    <li><a href="#">Download Materials</a></li>
-                    <li><a href="/prayer_app/subscribe/">Subscribe for News</a></li>
+                    <li><a class="white" href="/newest/lap/">Start Praying</a></li>
+                    <li><a class="white" href="/download_app/media/">Download Materials</a></li>
+                    <li><a class="white" href="/prayer_app/subscribe/">Subscribe for News</a></li>
                 </ul>
             </div>
             <div class="col-md-3">
                 <ul style="list-style: none;">
-                    <li><a href="#">Contact Us</a></li>
-                    <!--                    <li><a href="#">Report a Correction</a></li>-->
-                    <li><a href="https://gospelambition.org/donate/">Donate</a></li>
+                    <li><a class="white" href="#">Contact Us</a></li>
+                    <li><a class="white" href="https://gospelambition.org/donate/">Donate</a></li>
                 </ul>
             </div>
             <div class="col-md-3">
                 <ul style="list-style: none;">
-                    <li><a href="/contacts">DT Login</a></li>
-                    <li><a href="/wp-admin">WP Admin</a></li>
+                    <li><a class="white" href="/user_app/private/">User Login</a></li>
+                    <li><a class="white" href="/contacts">DT Login</a></li>
+                    <li><a class="white" href="/wp-admin">Admin Login</a></li>
                 </ul>
             </div>
 

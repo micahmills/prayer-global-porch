@@ -14,8 +14,9 @@ if ( '' === $url ) { ?>
         <div class="collapse navbar-collapse" id="probootstrap-navbar">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item"><a class="nav-link" href="#section-home">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="#section-lap">Prayer Laps</a></li>
                 <li class="nav-item"><a class="nav-link" href="#section-about">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="#section-challenge">Challenge</a></li>
+                <li class="nav-item"><a class="nav-link" href="#section-lap">Status</a></li>
 <!--                <li class="nav-item"><a class="nav-link btn smoothscroll pb_outline-dark" style="text-transform: capitalize;" href="/newest/lap/">Start Praying</a></li>-->
                 <li class="nav-item"><a class="nav-link btn smoothscroll pb_outline-dark" style="text-transform: capitalize;" href="/prayer_app/subscribe/">Start Praying</a></li>
             </ul>
@@ -37,10 +38,11 @@ if ( '' === $url ) { ?>
             <div class="collapse navbar-collapse" id="probootstrap-navbar">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/#section-lap">Prayer Laps</a></li>
                     <li class="nav-item"><a class="nav-link" href="/#section-about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/#section-challenge">Challenge</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/#section-lap">Status</a></li>
 <!--                    <li class="nav-item"><a class="nav-link btn smoothscroll pb_outline-dark" style="text-transform: capitalize;" href="/newest/lap/">Start Praying</a></li>-->
-                    <li class="nav-item"><a class="nav-link btn smoothscroll pb_outline-dark" style="text-transform: capitalize;" href="/prayer_app/subscribe/">Start Praying</a></li>
+                    <li class="nav-item"><a class="nav-link btn smoothscroll pb_outline-dark" style="text-transform: capitalize;border:1px black solid; border-radius: 4px;" href="/prayer_app/subscribe/">Start Praying</a></li>
                 </ul>
             </div>
         </div>

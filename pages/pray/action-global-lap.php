@@ -159,7 +159,9 @@ class PG_Global_Prayer_App_Lap extends PG_Global_Prayer_App {
                         </button>
                     </div>
                     <div class="modal-body">
-                        Adjust your prayer pace. Spend longer on each location.<br>
+                        <div>
+                            <p>Prayer pace</p>
+                        </div>
                         <div class="btn-group-vertical pace-wrapper">
                             <button type="button" class="btn btn-secondary pace" id="pace__1" value="1">1 Minute</button>
                             <button type="button" class="btn btn-outline-secondary pace" id="pace__2" value="2">2 Minutes</button>
@@ -167,6 +169,13 @@ class PG_Global_Prayer_App_Lap extends PG_Global_Prayer_App {
                             <button type="button" class="btn btn-outline-secondary pace" id="pace__5" value="5">5 Minutes</button>
                             <button type="button" class="btn btn-outline-secondary pace" id="pace__10" value="10">10 Minutes</button>
                             <button type="button" class="btn btn-outline-secondary pace" id="pace__15" value="15">15 Minutes</button>
+                        </div>
+                        <div>
+                            <p>Prayer guidance</p>
+                        </div>
+                        <div class="btn-group-vertical pace-wrapper">
+                            <button type="button" class="btn btn-secondary" value="guided">More Guided</button>
+                            <button type="button" class="btn btn-outline-secondary" value="facts">More Facts</button>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -429,8 +438,9 @@ class PG_Global_Prayer_App_Lap extends PG_Global_Prayer_App {
         shuffle( $list_4770 );
         $grid_id = $list_4770[0];
 
-//        return PG_Stacker::build_location_stack( $grid_id );
-        return PG_Stacker::build_location_stack_v2( $grid_id );
+        
+        return PG_Stacker::build_location_stack( $grid_id );
+//        return PG_Stacker::build_location_stack_v2( $grid_id );
 
     }
 
