@@ -153,14 +153,14 @@ class PG_Global_Prayer_App_Lap extends PG_Global_Prayer_App {
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Options</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Set Your Prayer Experience</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
                         <div>
-                            <p>Prayer pace</p>
+                            <p>Prayer pace per place</p>
                         </div>
                         <div class="btn-group-vertical pace-wrapper">
                             <button type="button" class="btn btn-secondary pace" id="pace__1" value="1">1 Minute</button>
@@ -174,12 +174,12 @@ class PG_Global_Prayer_App_Lap extends PG_Global_Prayer_App {
                             <p>Prayer guidance</p>
                         </div>
                         <div class="btn-group-vertical pace-wrapper">
-                            <button type="button" class="btn btn-secondary" value="guided">More Guided</button>
-                            <button type="button" class="btn btn-outline-secondary" value="facts">More Facts</button>
+                            <button type="button" class="btn btn-secondary favor" id="favor__guided" value="guided">More Guided</button>
+                            <button type="button" class="btn btn-outline-secondary favor" id="favor__facts" value="facts">More Facts</button>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <div class="modal-footer center">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Let's Go!</button>
                     </div>
                 </div>
             </div>
@@ -269,7 +269,7 @@ class PG_Global_Prayer_App_Lap extends PG_Global_Prayer_App {
             case 'correction':
                 return $this->save_correction( $params['parts'], $params['data'] );
             case 'refresh':
-                return $this->get_new_location();
+                return $this->get_new_location( $params['favor'] );
             case 'ip_location':
                 return $this->get_ip_location();
             default:
@@ -398,10 +398,6 @@ class PG_Global_Prayer_App_Lap extends PG_Global_Prayer_App {
 
         $result = DT_Posts::create_post( 'feedback', $fields, true, false );
 
-//        if ( is_user_logged_in() ) {
-//            $args['user_id'] = get_current_user_id();
-//        }
-//        $id = dt_report_insert( $args, true, false );
 
         return $result;
     }
@@ -410,7 +406,7 @@ class PG_Global_Prayer_App_Lap extends PG_Global_Prayer_App {
      * Global query
      * @return array|false|void
      */
-    public function get_new_location() {
+    public function get_new_location( $favor = 'guided' ) {
         // get 4770 list
         $list_4770 = pg_query_4770_locations();
 
@@ -438,10 +434,11 @@ class PG_Global_Prayer_App_Lap extends PG_Global_Prayer_App {
         shuffle( $list_4770 );
         $grid_id = $list_4770[0];
 
-        
-        return PG_Stacker::build_location_stack( $grid_id );
-//        return PG_Stacker::build_location_stack_v2( $grid_id );
-
+        if ( 'guided' === $favor ) {
+            return PG_Stacker::build_location_stack_v2( $grid_id );
+        } else {
+            return PG_Stacker::build_location_stack( $grid_id );
+        }
     }
 
     public static function _query_prayed_list() {

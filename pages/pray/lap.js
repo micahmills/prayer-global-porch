@@ -29,7 +29,7 @@ jQuery(document).ready(function(){
       })
   }
   function refresh() {
-    window.api_post( 'refresh', { grid_id: window.current_content.location.grid_id } )
+    window.api_post( 'refresh', { grid_id: window.current_content.location.grid_id, favor: window.favor } )
       .done(function(location) {
         // console.log(location)
         if ( location === false ) {
@@ -84,6 +84,7 @@ jQuery(document).ready(function(){
 
   let pace_open_options = jQuery('#option_filter')
   let pace_buttons = jQuery('.pace')
+  let favor_buttons = jQuery('.favor')
 
   let location_show_borders = jQuery('#show_borders')
   let location_map_wrapper = jQuery('#location-map')
@@ -94,10 +95,21 @@ jQuery(document).ready(function(){
 
   let interval
   let percent = 0
+  window.items = 4
   window.time = 0
   window.seconds = 60
-  window.pace = 1
-  window.items = 4
+  window.pace = Cookies.get('pg_pace')
+  if ( typeof window.pace === 'undefined' ) {
+    window.pace = 1
+    Cookies.set('pg_pace', 1)
+  }
+  window.favor = Cookies.get('pg_favor')
+  if ( typeof window.favor === 'undefined' ) {
+    window.favor = 'guided'
+    Cookies.set('pg_favor', 'guided' )
+  }
+
+
 
   /**
    * INITIALIZE
@@ -111,6 +123,21 @@ jQuery(document).ready(function(){
       jQuery('.container.block').show()
       jQuery('#more_prayer_fuel').hide()
     })
+
+    // set options fields
+    pace_buttons.removeClass('btn-secondary').addClass('btn-outline-secondary')
+    jQuery('#pace__'+window.pace).removeClass('btn-outline-secondary').addClass('btn-secondary')
+    favor_buttons.removeClass('btn-secondary').addClass('btn-outline-secondary')
+    jQuery('#favor__'+window.favor).removeClass('btn-outline-secondary').addClass('btn-secondary')
+
+    // view options every week
+    let viewed = Cookies.get('pg_viewed')
+    if ( typeof viewed === 'undefined' ) {
+      open_options()
+      jQuery('#option_filter').modal('show')
+      Cookies.set('pg_viewed', true, { expires: 7 } )
+    }
+
 
     setTimeout(function() {
       jQuery('.tutorial').animate({
@@ -681,17 +708,37 @@ jQuery(document).ready(function(){
     window.pace = e.currentTarget.value
     window.seconds = e.currentTarget.value * 60
 
+    Cookies.set( 'pg_pace', window.pace )
+
     jQuery('.container.block').show()
     jQuery('.container.block:nth-child(+n+' + ( parseInt( e.currentTarget.value ) + window.items) + ')').hide()
   })
+  favor_buttons.on('click', function(e) {
+    favor_buttons.removeClass('btn-secondary').addClass('btn-outline-secondary')
+    jQuery('#'+e.currentTarget.id).removeClass('btn-outline-secondary').addClass('btn-secondary')
+
+    window.favor = e.currentTarget.value
+
+    Cookies.set( 'pg_favor', window.favor )
+
+    window.api_post( 'refresh', { grid_id: window.current_content.location.grid_id, favor: window.favor } )
+      .done(function(x) {
+        console.log(x)
+        window.next_content = x
+      })
+
+  })
   pace_open_options.on('show.bs.modal', function () {
+    open_options()
+  })
+  function open_options() {
     if ( percent < 100 ) {
       button_text.html('Praying Paused')
     } else {
       console.log( 'finished' )
     }
     clearInterval(interval);
-  })
+  }
   pace_open_options.on('hide.bs.modal', function () {
     praying_panel.show()
     decision_panel.hide()
@@ -702,6 +749,7 @@ jQuery(document).ready(function(){
   location_show_borders.on('click', function(e) {
     mapbox_border_map()
   })
+
 
   /**
    * Correction button

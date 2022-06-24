@@ -57,15 +57,14 @@ class PG_Stacker {
 
         $lists = [];
         PG_Stacker_Text::_language_prayers( $lists, $stack );
-//        PG_Stacker_Text::_population_prayers( $lists, $stack );
-//        PG_Stacker_Text::_religion_prayers( $lists, $stack );
-//        PG_Stacker_Text::_faith_status_focused_prayers( $lists, $stack );
+        PG_Stacker_Text::_population_prayers( $lists, $stack );
+        PG_Stacker_Text::_religion_prayers( $lists, $stack );
+        PG_Stacker_Text::_faith_status_focused_prayers( $lists, $stack );
 
         dt_write_log($lists);
+        dt_write_log($stack);
 
-        foreach( $lists as $list ) {
-
-            $text = $list[array_rand( $list )];
+        foreach( $lists as $text ) {
             $stack['list'][] = [
                 'type' => 'basic_block',
                 'data' => [
@@ -77,6 +76,8 @@ class PG_Stacker {
                 ]
             ];
         }
+
+        dt_write_log($stack);
 
         shuffle( $stack['list'] );
 

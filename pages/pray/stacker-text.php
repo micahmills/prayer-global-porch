@@ -337,60 +337,7 @@ class PG_Stacker_Text {
     }
 
 
-//    public static function block_text( $stack ) {
-//
-//        return [
-//            'language' => [
-//                [
-//                    'section_label' => 'Language',
-//                    'prayer' => 'Father, please raise up apostles, evangelists and preachers in '.$stack['location']['name'].' who can speak your gospel boldly and clearly in ' . $stack['location']['primary_language'] . '.',
-//                    'reference' => '',
-//                    'verse' => '',
-//                ],
-//                [
-//                    'section_label' => 'Language',
-//                    'prayer' => 'Father, please provide access to your Word in ' . $stack['location']['primary_language'] . '. Provide translators, printers, books sellers, and app developers the resources and skill to get your Word to '.$stack['location']['name'].'.',
-//                    'verse' => 'And this gospel of the kingdom will be preached in the whole world as a testimony to all nations, and then the end will come.',
-//                    'reference' => 'Matthew 24:14',
-//                ],
-//            ],
-//            'population' => [
-//                [
-//                    'section_label' => 'Population',
-//                    'prayer' => 'Pour your Spirit out on the '.$stack['location']['population'].' citizens of '.$stack['location']['name'].', so that they might know your name and the name of your Son.',
-//                    'reference' => '',
-//                    'verse' => '',
-//                ],
-//                [
-//                    'section_label' => 'Population',
-//                    'prayer' => 'Pour your Spirit out on the '.$stack['location']['population'].' citizens of '.$stack['location']['name'].', so that they might know your name and the name of your Son.',
-//                    'verse' => 'And this gospel of the kingdom will be preached in the whole world as a testimony to all nations, and then the end will come.',
-//                    'reference' => 'Matthew 24:14',
-//                ],
-//            ],
-//
-//        ];
-//    }
-
-//    public static function block_text_religion( $stack ) {
-//
-//        if ( 'Christianity' === $stack['location']['primary_religion'] ) {
-//            return false;
-//        }
-//
-//        return [
-//            'religion' => [
-//                [
-//                    'section_label' => 'Primary Religion',
-//                    'prayer' => 'Father give the '.$stack['location']['believers'].' believers in '.$stack['location']['name'].' the skill to communicate your gospel to those who follow '.$stack['location']['primary_religion'].' around them.',
-//                    'reference' => '',
-//                    'verse' => '',
-//                ],
-//            ],
-//        ];
-//    }
-
-    public static function _faith_status_focused_prayers( $lists, $stack ) {
+    public static function _faith_status_focused_prayers( &$lists, $stack ) {
 
         switch( $stack['location']['favor'] ) {
             case 'non_christians':
@@ -432,8 +379,8 @@ class PG_Stacker_Text {
 
     }
 
-    public static function _language_prayers( $lists, $stack ) {
-        $list = [
+    public static function _language_prayers( &$lists, $stack ) {
+        $lists = array_merge( $lists, [
             [
                 'section_label' => 'Language',
                 'prayer' => 'Father, please raise up apostles, evangelists and preachers in '.$stack['location']['name'].' who can speak your gospel boldly and clearly in ' . $stack['location']['primary_language'] . '.',
@@ -446,12 +393,13 @@ class PG_Stacker_Text {
                 'verse' => 'And this gospel of the kingdom will be preached in the whole world as a testimony to all nations, and then the end will come.',
                 'reference' => 'Matthew 24:14',
             ],
-        ];
-        return $list[array_rand( $list )];
+        ] );
+        dt_write_log($lists);
+        return $lists;
     }
 
-    public static function _population_prayers( $lists, $stack ) {
-        return array_merge( $lists, [
+    public static function _population_prayers( &$lists, $stack ) {
+        $lists = array_merge( $lists, [
             [
                 'section_label' => 'Population',
                 'prayer' => 'Pour your Spirit out on the '.$stack['location']['population'].' citizens of '.$stack['location']['name'].', so that they might know your name and the name of your Son.',
@@ -465,9 +413,11 @@ class PG_Stacker_Text {
                 'reference' => 'Matthew 24:14',
             ],
         ] );
+        dt_write_log($lists);
+        return $lists;
     }
 
-    public static function _religion_prayers( $lists, $stack ) {
+    public static function _religion_prayers( &$lists, $stack ) {
         return array_merge( $lists, [
             [
                 'section_label' => 'Primary Religion',
