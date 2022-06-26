@@ -91,8 +91,8 @@ class PG_Global_Prayer_App_Lap extends PG_Global_Prayer_App {
                     'nope' => plugin_dir_url( __DIR__ ) . 'assets/images/nope.jpg',
                     'images_url' => pg_grid_image_url(),
                     'image_folder' => plugin_dir_url( __DIR__ ) . 'assets/images/',
-                    'start_content' => $this->get_new_location(),
-                    'next_content' => $this->get_new_location(),
+//                    'start_content' => $this->get_new_location(),
+//                    'next_content' => $this->get_new_location(),
                 ]) ?>][0]
             </script>
             <script type="text/javascript" src="<?php echo esc_url( DT_Mapbox_API::$mapbox_gl_js ) ?>"></script>
@@ -214,7 +214,7 @@ class PG_Global_Prayer_App_Lap extends PG_Global_Prayer_App {
             <div class="container" id="map">
                 <div class="row">
                     <div class="col">
-                        <p class="text-md-center" id="location-map"></p>
+                        <p class="text-md-center" id="location-map"><span class="loading-spinner active"></span></p>
                     </div>
                 </div>
             </div>
@@ -269,7 +269,7 @@ class PG_Global_Prayer_App_Lap extends PG_Global_Prayer_App {
             case 'correction':
                 return $this->save_correction( $params['parts'], $params['data'] );
             case 'refresh':
-                return $this->get_new_location( $params['favor'] );
+                return $this->get_new_location( $params['data']['favor'] );
             case 'ip_location':
                 return $this->get_ip_location();
             default:
@@ -383,7 +383,6 @@ class PG_Global_Prayer_App_Lap extends PG_Global_Prayer_App {
                 'User_Location' => $user_location,
             ]
         ];
-        dt_write_log( $fields );
 
         if ( is_user_logged_in() ) {
             $contact_id = Disciple_Tools_users::get_contact_for_user( get_current_user_id() );
@@ -436,8 +435,10 @@ class PG_Global_Prayer_App_Lap extends PG_Global_Prayer_App {
 
         if ( 'guided' === $favor ) {
             return PG_Stacker::build_location_stack_v2( $grid_id );
-        } else {
+        } else if ( 'facts' === $favor ) {
             return PG_Stacker::build_location_stack( $grid_id );
+        } else {
+            return PG_Stacker::build_location_stack_v2( $grid_id );
         }
     }
 

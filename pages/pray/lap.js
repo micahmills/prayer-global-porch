@@ -115,10 +115,19 @@ jQuery(document).ready(function(){
    * INITIALIZE
    */
   function initialize_location() {
-    window.current_content = jsObject.start_content
-    window.next_content = jsObject.next_content
-    load_location()
+    window.api_post('refresh', { favor: window.favor } )
+      .done( function(l1) {
+        window.current_content = l1
+        load_location()
+      })
+
     ip_location()
+
+    window.api_post('refresh', { favor: window.favor } )
+      .done( function(l2) {
+        window.next_content = l2
+      })
+
     more_prayer_fuel.on('click', function(){
       jQuery('.container.block').show()
       jQuery('#more_prayer_fuel').hide()
@@ -721,7 +730,13 @@ jQuery(document).ready(function(){
 
     Cookies.set( 'pg_favor', window.favor )
 
-    window.api_post( 'refresh', { grid_id: window.current_content.location.grid_id, favor: window.favor } )
+    window.api_post( 'refresh', { favor: window.favor } )
+      .done(function(x) {
+        console.log(x)
+        window.current_content = x
+        load_location()
+      })
+    window.api_post( 'refresh', { favor: window.favor } )
       .done(function(x) {
         console.log(x)
         window.next_content = x
