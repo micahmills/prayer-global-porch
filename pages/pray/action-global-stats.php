@@ -183,9 +183,12 @@ class PG_Global_Prayer_App_Stats extends PG_Global_Prayer_App {
                         jQuery('.top_locations').html(html)
 
                         // if you participated in this lap
-                        jQuery('.participation_thank_you').html(`
+                        if ( x.user_stats.count ) {
+                            jQuery('.participation_thank_you').html(`
                             <h3 class='center white'>Thank you for covering ${x.user_stats.count} locations in prayer for lap ${x.lap_stats.lap_number}!</h3>
                         `)
+                        }
+
             })
 
 
