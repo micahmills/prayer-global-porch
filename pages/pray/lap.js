@@ -17,8 +17,8 @@ jQuery(document).ready(function(){
         console.log(e)
       })
   }
-  function log() {
-    window.api_post( 'log', { grid_id: window.current_content.location.grid_id, pace: window.pace, user: window.user_location } )
+  function log( grid_id ) {
+    window.api_post( 'log', { grid_id: grid_id, pace: window.pace, user: window.user_location } )
       .done(function(location) {
         // console.log(location)
         if ( location === false ) {
@@ -86,16 +86,14 @@ jQuery(document).ready(function(){
   let pace_buttons = jQuery('.pace')
   let favor_buttons = jQuery('.favor')
 
-  let location_show_borders = jQuery('#show_borders')
   let location_map_wrapper = jQuery('#location-map')
 
   let more_prayer_fuel = jQuery('#more_prayer_fuel')
-
   let i
 
-  let interval
-  let percent = 0
-  window.items = 4
+
+  window.interval = false
+  window.percent = 0
   window.time = 0
   window.seconds = 60
   window.pace = Cookies.get('pg_pace')
@@ -108,21 +106,38 @@ jQuery(document).ready(function(){
     window.favor = 'guided'
     Cookies.set('pg_favor', 'guided' )
   }
-
+  window.viewed = Cookies.get('pg_viewed')
+  window.items = parseInt( window.pace ) + 4
 
 
   /**
    * INITIALIZE
    */
   function initialize_location() {
-    window.api_post('refresh', { favor: window.favor } )
+    setup_listeners()
+
+    // set options fields
+    pace_buttons.removeClass('btn-secondary').addClass('btn-outline-secondary')
+    jQuery('#pace__'+window.pace).removeClass('btn-outline-secondary').addClass('btn-secondary')
+    favor_buttons.removeClass('btn-secondary').addClass('btn-outline-secondary')
+    jQuery('#favor__'+window.favor).removeClass('btn-outline-secondary').addClass('btn-secondary')
+
+    // load current location
+    window.api_post( 'refresh', { favor: window.favor } )
       .done( function(l1) {
         window.current_content = l1
         load_location()
+        Cookies.set('pg_viewed', true, { expires: 7 } )
+        if ( typeof window.viewed === 'undefined' ) {
+          jQuery('#option_filter').modal('show')
+          clearInterval(window.interval);
+        }
       })
 
+    // load ip tracking
     ip_location()
 
+    // load next location
     window.api_post('refresh', { favor: window.favor } )
       .done( function(l2) {
         window.next_content = l2
@@ -133,21 +148,7 @@ jQuery(document).ready(function(){
       jQuery('#more_prayer_fuel').hide()
     })
 
-    // set options fields
-    pace_buttons.removeClass('btn-secondary').addClass('btn-outline-secondary')
-    jQuery('#pace__'+window.pace).removeClass('btn-outline-secondary').addClass('btn-secondary')
-    favor_buttons.removeClass('btn-secondary').addClass('btn-outline-secondary')
-    jQuery('#favor__'+window.favor).removeClass('btn-outline-secondary').addClass('btn-secondary')
-
-    // view options every week
-    let viewed = Cookies.get('pg_viewed')
-    if ( typeof viewed === 'undefined' ) {
-      open_options()
-      jQuery('#option_filter').modal('show')
-      Cookies.set('pg_viewed', true, { expires: 7 } )
-    }
-
-
+    // start praying collapsing title animation
     setTimeout(function() {
       jQuery('.tutorial').animate({
         opacity: "toggle"
@@ -156,12 +157,133 @@ jQuery(document).ready(function(){
   }
   initialize_location() // initialize prayer framework
 
+  function setup_listeners() {
+    praying_button.off('click')
+    praying_button.on('click', function( e ) {
+      if ( window.percent < 100 ) {
+        decision_panel.show()
+        button_text.html('Praying Paused')
+        clearInterval(window.interval);
+      } else {
+        console.log( 'finished' )
+      }
+    })
+    praying_close_button.off('click')
+    praying_close_button.on('click', function( e ) {
+      if ( window.percent < 100 ) {
+        button_text.html('Praying Paused')
+      } else {
+        console.log( 'finished' )
+      }
+      decision_panel.show()
+      clearInterval(window.interval);
+    })
+    decision_home.off('click')
+    decision_home.on('click', function( e ) {
+      window.location = 'https://prayer.global'
+    })
+    decision_continue.off('click')
+    decision_continue.on('click', function( e ) {
+      praying_panel.show()
+      decision_panel.hide()
+      question_panel.hide()
+      prayer_progress_indicator( window.time )
+      button_text.html('Keep Praying...')
+    })
+    decision_next.off('click')
+    decision_next.on('click', function( e ) {
+      button_text.html('Keep Praying...')
+      button_progress.css('width', '0' )
+      window.time = 0
+      window.current_content = window.next_content
+      load_location()
+      refresh()
+    })
+    question_no.off('click')
+    question_no.on('click', function( e ) {
+      button_text.html('Keep Praying...')
+      button_progress.css('width', '0' )
+      window.time = 0
+      decision_panel.show()
+      decision_continue.show();
+    })
+    question_yes_done.off('click')
+    question_yes_done.on('click', function( e ) {
+      decision_continue.hide();
+      question_panel.hide()
+      decision_panel.show()
+      celebrate()
+      log( window.current_content.location.grid_id )
+    })
+    question_yes_next.off('click')
+    question_yes_next.on('click', function( e ) {
+      celebrate()
+      question_panel.hide()
+      log( window.current_content.location.grid_id )
+      window.current_content = window.next_content
+      let next = setTimeout(
+        function()
+        {
+          window.time = 0
+          load_location()
+        }, 3000);
+    })
+    pace_buttons.off('click')
+    pace_buttons.on('click', function(e) {
+      pace_buttons.removeClass('btn-secondary').addClass('btn-outline-secondary')
+      jQuery('#'+e.currentTarget.id).removeClass('btn-outline-secondary').addClass('btn-secondary')
+
+      window.pace = e.currentTarget.value
+      window.seconds = e.currentTarget.value * 60
+
+      Cookies.set( 'pg_pace', window.pace )
+
+      window.items = parseInt( window.pace ) + 4
+
+      jQuery('.container.block').show()
+      jQuery('.container.block:nth-child(+n+' + window.items + ')').hide()
+    })
+    favor_buttons.off('click')
+    favor_buttons.on('click', function(e) {
+      favor_buttons.removeClass('btn-secondary').addClass('btn-outline-secondary')
+      jQuery('#'+e.currentTarget.id).removeClass('btn-outline-secondary').addClass('btn-secondary')
+
+      window.favor = e.currentTarget.value
+
+      Cookies.set( 'pg_favor', window.favor )
+
+      window.api_post( 'refresh', { favor: window.favor } )
+        .done(function(x) {
+          console.log(x)
+          window.next_content = x
+        })
+
+    })
+    pace_open_options.off('show.bs.modal')
+    pace_open_options.on('show.bs.modal', function () {
+      if ( window.percent < 100 ) {
+        button_text.html('Praying Paused')
+      } else {
+        console.log( 'finished' )
+      }
+      clearInterval(window.interval);
+    })
+    pace_open_options.off('hide.bs.modal')
+    pace_open_options.on('hide.bs.modal', function () {
+      praying_panel.show()
+      decision_panel.hide()
+      question_panel.hide()
+      prayer_progress_indicator( window.time )
+      button_text.html('Keep Praying...')
+    })
+  }
+
   /**
    * FRAMEWORK LOADERS
    */
-  function load_location() {
+  function load_location( ) {
     let content = window.current_content
-    console.log(window.current_content)
+
     button_text.html('Keep Praying...')
     button_progress.css('width', '0' )
 
@@ -183,30 +305,28 @@ jQuery(document).ready(function(){
     })
 
     // FOOTER
-
-    var max = window.pace + window.items;
-    var listItems = jQuery('.container.block').length;
-    if (listItems > max) {
-      jQuery('.container.block:nth-child(+n+' + (max) + ')').hide()
-    }
+    jQuery('.container.block:nth-child(+n+' + window.items + ')').hide()
 
     prayer_progress_indicator( window.time ) // SETS THE PRAYER PROGRESS WIDGET
-
   }
 
   function prayer_progress_indicator( time_start ) {
     window.time = time_start
-    interval = setInterval(function() {
+    if ( window.interval ) {
+      clearInterval(window.interval)
+    }
+    window.interval = setInterval(function() {
       if (window.time <= window.seconds) {
         window.time = window.time + .1
-        percent = 1.6666 * ( window.time / window.pace )
-        if ( percent > 100 ) {
-          percent = 100
+        window.percent = 1.6666 * ( window.time / window.pace )
+        if ( window.percent > 100 ) {
+          window.percent = 100
         }
-        button_progress.css('width', percent+'%' )
+        // console.log( window.time + ' ' + window.percent )
+        button_progress.css('width', window.percent+'%' )
       }
       else {
-        clearInterval(interval);
+        clearInterval(window.interval);
         praying_panel.hide()
         question_panel.show()
         button_text.html('Finished!')
@@ -214,283 +334,88 @@ jQuery(document).ready(function(){
     }, 100);
   }
 
+
+
+  /**
+   * Correction button
+   */
+  let correction_field = jQuery('.correction_field')
+  let correction_modal = jQuery('#correction_modal')
+  let correction_title = jQuery('#correction_title')
+  let correction_select = jQuery('#correction_select')
+  let correction_submit = jQuery('#correction_submit_button')
+  let correction_spinner = jQuery('.loading-spinner.correction_modal_spinner')
+  let correction_error = jQuery('#correction_error')
+  let correction_response = jQuery('#correction_response')
+  jQuery('#correction_button').on('click', function() {
+    console.log(window.current_content)
+    correction_title.html(`<strong>${window.current_content.location.full_name}</strong>`)
+    correction_select.empty()
+    correction_select.append(`<option value=""></option><option value="map">Map</option>`)
+    jQuery.each(window.current_content.list, function(i,v){
+      correction_select.append(`<option value="${v.type}">${v.data.section_label}</option>`)
+    })
+    correction_select.append(`<option value="other">Other</option>`)
+    correction_modal.modal('show')
+  })
+  correction_submit.on('click', function(){
+    correction_error.empty()
+
+    let data = {
+      grid_id: window.current_content.location.grid_id,
+      current_content: window.current_content,
+      user: window.user_location,
+      language: 'en',
+      section: correction_select.val(),
+      section_label: jQuery('#correction_select option:selected').text(),
+      response: correction_response.val(),
+
+    }
+
+    if ( ! data.response ) {
+      correction_error.html(`You must enter a correction in order to submit.`)
+      return
+    }
+
+    correction_spinner.addClass('active')
+    correction_submit.prop('disabled', true)
+
+    window.api_post( 'correction', data )
+      .done(function(x) {
+        console.log(x)
+        correction_modal.modal('hide')
+        correction_field.empty().val('')
+        correction_submit.prop('disabled', false)
+        correction_spinner.removeClass('active')
+      })
+
+  })
+  jQuery('#correction_close').on( 'click', function(){
+    correction_field.empty().val('')
+    correction_submit.prop('disabled', false)
+    correction_spinner.removeClass('active')
+  })
+
+
+  /**
+   * CELEBRATE FUNCTION
+   */
+  function celebrate(){
+    div.empty()
+    location_map_wrapper.hide()
+    more_prayer_fuel.show()
+
+    let rint = Math.floor(Math.random() * 13) + 1
+    celebrate_panel.html(`<p style="padding-top:2em;"><h1>Great Job!<br>Prayer Added!</h1></p>
+    <p><img width="400px" src="${jsObject.image_folder}celebrate${rint}.gif" class="img-fluid celebrate-image" alt="photo" /></p>`).show()
+
+  }
+
+
   /**
    * Maps
    */
-  function wide_globe(){
-    jQuery('#location-map').html(`<div class="chartdiv wide_globe" id="wide_globe"></div>`)
-    let content = window.current_content
-    // https://www.amcharts.com/demos/rotating-globe/
-    am5.ready(function() {
 
-      var root = am5.Root.new("wide_globe");
-
-      root.setThemes([
-        am5themes_Animated.new(root)
-      ]);
-
-      var chart = root.container.children.push(am5map.MapChart.new(root, {
-        panX: "rotateX",
-        projection: am5map.geoNaturalEarth1(),
-        paddingBottom: 20,
-        paddingTop: 20,
-        paddingLeft: 20,
-        paddingRight: 20,
-        wheelY: 'none'
-      }));
-
-      var polygonSeries = chart.series.push(am5map.MapPolygonSeries.new(root, {
-        geoJSON: am5geodata_worldLow
-      }));
-
-      polygonSeries.mapPolygons.template.setAll({
-        tooltipText: "{name}",
-        toggleKey: "active",
-        interactive: true
-      });
-
-      polygonSeries.mapPolygons.template.states.create("hover", {
-        fill: root.interfaceColors.get("primaryButtonHover")
-      });
-
-      var backgroundSeries = chart.series.push(am5map.MapPolygonSeries.new(root, {}));
-      backgroundSeries.mapPolygons.template.setAll({
-        fill: root.interfaceColors.get("alternativeBackground"),
-        fillOpacity: 0.1,
-        strokeOpacity: 0
-      });
-      backgroundSeries.data.push({
-        geometry: am5map.getGeoRectangle(90, 180, -90, -180)
-      });
-
-      var graticuleSeries = chart.series.push(am5map.GraticuleSeries.new(root, {}));
-      graticuleSeries.mapLines.template.setAll({ strokeOpacity: 0.1, stroke: root.interfaceColors.get("alternativeBackground") })
-
-      chart.animate({
-        key: "rotationX",
-        from: 0,
-        to: 360,
-        duration: 60000,
-        loops: Infinity
-      });
-
-      chart.appear(1000, 100);
-
-      let cities = {
-        "type": "FeatureCollection",
-        "features": [{
-          "type": "Feature",
-          "properties": {
-            "name": content.location.full_name
-          },
-          "geometry": {
-            "type": "Point",
-            "coordinates": [content.location.longitude, content.location.latitude]
-          }
-        }]
-      };
-
-      let pointSeries = chart.series.push(
-        am5map.MapPointSeries.new(root, {
-          geoJSON: cities
-        })
-      );
-
-      pointSeries.bullets.push(function() {
-        return am5.Bullet.new(root, {
-          sprite: am5.Circle.new(root, {
-            radius: 30,
-            fill: 'green',
-          })
-        });
-      });
-
-      chart.seriesContainer.draggable = false;
-      chart.seriesContainer.resizable = false;
-
-    }); // end am5.ready()
-  }
-  function rotating_globe(){
-    jQuery('#location-map').html(`<div class="chartdiv rotating_globe" id="rotating_globe"></div>`)
-    let content = window.current_content
-    // https://www.amcharts.com/demos/rotating-globe/
-    am5.ready(function() {
-
-      var root = am5.Root.new("rotating_globe");
-
-      root.setThemes([
-        am5themes_Animated.new(root)
-      ]);
-
-      var chart = root.container.children.push(am5map.MapChart.new(root, {
-        panX: "rotateX",
-        projection: am5map.geoOrthographic(),
-        paddingBottom: 20,
-        paddingTop: 20,
-        paddingLeft: 20,
-        paddingRight: 20,
-        wheelY: 'none'
-      }));
-
-      var polygonSeries = chart.series.push(am5map.MapPolygonSeries.new(root, {
-        geoJSON: am5geodata_worldLow
-      }));
-
-      polygonSeries.mapPolygons.template.setAll({
-        tooltipText: "{name}",
-        toggleKey: "active",
-        interactive: true
-      });
-
-      polygonSeries.mapPolygons.template.states.create("hover", {
-        fill: root.interfaceColors.get("primaryButtonHover")
-      });
-
-      var backgroundSeries = chart.series.push(am5map.MapPolygonSeries.new(root, {}));
-      backgroundSeries.mapPolygons.template.setAll({
-        fill: root.interfaceColors.get("alternativeBackground"),
-        fillOpacity: 0.1,
-        strokeOpacity: 0
-      });
-      backgroundSeries.data.push({
-        geometry: am5map.getGeoRectangle(90, 180, -90, -180)
-      });
-
-      var graticuleSeries = chart.series.push(am5map.GraticuleSeries.new(root, {}));
-      graticuleSeries.mapLines.template.setAll({ strokeOpacity: 0.1, stroke: root.interfaceColors.get("alternativeBackground") })
-
-
-      chart.animate({
-        key: "rotationX",
-        from: 0,
-        to: 360,
-        duration: 60000,
-        loops: Infinity
-      });
-
-      chart.appear(1000, 100);
-
-      let cities = {
-        "type": "FeatureCollection",
-        "features": [{
-          "type": "Feature",
-          "properties": {
-            "name": content.location.full_name
-          },
-          "geometry": {
-            "type": "Point",
-            "coordinates": [content.location.longitude, content.location.latitude]
-          }
-        }]
-      };
-
-      let pointSeries = chart.series.push(
-        am5map.MapPointSeries.new(root, {
-          geoJSON: cities
-        })
-      );
-
-      pointSeries.bullets.push(function() {
-        return am5.Bullet.new(root, {
-          sprite: am5.Circle.new(root, {
-            radius: 30,
-            fill: 'green',
-          })
-        });
-      });
-      chart.deltaLongitude = content.location.longitude;
-
-    }); // end am5.ready()
-  }
-  function zoom_globe(){
-    jQuery('#location-map').html(`<div class="chartdiv zoom_globe" id="zoom_globe"></div>`)
-    let content = window.current_content
-    // https://www.amcharts.com/demos/rotating-globe/
-    am5.ready(function() {
-
-      var root = am5.Root.new("zoom_globe");
-
-      // root.setThemes([
-      //   am5themes_Animated.new(root)
-      // ]);
-
-      var chart = root.container.children.push(am5map.MapChart.new(root, {
-        panX: "rotateX",
-        panY: "rotateY",
-        projection: am5map.geoNaturalEarth1(),
-        paddingBottom: 20,
-        paddingTop: 20,
-        paddingLeft: 20,
-        paddingRight: 20,
-        homeZoomLevel: 3.5,
-        homeGeoPoint: { longitude: content.location.longitude, latitude: content.location.latitude },
-        wheelY: 'none'
-      }));
-
-      var polygonSeries = chart.series.push(am5map.MapPolygonSeries.new(root, {
-        geoJSON: am5geodata_worldLow
-      }));
-
-      polygonSeries.mapPolygons.template.setAll({
-        tooltipText: "{name}",
-        toggleKey: "active",
-        interactive: true
-      });
-
-      polygonSeries.mapPolygons.template.states.create("hover", {
-        fill: root.interfaceColors.get("primaryButtonHover")
-      });
-
-      var backgroundSeries = chart.series.push(am5map.MapPolygonSeries.new(root, {}));
-      backgroundSeries.mapPolygons.template.setAll({
-        fill: root.interfaceColors.get("alternativeBackground"),
-        fillOpacity: 0.1,
-        strokeOpacity: 0
-      });
-      backgroundSeries.data.push({
-        geometry: am5map.getGeoRectangle(90, 180, -90, -180)
-      });
-
-      var graticuleSeries = chart.series.push(am5map.GraticuleSeries.new(root, {}));
-      graticuleSeries.mapLines.template.setAll({ strokeOpacity: 0.1, stroke: root.interfaceColors.get("alternativeBackground") })
-
-      chart.appear(1000, 100);
-
-      let cities = {
-        "type": "FeatureCollection",
-        "features": [{
-          "type": "Feature",
-          "properties": {
-            "name": content.location.full_name
-          },
-          "geometry": {
-            "type": "Point",
-            "coordinates": [content.location.longitude, content.location.latitude]
-          }
-        }]
-      };
-
-      let pointSeries = chart.series.push(
-        am5map.MapPointSeries.new(root, {
-          geoJSON: cities
-        })
-      );
-
-      pointSeries.bullets.push(function() {
-        return am5.Bullet.new(root, {
-          sprite: am5.Circle.new(root, {
-            radius: 30,
-            fill: 'green',
-          })
-        });
-      });
-
-      polygonSeries.events.on("datavalidated", function() {
-        chart.goHome();
-      });
-
-    }); // end am5.ready()
-  }
   function mapbox_border_map() {
     let content = jQuery('#location-map')
     let grid_row = window.current_content.location
@@ -642,203 +567,6 @@ jQuery(document).ready(function(){
       }) // map load
     }
     window.load_map_with_style() // initialize map
-  }
-
-
-  /**
-   *  LISTENERS FOR CLICKS
-   */
-  praying_button.on('click', function( e ) {
-    if ( percent < 100 ) {
-      decision_panel.show()
-      button_text.html('Praying Paused')
-      clearInterval(interval);
-    } else {
-      console.log( 'finished' )
-    }
-  })
-  praying_close_button.on('click', function( e ) {
-    if ( percent < 100 ) {
-      button_text.html('Praying Paused')
-    } else {
-      console.log( 'finished' )
-    }
-    decision_panel.show()
-    clearInterval(interval);
-  })
-  decision_home.on('click', function( e ) {
-    window.location = 'https://prayer.global'
-  })
-  decision_continue.on('click', function( e ) {
-    praying_panel.show()
-    decision_panel.hide()
-    question_panel.hide()
-    prayer_progress_indicator( window.time )
-    button_text.html('Keep Praying...')
-  })
-  decision_next.on('click', function( e ) {
-    button_text.html('Keep Praying...')
-    button_progress.css('width', '0' )
-    window.time = 0
-    window.current_content = window.next_content
-    load_location()
-    refresh()
-  })
-  question_no.on('click', function( e ) {
-    button_text.html('Keep Praying...')
-    button_progress.css('width', '0' )
-    window.time = 0
-    decision_panel.show()
-    decision_continue.show();
-  })
-  question_yes_done.on('click', function( e ) {
-    decision_continue.hide();
-    question_panel.hide()
-    decision_panel.show()
-    celebrate()
-    log()
-  })
-  question_yes_next.on('click', function( e ) {
-    celebrate()
-    question_panel.hide()
-    log()
-    let next = setTimeout(
-      function()
-      {
-        window.time = 0
-        window.current_content = window.next_content
-        load_location()
-      }, 3000);
-  })
-  pace_buttons.on('click', function(e) {
-    pace_buttons.removeClass('btn-secondary').addClass('btn-outline-secondary')
-    jQuery('#'+e.currentTarget.id).removeClass('btn-outline-secondary').addClass('btn-secondary')
-
-    window.pace = e.currentTarget.value
-    window.seconds = e.currentTarget.value * 60
-
-    Cookies.set( 'pg_pace', window.pace )
-
-    jQuery('.container.block').show()
-    jQuery('.container.block:nth-child(+n+' + ( parseInt( e.currentTarget.value ) + window.items) + ')').hide()
-  })
-  favor_buttons.on('click', function(e) {
-    favor_buttons.removeClass('btn-secondary').addClass('btn-outline-secondary')
-    jQuery('#'+e.currentTarget.id).removeClass('btn-outline-secondary').addClass('btn-secondary')
-
-    window.favor = e.currentTarget.value
-
-    Cookies.set( 'pg_favor', window.favor )
-
-    window.api_post( 'refresh', { favor: window.favor } )
-      .done(function(x) {
-        console.log(x)
-        window.current_content = x
-        load_location()
-      })
-    window.api_post( 'refresh', { favor: window.favor } )
-      .done(function(x) {
-        console.log(x)
-        window.next_content = x
-      })
-
-  })
-  pace_open_options.on('show.bs.modal', function () {
-    open_options()
-  })
-  function open_options() {
-    if ( percent < 100 ) {
-      button_text.html('Praying Paused')
-    } else {
-      console.log( 'finished' )
-    }
-    clearInterval(interval);
-  }
-  pace_open_options.on('hide.bs.modal', function () {
-    praying_panel.show()
-    decision_panel.hide()
-    question_panel.hide()
-    prayer_progress_indicator( window.time )
-    button_text.html('Keep Praying...')
-  })
-  location_show_borders.on('click', function(e) {
-    mapbox_border_map()
-  })
-
-
-  /**
-   * Correction button
-   */
-  let correction_field = jQuery('.correction_field')
-  let correction_modal = jQuery('#correction_modal')
-  let correction_title = jQuery('#correction_title')
-  let correction_select = jQuery('#correction_select')
-  let correction_submit = jQuery('#correction_submit_button')
-  let correction_spinner = jQuery('.loading-spinner.correction_modal_spinner')
-  let correction_error = jQuery('#correction_error')
-  let correction_response = jQuery('#correction_response')
-  jQuery('#correction_button').on('click', function() {
-    console.log(window.current_content)
-    correction_title.html(`<strong>${window.current_content.location.full_name}</strong>`)
-    correction_select.empty()
-    correction_select.append(`<option value=""></option><option value="map">Map</option>`)
-    jQuery.each(window.current_content.list, function(i,v){
-      correction_select.append(`<option value="${v.type}">${v.data.section_label}</option>`)
-    })
-    correction_select.append(`<option value="other">Other</option>`)
-    correction_modal.modal('show')
-  })
-  correction_submit.on('click', function(){
-    correction_error.empty()
-
-    let data = {
-      grid_id: window.current_content.location.grid_id,
-      current_content: window.current_content,
-      user: window.user_location,
-      language: 'en',
-      section: correction_select.val(),
-      section_label: jQuery('#correction_select option:selected').text(),
-      response: correction_response.val(),
-
-    }
-
-    if ( ! data.response ) {
-      correction_error.html(`You must enter a correction in order to submit.`)
-      return
-    }
-
-    correction_spinner.addClass('active')
-    correction_submit.prop('disabled', true)
-
-    window.api_post( 'correction', data )
-      .done(function(x) {
-        console.log(x)
-        correction_modal.modal('hide')
-        correction_field.empty().val('')
-        correction_submit.prop('disabled', false)
-        correction_spinner.removeClass('active')
-      })
-
-  })
-  jQuery('#correction_close').on( 'click', function(){
-    correction_field.empty().val('')
-    correction_submit.prop('disabled', false)
-    correction_spinner.removeClass('active')
-  })
-
-
-  /**
-   * CELEBRATE FUNCTION
-   */
-  function celebrate(){
-    div.empty()
-    location_map_wrapper.hide()
-    more_prayer_fuel.show()
-
-    let rint = Math.floor(Math.random() * 13) + 1
-    celebrate_panel.html(`<p style="padding-top:2em;"><h1>Great Job!<br>Prayer Added!</h1></p>
-    <p><img width="400px" src="${jsObject.image_folder}celebrate${rint}.gif" class="img-fluid celebrate-image" alt="photo" /></p>`).show()
-
   }
 
 
@@ -1298,35 +1026,6 @@ jQuery(document).ready(function(){
     <div class="w-100"><hr></div>
     </div>`)
   }
-  // function _template_least_reached_block_v1( data ) {
-  //   let image
-  //   if ( data.image_url ) {
-  //     image = '<p class="mt-3 mb-3"><img src="'+data.image_url+'" class="img-fluid" alt="" /></p>'
-  //   } else {
-  //     image = '<p class="mt-3 mb-3 font-weight-bold six-em"><i class="ion-android-warning red"></i></p>'
-  //   }
-  //   div.append(
-  //     `<div class="container block">
-  //         <div class="row">
-  //         <div class="col text-center ">
-  //            <p class="mt-3 mb-3 font-weight-normal one-em uc">${data.section_label}</p>
-  //            <p class="mt-3 mb-3 font-weight-bold two-em">${data.focus_label}</p>
-  //           ${image}
-  //         </div>
-  //     </div>
-  //     <div class="row text-center justify-content-center">
-  //       <div class="col-md-8">
-  //           <p class="mt-3 mb-3 font-weight-normal one-em">${data.section_summary}</p>
-  //       </div>
-  //     </div>
-  //     <div class="row text-center justify-content-center">
-  //       <div class="col-md-8">
-  //          <p class="mt-3 mb-3 font-weight-bold two-em">${data.prayer}</p>
-  //       </div>
-  //   </div>
-  //   <div class="w-100"><hr></div>
-  //   </div>`)
-  // }
   function _template_fact_block( data ) {
     let icon = ''
     if ( typeof data.icon !== 'undefined' ) {
@@ -1532,3 +1231,278 @@ jQuery(document).ready(function(){
   }
 
 })
+
+// function wide_globe(){
+//   jQuery('#location-map').html(`<div class="chartdiv wide_globe" id="wide_globe"></div>`)
+//   let content = window.current_content
+//   // https://www.amcharts.com/demos/rotating-globe/
+//   am5.ready(function() {
+//
+//     var root = am5.Root.new("wide_globe");
+//
+//     root.setThemes([
+//       am5themes_Animated.new(root)
+//     ]);
+//
+//     var chart = root.container.children.push(am5map.MapChart.new(root, {
+//       panX: "rotateX",
+//       projection: am5map.geoNaturalEarth1(),
+//       paddingBottom: 20,
+//       paddingTop: 20,
+//       paddingLeft: 20,
+//       paddingRight: 20,
+//       wheelY: 'none'
+//     }));
+//
+//     var polygonSeries = chart.series.push(am5map.MapPolygonSeries.new(root, {
+//       geoJSON: am5geodata_worldLow
+//     }));
+//
+//     polygonSeries.mapPolygons.template.setAll({
+//       tooltipText: "{name}",
+//       toggleKey: "active",
+//       interactive: true
+//     });
+//
+//     polygonSeries.mapPolygons.template.states.create("hover", {
+//       fill: root.interfaceColors.get("primaryButtonHover")
+//     });
+//
+//     var backgroundSeries = chart.series.push(am5map.MapPolygonSeries.new(root, {}));
+//     backgroundSeries.mapPolygons.template.setAll({
+//       fill: root.interfaceColors.get("alternativeBackground"),
+//       fillOpacity: 0.1,
+//       strokeOpacity: 0
+//     });
+//     backgroundSeries.data.push({
+//       geometry: am5map.getGeoRectangle(90, 180, -90, -180)
+//     });
+//
+//     var graticuleSeries = chart.series.push(am5map.GraticuleSeries.new(root, {}));
+//     graticuleSeries.mapLines.template.setAll({ strokeOpacity: 0.1, stroke: root.interfaceColors.get("alternativeBackground") })
+//
+//     chart.animate({
+//       key: "rotationX",
+//       from: 0,
+//       to: 360,
+//       duration: 60000,
+//       loops: Infinity
+//     });
+//
+//     chart.appear(1000, 100);
+//
+//     let cities = {
+//       "type": "FeatureCollection",
+//       "features": [{
+//         "type": "Feature",
+//         "properties": {
+//           "name": content.location.full_name
+//         },
+//         "geometry": {
+//           "type": "Point",
+//           "coordinates": [content.location.longitude, content.location.latitude]
+//         }
+//       }]
+//     };
+//
+//     let pointSeries = chart.series.push(
+//       am5map.MapPointSeries.new(root, {
+//         geoJSON: cities
+//       })
+//     );
+//
+//     pointSeries.bullets.push(function() {
+//       return am5.Bullet.new(root, {
+//         sprite: am5.Circle.new(root, {
+//           radius: 30,
+//           fill: 'green',
+//         })
+//       });
+//     });
+//
+//     chart.seriesContainer.draggable = false;
+//     chart.seriesContainer.resizable = false;
+//
+//   }); // end am5.ready()
+// }
+// function rotating_globe(){
+//   jQuery('#location-map').html(`<div class="chartdiv rotating_globe" id="rotating_globe"></div>`)
+//   let content = window.current_content
+//   // https://www.amcharts.com/demos/rotating-globe/
+//   am5.ready(function() {
+//
+//     var root = am5.Root.new("rotating_globe");
+//
+//     root.setThemes([
+//       am5themes_Animated.new(root)
+//     ]);
+//
+//     var chart = root.container.children.push(am5map.MapChart.new(root, {
+//       panX: "rotateX",
+//       projection: am5map.geoOrthographic(),
+//       paddingBottom: 20,
+//       paddingTop: 20,
+//       paddingLeft: 20,
+//       paddingRight: 20,
+//       wheelY: 'none'
+//     }));
+//
+//     var polygonSeries = chart.series.push(am5map.MapPolygonSeries.new(root, {
+//       geoJSON: am5geodata_worldLow
+//     }));
+//
+//     polygonSeries.mapPolygons.template.setAll({
+//       tooltipText: "{name}",
+//       toggleKey: "active",
+//       interactive: true
+//     });
+//
+//     polygonSeries.mapPolygons.template.states.create("hover", {
+//       fill: root.interfaceColors.get("primaryButtonHover")
+//     });
+//
+//     var backgroundSeries = chart.series.push(am5map.MapPolygonSeries.new(root, {}));
+//     backgroundSeries.mapPolygons.template.setAll({
+//       fill: root.interfaceColors.get("alternativeBackground"),
+//       fillOpacity: 0.1,
+//       strokeOpacity: 0
+//     });
+//     backgroundSeries.data.push({
+//       geometry: am5map.getGeoRectangle(90, 180, -90, -180)
+//     });
+//
+//     var graticuleSeries = chart.series.push(am5map.GraticuleSeries.new(root, {}));
+//     graticuleSeries.mapLines.template.setAll({ strokeOpacity: 0.1, stroke: root.interfaceColors.get("alternativeBackground") })
+//
+//
+//     chart.animate({
+//       key: "rotationX",
+//       from: 0,
+//       to: 360,
+//       duration: 60000,
+//       loops: Infinity
+//     });
+//
+//     chart.appear(1000, 100);
+//
+//     let cities = {
+//       "type": "FeatureCollection",
+//       "features": [{
+//         "type": "Feature",
+//         "properties": {
+//           "name": content.location.full_name
+//         },
+//         "geometry": {
+//           "type": "Point",
+//           "coordinates": [content.location.longitude, content.location.latitude]
+//         }
+//       }]
+//     };
+//
+//     let pointSeries = chart.series.push(
+//       am5map.MapPointSeries.new(root, {
+//         geoJSON: cities
+//       })
+//     );
+//
+//     pointSeries.bullets.push(function() {
+//       return am5.Bullet.new(root, {
+//         sprite: am5.Circle.new(root, {
+//           radius: 30,
+//           fill: 'green',
+//         })
+//       });
+//     });
+//     chart.deltaLongitude = content.location.longitude;
+//
+//   }); // end am5.ready()
+// }
+// function zoom_globe(){
+//   jQuery('#location-map').html(`<div class="chartdiv zoom_globe" id="zoom_globe"></div>`)
+//   let content = window.current_content
+//   // https://www.amcharts.com/demos/rotating-globe/
+//   am5.ready(function() {
+//
+//     var root = am5.Root.new("zoom_globe");
+//
+//     // root.setThemes([
+//     //   am5themes_Animated.new(root)
+//     // ]);
+//
+//     var chart = root.container.children.push(am5map.MapChart.new(root, {
+//       panX: "rotateX",
+//       panY: "rotateY",
+//       projection: am5map.geoNaturalEarth1(),
+//       paddingBottom: 20,
+//       paddingTop: 20,
+//       paddingLeft: 20,
+//       paddingRight: 20,
+//       homeZoomLevel: 3.5,
+//       homeGeoPoint: { longitude: content.location.longitude, latitude: content.location.latitude },
+//       wheelY: 'none'
+//     }));
+//
+//     var polygonSeries = chart.series.push(am5map.MapPolygonSeries.new(root, {
+//       geoJSON: am5geodata_worldLow
+//     }));
+//
+//     polygonSeries.mapPolygons.template.setAll({
+//       tooltipText: "{name}",
+//       toggleKey: "active",
+//       interactive: true
+//     });
+//
+//     polygonSeries.mapPolygons.template.states.create("hover", {
+//       fill: root.interfaceColors.get("primaryButtonHover")
+//     });
+//
+//     var backgroundSeries = chart.series.push(am5map.MapPolygonSeries.new(root, {}));
+//     backgroundSeries.mapPolygons.template.setAll({
+//       fill: root.interfaceColors.get("alternativeBackground"),
+//       fillOpacity: 0.1,
+//       strokeOpacity: 0
+//     });
+//     backgroundSeries.data.push({
+//       geometry: am5map.getGeoRectangle(90, 180, -90, -180)
+//     });
+//
+//     var graticuleSeries = chart.series.push(am5map.GraticuleSeries.new(root, {}));
+//     graticuleSeries.mapLines.template.setAll({ strokeOpacity: 0.1, stroke: root.interfaceColors.get("alternativeBackground") })
+//
+//     chart.appear(1000, 100);
+//
+//     let cities = {
+//       "type": "FeatureCollection",
+//       "features": [{
+//         "type": "Feature",
+//         "properties": {
+//           "name": content.location.full_name
+//         },
+//         "geometry": {
+//           "type": "Point",
+//           "coordinates": [content.location.longitude, content.location.latitude]
+//         }
+//       }]
+//     };
+//
+//     let pointSeries = chart.series.push(
+//       am5map.MapPointSeries.new(root, {
+//         geoJSON: cities
+//       })
+//     );
+//
+//     pointSeries.bullets.push(function() {
+//       return am5.Bullet.new(root, {
+//         sprite: am5.Circle.new(root, {
+//           radius: 30,
+//           fill: 'green',
+//         })
+//       });
+//     });
+//
+//     polygonSeries.events.on("datavalidated", function() {
+//       chart.goHome();
+//     });
+//
+//   }); // end am5.ready()
+// }
