@@ -123,11 +123,12 @@ class PG_Global_Prayer_App_Map extends PG_Global_Prayer_App {
                         </div>
                         <div class="cell small-3 medium-4 show-for-medium" id="nav-list">
                             <ul>
-<!--                                <li><a href="/newest/lap/" class="highlight">Start Praying</a></li>-->
-                                <li><a href="/prayer_app/subscribe/" class="highlight">Start Praying</a></li>
-                                <li><a href="/#section-about">About</a></li>
-                                <li><a href="/#section-lap">Prayer Laps</a></li>
-                                <li><a href="/">Home</a></li>
+                                <!--                    <li class="nav-item"><a class="nav-link btn smoothscroll pb_outline-dark" style="border:1px black solid;" href="/newest/lap/">Start Praying</a></li>-->
+                                <li class="nav-item"><a class="nav-link btn smoothscroll pb_outline-dark highlight" style="border:1px black solid;" href="/prayer_app/subscribe/">Start Praying</a></li>
+                                <li class="nav-item"><a class="nav-link" href="/#section-lap">Status</a></li>
+                                <li class="nav-item"><a class="nav-link" href="/#section-challenge">Challenge</a></li>
+                                <li class="nav-item"><a class="nav-link" href="/#section-about">About</a></li>
+                                <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
                             </ul>
                         </div>
                         <div class="cell small-3 medium-4 hide-for-medium" style="text-align:right;">
