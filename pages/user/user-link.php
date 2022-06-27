@@ -109,7 +109,7 @@ class Prayer_Global_Porch_User_Page extends DT_Magic_Url_Base {
                 ],
             ]) ?>][0]
 
-            window.user_status = <?php echo ( is_user_logged_in() ) ?  1 :  0 ; ?>
+            window.user_status = <?php echo ( is_user_logged_in() ) ? 1 : 0; ?>
 
             jQuery(document).ready(function(){
 
@@ -172,7 +172,7 @@ class Prayer_Global_Porch_User_Page extends DT_Magic_Url_Base {
                         </tbody>
                     </table>
 
-                    <a href="<?php echo wp_logout_url('/'); ?>">Logout</a>
+                    <a href="<?php echo esc_url( wp_logout_url( '/' ) ); ?>">Logout</a>
                 `)
                 jQuery('#pg_user_id').html(data.ID)
                 jQuery('#pg_user_display').html(data.display_name)
@@ -230,7 +230,7 @@ class Prayer_Global_Porch_User_Page extends DT_Magic_Url_Base {
                 </div>
             </div>
         </section>
-       <?php
+        <?php
     }
 
     /**
@@ -260,9 +260,9 @@ class Prayer_Global_Porch_User_Page extends DT_Magic_Url_Base {
 
         $params = dt_recursive_sanitize_array( $params );
 
-        switch( $params['action'] ) {
+        switch ( $params['action'] ) {
             case 'login':
-                $user = get_user_by('email', $params['data']['email'] );
+                $user = get_user_by( 'email', $params['data']['email'] );
 
                 if ( $user ) {
                     if ( wp_check_password( $params['data']['pass'], $user->data->user_pass ) ) {

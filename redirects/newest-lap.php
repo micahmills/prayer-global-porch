@@ -32,7 +32,7 @@ class Prayer_Global_Porch_Newest_Lap extends DT_Magic_Url_Base
 
     public function redirect() {
         $current_lap = pg_current_global_lap();
-        $link = '/prayer_app/global/' . $current_lap['key'] ;
+        $link = '/prayer_app/global/' . $current_lap['key'];
         wp_redirect( $link );
         exit;
     }

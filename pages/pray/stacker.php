@@ -61,10 +61,10 @@ class PG_Stacker {
         PG_Stacker_Text::_religion_prayers( $lists, $stack );
         PG_Stacker_Text::_faith_status_focused_prayers( $lists, $stack );
 
-        dt_write_log($lists);
-        dt_write_log($stack);
+        dt_write_log( $lists );
+        dt_write_log( $stack );
 
-        foreach( $lists as $text ) {
+        foreach ( $lists as $text ) {
             $stack['list'][] = [
                 'type' => 'basic_block',
                 'data' => [
@@ -77,7 +77,7 @@ class PG_Stacker {
             ];
         }
 
-        dt_write_log($stack);
+        dt_write_log( $stack );
 
         shuffle( $stack['list'] );
 
@@ -1004,7 +1004,7 @@ class PG_Stacker {
         // cities
         $cities = [];
         $where = '';
-        if ( 0 === $grid_record['level']  ) {
+        if ( 0 === $grid_record['level'] ) {
             $where = ' WHERE lgpg.admin0_grid_id = '.$grid_record['grid_id'].' ';
         } else if ( 1 === $grid_record['level'] ) {
             $where = ' WHERE lgpg.admin1_grid_id = '.$grid_record['grid_id'].' ';

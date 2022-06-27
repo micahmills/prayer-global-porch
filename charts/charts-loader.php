@@ -25,7 +25,6 @@ class PG_Charts_Loader
 
 //        require_once( 'pg-review.php' );
 //        new PG_Charts_Review();
-
     } // End __construct
 
     public function add_navigation_links( $tabs ) {

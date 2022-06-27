@@ -339,7 +339,7 @@ class PG_Stacker_Text {
 
     public static function _faith_status_focused_prayers( &$lists, $stack ) {
 
-        switch( $stack['location']['favor'] ) {
+        switch ( $stack['location']['favor'] ) {
             case 'non_christians':
                 return array_merge( $lists, [
                     [
@@ -394,7 +394,7 @@ class PG_Stacker_Text {
                 'reference' => 'Matthew 24:14',
             ],
         ] );
-        dt_write_log($lists);
+        dt_write_log( $lists );
         return $lists;
     }
 
@@ -413,7 +413,7 @@ class PG_Stacker_Text {
                 'reference' => 'Matthew 24:14',
             ],
         ] );
-        dt_write_log($lists);
+        dt_write_log( $lists );
         return $lists;
     }
 
