@@ -73,6 +73,7 @@ jQuery(document).ready(function(){
   let button_progress = jQuery('.praying__progress')
   let button_text = jQuery('.praying__text')
   let praying_close_button = jQuery('#praying__close_button')
+  let praying_continue_button = jQuery('#praying__continue_button')
 
   let decision_home = jQuery('#decision__home')
   let decision_continue = jQuery('#decision__continue')
@@ -157,6 +158,9 @@ jQuery(document).ready(function(){
   }
   initialize_location() // initialize prayer framework
 
+  /**
+   * Listeners
+   */
   function setup_listeners() {
     praying_button.off('click')
     praying_button.on('click', function( e ) {
@@ -170,6 +174,8 @@ jQuery(document).ready(function(){
     })
     praying_close_button.off('click')
     praying_close_button.on('click', function( e ) {
+      praying_close_button.hide()
+      praying_continue_button.show()
       if ( window.percent < 100 ) {
         button_text.html('Praying Paused')
       } else {
@@ -178,22 +184,34 @@ jQuery(document).ready(function(){
       decision_panel.show()
       clearInterval(window.interval);
     })
-    decision_home.off('click')
-    decision_home.on('click', function( e ) {
-      window.location = 'https://prayer.global'
-    })
-    decision_continue.off('click')
-    decision_continue.on('click', function( e ) {
+    praying_continue_button.off('click')
+    praying_continue_button.on('click', function( e ) {
+      praying_close_button.show()
+      praying_continue_button.hide()
       praying_panel.show()
       decision_panel.hide()
       question_panel.hide()
       prayer_progress_indicator( window.time )
       button_text.html('Keep Praying...')
     })
+    decision_home.off('click')
+    decision_home.on('click', function( e ) {
+      window.location = 'https://prayer.global'
+    })
+    // decision_continue.off('click')
+    // decision_continue.on('click', function( e ) {
+    //   praying_panel.show()
+    //   decision_panel.hide()
+    //   question_panel.hide()
+    //   prayer_progress_indicator( window.time )
+    //   button_text.html('Keep Praying...')
+    // })
     decision_next.off('click')
     decision_next.on('click', function( e ) {
       button_text.html('Keep Praying...')
       button_progress.css('width', '0' )
+      praying_close_button.show()
+      praying_continue_button.hide()
       window.time = 0
       window.current_content = window.next_content
       load_location()
@@ -209,16 +227,17 @@ jQuery(document).ready(function(){
     })
     question_yes_done.off('click')
     question_yes_done.on('click', function( e ) {
-      decision_continue.hide();
-      question_panel.hide()
-      decision_panel.show()
-      celebrate()
-      log( window.current_content.location.grid_id )
+      window.api_post( 'log', { grid_id: window.current_content.location.grid_id, pace: window.pace, user: window.user_location } )
+        .done(function(x) {
+          window.location = jsObject.stats_url
+        })
     })
     question_yes_next.off('click')
     question_yes_next.on('click', function( e ) {
       celebrate()
       question_panel.hide()
+      praying_close_button.show()
+      praying_continue_button.hide()
       log( window.current_content.location.grid_id )
       window.current_content = window.next_content
       let next = setTimeout(
@@ -296,7 +315,6 @@ jQuery(document).ready(function(){
     div.empty()
 
     location_map_wrapper.show()
-    // add_map()
     mapbox_border_map()
 
     // LOOP STACK
@@ -408,8 +426,8 @@ jQuery(document).ready(function(){
     let rint = Math.floor(Math.random() * 13) + 1
     celebrate_panel.html(`<p style="padding-top:2em;"><h1>Great Job!<br>Prayer Added!</h1></p>
     <p><img width="400px" src="${jsObject.image_folder}celebrate${rint}.gif" class="img-fluid celebrate-image" alt="photo" /></p>`).show()
-
   }
+
 
 
   /**

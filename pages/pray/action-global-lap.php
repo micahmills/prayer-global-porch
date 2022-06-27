@@ -68,6 +68,7 @@ class PG_Global_Prayer_App_Lap extends PG_Global_Prayer_App {
         require_once( trailingslashit( plugin_dir_path( __DIR__ ) ) . 'assets/header.php' );
 
         $current_lap = pg_current_global_lap();
+        $current_url = trailingslashit( site_url() ) . $this->parts['root'] . '/' . $this->parts['type'] . '/' . $this->parts['public_key'] . '/';
         if ( (int) $current_lap['post_id'] === (int) $this->parts['post_id'] ) {
             ?>
             <!-- Resources -->
@@ -91,8 +92,9 @@ class PG_Global_Prayer_App_Lap extends PG_Global_Prayer_App {
                     'nope' => plugin_dir_url( __DIR__ ) . 'assets/images/nope.jpg',
                     'images_url' => pg_grid_image_url(),
                     'image_folder' => plugin_dir_url( __DIR__ ) . 'assets/images/',
-//                    'start_content' => $this->get_new_location(),
-//                    'next_content' => $this->get_new_location(),
+                    'current_url' => $current_url,
+                    'stats_url' => $current_url . 'stats',
+                    'map_url' => $current_url . 'map'
                 ]) ?>][0]
             </script>
             <script type="text/javascript" src="<?php echo esc_url( DT_Mapbox_API::$mapbox_gl_js ) ?>"></script>
@@ -121,6 +123,7 @@ class PG_Global_Prayer_App_Lap extends PG_Global_Prayer_App {
                         <span class="praying__text"></span>
                     </button>
                     <button type="button" class="btn btn-secondary praying" id="praying__close_button"><i class="ion-close-circled"></i></button>
+                    <button type="button" class="btn btn-secondary praying" id="praying__continue_button"><i class="ion-android-arrow-dropright-circle"></i></button>
                     <button type="button" class="btn btn-secondary settings" id="praying__open_options" data-toggle="modal" data-target="#option_filter"><i class="ion-android-options"></i></button>
                 </div>
             </div>
@@ -137,7 +140,7 @@ class PG_Global_Prayer_App_Lap extends PG_Global_Prayer_App {
             <div class="container decision" id="decision-panel">
                 <div class="btn-group decision_button_group" role="group" aria-label="Decision Button">
                     <button type="button" class="btn btn-secondary decision" id="decision__home">Home</button>
-                    <button type="button" class="btn btn-secondary decision" id="decision__continue">Continue</button>
+<!--                    <button type="button" class="btn btn-secondary decision" id="decision__continue">Continue</button>-->
                     <button type="button" class="btn btn-secondary decision" id="decision__next">Next</button>
                 </div>
             </div>

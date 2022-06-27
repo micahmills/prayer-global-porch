@@ -34,6 +34,10 @@ section {
 #praying__close_button {
     font-size:2em;
 }
+#praying__continue_button {
+    font-size:2em;
+    display:none;
+}
 #praying__open_options {
     font-size:2em;
 }
