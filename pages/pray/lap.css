@@ -210,7 +210,9 @@ nav {
 }
 .btn {
     cursor: pointer;
+    margin: 0 2px;
 }
+
 #map-wrapper, #map-content, #mabox-map {
     height:300px;
     padding-top:10px;

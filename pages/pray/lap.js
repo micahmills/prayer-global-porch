@@ -161,38 +161,43 @@ jQuery(document).ready(function(){
   /**
    * Listeners
    */
-  function setup_listeners() {
-    praying_button.off('click')
-    praying_button.on('click', function( e ) {
-      if ( window.percent < 100 ) {
-        decision_panel.show()
-        button_text.html('Praying Paused')
-        clearInterval(window.interval);
-      } else {
-        console.log( 'finished' )
-      }
-    })
-    praying_close_button.off('click')
-    praying_close_button.on('click', function( e ) {
+  function toggle_timer() {
+    if ( typeof window.paused === 'undefined' || window.paused === '' ) {
+      console.log('pausing')
       praying_close_button.hide()
       praying_continue_button.show()
-      if ( window.percent < 100 ) {
-        button_text.html('Praying Paused')
-      } else {
-        console.log( 'finished' )
-      }
+
       decision_panel.show()
-      clearInterval(window.interval);
-    })
-    praying_continue_button.off('click')
-    praying_continue_button.on('click', function( e ) {
+
+      button_text.html('Praying Paused')
+      clearInterval(window.interval)
+      window.paused = true
+    } else {
+      console.log('activating')
       praying_close_button.show()
       praying_continue_button.hide()
+
       praying_panel.show()
       decision_panel.hide()
       question_panel.hide()
-      prayer_progress_indicator( window.time )
+
       button_text.html('Keep Praying...')
+      prayer_progress_indicator( window.time )
+      window.paused = ''
+    }
+  }
+  function setup_listeners() {
+    praying_button.off('click')
+    praying_button.on('click', function( e ) {
+      toggle_timer()
+    })
+    praying_close_button.off('click')
+    praying_close_button.on('click', function( e ) {
+      toggle_timer()
+    })
+    praying_continue_button.off('click')
+    praying_continue_button.on('click', function( e ) {
+      toggle_timer()
     })
     decision_home.off('click')
     decision_home.on('click', function( e ) {
