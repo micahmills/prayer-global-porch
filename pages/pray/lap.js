@@ -24,7 +24,6 @@ jQuery(document).ready(function(){
         if ( location === false ) {
           window.location = '/'+jsObject.parts.root+'/'+jsObject.parts.type+'/'+jsObject.parts.public_key
         }
-        window.current_content = window.next_content
         window.next_content = location
       })
   }
@@ -35,9 +34,15 @@ jQuery(document).ready(function(){
         if ( location === false ) {
           window.location = '/'+jsObject.parts.root+'/'+jsObject.parts.type+'/'+jsObject.parts.public_key
         }
-        window.current_content = window.next_content
         window.next_content = location
       })
+  }
+  function load_next() {
+    toggle_timer( false )
+    button_progress.css('width', '0' )
+    window.time = 0
+    window.current_content = window.next_content
+    load_location()
   }
   function ip_location() {
     window.api_post( 'ip_location', [] )
@@ -76,7 +81,6 @@ jQuery(document).ready(function(){
   let praying_continue_button = jQuery('#praying__continue_button')
 
   let decision_home = jQuery('#decision__home')
-  let decision_continue = jQuery('#decision__continue')
   let decision_next = jQuery('#decision__next')
 
   let question_no = jQuery('#question__no')
@@ -159,33 +163,8 @@ jQuery(document).ready(function(){
   initialize_location() // initialize prayer framework
 
   /**
-   * Listeners
+   * Widget Listeners
    */
-  function toggle_timer() {
-    if ( typeof window.paused === 'undefined' || window.paused === '' ) {
-      console.log('pausing')
-      praying_close_button.hide()
-      praying_continue_button.show()
-
-      decision_panel.show()
-
-      button_text.html('Praying Paused')
-      clearInterval(window.interval)
-      window.paused = true
-    } else {
-      console.log('activating')
-      praying_close_button.show()
-      praying_continue_button.hide()
-
-      praying_panel.show()
-      decision_panel.hide()
-      question_panel.hide()
-
-      button_text.html('Keep Praying...')
-      prayer_progress_indicator( window.time )
-      window.paused = ''
-    }
-  }
   function setup_listeners() {
     praying_button.off('click')
     praying_button.on('click', function( e ) {
@@ -193,42 +172,24 @@ jQuery(document).ready(function(){
     })
     praying_close_button.off('click')
     praying_close_button.on('click', function( e ) {
-      toggle_timer()
+      toggle_timer( true )
     })
     praying_continue_button.off('click')
     praying_continue_button.on('click', function( e ) {
-      toggle_timer()
+      toggle_timer( false )
     })
     decision_home.off('click')
     decision_home.on('click', function( e ) {
       window.location = 'https://prayer.global'
     })
-    // decision_continue.off('click')
-    // decision_continue.on('click', function( e ) {
-    //   praying_panel.show()
-    //   decision_panel.hide()
-    //   question_panel.hide()
-    //   prayer_progress_indicator( window.time )
-    //   button_text.html('Keep Praying...')
-    // })
     decision_next.off('click')
     decision_next.on('click', function( e ) {
-      button_text.html('Keep Praying...')
-      button_progress.css('width', '0' )
-      praying_close_button.show()
-      praying_continue_button.hide()
-      window.time = 0
-      window.current_content = window.next_content
-      load_location()
+      load_next()
       refresh()
     })
     question_no.off('click')
     question_no.on('click', function( e ) {
-      button_text.html('Keep Praying...')
-      button_progress.css('width', '0' )
-      window.time = 0
       decision_panel.show()
-      decision_continue.show();
     })
     question_yes_done.off('click')
     question_yes_done.on('click', function( e ) {
@@ -239,17 +200,13 @@ jQuery(document).ready(function(){
     })
     question_yes_next.off('click')
     question_yes_next.on('click', function( e ) {
-      celebrate()
       question_panel.hide()
-      praying_close_button.show()
-      praying_continue_button.hide()
-      log( window.current_content.location.grid_id )
-      window.current_content = window.next_content
+      celebrate()
       let next = setTimeout(
         function()
         {
-          window.time = 0
-          load_location()
+          load_next()
+          log( window.current_content.location.grid_id )
         }, 3000);
     })
     pace_buttons.off('click')
@@ -285,21 +242,39 @@ jQuery(document).ready(function(){
     })
     pace_open_options.off('show.bs.modal')
     pace_open_options.on('show.bs.modal', function () {
-      if ( window.percent < 100 ) {
-        button_text.html('Praying Paused')
-      } else {
-        console.log( 'finished' )
-      }
-      clearInterval(window.interval);
+      window.paused = ''
+      toggle_timer()
     })
     pace_open_options.off('hide.bs.modal')
     pace_open_options.on('hide.bs.modal', function () {
+      window.paused = true
+      toggle_timer()
+    })
+  }
+  function toggle_timer( set_to_pause = false ) {
+    if ( typeof window.paused === 'undefined' || window.paused === '' || set_to_pause ) {
+      // console.log('pausing')
+      praying_close_button.hide()
+      praying_continue_button.show()
+
+      decision_panel.show()
+
+      button_text.html('Praying Paused')
+      clearInterval(window.interval)
+      window.paused = true
+    } else {
+      // console.log('activating')
+      praying_close_button.show()
+      praying_continue_button.hide()
+
       praying_panel.show()
       decision_panel.hide()
       question_panel.hide()
-      prayer_progress_indicator( window.time )
+
       button_text.html('Keep Praying...')
-    })
+      prayer_progress_indicator( window.time )
+      window.paused = ''
+    }
   }
 
   /**
@@ -332,7 +307,6 @@ jQuery(document).ready(function(){
 
     prayer_progress_indicator( window.time ) // SETS THE PRAYER PROGRESS WIDGET
   }
-
   function prayer_progress_indicator( time_start ) {
     window.time = time_start
     if ( window.interval ) {
@@ -349,10 +323,11 @@ jQuery(document).ready(function(){
         button_progress.css('width', window.percent+'%' )
       }
       else {
-        clearInterval(window.interval);
         praying_panel.hide()
         question_panel.show()
-        button_text.html('Finished!')
+        button_progress.css('width', '0' )
+        button_text.html('Keep Praying...')
+        clearInterval(window.interval);
       }
     }, 100);
   }
