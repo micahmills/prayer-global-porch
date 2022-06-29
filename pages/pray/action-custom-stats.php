@@ -160,7 +160,7 @@ class PG_Custom_Prayer_App_Stats extends PG_Custom_Prayer_App {
             </div>
         </section>
         <!-- END section -->
-
+        <?php require_once( trailingslashit( plugin_dir_path( __DIR__ ) ) . '/assets/working-footer.php' ) ?>
         <?php // end html
     }
 

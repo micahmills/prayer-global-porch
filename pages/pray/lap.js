@@ -88,6 +88,7 @@ jQuery(document).ready(function(){
   let question_yes_next = jQuery('#question__yes_next')
 
   let pace_open_options = jQuery('#option_filter')
+  let open_welcome = jQuery('#welcome_screen')
   let pace_buttons = jQuery('.pace')
   let favor_buttons = jQuery('.favor')
 
@@ -125,17 +126,17 @@ jQuery(document).ready(function(){
     pace_buttons.removeClass('btn-secondary').addClass('btn-outline-secondary')
     jQuery('#pace__'+window.pace).removeClass('btn-outline-secondary').addClass('btn-secondary')
     favor_buttons.removeClass('btn-secondary').addClass('btn-outline-secondary')
-    jQuery('#favor__'+window.favor).removeClass('btn-outline-secondary').addClass('btn-secondary')
+    jQuery('.favor__'+window.favor).removeClass('btn-outline-secondary').addClass('btn-secondary')
 
     // load current location
     window.api_post( 'refresh', { favor: window.favor } )
       .done( function(l1) {
         window.current_content = l1
         load_location()
-        Cookies.set('pg_viewed', true, { expires: 7 } )
         if ( typeof window.viewed === 'undefined' ) {
-          jQuery('#option_filter').modal('show')
-          clearInterval(window.interval);
+          toggle_timer( true )
+          open_welcome.modal('show')
+          Cookies.set('pg_viewed', true, { expires: 7 } )
         }
       })
 
@@ -152,13 +153,6 @@ jQuery(document).ready(function(){
       jQuery('.container.block').show()
       jQuery('#more_prayer_fuel').hide()
     })
-
-    // start praying collapsing title animation
-    setTimeout(function() {
-      jQuery('.tutorial').animate({
-        opacity: "toggle"
-      })
-    }, 5000);
   }
   initialize_location() // initialize prayer framework
 
@@ -212,7 +206,7 @@ jQuery(document).ready(function(){
     pace_buttons.off('click')
     pace_buttons.on('click', function(e) {
       pace_buttons.removeClass('btn-secondary').addClass('btn-outline-secondary')
-      jQuery('#'+e.currentTarget.id).removeClass('btn-outline-secondary').addClass('btn-secondary')
+      jQuery('.'+e.currentTarget.id).removeClass('btn-outline-secondary').addClass('btn-secondary')
 
       window.pace = e.currentTarget.value
       window.seconds = e.currentTarget.value * 60
@@ -226,8 +220,10 @@ jQuery(document).ready(function(){
     })
     favor_buttons.off('click')
     favor_buttons.on('click', function(e) {
+
       favor_buttons.removeClass('btn-secondary').addClass('btn-outline-secondary')
-      jQuery('#'+e.currentTarget.id).removeClass('btn-outline-secondary').addClass('btn-secondary')
+      let item_id = jQuery(this).data('item-id')
+      jQuery('.'+item_id).removeClass('btn-outline-secondary').addClass('btn-secondary')
 
       window.favor = e.currentTarget.value
 
@@ -242,13 +238,20 @@ jQuery(document).ready(function(){
     })
     pace_open_options.off('show.bs.modal')
     pace_open_options.on('show.bs.modal', function () {
-      window.paused = ''
-      toggle_timer()
+      toggle_timer( true )
     })
     pace_open_options.off('hide.bs.modal')
     pace_open_options.on('hide.bs.modal', function () {
-      window.paused = true
-      toggle_timer()
+      toggle_timer( true )
+    })
+    open_welcome.off('hide.bs.modal')
+    open_welcome.on('hide.bs.modal', function () {
+      toggle_timer( false )
+      setTimeout(function() {
+        jQuery('.tutorial').animate({
+          opacity: "toggle"
+        })
+      }, 5000);
     })
   }
   function toggle_timer( set_to_pause = false ) {

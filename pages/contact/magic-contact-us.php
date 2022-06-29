@@ -79,9 +79,12 @@ class Prayer_Global_Porch_Contact_Us extends DT_Magic_Url_Base
             <div class="container">
                 <div class="row justify-content-md-center text-center mb-5">
                     <div class="col-lg-7">
-                        <h2 class="mt-0 heading-border-top font-weight-normal">Contact Us</h2>
+                        <h2 class="mt-0 pb-3 heading-border-top font-weight-normal">Contact Us</h2>
                         <p>
-
+                            First, thank you for reaching out.
+                        </p>
+                        <p>
+                            Second, we're a group of volunteers striving to see the Great Commission fulfilled in this generation ... and we also have other jobs ... so be patient as we get back to you!
                         </p>
                     </div>
                 </div>
@@ -95,8 +98,8 @@ class Prayer_Global_Porch_Contact_Us extends DT_Magic_Url_Base
             </div>
         </section>
         <!-- END section -->
+        <?php require_once( trailingslashit( plugin_dir_path( __DIR__ ) ) . '/assets/working-footer.php' ) ?>
         <?php
     }
-
 }
 Prayer_Global_Porch_Contact_Us::instance();

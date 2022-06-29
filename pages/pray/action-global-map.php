@@ -161,8 +161,8 @@ class PG_Global_Prayer_App_Map extends PG_Global_Prayer_App {
             </ul>
             <hr>
             <ul class="navbar-nav two-em">
-                <li class="nav-item"><a class="nav-link" href="/stats_app/big_list/">Race List</a></li>
-                <li class="nav-item"><a class="nav-link" href="/stats_app/big_map/">Race Map</a></li>
+                <li class="nav-item"><a class="nav-link" href="/race_app/big_list/">Race List</a></li>
+                <li class="nav-item"><a class="nav-link" href="/race_app/big_map/">Race Map</a></li>
             </ul>
             <div class="show-for-small-only">
                 <hr>

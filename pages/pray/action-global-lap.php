@@ -176,11 +176,34 @@ class PG_Global_Prayer_App_Lap extends PG_Global_Prayer_App {
                             <p>Prayer guidance</p>
                         </div>
                         <div class="btn-group-vertical pace-wrapper">
-                            <button type="button" class="btn btn-secondary favor" id="favor__guided" value="guided">More Guided</button>
-                            <button type="button" class="btn btn-outline-secondary favor" id="favor__facts" value="facts">More Facts</button>
+                            <button type="button" class="btn btn-secondary favor favor__guided" data-item-id="favor__guided" value="guided">More Guided</button>
+                            <button type="button" class="btn btn-outline-secondary favor favor__facts" data-item-id="favor__facts" value="facts">More Facts</button>
                         </div>
                     </div>
                     <div class="modal-footer center">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Let's Go!</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="welcome_screen" tabindex="-1" role="dialog" aria-labelledby="welcome_screen_label" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <h3 class="center">Pray</h3>
+                        <p>
+                            Pray over the location using the maps, photos, prayers and facts provided.
+                        </p>
+                        <p>
+                            Pray for one minute or longer as the Spirit leads.
+                        </p>
+                        <h3 class="center">Log</h3>
+                        <p>
+                            Once the timer transforms, log your prayer with the prayers of others.
+                        </p>
+                        <h3 class="center">Pray again!</h3>
+                    </div>
+                    <div class="modal-footer justify-content-center">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Let's Go!</button>
                     </div>
                 </div>

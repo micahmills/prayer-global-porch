@@ -104,13 +104,13 @@
                                 The current map shows what has been covered so far in the active prayer map.
                             </p>
                             <p>
-                                <strong class="black">Big Map</strong> <a href="/stats_app/big_map/"><i class="ion-android-open"></i></a>
+                                <strong class="black">Big Map</strong> <a href="/race_app/big_map/"><i class="ion-android-open"></i></a>
                             </p>
                             <p>
                                 The Big map shows the number of laps, number of minutes, and number of prayer warriors for the entire challenge.
                             </p>
                             <p>
-                                <strong class="black">Big List</strong> <a href="/stats_app/big_list/"><i class="ion-android-open"></i></a>
+                                <strong class="black">Big List</strong> <a href="/race_app/big_list/"><i class="ion-android-open"></i></a>
                             </p>
                             <p>
                                 The Big List shows each of the laps accomplished so far and some of the statistics for those individual laps.
@@ -253,8 +253,8 @@
         </div>
         <div class="row">
             <div class="col-md text-center">
-                <a href="/stats_app/big_map/" role="button" class="btn smoothscroll pb_outline-dark btn-xl pb_font-13 p-4 rounded-0 pb_letter-spacing-2">Big Map</a>
-                <a href="/stats_app/big_list/" role="button" class="btn smoothscroll pb_outline-dark btn-xl pb_font-13 p-4 rounded-0 pb_letter-spacing-2">Big List</a>
+                <a href="/race_app/big_map/" role="button" class="btn smoothscroll pb_outline-dark btn-xl pb_font-13 p-4 rounded-0 pb_letter-spacing-2">Big Map</a>
+                <a href="/race_app/big_list/" role="button" class="btn smoothscroll pb_outline-dark btn-xl pb_font-13 p-4 rounded-0 pb_letter-spacing-2">Big List</a>
             </div>
         </div>
     </div>
@@ -373,45 +373,4 @@
     </div>
 </section>
 
-<footer class="pb_footer bg-light" role="contentinfo"  style="background-image: url(<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/images/1900x1200_img_2.jpg);">
-    <div class="container">
-        <div class="row" >
-            <div class="col-md-3">
-                <p class="pb_font-14">
-                    Made with &#10084;&#65039; by <a class="white" href="https://pray4movements.org">Pray4Movement</a><br>
-                    Powered by <a class="white" href="https://disciple.tools">Disciple.Tools</a>
-                </p>
-            </div>
-            <div class="col-md-3">
-                <ul style="list-style: none;">
-                    <li><a class="white" href="/newest/lap/">Start Praying</a></li>
-                    <li><a class="white" href="/download_app/media/">Download Materials</a></li>
-                    <li><a class="white" href="/prayer_app/subscribe/">Subscribe for News</a></li>
-                </ul>
-            </div>
-            <div class="col-md-3">
-                <ul style="list-style: none;">
-                    <li><a class="white" href="/prayer_app/contact_us/">Contact Us</a></li>
-                    <li><a class="white" href="https://gospelambition.org/donate/">Donate</a></li>
-                </ul>
-            </div>
-            <div class="col-md-3">
-                <ul style="list-style: none;">
-                    <li><a class="white" href="/user_app/private/">User Login</a></li>
-                    <li><a class="white" href="/contacts">DT Login</a></li>
-                    <li><a class="white" href="/wp-admin">Admin Login</a></li>
-                </ul>
-            </div>
-
-        </div>
-
-        <div class="row" style="padding-top: 5rem;">
-            <div class="col text-center">
-                <p class="pb_font-14">&copy; <script>document.write(new Date().getFullYear())</script>. All Rights Reserved.</p>
-            </div>
-        </div>
-    </div>
-</footer>
-
-<!-- loader -->
-<!--<div id="pb_loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#FDA04F"/></svg></div>-->
+<?php require_once( trailingslashit( plugin_dir_path( __DIR__ ) ) . '/assets/working-footer.php' ) ?>

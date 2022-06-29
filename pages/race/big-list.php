@@ -6,10 +6,10 @@ class Prayer_Global_Porch_Stats_Big_List extends DT_Magic_Url_Base
     public $magic = false;
     public $parts = false;
     public $page_title = 'Global Prayer Map';
-    public $root = 'stats_app';
+    public $root = 'race_app';
     public $type = 'big_list';
     public $type_name = 'Global Prayer Stats';
-    public static $token = 'stats_app_big_list';
+    public static $token = 'race_app_big_list';
     public $post_type = 'laps';
 
     private static $_instance = null;
@@ -114,7 +114,7 @@ class Prayer_Global_Porch_Stats_Big_List extends DT_Magic_Url_Base
         require_once( trailingslashit( plugin_dir_path( __DIR__ ) ) . '/assets/nav.php' );
         ?>
         <!-- content section -->
-        <section>
+        <section style="height: 95vh;">
             <div class="container pb-4">
                 <div class="row">
                     <div class="col-md text-center">
@@ -126,12 +126,14 @@ class Prayer_Global_Porch_Stats_Big_List extends DT_Magic_Url_Base
             <div class="container center">
                 <div class="row">
                     <div class="col center">
-                        <a href="/stats_app/big_map/" role="button" class="btn smoothscroll pb_outline-dark btn-xl pb_font-13 p-4 rounded-0 pb_letter-spacing-2">Big Map</a>
+                        <a href="/race_app/big_map/" role="button" class="btn smoothscroll pb_outline-dark btn-xl pb_font-13 p-4 rounded-0 pb_letter-spacing-2">Big Map</a>
                     </div>
                 </div>
             </div>
 
         </section>
+
+        <?php require_once( trailingslashit( plugin_dir_path( __DIR__ ) ) . '/assets/working-footer.php' ) ?>
         <?php
     }
 

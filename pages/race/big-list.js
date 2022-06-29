@@ -98,7 +98,7 @@ jQuery(document).ready(function() {
                     ${jsObject.global_race.time_elapsed_small}
                 </div>
                 <div class="col-sm-2">
-                    <a href="/stats_app/big_map/">Big Map</a>
+                    <a href="/race_app/big_map/">Big Map</a>
                 </div>
             </div>`
       )

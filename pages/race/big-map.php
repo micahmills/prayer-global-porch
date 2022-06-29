@@ -6,10 +6,10 @@ class Prayer_Global_Porch_Stats_Big_Map extends DT_Magic_Url_Base
     public $magic = false;
     public $parts = false;
     public $page_title = 'Global Prayer Map';
-    public $root = 'stats_app';
+    public $root = 'race_app';
     public $type = 'big_map';
     public $type_name = 'Global Prayer Stats';
-    public static $token = 'stats_app_big_map';
+    public static $token = 'race_app_big_map';
     public $post_type = 'laps';
 
     private static $_instance = null;
@@ -185,8 +185,8 @@ class Prayer_Global_Porch_Stats_Big_Map extends DT_Magic_Url_Base
             </ul>
             <hr>
             <ul class="navbar-nav two-em">
-                <li class="nav-item"><a class="nav-link" href="/stats_app/big_list/">Big List</a></li>
-                <li class="nav-item"><a class="nav-link" href="/stats_app/big_map/">Big Map</a></li>
+                <li class="nav-item"><a class="nav-link" href="/race_app/big_list/">Big List</a></li>
+                <li class="nav-item"><a class="nav-link" href="/race_app/big_map/">Big Map</a></li>
             </ul>
         </div>
         <div class="off-canvas position-right " id="offcanvas_location_details" data-close-on-click="true" data-content-overlay="false" data-off-canvas>

@@ -100,26 +100,26 @@ class Prayer_Global_Porch {
         require_once( 'redirects/loader.php' );
         require_once( 'post-type/loader.php' );
 
-//        require_once( 'support/cron.php' );
-//        require_once( 'post-type/verses-post-type.php' );
-//        require_once( 'support/config-required-plugins.php' );
-
         // home
         require_once( 'pages/home/magic-home.php' );
+        require_once( 'pages/media/magic-media.php' );
+        require_once( 'pages/contact/loader.php' );
 
         // prayer_app
         require_once( 'pages/pray/magic-global.php' );
         require_once( 'pages/pray/magic-custom.php' );
 
-        // stats_app
-        require_once( 'pages/stats/big-list.php' );
-        require_once( 'pages/stats/big-map.php' );
-        require_once( 'pages/media/magic-media.php' );
+        // race_app
+        require_once( 'pages/race/big-list.php' );
+        require_once( 'pages/race/big-map.php' );
 
         // user
         require_once( 'pages/user/user-link.php' );
-        require_once( 'pages/contact/loader.php' );
+
+        // admin
         require_once( 'charts/charts-loader.php' );
+//        require_once( 'support/cron.php' );
+//        require_once( 'support/config-required-plugins.php' );
 
         $this->i18n();
     }
