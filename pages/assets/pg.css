@@ -158,5 +158,8 @@
 .pg_footer {
     color: white;
 }
+.video-image-link {
+    cursor: pointer;
 
+}
 

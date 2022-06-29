@@ -129,23 +129,28 @@
 </section>
 <!-- END section -->
 
-
-<style></style>
+<!-- Video modal -->
 <section class="pb_sm_py_cover text-center cover-bg-black cover-bg-opacity-4" id="section-challenge" style="background-image: url(<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/images/1900x1200_img_2.jpg)">
     <div class="container">
         <div class="row align-items-center">
             <div class="col-md-12">
-                <h2 class="heading mb-3">Moravian Prayer Challenge</h2>
-                <p class="sub-heading mb-5 pb_color-light-opacity-8">What is the Moravian Prayer Challenge? Who are the Moravians? Watch this video and find out.</p>
+                <h2 class="heading mb-5">Moravian Prayer Challenge</h2>
+                <p class="sub-heading mb-5 pb_color-light-opacity-8" style="border: 1px solid white;">World Prayer<br> x <br> 24 hours a day / 7 days a week / 365 days a year <br>x<br> 100 years</p>
+                <p class="sub-heading mb-5 pb_color-light-opacity-8">Who are the Moravians? <br>What is the Moravian Prayer Challenge?<br> How are we going to accept the challenge? <br> Watch this video.</p>
                 <div class="text-center">
-                    <a data-toggle="modal" data-target="#demo_video"></a><i class="ion-videocamera pb_font-60 border-gray rounded-circle" id="video-link-icon"></i>
+<!--                    <a data-toggle="modal" data-target="#demo_video"></a><i class="ion-videocamera pb_font-60 border-gray rounded-circle" id="video-link-icon"></i>-->
+                    <img class="img-fluid video-image-link" src="<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/images/moravian-video.jpg" id="video-image-link" />
+                </div>
+
+
+                <div class="text-center mt-3">
+
                 </div>
             </div>
         </div>
     </div>
 </section>
-
-<div class="modal fade"  tabindex="-1" role="dialog" aria-labelledby="demo_video" aria-hidden="true">
+<div class="modal fade" id="demo_video"  tabindex="-1" role="dialog" aria-labelledby="demo_video" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -208,7 +213,6 @@
         <div class="row">
             <div class="col-md text-center">
                 <a href="/newest/map/" role="button" class="btn smoothscroll pb_outline-dark btn-xl pb_font-13 p-4 rounded-0 pb_letter-spacing-2">Current Map</a>
-                <!--                <a href="/newest/lap/" role="button" class="btn smoothscroll pb_outline-dark btn-xl pb_font-13 p-4 rounded-0 pb_letter-spacing-2">Start Praying</a>-->
                 <a href="/prayer_app/subscribe/" role="button" class="btn smoothscroll pb_outline-dark btn-xl pb_font-13 p-4 rounded-0 pb_letter-spacing-2">Start Praying</a>
             </div>
         </div>
