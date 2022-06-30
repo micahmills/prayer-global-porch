@@ -140,6 +140,12 @@ class Prayer_Global_Porch_Media extends DT_Magic_Url_Base
                             <br><a href="<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) )  ?>walking-girl.jpg">Download</a>
                         </p>
                     </div>
+                    <div class="col-lg-3 p-3">
+                        <p>
+                            <img src="<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) )  ?>pg-code.png" class="img-thumbnail" />
+                            <br><a href="<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) )  ?>pg-code.png">Download</a>
+                        </p>
+                    </div>
                 </div>
             </div>
         </section>
