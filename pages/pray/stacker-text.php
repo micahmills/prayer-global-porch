@@ -355,7 +355,7 @@ class PG_Stacker_Text_V2 {
      *
      *********************************************************************/
 
-    public static function _population_prayers( &$lists, $stack ) {
+    public static function _population_prayers( &$lists, $stack, $all = false ) {
         $section_label = 'Population';
         $templates = [
             [
@@ -366,16 +366,27 @@ class PG_Stacker_Text_V2 {
             ],
             [
                 'section_label' => $section_label,
-                'prayer' => 'Pour your Spirit out on the '.$stack['location']['population'].' citizens of '.$stack['location']['name'].', so that they might know your name and the name of your Son.',
-                'reference' => 'Matthew 24:14',
-                'verse' => 'And this gospel of the kingdom will be preached in the whole world as a testimony to all nations, and then the end will come.',
+                'prayer' => 'The ' . $stack['location']['admin_level_name'] . ' of <strong>' . $stack['location']['full_name'] . '</strong> has a population of <strong>' . $stack['location']['population'] . '</strong>. We estimate there is <strong>1</strong> believer for every <strong>' . $stack['location']['lost_per_believer'] . '</strong> neighbors who need Jesus.',
+                'reference' => '',
+                'verse' => '',
+            ],
+            [
+                'section_label' => $section_label,
+                'prayer' => 'Lord, help the people of ' . $stack['location']['full_name'] . ' to discover the essence of being a disciple, making disciples, and how to plant churches that multiply.',
+                'reference' => '',
+                'verse' => '',
             ],
         ];
+
+        if ( $all ) {
+            return array_merge( $templates, $lists );
+        }
+
         $lists = array_merge( [ $templates[array_rand( $templates ) ] ], $lists );
         return $lists;
     }
 
-    public static function _language_prayers( &$lists, $stack ) {
+    public static function _language_prayers( &$lists, $stack, $all = false ) {
         $section_label = 'Language';
         $templates = [
             [
@@ -391,11 +402,16 @@ class PG_Stacker_Text_V2 {
                 'verse' => 'And this gospel of the kingdom will be preached in the whole world as a testimony to all nations, and then the end will come.',
             ],
         ];
+
+        if ( $all ) {
+            return array_merge( $templates, $lists );
+        }
+
         $lists = array_merge( [ $templates[array_rand( $templates ) ] ], $lists );
         return $lists;
     }
 
-    public static function _religion_prayers( &$lists, $stack ) {
+    public static function _religion_prayers( &$lists, $stack, $all = false ) {
         $section_label = 'Primary Religion';
         $templates = [
             [
@@ -411,11 +427,16 @@ class PG_Stacker_Text_V2 {
                 'verse' => '',
             ],
         ];
+
+        if ( $all ) {
+            return array_merge( $templates, $lists );
+        }
+
         $lists = array_merge( [ $templates[array_rand( $templates ) ] ], $lists );
         return $lists;
     }
 
-    public static function _for_the_church( &$lists, $stack ) {
+    public static function _for_the_church( &$lists, $stack, $all = false ) {
         $templates = [
             [
                 'section_label' => 'The Church',
@@ -424,17 +445,76 @@ class PG_Stacker_Text_V2 {
                 'verse' => '',
             ],
             [
-                'section_label' => 'Believers',
+                'section_label' => 'The Church',
                 'prayer' => 'Father, please provide access to your Word in ' . $stack['location']['primary_language'] . '. Provide translators, printers, books sellers, and app developers the resources and skill to get your Word to '.$stack['location']['name'].'.',
                 'reference' => 'Matthew 24:14',
                 'verse' => 'And this gospel of the kingdom will be preached in the whole world as a testimony to all nations, and then the end will come.',
             ],
+            [
+                'section_label' => 'Prayer Movement',
+                'prayer' => 'Father, even as we pray for people of ' . $stack['location']['name'] . ' and long to see disciples made and multiplied, we cry out for a prayer movement to stir inside and outside of ' . $stack['location']['full_name'] . '.',
+                'reference' => '',
+                'verse' => '',
+            ],
+            [
+                'section_label' => 'Prayer Movement',
+                'prayer' => 'Lord, stir the hearts of Your people to agree with You and with one another in strong faith, passion, and perseverance to see You build Your Church in ' . $stack['location']['full_name'] . '.',
+                'reference' => '',
+                'verse' => '',
+            ],
+            [
+                'section_label' => 'The Church',
+                'prayer' => 'Lord we pray you unite believers to pray at all times in the Spirit, with all prayer and supplication, for spiritual breakthrough and protection and transformation throughout ' . $stack['location']['full_name'] . ' in this generation.',
+                'reference' => '',
+                'verse' => '',
+            ],
+            [
+                'section_label' => 'The Church',
+                'prayer' => 'Father, we pray that the people of ' . $stack['location']['full_name'] . ' that they will learn to study the Bible, understand it, obey it, and share it.',
+                'reference' => '',
+                'verse' => '',
+            ],
+            [
+                'section_label' => 'The Church',
+                'prayer' => 'God, we pray both the men and women of ' . $stack['location']['full_name'] . ' that they will find ways to meet in groups of two or three to encourage and correct one another from your Word.',
+                'reference' => '',
+                'verse' => '',
+            ],
+            [
+                'section_label' => 'The Church',
+                'prayer' => 'Lord, we pray for the believers in ' . $stack['location']['full_name'] . ' to be more like Jesus, which is the greatest blessing we can offer them.',
+                'reference' => '',
+                'verse' => '',
+            ],
+            [
+                'section_label' => 'The Church',
+                'prayer' => 'God, we pray for the believers in ' . $stack['location']['full_name'] . ' that they will know how easy it is to spend an hour in prayer with you, and will do it.',
+                'reference' => '',
+                'verse' => '',
+            ],
+            [
+                'section_label' => 'The Church',
+                'prayer' => 'Father, we pray for the believers in ' . $stack['location']['full_name'] . ' to be good stewards of their relationships.',
+                'reference' => '',
+                'verse' => '',
+            ],
+            [
+                'section_label' => 'The Church',
+                'prayer' => 'God, we pray for the believers in ' . $stack['location']['full_name'] . ' to be generous so that they would be worthy of greater investment by you.',
+                'reference' => '',
+                'verse' => '',
+            ],
         ];
+
+        if ( $all ) {
+            return array_merge( $templates, $lists );
+        }
+
         $lists = array_merge( [ $templates[array_rand( $templates ) ] ], $lists );
         return $lists;
     }
 
-    public static function _non_christian_deaths( &$lists, $stack ) {
+    public static function _non_christian_deaths( &$lists, $stack, $all = false ) {
         $section_label = 'Non-Christians';
         $templates = [
             [
@@ -451,11 +531,15 @@ class PG_Stacker_Text_V2 {
             ],
         ];
 
+        if ( $all ) {
+            return array_merge( $templates, $lists );
+        }
+
         $lists = array_merge( [ $templates[array_rand( $templates ) ] ], $lists );
         return $lists;
     }
 
-    public static function _christian_adherents_deaths( &$lists, $stack ) {
+    public static function _christian_adherents_deaths( &$lists, $stack, $all = false ) {
         $section_label = 'Cultural Christians';
         $templates = [
             [
@@ -472,11 +556,15 @@ class PG_Stacker_Text_V2 {
             ],
         ];
 
+        if ( $all ) {
+            return array_merge( $templates, $lists );
+        }
+
         $lists = array_merge( [ $templates[array_rand( $templates ) ] ], $lists );
         return $lists;
     }
 
-    public static function _belivers_births( &$lists, $stack ) {
+    public static function _believers_births( &$lists, $stack, $all = false ) {
         $section_label = 'Believer Families';
         $templates = [
             [
@@ -493,11 +581,16 @@ class PG_Stacker_Text_V2 {
             ],
         ];
 
+        if ( $all ) {
+            return array_merge( $templates, $lists );
+        }
+
         $lists = array_merge( [ $templates[array_rand( $templates ) ] ], $lists );
         return $lists;
     }
 
 }
+
 
 /**
  * (

@@ -71,7 +71,7 @@ class PG_Stacker {
                 PG_Stacker_Text_V2::_christian_adherents_deaths( $lists, $stack );
                 break;
             case 'believers':
-                PG_Stacker_Text_V2::_belivers_births( $lists, $stack );
+                PG_Stacker_Text_V2::_believers_births( $lists, $stack );
                 break;
             default:
                 break;

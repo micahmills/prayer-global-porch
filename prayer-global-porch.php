@@ -118,6 +118,9 @@ class Prayer_Global_Porch {
 
         // admin
         require_once( 'charts/charts-loader.php' );
+        require_once( 'support/build/show-all-content.php' );
+
+
 //        require_once( 'support/cron.php' );
 //        require_once( 'support/config-required-plugins.php' );
 
