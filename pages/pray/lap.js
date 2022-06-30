@@ -57,7 +57,6 @@ jQuery(document).ready(function(){
           } else {
             location.hash = pg_user_hash
           }
-
           window.user_location = location
         }
       })

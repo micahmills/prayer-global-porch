@@ -116,79 +116,28 @@ class Prayer_Global_Porch_Media extends DT_Magic_Url_Base
                     </div>
                 </div>
                 <div class="row justify-content-md-center text-center mb-5">
-                    <div class="col-12">
+                    <div class="col-12 mb-3">
                         <hr>
+                    </div>
+                    <div class="col-12">
                         <h2>Social Promotion</h2>
                     </div>
                     <div class="col-lg-6 p-3">
                         <p>
-                            <img src="<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) )  ?>firestarters-wanted-2.jpg" class="img-thumbnail" />
-                            <br><a href="<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) )  ?>firestarters-wanted-2.jpg">Download</a>
+                            <img src="<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) )  ?>firestarters-wanted.jpg" class="img-thumbnail" />
+                            <br><a href="<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) )  ?>firestarters-wanted.jpg">Download</a>
+                        </p>
+                    </div>
+                    <div class="col-lg-6 p-3">
+                        <p>
+                            <img src="<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) )  ?>plain-prayer-global.jpg" class="img-thumbnail" />
+                            <br><a href="<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) )  ?>plain-prayer-global.jpg">Download</a>
                         </p>
                     </div>
                     <div class="col-lg-3 p-3">
                         <p>
-                            <img src="<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) )  ?>dont-fear-the-dark.jpg" class="img-thumbnail" />
-                            <br><a href="<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) )  ?>dont-fear-the-dark.jpg">Download</a>
-                        </p>
-                    </div>
-                    
-                </div>
-                <div class="row justify-content-md-center text-center mb-5">
-                    <div class="col-12">
-                        <h2>Slides</h2>
-                    </div>
-                    <div class="col-lg-3 p-3">
-                        <p>
-                            <img src="https://place-hold.it/300" class="img-thumbnail" />
-                            <br><a href="#">Download</a>
-                        </p>
-                    </div>
-                    <div class="col-lg-3 p-3">
-                        <p>
-                            <img src="https://place-hold.it/300" class="img-thumbnail" />
-                            <br><a href="#">Download</a>
-                        </p>
-                    </div>
-                    <div class="col-lg-3 p-3">
-                        <p>
-                            <img src="https://place-hold.it/300" class="img-thumbnail" />
-                            <br><a href="#">Download</a>
-                        </p>
-                    </div>
-                    <div class="col-lg-3 p-3">
-                        <p>
-                            <img src="https://place-hold.it/300" class="img-thumbnail" />
-                            <br><a href="#">Download</a>
-                        </p>
-                    </div>
-                </div>
-                <div class="row justify-content-md-center text-center mb-5">
-                    <div class="col-12">
-                        <h2>Handouts</h2>
-                    </div>
-                    <div class="col-lg-3 p-3">
-                        <p>
-                            <img src="https://place-hold.it/300" class="img-thumbnail" />
-                            <br><a href="#">Download</a>
-                        </p>
-                    </div>
-                    <div class="col-lg-3 p-3">
-                        <p>
-                            <img src="https://place-hold.it/300" class="img-thumbnail" />
-                            <br><a href="#">Download</a>
-                        </p>
-                    </div>
-                    <div class="col-lg-3 p-3">
-                        <p>
-                            <img src="https://place-hold.it/300" class="img-thumbnail" />
-                            <br><a href="#">Download</a>
-                        </p>
-                    </div>
-                    <div class="col-lg-3 p-3">
-                        <p>
-                            <img src="https://place-hold.it/300" class="img-thumbnail" />
-                            <br><a href="#">Download</a>
+                            <img src="<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) )  ?>walking-girl.jpg" class="img-thumbnail" />
+                            <br><a href="<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) )  ?>walking-girl.jpg">Download</a>
                         </p>
                     </div>
                 </div>
