@@ -136,6 +136,12 @@ jQuery(document).ready(function(){
           toggle_timer( true )
           open_welcome.modal('show')
           Cookies.set('pg_viewed', true, { expires: 7 } )
+        } else {
+          setTimeout(function() {
+            jQuery('.tutorial').animate({
+              opacity: "toggle"
+            })
+          }, 5000);
         }
       })
 
