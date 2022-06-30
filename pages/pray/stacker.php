@@ -52,41 +52,44 @@ class PG_Stacker {
 
         // get queries
         $stack = self::_stack_query( $grid_id );
-        // build full stack
+
         $stack['list'] = [];
-
         $lists = [];
-        PG_Stacker_Text::_language_prayers( $lists, $stack );
-        PG_Stacker_Text::_population_prayers( $lists, $stack );
-        PG_Stacker_Text::_religion_prayers( $lists, $stack );
-        PG_Stacker_Text::_faith_status_focused_prayers( $lists, $stack );
 
-        dt_write_log( $lists );
-        dt_write_log( $stack );
+        // selects one of these
+        PG_Stacker_Text_V2::_population_prayers( $lists, $stack );
+        PG_Stacker_Text_V2::_language_prayers( $lists, $stack );
+        PG_Stacker_Text_V2::_religion_prayers( $lists, $stack );
+        PG_Stacker_Text_V2::_for_the_church( $lists, $stack );
+        PG_Stacker_Text_V2::_for_the_church( $lists, $stack );
 
-        foreach ( $lists as $text ) {
-            $stack['list'][] = [
+        switch ( $stack['location']['favor'] ) {
+            case 'non_christians':
+                PG_Stacker_Text_V2::_non_christian_deaths( $lists, $stack );
+                break;
+            case 'christian_adherents':
+                PG_Stacker_Text_V2::_christian_adherents_deaths( $lists, $stack );
+                break;
+            case 'believers':
+                PG_Stacker_Text_V2::_belivers_births( $lists, $stack );
+                break;
+            default:
+                break;
+        }
+
+        foreach ( $lists as $content ) {
+            $content['id'] = hash( 'sha256', serialize( $content ) . microtime() );
+            $stack['list'][$content['id']] = [
                 'type' => 'basic_block',
-                'data' => [
-                    'section_label' => $text['section_label'],
-                    'prayer' => $text['prayer'],
-                    'verse' => $text['verse'],
-                    'reference' => $text['reference'],
-                    'id' => hash( 'sha256', serialize( $text ) . microtime() )
-                ]
+                'data' => $content
             ];
         }
 
-        dt_write_log( $stack );
-
         shuffle( $stack['list'] );
 
-
         self::_photos( $stack, 2 );
-//        self::_faith_status( $stack, 5 );
-        self::_least_reached( $stack, 8 );
-
-        // add to end
+        self::_faith_status( $stack , 5 );
+        self::_least_reached( $stack, 8);
 //        self::_cities( $stack );
 //        self::_people_groups( $stack );
 
