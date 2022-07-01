@@ -366,15 +366,106 @@ class PG_Stacker_Text_V2 {
             ],
             [
                 'section_label' => $section_label,
-                'prayer' => 'The ' . $stack['location']['admin_level_name'] . ' of <strong>' . $stack['location']['full_name'] . '</strong> has a population of <strong>' . $stack['location']['population'] . '</strong>. We estimate there is <strong>1</strong> believer for every <strong>' . $stack['location']['lost_per_believer'] . '</strong> neighbors who need Jesus.',
-                'reference' => '',
-                'verse' => '',
+                'prayer' => 'Lord, we suspect there is <strong>1</strong> believer for every <strong>' . $stack['location']['lost_per_believer'] . '</strong> lost neighbors who need your son, Jesus. Please, give courage and opportunity to your children to speak boldly.',
+                'reference' => 'Ephesians 6:19',
+                'verse' => 'Pray also for me, that whenever I speak, words may be given me so that I will fearlessly make known the mystery of the gospel.',
             ],
             [
                 'section_label' => $section_label,
                 'prayer' => 'Lord, help the people of ' . $stack['location']['full_name'] . ' to discover the essence of being a disciple, making disciples, and how to plant churches that multiply.',
                 'reference' => '',
                 'verse' => '',
+            ],
+            [
+                'section_label' => $section_label,
+                'prayer' => 'Father, you know every soul, and you know who are yours and who are yet to be yours out of the '.$stack['location']['population'] .' people living in '. $stack['location']['full_name'] . '. Please, call your lost to yourself.',
+                'reference' => 'Ezekiel 36:24',
+                'verse' => 'For I will take you out of the nations; I will gather you from all the countries and bring you back into your own land.',
+            ],
+            [
+                'section_label' => $section_label,
+                'prayer' => 'Father, bring yourself glory in '.$stack['location']['name'].'. Through your servants plant '.$stack['location']['new_churches_needed'].' new churches that love you, love one another, and make disciples this year.',
+                'reference' => 'Habakkuk 2:14',
+                'verse' => 'For the earth will be filled with the knowledge of the glory of the LORD as the waters cover the sea.',
+            ],
+        ];
+
+        if ( $all ) {
+            return array_merge( $templates, $lists );
+        }
+
+        $lists = array_merge( [ $templates[array_rand( $templates ) ] ], $lists );
+        return $lists;
+    }
+
+    public static function _movement_prayers( &$lists, $stack, $all = false ) {
+        $section_label = 'Movement';
+        $templates = [
+            [
+                'section_label' => $section_label,
+                'prayer' => 'Jesus, all authority was given to you, and you commanded all disciples in '. $stack['location']['full_name'] . ' to make more disciples, and you promised to be with them. May your power and their obedience make more disciples today.',
+                'reference' => 'Matthew 28:18',
+                'verse' => 'All authority in heaven and on earth has been given to me. Therefore go and make disciples of all nations, baptizing them in the name of the Father and of the Son and of the Holy Spirit, and teaching them to obey everything I have commanded you. And surely I am with you always, to the very end of the age.',
+            ],
+            [
+                'section_label' => $section_label,
+                'prayer' => 'Father, help the '.$stack['location']['believers'].' believers in '.$stack['location']['name'].' to know that You can make a big impact through their simple obedience today.',
+                'reference' => 'Exodus 19:6',
+                'verse' => '... you will be for me a kingdom of priests ...',
+            ],
+            [
+                'section_label' => $section_label,
+                'prayer' => 'Father, please raise up apostles and evangelists in '.$stack['location']['name'].' who can speak your gospel boldly and clearly in the ' . $stack['location']['primary_language'] . ' language.',
+                'reference' => 'Romans 10:14',
+                'verse' => 'How, then, can they call on the one they have not believed in? And how can they believe in the one of whom they have not heard? And how can they hear without someone preaching to them? And how can anyone preach unless they are sent?',
+            ],
+            [
+                'section_label' => $section_label,
+                'prayer' => 'Father, please raise up pastors and teachers in '.$stack['location']['name'].' who can speak your gospel boldly and clearly in the ' . $stack['location']['primary_language'] . ' language.',
+                'reference' => 'Romans 10:14',
+                'verse' => 'How, then, can they call on the one they have not believed in? And how can they believe in the one of whom they have not heard? And how can they hear without someone preaching to them? And how can anyone preach unless they are sent?',
+            ],
+            [
+                'section_label' => $section_label,
+                'prayer' => 'Please, teach the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' how to pray to you and how to listen for your voice. That they might follow you into the good works you have prepared for them.',
+                'reference' => 'John 10:27',
+                'verse' => 'My sheep listen to my voice; I know them, and they follow me.',
+            ],
+            [
+                'section_label' => $section_label,
+                'prayer' => 'Please, convict the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to look to You as their only hope for strength and fruitfulness and life.',
+                'reference' => 'John 15:5',
+                'verse' => 'I am the vine; you are the branches. If you remain in me and I in you, you will bear much fruit; apart from me you can do nothing.',
+            ],
+            [
+                'section_label' => $section_label,
+                'prayer' => 'Father, convict the '.$stack['location']['believers'].' believers in '.$stack['location']['name'].' to be holy and righteous. Inspire them to gather in small groups for accountability and spiritual growth.',
+                'reference' => '',
+                'verse' => '',
+            ],
+            [
+                'section_label' => $section_label,
+                'prayer' => 'Father, encourage the '.$stack['location']['believers'].' believers in '.$stack['location']['name'].' to not just be consumers of knowledge but be producers of love, mercy, kindness, and justice.',
+                'reference' => '1 John 3:18',
+                'verse' => '...let us not love with words or speech but with actions and in truth.',
+            ],
+            [
+                'section_label' => 'Prayer Movement',
+                'prayer' => 'Spirit, teach the church in '.$stack['location']['full_name'].' to increase their prayer for your kingdom to come. May their prayers be measured in hours and not in minutes.',
+                'reference' => 'Daniel 6:10',
+                'verse' => 'Now when Daniel learned that the decree had been published, he went home to his upstairs room where the windows opened toward Jerusalem. Three times a day he got down on his knees and prayed, giving thanks to his God...',
+            ],
+            [
+                'section_label' => $section_label,
+                'prayer' => 'Father, help the '.$stack['location']['believers'].' believers in '.$stack['location']['name'].' to be spiritually intentional with their relationships among their '.$stack['location']['all_lost'].' lost friends and neighbors.',
+                'reference' => '',
+                'verse' => '',
+            ],
+            [
+                'section_label' => $section_label,
+                'prayer' => 'Lord, we know that you invest more in those who have been faithful with what they have been given. Please, richly bless each faithful believer in '.$stack['location']['name'].' with more spiritual insight, wisdom, courage, and vision.',
+                'reference' => 'Matthew 25:28',
+                'verse' => 'So take the bag of gold from him and give it to the one who has ten bags. For whoever has will be given more, and they will have an abundance. Whoever does not have, even what they have will be taken from them.',
             ],
         ];
 
@@ -391,15 +482,33 @@ class PG_Stacker_Text_V2 {
         $templates = [
             [
                 'section_label' => $section_label,
-                'prayer' => 'Father, please raise up apostles, evangelists and preachers in '.$stack['location']['name'].' who can speak your gospel boldly and clearly in ' . $stack['location']['primary_language'] . '.',
+                'prayer' => 'Father, please provide access to your Word in the ' . $stack['location']['primary_language'] . ' language.',
                 'reference' => '',
                 'verse' => '',
             ],
             [
                 'section_label' => $section_label,
-                'prayer' => 'Father, please provide access to your Word in ' . $stack['location']['primary_language'] . '. Provide translators, printers, books sellers, and app developers the resources and skill to get your Word to '.$stack['location']['name'].'.',
-                'reference' => 'Matthew 24:14',
-                'verse' => 'And this gospel of the kingdom will be preached in the whole world as a testimony to all nations, and then the end will come.',
+                'prayer' => 'Father, please send out gospel messengers who can create video and radio media for the ' . $stack['location']['primary_language'] . ' language.',
+                'reference' => '',
+                'verse' => '',
+            ],
+            [
+                'section_label' => $section_label,
+                'prayer' => 'Father, please provide Bibles in '.$stack['location']['name'].' in the ' . $stack['location']['primary_language'] . ' language. Help those who print them and distribute them to '.$stack['location']['full_name'].'.',
+                'reference' => '',
+                'verse' => '',
+            ],
+            [
+                'section_label' => $section_label,
+                'prayer' => 'Father, please provide fresh translations in the ' . $stack['location']['primary_language'] . ' language, so the people of '.$stack['location']['full_name'].' would hear your Word in their heart language.',
+                'reference' => '',
+                'verse' => '',
+            ],
+            [
+                'section_label' => $section_label,
+                'prayer' => 'Lord, raise up workers in the ' . $stack['location']['primary_language'] . ' language, who can communicate accurately the word of truth.',
+                'reference' => '2 Timothy 2:15',
+                'verse' => '...a worker who does not need to be ashamed and who correctly handles the word of truth.',
             ],
         ];
 

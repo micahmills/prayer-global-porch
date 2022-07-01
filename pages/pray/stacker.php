@@ -62,6 +62,7 @@ class PG_Stacker {
         PG_Stacker_Text_V2::_religion_prayers( $lists, $stack );
         PG_Stacker_Text_V2::_for_the_church( $lists, $stack );
         PG_Stacker_Text_V2::_for_the_church( $lists, $stack );
+        PG_Stacker_Text_V2::_movement_prayers( $lists, $stack );
 
         switch ( $stack['location']['favor'] ) {
             case 'non_christians':
@@ -937,6 +938,8 @@ class PG_Stacker {
         $grid_record['births_christian_adherents_last_month'] = self::_get_pace( 'births_christian_adherents_last_month', $grid_record );
         $grid_record['births_christian_adherents_last_year'] = self::_get_pace( 'births_christian_adherents_last_year', $grid_record );
 
+        $grid_record['new_churches_needed'] = self::_get_pace( 'new_churches_needed', $grid_record );
+
         $status = [];
         for ($i = 1; $i <= $grid_record['percent_christian_adherents']; $i++) {
             $status[] = 'christian_adherents';
@@ -1136,6 +1139,16 @@ class PG_Stacker {
                     $return_value = 'Fastest Declining in the World';
                 }
                 return $return_value;
+
+            case 'new_churches_needed':
+                $return_value = $grid_record['population_int'] / 5000;
+                if ( $return_value < 1 ) {
+                    $return_value = $grid_record['population_int'] / 500;
+                    if ( $return_value < 1 ) {
+                        $return_value = $grid_record['population_int'] / 50;
+                    }
+                }
+                break;
             default:
                 break;
         }
