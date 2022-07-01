@@ -494,7 +494,7 @@ class PG_Stacker_Text_V2 {
             ],
             [
                 'section_label' => $section_label,
-                'prayer' => 'Father, please provide Bibles in '.$stack['location']['name'].' in the ' . $stack['location']['primary_language'] . ' language. Help those who print them and distribute them to '.$stack['location']['full_name'].'.',
+                'prayer' => 'Father, please provide Bibles in '.$stack['location']['name'].' in the ' . $stack['location']['primary_language'] . ' language. Give success to those who print them and distribute them.',
                 'reference' => '',
                 'verse' => '',
             ],
@@ -634,7 +634,7 @@ class PG_Stacker_Text_V2 {
             ],
             [
                 'section_label' => $section_label,
-                'prayer' => "If you don't have mercy on the ".$stack['location']['non_christians']." people in ".$stack['location']['name']." who are far from you, how can they find you? If you don't send someoen to them, how with they hear?",
+                'prayer' => "If you don't have mercy on the ".$stack['location']['non_christians']." people in ".$stack['location']['name']." who are far from you, how can they find you? If you don't send someone to them, how with they hear?",
                 'reference' => 'Romans 10:14',
                 'verse' => 'How, then, can they call on the one they have not believed in? And how can they believe in the one of whom they have not heard? And how can they hear without someone preaching to them?',
             ],
@@ -653,7 +653,7 @@ class PG_Stacker_Text_V2 {
         $templates = [
             [
                 'section_label' => $section_label,
-                'prayer' => "Spirit, consider the ".$stack['location']['christian_adherents']." cultural christians in ".$stack['location']['name']." . You promised to convict of sin, righteousness and judgement. Please show mercy and don't leave them idle and distant from Jesus.",
+                'prayer' => "Spirit, consider the ".$stack['location']['christian_adherents']." cultural christians in ".$stack['location']['name'].". You promised to convict of sin, righteousness and judgement. Please show mercy and don't leave them idle and distant from Jesus.",
                 'reference' => '',
                 'verse' => '',
             ],
@@ -678,7 +678,7 @@ class PG_Stacker_Text_V2 {
         $templates = [
             [
                 'section_label' => $section_label,
-                'prayer' => "Spirit, consider the ".$stack['location']['christian_adherents']." cultural christians in ".$stack['location']['name']." . You promised to convict of sin, righteousness and judgement. Please show mercy and don't leave them idle and distant from Jesus.",
+                'prayer' => "Spirit, consider the ".$stack['location']['believers']." believers in ".$stack['location']['name']." . You promised to convict of sin, righteousness and judgement. Please show mercy and don't leave them idle and distant from Jesus.",
                 'reference' => '',
                 'verse' => '',
             ],
