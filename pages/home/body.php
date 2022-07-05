@@ -35,7 +35,7 @@
                 </div>
             </div>
             <div class="col-lg-5 pl-md-5 pl-sm-0">
-                <div id="prayer_accordion_1" class="pb_accordion" data-children=".item">
+                <div id="prayer_accordion_" class="pb_accordion" data-children=".item">
                     <div class="item">
                         <a data-toggle="collapse" data-parent="#prayer_accordion_" href="#prayer_accordion_1" aria-expanded="true" aria-controls="prayer_accordion_1" class="pb_font-18 uppercase">Historic Moment</a>
                         <div id="prayer_accordion_1" class="collapse show" role="tabpanel">
