@@ -360,6 +360,18 @@ class PG_Stacker_Text_V2 {
         $templates = [
             [
                 'section_label' => $section_label,
+                'prayer' => 'There are '.$stack['location']['population'].' people living in '.$stack['location']['name'].'. About '.$stack['location']['believers'].' might know Jesus personally.',
+                'reference' => '',
+                'verse' => '',
+            ],
+            [
+                'section_label' => $section_label,
+                'prayer' => $stack['location']['name']. ' might have '.$stack['location']['believers'].' who know Jesus, '.$stack['location']['christian_adherents'].' who know about him culturally, and '.$stack['location']['non_christians'].' who are far from the saving knowledge of Jesus.',
+                'reference' => '',
+                'verse' => '',
+            ],
+            [
+                'section_label' => $section_label,
                 'prayer' => 'Pour your Spirit out on the '.$stack['location']['population'].' citizens of '.$stack['location']['name'].', so that they might know your name and the name of your Son.',
                 'reference' => '',
                 'verse' => '',
@@ -466,6 +478,12 @@ class PG_Stacker_Text_V2 {
                 'prayer' => 'Lord, we know that you invest more in those who have been faithful with what they have been given. Please, richly bless each faithful believer in '.$stack['location']['name'].' with more spiritual insight, wisdom, courage and vision.',
                 'reference' => 'Matthew 25:28',
                 'verse' => 'So take the bag of gold from him and give it to the one who has ten bags. For whoever has will be given more, and they will have an abundance. Whoever does not have, even what they have will be taken from them.',
+            ],
+            [
+                'section_label' => $section_label,
+                'prayer' => 'Father, multiply brothers, sisters, mothers, and fathers to our spiritual family in '.$stack['location']['full_name'].'.',
+                'reference' => 'Matthew 12:50',
+                'verse' => 'He replied to him, “Who is my mother, and who are my brothers?” Pointing to his disciples, he said, “Here are my mother and my brothers. For whoever does the will of my Father in heaven is my brother and sister and mother.”',
             ],
         ];
 
