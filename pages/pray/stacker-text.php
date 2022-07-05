@@ -143,7 +143,7 @@ class PG_Stacker_Text
                     'prayer' => '',
                 ],
                 [
-                    'prayer' => 'The ' . $stack['location']['admin_level_name'] . ' of <strong>' . $stack['location']['full_name'] . '</strong> has a population of <strong>' . $stack['location']['population'] . '</strong>. We estimate there is <strong>1</strong> believer for every <strong>' . $stack['location']['lost_per_believer'] . '</strong> neighbors who need Jesus.',
+//                    'prayer' => 'The ' . $stack['location']['admin_level_name'] . ' of <strong>' . $stack['location']['full_name'] . '</strong> has a population of <strong>' . $stack['location']['population'] . '</strong>. We estimate there is <strong>1</strong> believer for every <strong>' . $stack['location']['lost_per_believer'] . '</strong> neighbors who need Jesus.',
                     'prayer' => '',
                 ],
             ],
@@ -152,7 +152,7 @@ class PG_Stacker_Text
              */
             'christian_adherents' => [
                 [
-                    'prayer' => 'Lord, help the people of ' . $stack['location']['full_name'] . ' to discover the essence of being a disciple, making disciples, and how to plant churches that multiply.',
+//                    'prayer' => 'Lord, help the people of ' . $stack['location']['full_name'] . ' to discover the essence of being a disciple, making disciples, and how to plant churches that multiply.',
                     'prayer' => '',
                 ],
             ],
@@ -696,6 +696,45 @@ class PG_Stacker_Text_V2 {
 
         $lists = array_merge( [ $templates[array_rand( $templates ) ] ], $lists );
         return $lists;
+    }
+
+    public static function faith_status_text($stack): array
+    {
+
+        return [
+            /**
+             * PRAYERS TARGETING BELIEVERS
+             */
+            'believers' => [
+                [
+//                    'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['all_lost'].' neighbors around them.',
+                    'prayer' => '',
+                ],
+                [
+//                    'prayer' => 'The ' . $stack['location']['admin_level_name'] . ' of <strong>' . $stack['location']['full_name'] . '</strong> has a population of <strong>' . $stack['location']['population'] . '</strong>. We estimate there is <strong>1</strong> believer for every <strong>' . $stack['location']['lost_per_believer'] . '</strong> neighbors who need Jesus.',
+                    'prayer' => '',
+                ],
+            ],
+            /**
+             * PRAYERS TARGETING CULTURAL CHRISTIANS
+             */
+            'christian_adherents' => [
+                [
+//                    'prayer' => 'Lord, help the people of ' . $stack['location']['full_name'] . ' to discover the essence of being a disciple, making disciples, and how to plant churches that multiply.',
+                    'prayer' => '',
+                ],
+            ],
+            /**
+             * PRAYERS TARGETING NON CHRISTIANS
+             */
+            'non_christians' => [
+                [
+//                    'prayer' => 'God, please help the people of '.$stack['location']['full_name'].' to become disciples who hear from you and then obey you.',
+                    'prayer' => '',
+                ],
+            ]
+        ];
+
     }
 
 }

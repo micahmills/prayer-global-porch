@@ -213,6 +213,12 @@ class PG_Stacker {
                 'percent_1' => $stack['location']['percent_non_christians'],
                 'percent_2' => $stack['location']['percent_christian_adherents'],
                 'percent_3' => $stack['location']['percent_believers'],
+                'pop_1' => $stack['location']['percent_non_christians'],
+                'pop_2' => $stack['location']['percent_christian_adherents'],
+                'pop_3' => $stack['location']['percent_believers'],
+                'pop_1_label' => 'Non-Christian',
+                'pop_2_label' => 'Cultural Christian',
+                'pop_3_label' => 'Believers',
                 'section_summary' => '',
                 'prayer' => $text['prayer'],
             ]
