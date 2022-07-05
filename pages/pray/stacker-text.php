@@ -366,7 +366,7 @@ class PG_Stacker_Text_V2 {
             ],
             [
                 'section_label' => $section_label,
-                'prayer' => 'Lord, we suspect there is <strong>1</strong> believer for every <strong>' . $stack['location']['lost_per_believer'] . '</strong> lost neighbors who need your son, Jesus. Please, give courage and opportunity to your children to speak boldly.',
+                'prayer' => 'Lord, we suspect there is 1 believer for every ' . $stack['location']['lost_per_believer'] . ' lost neighbors who need your son, Jesus. Please, give courage and opportunity to your children to speak boldly.',
                 'reference' => 'Ephesians 6:19',
                 'verse' => 'Pray also for me, that whenever I speak, words may be given me so that I will fearlessly make known the mystery of the gospel.',
             ],
@@ -506,6 +506,12 @@ class PG_Stacker_Text_V2 {
             ],
             [
                 'section_label' => $section_label,
+                'prayer' => 'Father, raise up spiritual truth about Jesus through YouTube in the ' . $stack['location']['primary_language'] . ' language.',
+                'reference' => '',
+                'verse' => '',
+            ],
+            [
+                'section_label' => $section_label,
                 'prayer' => 'Lord, raise up workers in the ' . $stack['location']['primary_language'] . ' language, who can communicate accurately the word of truth.',
                 'reference' => '2 Timothy 2:15',
                 'verse' => '...a worker who does not need to be ashamed and who correctly handles the word of truth.',
@@ -525,15 +531,33 @@ class PG_Stacker_Text_V2 {
         $templates = [
             [
                 'section_label' => $section_label,
-                'prayer' => 'Father give the '.$stack['location']['believers'].' believers in '.$stack['location']['name'].' the skill to communicate your gospel to those who follow '.$stack['location']['primary_religion'].' around them.',
+                'prayer' => 'The primary religion in '.$stack['location']['full_name'].' is '.$stack['location']['primary_religion'].'.',
                 'reference' => '',
                 'verse' => '',
             ],
             [
                 'section_label' => $section_label,
-                'prayer' => 'Father give the '.$stack['location']['believers'].' believers in '.$stack['location']['name'].' the skill to communicate your gospel to those who follow '.$stack['location']['primary_religion'].' around them.',
-                'reference' => '',
-                'verse' => '',
+                'prayer' => 'Father, give the '.$stack['location']['believers'].' believers in '.$stack['location']['name'].' the skill to communicate your gospel to those who follow '.$stack['location']['primary_religion'].' around them.',
+                'reference' => 'Ephesians 6:19',
+                'verse' => 'Pray also for me, that whenever I speak, words may be given me so that I will fearlessly make known the mystery of the gospel.',
+            ],
+            [
+                'section_label' => $section_label,
+                'prayer' => 'Father, many people in '.$stack['location']['full_name'].' follow '.$stack['location']['primary_religion'].'. Please give them accurate knowledge of Jesus and take their current faith and devotion, and turn it towards You.',
+                'reference' => 'Romans 10:2',
+                'verse' => 'For I can testify about them that they are zealous for God, but their zeal is not based on knowledge.',
+            ],
+            [
+                'section_label' => $section_label,
+                'prayer' => 'Lord, increase dissatisfaction and hollowness among those in '.$stack['location']['name'].' who follow '.$stack['location']['primary_religion'] . ', so that they would begin to seek You.',
+                'reference' => 'Romans 10:2',
+                'verse' => 'For I can testify about them that they are zealous for God, but their zeal is not based on knowledge.',
+            ],
+            [
+                'section_label' => $section_label,
+                'prayer' => 'Even though the primary religion is '.$stack['location']['primary_religion'] . ' in '.$stack['location']['name'].', Lord, call to yourself persons of peace among the faith community, those who fear you with the best knowledge they have.',
+                'reference' => 'Acts 10:1,2',
+                'verse' => 'At Caesarea there was a man named Cornelius, a centurion in what was known as the Italian Regiment. He and all his family were devout and God-fearing; he gave generously to those in need and prayed to God regularly.',
             ],
         ];
 
@@ -632,12 +656,6 @@ class PG_Stacker_Text_V2 {
                 'reference' => '',
                 'verse' => '',
             ],
-            [
-                'section_label' => $section_label,
-                'prayer' => "If you don't have mercy on the ".$stack['location']['non_christians']." people in ".$stack['location']['name']." who are far from you, how can they find you? If you don't send someone to them, how with they hear?",
-                'reference' => 'Romans 10:14',
-                'verse' => 'How, then, can they call on the one they have not believed in? And how can they believe in the one of whom they have not heard? And how can they hear without someone preaching to them?',
-            ],
         ];
 
         if ( $all ) {
@@ -657,12 +675,6 @@ class PG_Stacker_Text_V2 {
                 'reference' => '',
                 'verse' => '',
             ],
-            [
-                'section_label' => $section_label,
-                'prayer' => 'Over '.$stack['location']['percent_christian_adherents'].' percent of the people of '.$stack['location']['name'].' know about your son, Jesus, through their culture, but, Lord, send your Spirit to show them how to make you first in all things ... love, family, finances, future hope, and all things',
-                'verse' => 'And this gospel of the kingdom will be preached in the whole world as a testimony to all nations, and then the end will come.',
-                'reference' => 'Matthew 24:14',
-            ],
         ];
 
         if ( $all ) {
@@ -679,14 +691,8 @@ class PG_Stacker_Text_V2 {
             [
                 'section_label' => $section_label,
                 'prayer' => "Spirit, consider the ".$stack['location']['believers']." believers in ".$stack['location']['name']." . You promised to convict of sin, righteousness and judgement. Please show mercy and don't leave them idle and distant from Jesus.",
-                'reference' => '',
                 'verse' => '',
-            ],
-            [
-                'section_label' => $section_label,
-                'prayer' => 'Over '.$stack['location']['percent_christian_adherents'].' percent of the people of '.$stack['location']['name'].' know about your son, Jesus, through their culture, but, Lord, send your Spirit to show them how to make you first in all things ... love, family, finances, future hope, and all things',
-                'verse' => 'And this gospel of the kingdom will be preached in the whole world as a testimony to all nations, and then the end will come.',
-                'reference' => 'Matthew 24:14',
+                'reference' => '',
             ],
         ];
 
@@ -696,45 +702,6 @@ class PG_Stacker_Text_V2 {
 
         $lists = array_merge( [ $templates[array_rand( $templates ) ] ], $lists );
         return $lists;
-    }
-
-    public static function faith_status_text($stack): array
-    {
-
-        return [
-            /**
-             * PRAYERS TARGETING BELIEVERS
-             */
-            'believers' => [
-                [
-//                    'prayer' => 'Pray that the '.$stack['location']['believers'].' believers in '.$stack['location']['full_name'].' to be bold witnesses to the '.$stack['location']['all_lost'].' neighbors around them.',
-                    'prayer' => '',
-                ],
-                [
-//                    'prayer' => 'The ' . $stack['location']['admin_level_name'] . ' of <strong>' . $stack['location']['full_name'] . '</strong> has a population of <strong>' . $stack['location']['population'] . '</strong>. We estimate there is <strong>1</strong> believer for every <strong>' . $stack['location']['lost_per_believer'] . '</strong> neighbors who need Jesus.',
-                    'prayer' => '',
-                ],
-            ],
-            /**
-             * PRAYERS TARGETING CULTURAL CHRISTIANS
-             */
-            'christian_adherents' => [
-                [
-//                    'prayer' => 'Lord, help the people of ' . $stack['location']['full_name'] . ' to discover the essence of being a disciple, making disciples, and how to plant churches that multiply.',
-                    'prayer' => '',
-                ],
-            ],
-            /**
-             * PRAYERS TARGETING NON CHRISTIANS
-             */
-            'non_christians' => [
-                [
-//                    'prayer' => 'God, please help the people of '.$stack['location']['full_name'].' to become disciples who hear from you and then obey you.',
-                    'prayer' => '',
-                ],
-            ]
-        ];
-
     }
 
 }
