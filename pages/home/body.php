@@ -43,7 +43,7 @@
                                 Never before in the history of the human race have we been able to coordinate a global community of people to pray for the kingdom to come on earth as it is in heaven <u>IN REALTIME</u>!
                             </p>
                             <p>
-                                We know it has always pleased the Lord to use current technologies for the advance of his kingdom. (Written language, Roman Roads, Printing Presses, etc.)
+                                We know it has always pleased the Lord to use current technologies for the advance of his kingdom. (written language, Roman roads, printing presses, etc.)
                                 And God is now using global travel and global communication to take the gospel to the ends of the earth.
                             </p>
                             <p>
