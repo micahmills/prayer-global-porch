@@ -40,14 +40,20 @@
                         <a data-toggle="collapse" data-parent="#prayer_accordion_" href="#prayer_accordion_1" aria-expanded="true" aria-controls="prayer_accordion_1" class="pb_font-18 uppercase">Historic Moment</a>
                         <div id="prayer_accordion_1" class="collapse show" role="tabpanel">
                             <p>
-                                Never before in the history of the human race have we been able to coordinate a global community of people to pray for the kingdom to come on earth as it is in heaven <u>IN REALTIME</u>!
+                                We know three things about our moment in history:
                             </p>
                             <p>
-                                We know it has always pleased the Lord to use current technologies for the advance of his kingdom. (written language, Roman roads, printing presses, etc.)
-                                And God is now using global travel and global communication to take the gospel to the ends of the earth.
+                                (1) Never before in history have we been able to coordinate global prayer for the kingdom <u>IN REALTIME</u>!
                             </p>
                             <p>
-                                We also know, based upon research, that "extraordinary prayer" is found at the root of all modern disciple multiplying movements.
+                                (2) God has used technology for the advance of His kingdom (i.e. written language, Roman roads, printing presses, etc.),
+                                and is now using the internet.
+                            </p>
+                            <p>
+                                (3) "Extraordinary prayer" is a foundational mark of all modern disciple multiplying movements.
+                            </p>
+                            <p>
+                                So, <strong>Prayer.Global</strong> exists to encourage extraordinary prayer for the fulfillment of the Great Commission using technology.
                             </p>
                             <p>
                                 <br><hr>
@@ -135,17 +141,12 @@
         <div class="row align-items-center">
             <div class="col-md-12">
                 <h2 class="heading mb-5">Moravian Prayer Challenge</h2>
-                <p class="sub-heading mb-5 pb_color-light-opacity-8" style="border: 1px solid white;">World Prayer<br> x <br> 24 hours a day / 7 days a week / 365 days a year <br>x<br> 100 years</p>
+                <p class="sub-heading mb-5 pb_color-light-opacity-8" style="border: 1px solid white;">Prayer for the World<br> x <br> 24 hours a day / 7 days a week / 365 days a year <br>x<br> 100 years</p>
                 <p class="sub-heading mb-5 pb_color-light-opacity-8">Who are the Moravians? <br>What is the Moravian Prayer Challenge?<br> How are we going to accept the challenge? <br> Watch this video.</p>
                 <div class="text-center">
-<!--                    <a data-toggle="modal" data-target="#demo_video"></a><i class="ion-videocamera pb_font-60 border-gray rounded-circle" id="video-link-icon"></i>-->
                     <img class="img-fluid video-image-link" src="<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/images/moravian-video.jpg" id="video-image-link" />
                 </div>
-
-
-                <div class="text-center mt-3">
-
-                </div>
+                <div class="text-center mt-3"></div>
             </div>
         </div>
     </div>

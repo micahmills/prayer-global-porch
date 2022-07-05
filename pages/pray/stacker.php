@@ -216,10 +216,10 @@ class PG_Stacker {
                 'pop_1' => $stack['location']['percent_non_christians'],
                 'pop_2' => $stack['location']['percent_christian_adherents'],
                 'pop_3' => $stack['location']['percent_believers'],
-                'pop_1_label' => 'Non-Christian',
-                'pop_2_label' => 'Cultural Christian',
+                'pop_1_label' => 'Non-Christians',
+                'pop_2_label' => 'Cultural Christians',
                 'pop_3_label' => 'Believers',
-                'section_summary' => '',
+                'section_summary' => 'Non-Christians - '.$stack['location']['non_christians'].' | Cultural Christians - '.$stack['location']['christian_adherents'].' | Believers - '.$stack['location']['believers'].'',
                 'prayer' => $text['prayer'],
             ]
         ];
@@ -250,25 +250,25 @@ class PG_Stacker {
             ]
         ];
 
-//        if ( $stack['location']['percent_non_christians'] < 85 ) {
-//            $templates[] = [
-//                'type' => 'percent_3_bar',
-//                'data' => [
-//                    'section_label' => $section_label,
-//                    'label_1' => "Don't",
-//                    'percent_1' => $stack['location']['percent_non_christians'],
-//                    'population_1' => $stack['location']['non_christians'],
-//                    'label_2' => 'Know About',
-//                    'percent_2' => $stack['location']['percent_christian_adherents'],
-//                    'population_2' => $stack['location']['christian_adherents'],
-//                    'label_3' => 'Know',
-//                    'percent_3' => $stack['location']['percent_believers'],
-//                    'population_3' => $stack['location']['believers'],
-//                    'section_summary' => '',
-//                    'prayer' => $text['prayer'],
-//                ]
-//            ];
-//        }
+        if ( $stack['location']['percent_non_christians'] < 85 ) {
+            $templates[] = [
+                'type' => 'percent_3_bar',
+                'data' => [
+                    'section_label' => $section_label,
+                    'label_1' => "Don't",
+                    'percent_1' => $stack['location']['percent_non_christians'],
+                    'population_1' => $stack['location']['non_christians'],
+                    'label_2' => 'Know About',
+                    'percent_2' => $stack['location']['percent_christian_adherents'],
+                    'population_2' => $stack['location']['christian_adherents'],
+                    'label_3' => 'Know',
+                    'percent_3' => $stack['location']['percent_believers'],
+                    'population_3' => $stack['location']['believers'],
+                    'section_summary' => '',
+                    'prayer' => $text['prayer'],
+                ]
+            ];
+        }
 
         if ( empty( $position ) ) {
             $stack['list'] = array_merge( [ $templates[array_rand( $templates )] ], $stack['list'] );
