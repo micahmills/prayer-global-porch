@@ -427,12 +427,6 @@ class PG_Stacker_Text_V2 {
             ],
             [
                 'section_label' => $section_label,
-                'prayer' => 'Father, please raise up apostles and evangelists in '.$stack['location']['name'].' who can speak your gospel boldly and clearly in the ' . $stack['location']['primary_language'] . ' language.',
-                'reference' => 'Romans 10:14',
-                'verse' => 'How, then, can they call on the one they have not believed in? And how can they believe in the one of whom they have not heard? And how can they hear without someone preaching to them? And how can anyone preach unless they are sent?',
-            ],
-            [
-                'section_label' => $section_label,
                 'prayer' => 'Father, please raise up pastors and teachers in '.$stack['location']['name'].' who can speak your gospel boldly and clearly in the ' . $stack['location']['primary_language'] . ' language.',
                 'reference' => 'Romans 10:14',
                 'verse' => 'How, then, can they call on the one they have not believed in? And how can they believe in the one of whom they have not heard? And how can they hear without someone preaching to them? And how can anyone preach unless they are sent?',
