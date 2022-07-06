@@ -609,7 +609,7 @@ class PG_Stacker_Text_V2 {
             ],
             [
                 'section_label' => 'The Church',
-                'prayer' => 'Lord we pray you unite believers to pray at all times in the Spirit, with all prayer and supplication, for spiritual breakthrough and protection and transformation throughout ' . $stack['location']['full_name'] . ' in this generation.',
+                'prayer' => 'Lord we pray you unite the '.$stack['location']['believers'].' believers to pray at all times in the Spirit, with all prayer and supplication, for spiritual breakthrough and protection and transformation throughout ' . $stack['location']['full_name'] . ' in this generation.',
                 'reference' => '',
                 'verse' => '',
             ],
@@ -702,7 +702,7 @@ class PG_Stacker_Text_V2 {
         $templates = [
             [
                 'section_label' => $section_label,
-                'prayer' => "Spirit, consider the ".$stack['location']['believers']." believers in ".$stack['location']['name']." . You promised to convict of sin, righteousness and judgement. Please show mercy and don't leave them idle and distant from Jesus.",
+                'prayer' => "Spirit, consider the ".$stack['location']['believers']." believers in ".$stack['location']['name'].". You promised to convict of sin, righteousness and judgement. Please show mercy and don't leave them idle and distant from Jesus.",
                 'verse' => '',
                 'reference' => '',
             ],
