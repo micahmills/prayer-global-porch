@@ -190,18 +190,24 @@ class PG_Global_Prayer_App_Lap extends PG_Global_Prayer_App {
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-body">
-                        <h3 class="center">Pray</h3>
+                        <h2 class="center">Pray</h2>
                         <p>
-                            Pray over the location using the maps, photos, prayers and facts provided.
+                            1. <strong>Pray over the location</strong> using the maps, photos, prayers and facts provided.
+                        </p>
+
+                        <p>
+                            2. <strong>Pray for one minute</strong> or longer as the Spirit leads.
                         </p>
                         <p>
-                            Pray for one minute or longer as the Spirit leads.
+                            <img src="<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/images/welcome-keep.png" class="img-fluid" />
                         </p>
-                        <h3 class="center">Log</h3>
+                        <h2 class="center">Log</h2>
                         <p>
-                            Once the timer transforms, log your prayer with the prayers of others.
+                            Once the timer transforms, <strong>log your prayer</strong> with "Yes"! Your prayer will be added to the prayer lap.
                         </p>
-                        <h3 class="center">Pray again!</h3>
+                        <p>
+                            <img src="<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/images/welcome-next.png" class="img-fluid" />
+                        </p>
                     </div>
                     <div class="modal-footer justify-content-center">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Let's Go!</button>

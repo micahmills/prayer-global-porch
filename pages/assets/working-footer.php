@@ -23,11 +23,10 @@
             <div class="col-md-3">
                 <ul style="list-style: none;">
                     <li><a class="white" href="/user_app/private/">User Login</a></li>
-                    <li><a class="white" href="/contacts">DT Login</a></li>
-                    <li><a class="white" href="/wp-admin">Admin Login</a></li>
+                    <li><a class="white" href="/contacts/">DT Login</a></li>
+                    <li><a class="white" href="/wp-admin/">Admin Login</a></li>
                 </ul>
             </div>
-
         </div>
 
         <div class="row" style="padding-top: 5rem;">
