@@ -126,12 +126,12 @@ class Prayer_Global_Feedback_Post_Type extends DT_Module_Base {
                     'accepted'   => [
                         'label' => __( 'Accepted', 'prayer-global' ),
                         'description' => __( 'Accepted as valid feedback', 'prayer-global' ),
-                        'color' => "blue"
+                        'color' => "#366184"
                     ],
                     'in_progress'   => [
                         'label' => __( 'In Progress', 'prayer-global' ),
                         'description' => __( 'Active and assigned', 'prayer-global' ),
-                        'color' => "blue"
+                        'color' => "#366184"
                     ],
                     'closed_fixed' => [
                         'label' => __( 'Closed (Fixed)', 'prayer-global' ),
