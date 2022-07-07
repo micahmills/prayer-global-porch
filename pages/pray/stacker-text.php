@@ -539,6 +539,11 @@ class PG_Stacker_Text_V2 {
     }
 
     public static function _religion_prayers( &$lists, $stack, $all = false ) {
+        if ( 'Christianity' === $stack['location']['primary_religion'] ) {
+            return $lists;
+        }
+
+
         $section_label = 'Primary Religion';
         $templates = [
             [
