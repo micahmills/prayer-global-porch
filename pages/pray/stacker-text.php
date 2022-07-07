@@ -644,7 +644,7 @@ class PG_Stacker_Text_V2 {
             ],
             [
                 'section_label' => 'The Church',
-                'prayer' => 'Father, we pray for the believers in ' . $stack['location']['full_name'] . ' to be good stewards of their relationships.',
+                'prayer' => 'Father, we pray for the believers in ' . $stack['location']['full_name'] . ' to be good spiritual stewards of their everyday relationships.',
                 'reference' => '',
                 'verse' => '',
             ],
