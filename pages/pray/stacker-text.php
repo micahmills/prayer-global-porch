@@ -493,7 +493,7 @@ class PG_Stacker_Text_V2 {
         if ( 'English' === $stack['location']['primary_language'] ) {
             return $lists;
         }
-        
+
         $section_label = 'Language';
         $templates = [
             [
@@ -669,11 +669,13 @@ class PG_Stacker_Text_V2 {
     }
 
     public static function _people_groups( &$lists, $stack, $all = false ) {
-
+        if ( empty( $stack['location']['people_groups_list'] ) ) {
+            return $lists;
+        }
         $templates = [
             [
                 'section_label' => 'Unreached People Groups',
-                'prayer' => 'Father, please raise up apostles, evangelists and preachers in '.$stack['location']['name'].' who can speak your gospel boldly and clearly in ' . $stack['location']['primary_language'] . '.',
+                'prayer' => 'Unreached groups in '.$stack['location']['name'] . ' and their global populations: '. $stack['location']['people_groups_list_w_pop'],
                 'reference' => '',
                 'verse' => '',
             ],

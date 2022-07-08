@@ -63,6 +63,7 @@ class PG_Stacker {
         PG_Stacker_Text_V2::_for_the_church( $lists, $stack );
         PG_Stacker_Text_V2::_for_the_church( $lists, $stack );
         PG_Stacker_Text_V2::_movement_prayers( $lists, $stack );
+        PG_Stacker_Text_V2::_people_groups($lists, $stack );
 
         switch ( $stack['location']['favor'] ) {
             case 'non_christians':
@@ -1002,13 +1003,6 @@ class PG_Stacker {
 
         $least_reached = [];
         if ( ! empty( $people_groups ) ) {
-            $people_groups_list = [ 'names' => [], 'names_pop' => [] ];
-            foreach ( $people_groups as $i => $pg ) {
-                $people_groups_list['names'][] = $pg['name'];
-                $people_groups_list['names_pop'][] = $pg['name'] . ' ('.$pg['population'].')';
-            }
-            $grid_record['people_groups_list'] = implode( ', ', $people_groups_list['names'] );
-            $grid_record['people_groups_list_w_pop'] = implode( ', ', $people_groups_list['names_pop'] );
 
             foreach ( $people_groups as $i => $pg ) {
                 if ( 'Y' === $pg['LeastReached'] ) {
@@ -1017,9 +1011,17 @@ class PG_Stacker {
                     break;
                 }
             }
-        }
 
-        $people_groups = array_slice( $people_groups, 0, 5, true ); // trim to first 5 shuffled results
+            $people_groups = array_slice( $people_groups, 0, 5, true ); // trim to first 5 shuffled results
+
+            $people_groups_list = [ 'names' => [], 'names_pop' => [] ];
+            foreach ( $people_groups as $i => $pg ) {
+                $people_groups_list['names'][] = $pg['name'];
+                $people_groups_list['names_pop'][] = $pg['name'] . ' ('.$pg['population'].')';
+            }
+            $grid_record['people_groups_list'] = implode( ', ', $people_groups_list['names'] );
+            $grid_record['people_groups_list_w_pop'] = implode( ', ', $people_groups_list['names_pop'] );
+        }
 
         // cities
         $cities = [];
