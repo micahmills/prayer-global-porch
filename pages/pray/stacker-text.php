@@ -608,7 +608,7 @@ class PG_Stacker_Text_V2 {
             ],
             [
                 'section_label' => 'Prayer Movement',
-                'prayer' => 'Lord, stir the hearts of Your people ' . $stack['location']['name'] . ' to agree with You and with one another in unity and love.',
+                'prayer' => 'Lord, stir the hearts of Your people in ' . $stack['location']['name'] . ' to agree with You and with one another in unity and love.',
                 'reference' => 'Matthew 17:20',
                 'verse' => 'I (Jesus) pray also for those who will believe in me through their message, that all of them may be one, Father, just aas you are in me and I am in you. May they also be in us so that the world my believe that you have sent me.',
             ],
