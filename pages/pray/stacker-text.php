@@ -566,7 +566,7 @@ class PG_Stacker_Text_V2 {
             ],
             [
                 'section_label' => $section_label,
-                'prayer' => 'Lord, increase dissatisfaction and hollowness among those in '.$stack['location']['name'].' who follow '.$stack['location']['primary_religion'] . ', so that they would begin to seek You.',
+                'prayer' => 'Lord, increase spiritual dissatisfaction among those in '.$stack['location']['name'].' who follow '.$stack['location']['primary_religion'] . ', so that they would begin to seek You.',
                 'reference' => 'Romans 10:2',
                 'verse' => 'For I can testify about them that they are zealous for God, but their zeal is not based on knowledge.',
             ],
@@ -632,9 +632,9 @@ class PG_Stacker_Text_V2 {
             ],
             [
                 'section_label' => 'The Church',
-                'prayer' => 'Lord, we pray for the believers in ' . $stack['location']['full_name'] . ' to be more like Jesus, which is the greatest blessing we can offer them.',
-                'reference' => '',
-                'verse' => '',
+                'prayer' => 'Lord, we pray for the believers in ' . $stack['location']['full_name'] . ' to be more like Jesus in their love for friends and enemies.',
+                'reference' => 'Matthew 5:44',
+                'verse' => 'But I tell you, love your enemies and pray for those who persecute you.',
             ],
             [
                 'section_label' => 'The Church',
@@ -651,6 +651,24 @@ class PG_Stacker_Text_V2 {
             [
                 'section_label' => 'The Church',
                 'prayer' => 'God, we pray for the believers in ' . $stack['location']['full_name'] . ' to be generous so that they would be worthy of greater investment by you.',
+                'reference' => '',
+                'verse' => '',
+            ],
+        ];
+
+        if ( $all ) {
+            return array_merge( $templates, $lists );
+        }
+
+        $lists = array_merge( [ $templates[array_rand( $templates ) ] ], $lists );
+        return $lists;
+    }
+
+    public static function _people_groups( &$lists, $stack, $all = false ) { // @todo
+        $templates = [
+            [
+                'section_label' => 'The Church',
+                'prayer' => 'Father, please raise up apostles, evangelists and preachers in '.$stack['location']['name'].' who can speak your gospel boldly and clearly in ' . $stack['location']['primary_language'] . '.',
                 'reference' => '',
                 'verse' => '',
             ],
