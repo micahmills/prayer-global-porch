@@ -707,7 +707,7 @@ class PG_Stacker_Text_V2 {
         $templates = [
             [
                 'section_label' => $section_label,
-                'prayer' => "Spirit, consider the ".$stack['location']['christian_adherents']." cultural christians in ".$stack['location']['name'].". You promised to convict of sin, righteousness and judgement. Please show mercy and don't leave them idle and distant from Jesus.",
+                'prayer' => "Spirit, consider the ".$stack['location']['christian_adherents']." cultural Christians in ".$stack['location']['name'].". You promised to convict of sin, righteousness and judgement. Please show mercy and don't leave them idle and distant from Jesus.",
                 'reference' => '',
                 'verse' => '',
             ],
