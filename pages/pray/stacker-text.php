@@ -3,7 +3,7 @@ if ( !defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly.
 
 class PG_Stacker_Text
 {
-    public static function photos_text($stack): array
+    public static function photos_text( $stack): array
     {
         /**
          * Photos Block
@@ -20,7 +20,7 @@ class PG_Stacker_Text
         ];
     }
 
-    public static function least_reached_text($stack): array
+    public static function least_reached_text( $stack): array
     {
         /**
          * Least Reached Block
@@ -32,7 +32,7 @@ class PG_Stacker_Text
 //            ],
             [
                 'section_summary' => '',
-                'prayer' => 'Lord we ask you on behalf of the ' . $stack['least_reached']['name'] . ' people. ' . number_format((float)$stack['least_reached']['PercentEvangelical'], 1) . '% are known to us to be believers. Oh God, share with them the great gift of your son Jesus and your kingdom.',
+                'prayer' => 'Lord we ask you on behalf of the ' . $stack['least_reached']['name'] . ' people. ' . number_format( (float) $stack['least_reached']['PercentEvangelical'], 1 ) . '% are known to us to be believers. Oh God, share with them the great gift of your son Jesus and your kingdom.',
             ],
             [
                 'section_summary' => '',
@@ -41,7 +41,7 @@ class PG_Stacker_Text
         ];
     }
 
-    public static function key_city_text($stack, $key_city): array
+    public static function key_city_text( $stack, $key_city): array
     {
         /**
          * Key City Block
@@ -53,7 +53,7 @@ class PG_Stacker_Text
         ];
     }
 
-    public static function cities_text($stack): array
+    public static function cities_text( $stack): array
     {
         /**
          * Key City Block
@@ -68,7 +68,7 @@ class PG_Stacker_Text
         ];
     }
 
-    public static function prayer_text($stack): array
+    public static function prayer_text( $stack): array
     {
 
         return [
@@ -130,7 +130,7 @@ class PG_Stacker_Text
 
     }
 
-    public static function faith_status_text($stack): array
+    public static function faith_status_text( $stack): array
     {
 
         return [
@@ -169,7 +169,7 @@ class PG_Stacker_Text
 
     }
 
-    public static function verse_text($stack): array
+    public static function verse_text( $stack): array
     {
 
         return [
@@ -245,7 +245,7 @@ class PG_Stacker_Text
                 [
                     'verse' => '"By this everyone will know that you are my disciples, if you love one another."',
                     'reference' => 'John 13:35',
-                    'prayer' => 'Lord, stir the hearts of Your people in ' . $stack['location']['full_name'] . ' to agree with You and with one another in strong love that their ' . number_format($stack['location']['non_christians_int'] + $stack['location']['christian_adherents_int']) . ' neighbors might know that they are yours.',
+                    'prayer' => 'Lord, stir the hearts of Your people in ' . $stack['location']['full_name'] . ' to agree with You and with one another in strong love that their ' . number_format( $stack['location']['non_christians_int'] + $stack['location']['christian_adherents_int'] ) . ' neighbors might know that they are yours.',
                 ],
             ],
             /**
@@ -282,7 +282,7 @@ class PG_Stacker_Text
 
     }
 
-    public static function demographics_content_text($stack): array
+    public static function demographics_content_text( $stack): array
     {
 
         return [
@@ -314,7 +314,7 @@ class PG_Stacker_Text
 
     }
 
-    public static function demogrphics_4_fact_text($stack): array
+    public static function demogrphics_4_fact_text( $stack): array
     {
 
         return [

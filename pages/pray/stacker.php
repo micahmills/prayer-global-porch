@@ -89,8 +89,8 @@ class PG_Stacker {
         shuffle( $stack['list'] );
 
         self::_photos( $stack, 2 );
-        self::_faith_status( $stack , 5 );
-        self::_least_reached( $stack, 8);
+        self::_faith_status( $stack, 5 );
+        self::_least_reached( $stack, 8 );
 //        self::_cities( $stack );
 //        self::_people_groups( $stack );
 
@@ -1017,7 +1017,6 @@ class PG_Stacker {
                     break;
                 }
             }
-
         }
 
         $people_groups = array_slice( $people_groups, 0, 5, true ); // trim to first 5 shuffled results

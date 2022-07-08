@@ -97,7 +97,7 @@ class Prayer_Global_Show_All extends DT_Magic_Url_Base
         $lists = PG_Stacker_Text_V2::_christian_adherents_deaths( $lists, $stack, true );
         $lists = PG_Stacker_Text_V2::_believers_births( $lists, $stack, true );
 
-        $lists = array_reverse($lists);
+        $lists = array_reverse( $lists );
 
         require_once( WP_CONTENT_DIR . '/plugins/prayer-global-porch/pages/assets/nav.php' ) ?>
 
@@ -119,7 +119,7 @@ class Prayer_Global_Show_All extends DT_Magic_Url_Base
                             </select>
                         </p>
                         <p>
-                            <?php echo $stack['location']['full_name'] ?>
+                            <?php echo esc_html( $stack['location']['full_name'] ) ?>
                         </p>
                     </div>
                 </div>
@@ -127,31 +127,31 @@ class Prayer_Global_Show_All extends DT_Magic_Url_Base
                     <div class="col-12 mb-3">
                        <hr>
                         <?php
-                        foreach( $lists as $item ) {
-                            $hash = hash('sha256', serialize($item) );
-                            $display = empty($item['reference'])? 'none':'block';
+                        foreach ( $lists as $item ) {
+                            $hash = hash( 'sha256', serialize( $item ) );
+                            $display = empty( $item['reference'] ) ? 'none' :'block';
                             ?>
                             <div class="container block">
                                 <div class="row">
                                     <div class="col text-center ">
-                                        <p class="mt-3 mb-3 font-weight-normal one-em uc"><?php echo $item['section_label'] ?></p>
+                                        <p class="mt-3 mb-3 font-weight-normal one-em uc"><?php echo esc_html( $item['section_label'] ) ?></p>
                                     </div>
                                 </div>
                                 <div class="row text-center justify-content-center">
                                     <div class="col-md-8">
-                                        <p class="mt-3 mb-3 font-weight-bold two-em"><?php echo $item['prayer'] ?></p>
+                                        <p class="mt-3 mb-3 font-weight-bold two-em"><?php echo esc_html( $item['prayer'] ) ?></p>
                                     </div>
                                 </div>
 
-                                <div class="row text-center justify-content-center <?php echo $hash ?>" style="display:<?php echo $display ?>;">
+                                <div class="row text-center justify-content-center <?php echo esc_html( $hash ) ?>" style="display:<?php echo esc_html( $display ) ?>;">
                                     <div class="col mt-3 mb-3 font-weight-bold text-center">
-                                        <button type="button" class="btn btn-outline-dark btn-sm" onclick="jQuery('#<?php echo $hash ?>').show();jQuery('.<?php echo $hash ?>').hide();" ><?php echo $item['reference'] ?></button>
+                                        <button type="button" class="btn btn-outline-dark btn-sm" onclick="jQuery('#<?php echo esc_html( $hash ) ?>').show();jQuery('.<?php echo esc_html( $hash ) ?>').hide();" ><?php echo esc_html( $item['reference'] ) ?></button>
                                     </div>
                                 </div>
-                                <div class="row text-center justify-content-center" style="display:none;" id="<?php echo $hash ?>" >
+                                <div class="row text-center justify-content-center" style="display:none;" id="<?php echo esc_html( $hash ) ?>" >
                                     <div class="col-md-8">
-                                        <p class="mt-3 mb-0 font-weight-normal font-italic two-em"><?php echo $item['verse'] ?></p>
-                                        <p class="mt-0 mb-3 font-weight-normal"><?php echo $item['reference'] ?></p>
+                                        <p class="mt-3 mb-0 font-weight-normal font-italic two-em"><?php echo esc_html( $item['verse'] ) ?></p>
+                                        <p class="mt-0 mb-3 font-weight-normal"><?php echo esc_html( $item['reference'] ) ?></p>
                                     </div>
                                 </div>
                                 <div class="w-100"><hr></div>
