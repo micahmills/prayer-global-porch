@@ -695,7 +695,7 @@ class PG_Stacker_Text_V2 {
         }
         $templates = [
             [
-                'section_label' => 'Key Cities',
+                'section_label' => 'Key Cities in '.$stack['location']['name'],
                 'prayer' => $stack['location']['cities_list_w_pop'],
                 'reference' => '',
                 'verse' => '',
