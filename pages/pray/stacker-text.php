@@ -689,6 +689,27 @@ class PG_Stacker_Text_V2 {
         return $lists;
     }
 
+    public static function _cities( &$lists, $stack, $all = false ) {
+        if ( empty( $stack['location']['cities_list_w_pop'] ) ) {
+            return $lists;
+        }
+        $templates = [
+            [
+                'section_label' => 'Key Cities',
+                'prayer' => $stack['location']['cities_list_w_pop'],
+                'reference' => '',
+                'verse' => '',
+            ],
+        ];
+
+        if ( $all ) {
+            return array_merge( $templates, $lists );
+        }
+
+        $lists = array_merge( [ $templates[array_rand( $templates ) ] ], $lists );
+        return $lists;
+    }
+
     public static function _non_christian_deaths( &$lists, $stack, $all = false ) {
         $section_label = 'Non-Christians';
         $templates = [

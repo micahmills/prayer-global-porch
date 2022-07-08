@@ -63,7 +63,8 @@ class PG_Stacker {
         PG_Stacker_Text_V2::_for_the_church( $lists, $stack );
         PG_Stacker_Text_V2::_for_the_church( $lists, $stack );
         PG_Stacker_Text_V2::_movement_prayers( $lists, $stack );
-        PG_Stacker_Text_V2::_people_groups($lists, $stack );
+//        PG_Stacker_Text_V2::_people_groups($lists, $stack );
+        PG_Stacker_Text_V2::_cities($lists, $stack );
 
         switch ( $stack['location']['favor'] ) {
             case 'non_christians':
@@ -93,7 +94,7 @@ class PG_Stacker {
         self::_faith_status( $stack, 5 );
         self::_least_reached( $stack, 8 );
 //        self::_cities( $stack );
-//        self::_people_groups( $stack );
+        self::_people_groups( $stack );
 
         $reduced_stack = [];
         $reduced_stack['list'] = $stack['list'];
@@ -1053,6 +1054,15 @@ class PG_Stacker {
                 LIMIT 5
         ", ARRAY_A );
             // @phpcs:enable
+        }
+        if ( ! empty( $cities ) ) {
+            $cities_list = [ 'names' => [], 'names_pop' => [] ];
+            foreach ( $cities as $city_value ) {
+                $cities_list['names'][] = $city_value['name'];
+                $cities_list['names_pop'][] = $city_value['name'] . ' ('.$city_value['population'].')';
+            }
+            $grid_record['cities_list'] = implode( ', ', $cities_list['names'] );
+            $grid_record['cities_list_w_pop'] = implode( ', ', $cities_list['names_pop'] );
         }
 
 
