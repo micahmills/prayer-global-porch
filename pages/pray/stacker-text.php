@@ -490,6 +490,10 @@ class PG_Stacker_Text_V2 {
     }
 
     public static function _language_prayers( &$lists, $stack, $all = false ) {
+        if ( 'English' === $stack['location']['primary_language'] ) {
+            return $lists;
+        }
+        
         $section_label = 'Language';
         $templates = [
             [
