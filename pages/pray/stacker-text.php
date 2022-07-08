@@ -664,10 +664,11 @@ class PG_Stacker_Text_V2 {
         return $lists;
     }
 
-    public static function _people_groups( &$lists, $stack, $all = false ) { // @todo
+    public static function _people_groups( &$lists, $stack, $all = false ) {
+
         $templates = [
             [
-                'section_label' => 'The Church',
+                'section_label' => 'Unreached People Groups',
                 'prayer' => 'Father, please raise up apostles, evangelists and preachers in '.$stack['location']['name'].' who can speak your gospel boldly and clearly in ' . $stack['location']['primary_language'] . '.',
                 'reference' => '',
                 'verse' => '',

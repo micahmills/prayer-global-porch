@@ -153,6 +153,9 @@ class PG_Global_Prayer_App extends DT_Magic_Url_Base {
         $this->header_style();
         $this->header_javascript();
     }
+    public function _footer(){
+        $this->footer_javascript();
+    }
 
 }
 PG_Global_Prayer_App::instance();

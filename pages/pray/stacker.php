@@ -1002,6 +1002,14 @@ class PG_Stacker {
 
         $least_reached = [];
         if ( ! empty( $people_groups ) ) {
+            $people_groups_list = [ 'names' => [], 'names_pop' => [] ];
+            foreach ( $people_groups as $i => $pg ) {
+                $people_groups_list['names'][] = $pg['name'];
+                $people_groups_list['names_pop'][] = $pg['name'] . ' ('.$pg['population'].')';
+            }
+            $grid_record['people_groups_list'] = implode( ', ', $people_groups_list['names'] );
+            $grid_record['people_groups_list_w_pop'] = implode( ', ', $people_groups_list['names_pop'] );
+
             foreach ( $people_groups as $i => $pg ) {
                 if ( 'Y' === $pg['LeastReached'] ) {
                     $least_reached = $pg; // get first least reached group
@@ -1009,6 +1017,7 @@ class PG_Stacker {
                     break;
                 }
             }
+
         }
 
         $people_groups = array_slice( $people_groups, 0, 5, true ); // trim to first 5 shuffled results
