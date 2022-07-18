@@ -378,7 +378,7 @@ class PG_Stacker_Text_V2 {
             ],
             [
                 'section_label' => $section_label,
-                'prayer' => 'Lord, we suspect there is 1 believer for every ' . $stack['location']['lost_per_believer'] . ' lost neighbors who need your son, Jesus. Please, give courage and opportunity to your children to speak boldly.',
+                'prayer' => 'Lord, we suspect there is 1 believer for every ' . $stack['location']['lost_per_believer'] . ' neighbors who need your son, Jesus. Please, give courage and opportunity to your children to speak boldly.',
                 'reference' => 'Ephesians 6:19',
                 'verse' => 'Pray also for me, that whenever I speak, words may be given me so that I will fearlessly make known the mystery of the gospel.',
             ],
@@ -695,7 +695,7 @@ class PG_Stacker_Text_V2 {
         }
         $templates = [
             [
-                'section_label' => 'Key Cities in '.$stack['location']['name'],
+                'section_label' => 'Cities in '.$stack['location']['name'],
                 'prayer' => $stack['location']['cities_list_w_pop'],
                 'reference' => '',
                 'verse' => '',

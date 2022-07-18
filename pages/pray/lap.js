@@ -112,7 +112,7 @@ jQuery(document).ready(function(){
     Cookies.set('pg_favor', 'guided' )
   }
   window.viewed = Cookies.get('pg_viewed')
-  window.items = parseInt( window.pace ) + 4
+  window.items = parseInt( window.pace ) + 5
 
 
   /**
@@ -218,7 +218,7 @@ jQuery(document).ready(function(){
 
       Cookies.set( 'pg_pace', window.pace )
 
-      window.items = parseInt( window.pace ) + 4
+      window.items = parseInt( window.pace ) + 5
 
       jQuery('.container.block').show()
       jQuery('.container.block:nth-child(+n+' + window.items + ')').hide()

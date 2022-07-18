@@ -56,16 +56,14 @@ class PG_Stacker {
         $stack['list'] = [];
         $lists = [];
 
-        // selects one of these
+        // PRAYER SHUFFLE
         PG_Stacker_Text_V2::_population_prayers( $lists, $stack );
         PG_Stacker_Text_V2::_language_prayers( $lists, $stack );
         PG_Stacker_Text_V2::_religion_prayers( $lists, $stack );
         PG_Stacker_Text_V2::_for_the_church( $lists, $stack );
-        PG_Stacker_Text_V2::_for_the_church( $lists, $stack );
         PG_Stacker_Text_V2::_movement_prayers( $lists, $stack );
 //        PG_Stacker_Text_V2::_people_groups($lists, $stack );
-        PG_Stacker_Text_V2::_cities($lists, $stack );
-
+//        PG_Stacker_Text_V2::_cities($lists, $stack );
         switch ( $stack['location']['favor'] ) {
             case 'non_christians':
                 PG_Stacker_Text_V2::_non_christian_deaths( $lists, $stack );
@@ -79,7 +77,6 @@ class PG_Stacker {
             default:
                 break;
         }
-
         foreach ( $lists as $content ) {
             $content['id'] = hash( 'sha256', serialize( $content ) . microtime() );
             $stack['list'][$content['id']] = [
@@ -87,15 +84,20 @@ class PG_Stacker {
                 'data' => $content
             ];
         }
-
         shuffle( $stack['list'] );
 
-        self::_photos( $stack, 2 );
-        self::_faith_status( $stack, 5 );
-        self::_least_reached( $stack, 8 );
-//        self::_cities( $stack );
+        // FACT SHUFFLE
+        $position = [1,3,5];
+        shuffle( $position );
+        self::_photos( $stack, $position[0] );
+        self::_faith_status( $stack, $position[1] );
+        self::_least_reached( $stack, $position[2] );
+        
+        // APPEND TO END
         self::_people_groups( $stack );
+//        self::_cities( $stack );
 
+        // REDUCE STACK
         $reduced_stack = [];
         $reduced_stack['list'] = $stack['list'];
         $reduced_stack['location'] = $stack['location'];
