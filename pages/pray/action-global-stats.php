@@ -195,7 +195,7 @@ class PG_Global_Prayer_App_Stats extends PG_Global_Prayer_App {
             })
         </script>
         <!-- END section -->
-        <?php require_once( trailingslashit( plugin_dir_path( __DIR__ ) ) . '/assets/working-footer.php' ) ?>
+<!--        --><?php //require_once( trailingslashit( plugin_dir_path( __DIR__ ) ) . '/assets/working-footer.php' ) ?>
         <?php // end html
     }
 
