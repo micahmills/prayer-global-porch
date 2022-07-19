@@ -52,8 +52,10 @@ function pg_get_global_lap_by_key( $key ) {
     if ( empty( $result ) ) {
         $lap = false;
     } else {
+        $ongoing = false;
         if ( empty( $result['end_time'] ) ) {
             $result['end_time'] = time();
+            $ongoing = true;
         }
         $lap = [
             'title' => $result['title'],
@@ -61,7 +63,8 @@ function pg_get_global_lap_by_key( $key ) {
             'post_id' => (int) $result['post_id'],
             'key' => $result['lap_key'],
             'start_time' => (int) $result['start_time'],
-            'end_time' => (int) $result['end_time']
+            'end_time' => (int) $result['end_time'],
+            'on_going' => $ongoing
         ];
     }
 
@@ -91,8 +94,10 @@ function pg_get_custom_lap_by_post_id( $post_id ) {
     if ( empty( $result ) ) {
         $lap = false;
     } else {
+        $ongoing = false;
         if ( empty( $result['end_time'] ) ) {
             $result['end_time'] = time();
+            $ongoing = true;
         }
         $lap = [
             'title' => $result['title'],
@@ -100,7 +105,8 @@ function pg_get_custom_lap_by_post_id( $post_id ) {
             'post_id' => (int) $result['post_id'],
             'key' => $result['lap_key'],
             'start_time' => (int) $result['start_time'],
-            'end_time' => (int) $result['end_time']
+            'end_time' => (int) $result['end_time'],
+            'on_going' => $ongoing
         ];
     }
 
@@ -130,8 +136,10 @@ function pg_get_global_lap_by_lap_number( $lap_number ) {
     if ( empty( $result ) ) {
         $lap = false;
     } else {
+        $ongoing = false;
         if ( empty( $result['end_time'] ) ) {
             $result['end_time'] = time();
+            $ongoing = true;
         }
         $lap = [
             'title' => $result['title'],
@@ -139,7 +147,8 @@ function pg_get_global_lap_by_lap_number( $lap_number ) {
             'post_id' => (int) $result['post_id'],
             'key' => $result['lap_key'],
             'start_time' => (int) $result['start_time'],
-            'end_time' => (int) $result['end_time']
+            'end_time' => (int) $result['end_time'],
+            'on_going' => $ongoing
         ];
     }
 
@@ -179,7 +188,8 @@ function pg_get_global_race(){
         'post_id' => (int) $result['post_id'],
         'key' => $result['lap_key'],
         'start_time' => (int) $result['start_time'],
-        'end_time' => time() // current time is the end of the query
+        'end_time' => time(), // current time is the end of the query
+        'on_going' => true,
     ];
 
     wp_cache_set( __METHOD__, $lap );

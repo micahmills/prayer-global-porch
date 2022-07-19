@@ -17,16 +17,16 @@ jQuery(document).ready(function(){
         console.log(e)
       })
   }
-  function log( grid_id ) {
-    window.api_post( 'log', { grid_id: grid_id, pace: window.pace, user: window.user_location } )
-      .done(function(location) {
-        // console.log(location)
-        if ( location === false ) {
-          window.location = '/'+jsObject.parts.root+'/'+jsObject.parts.type+'/'+jsObject.parts.public_key
-        }
-        window.next_content = location
-      })
-  }
+  // function log( grid_id ) {
+  //   window.api_post( 'log', { grid_id: grid_id, pace: window.pace, user: window.user_location } )
+  //     .done(function(location) {
+  //       // console.log(location)
+  //       if ( location === false ) {
+  //         window.location = '/'+jsObject.parts.root+'/'+jsObject.parts.type+'/'+jsObject.parts.public_key
+  //       }
+  //       window.next_content = location
+  //     })
+  // }
   function refresh() {
     window.api_post( 'refresh', { grid_id: window.current_content.location.grid_id, favor: window.favor } )
       .done(function(location) {
@@ -82,7 +82,7 @@ jQuery(document).ready(function(){
   let decision_home = jQuery('#decision__home')
   let decision_next = jQuery('#decision__next')
 
-  let question_no = jQuery('#question__no')
+  // let question_no = jQuery('#question__no')
   let question_yes_done = jQuery('#question__yes_done')
   let question_yes_next = jQuery('#question__yes_next')
 
@@ -177,25 +177,14 @@ jQuery(document).ready(function(){
     praying_continue_button.on('click', function( e ) {
       toggle_timer( false )
     })
-    decision_home.off('click')
-    decision_home.on('click', function( e ) {
-      window.location = 'https://prayer.global'
-    })
     decision_next.off('click')
     decision_next.on('click', function( e ) {
       load_next()
       refresh()
     })
-    question_no.off('click')
-    question_no.on('click', function( e ) {
-      decision_panel.show()
-    })
     question_yes_done.off('click')
     question_yes_done.on('click', function( e ) {
-      window.api_post( 'log', { grid_id: window.current_content.location.grid_id, pace: window.pace, user: window.user_location } )
-        .done(function(x) {
-          window.location = jsObject.stats_url
-        })
+      window.location = jsObject.map_url
     })
     question_yes_next.off('click')
     question_yes_next.on('click', function( e ) {
@@ -205,7 +194,6 @@ jQuery(document).ready(function(){
         function()
         {
           load_next()
-          log( window.current_content.location.grid_id )
         }, 3000);
     })
     pace_buttons.off('click')
@@ -331,6 +319,10 @@ jQuery(document).ready(function(){
         button_progress.css('width', window.percent+'%' )
       }
       else {
+        window.api_post( 'log', { grid_id: window.current_content.location.grid_id, pace: window.pace, user: window.user_location } )
+          .done(function(x) {
+            console.log(x)
+          })
         praying_panel.hide()
         question_panel.show()
         button_progress.css('width', '0' )
@@ -1213,11 +1205,16 @@ jQuery(document).ready(function(){
     if ( data.reference ) {
       display = 'block'
     }
+    let icon = 'none'
+    if ( data.icon ) {
+      icon = 'block'
+    }
     div.append(
       `<div class="container block">
           <div class="row">
-          <div class="col text-center ">
+          <div class="col text-center">
             <p class="mt-3 mb-3 font-weight-normal one-em uc">${data.section_label}</p>
+            <p class="mt-3 mb-3" style="display: ${icon};"><i class="${data.icon} six-em" /></p>
           </div>
       </div>
       <div class="row text-center justify-content-center">

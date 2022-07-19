@@ -82,6 +82,7 @@ class PG_Global_Prayer_App_Map extends PG_Global_Prayer_App {
                 'parts' => $this->parts,
                 'grid_data' => [],
                 'participants' => [],
+                'user_locations' => [],
                 'stats' => pg_global_stats_by_key( $this->parts['public_key'] ),
                 'image_folder' => plugin_dir_url( __DIR__ ) . 'assets/images/',
                 'translations' => [
@@ -127,7 +128,6 @@ class PG_Global_Prayer_App_Map extends PG_Global_Prayer_App {
                         </div>
                         <div class="cell small-3 medium-4 show-for-medium" id="nav-list">
                             <ul>
-                                <!--                    <li class="nav-item"><a class="nav-link btn smoothscroll pb_outline-dark" style="border:1px black solid;" href="/newest/lap/">Start Praying</a></li>-->
                                 <li class="nav-item"><a class="nav-link btn smoothscroll pb_outline-dark highlight" style="border:1px black solid;" href="/prayer_app/subscribe/">Start Praying</a></li>
                                 <li class="nav-item"><a class="nav-link" href="/#section-lap">Status</a></li>
                                 <li class="nav-item"><a class="nav-link" href="/#section-challenge">Challenge</a></li>
@@ -142,15 +142,16 @@ class PG_Global_Prayer_App_Map extends PG_Global_Prayer_App {
                 </div>
                 <span class="loading-spinner active"></span>
                 <div id='map'></div>
+                <
                 <div id="foot_block">
                     <div class="grid-x grid-padding-x">
                         <div class="cell center"><button type="button" data-toggle="offcanvas_stats"><i class="ion-chevron-up two-em"></i></button></div>
-                        <div class="cell small-6 medium-2 center"><strong>Warriors</strong> <i class="fi-marker" style="color:blue;"></i><br><span class="one-em warriors" id="warriors"></span></div>
-                        <div class="cell small-6 medium-3 center hide-for-small-only"><strong>Minutes Prayed</strong><br><span class="one-em minutes_prayed" id="minutes_prayed_formatted"></span></div>
-                        <div class="cell small-6 medium-2 center"><strong>World Coverage</strong><br><span class="one-em completed_percent" id="completed_percent"></span><span class="one-em">%</span></div>
-                        <div class="cell small-6 medium-2 center hide-for-small-only"><strong>Places Remaining</strong><br><span class="one-em remaining" id="remaining"></span></div>
-                        <div class="cell small-6 medium-3 center hide-for-small-only"><strong>Pace of Lap</strong><br><span class="one-em time_elapsed" id="time_elapsed"></span></div>
+                        <div class="cell small-6 medium-3 center hide-for-small-only"><strong>Places Remaining</strong><br><strong><span class="one-em red stats-figure remaining"></span></strong></div>
+                        <div class="cell small-6 medium-3 center hide-for-small-only"><strong>Places Covered</strong><br><strong><span class="one-em green stats-figure completed"></span></strong></div>
+                        <div class="cell small-6 medium-3 center"><strong>Places You Prayed For</strong><br><img class="three-em" style="padding-top:5px;" src="<?php echo plugin_dir_url( __DIR__ ) . 'assets/images/black-check-50.png' ?>" /></div>
+                        <div class="cell small-6 medium-3 center"><strong>Prayer Warriors</strong><br><img class="three-em" style="padding-top:5px;" src="<?php echo plugin_dir_url( __DIR__ ) . 'assets/images/praying-hand-up-20.png' ?>" /></div>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -241,6 +242,8 @@ class PG_Global_Prayer_App_Map extends PG_Global_Prayer_App {
             return new WP_Error( __METHOD__, "Missing parameters", [ 'status' => 400 ] );
         }
 
+        $params = dt_recursive_sanitize_array( $params );
+
         switch ( $params['action'] ) {
             case 'get_stats':
                 return pg_global_stats_by_key( $params['parts']['public_key'] );
@@ -250,6 +253,8 @@ class PG_Global_Prayer_App_Map extends PG_Global_Prayer_App {
                 return $this->get_grid_details( $params['data'] );
             case 'get_participants':
                 return $this->get_participants( $params['parts'] );
+            case 'get_user_locations':
+                return $this->get_user_locations( $params['parts'], $params['data'] );
             default:
                 return new WP_Error( __METHOD__, 'missing action parameter' );
         }
@@ -322,6 +327,41 @@ class PG_Global_Prayer_App_Map extends PG_Global_Prayer_App {
         }
 
         return $participants;
+    }
+
+    public function get_user_locations( $parts, $data ){
+        global $wpdb;
+        // Query based on hash
+        $hash = $data['hash'];
+        if ( empty( $hash ) ) {
+            return [];
+        }
+        $lap_stats = pg_global_stats_by_key( $parts['public_key'] );
+
+        $user_locations_raw  = $wpdb->get_results( $wpdb->prepare( "
+               SELECT lg.longitude, lg.latitude
+               FROM $wpdb->dt_reports r
+               LEFT JOIN $wpdb->dt_location_grid lg ON lg.grid_id=r.grid_id
+               WHERE r.post_type = 'laps'
+                    AND r.type = 'prayer_app'
+                    AND r.hash = %s
+                AND r.timestamp >= %d AND r.timestamp <= %d
+                AND r.label IS NOT NULL
+            ", $hash, $lap_stats['start_time'], $lap_stats['end_time'] ), ARRAY_A );
+
+        $user_locations = [];
+        if ( ! empty( $user_locations_raw ) ) {
+            foreach ( $user_locations_raw as $p ) {
+                if ( ! empty( $p['longitude'] ) ) {
+                    $user_locations[] = [
+                        'longitude' => (float) $p['longitude'],
+                        'latitude' => (float) $p['latitude']
+                    ];
+                }
+            }
+        }
+
+        return $user_locations;
     }
 
     public function get_grid_details( $data ) {

@@ -99,7 +99,7 @@ class PG_Global_Prayer_App_Stats extends PG_Global_Prayer_App {
                         <h2 class="heading mb-3">Pace</h2>
                         <div class="sub-heading pl-4">
                             <p class="mb-0">Start: <span class="start_time_full"></span></p>
-<!--                            <p class="mb-0">End: <span class="end_time_full"></span></p>-->
+                            <p class="mb-0">End: <span class="end_time"></span></p>
                             <p class="mb-0"><span class="time_elapsed"></span></p>
                         </div>
                     </div>
@@ -173,7 +173,11 @@ class PG_Global_Prayer_App_Stats extends PG_Global_Prayer_App {
                         jQuery('.completed_percent').html(x.lap_stats.completed_percent)
                         jQuery('.start_time_full').html(x.lap_stats.start_time_formatted)
 
-                        // jQuery('.end_time_full').html(x.lap_stats.end_time_formatted)
+                        if ( x.lap_stats.on_going ) {
+                            jQuery('.end_time').html( 'On-going' )
+                        } else {
+                            jQuery('.end_time').html( x.lap_stats.end_time_formatted )
+                        }
 
                         jQuery('.time_elapsed').html(x.lap_stats.time_elapsed)
                         jQuery('.prayer_warriors').html(x.lap_stats.participants)

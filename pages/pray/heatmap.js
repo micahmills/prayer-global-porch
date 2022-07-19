@@ -96,6 +96,18 @@ jQuery(document).ready(function($){
       console.log('Error getting grid data')
       jsObject.participants = []
     })
+  let data = {
+    hash: Cookies.get('pg_user_hash')
+  }
+  window.get_data_page( 'get_user_locations', data )
+    .done(function(user_locations){
+      jsObject.user_locations = user_locations
+      load_user_locations()
+    })
+    .fail(function(){
+      console.log('Error getting user locations')
+      jsObject.user_locations = []
+    })
 
   let map
   jQuery.each(asset_list, function(i,v) {
@@ -224,6 +236,12 @@ jQuery(document).ready(function($){
             map.on('click', i.toString() + 'fills_heat', function (e) {
               load_grid_details( e.features[0].id )
             })
+            map.on('mouseenter', i.toString() + 'fills_heat', () => {
+              map.getCanvas().style.cursor = 'pointer'
+            })
+            map.on('mouseleave', i.toString() + 'fills_heat', () => {
+              map.getCanvas().style.cursor = ''
+            })
           })
 
         }) /* ajax call */
@@ -256,7 +274,7 @@ jQuery(document).ready(function($){
       });
 
       map.loadImage(
-        jsObject.image_folder + 'mapbox-marker-icon-20px-blue.png',
+        jsObject.image_folder + 'praying-hand-up-40.png',
         (error, image) => {
           if (error) throw error;
           map.addImage('custom-marker', image);
@@ -277,6 +295,53 @@ jQuery(document).ready(function($){
         })
     })
 
+    map.on('load', function() {
+      let features = []
+      jQuery.each( jsObject.user_locations, function(i,v){
+        features.push({
+            "type": "Feature",
+            "geometry": {
+              "type": "Point",
+              "coordinates": [v.longitude, v.latitude]
+            },
+            "properties": {
+              "name": "Name"
+            }
+          }
+        )
+      })
+      let geojson = {
+        "type": "FeatureCollection",
+        "features": features
+      }
+
+      map.addSource('user_locations', {
+        'type': 'geojson',
+        'data': geojson
+      });
+
+      map.loadImage(
+        jsObject.image_folder + 'black-check-50.png',
+        (error, image) => {
+          if (error) throw error;
+          map.addImage('custom-marker-user', image);
+          map.addLayer({
+            'id': 'points_user',
+            'type': 'symbol',
+            'source': 'user_locations',
+            'layout': {
+              'icon-image': 'custom-marker-user',
+              'text-font': [
+                'Open Sans Semibold',
+                'Arial Unicode MS Bold'
+              ],
+              'text-offset': [0, 1.25],
+              'text-anchor': 'top'
+            }
+          });
+        })
+    })
+
     // add stats
     jQuery('.completed').html( jsObject.stats.completed )
     jQuery('.completed_percent').html( jsObject.stats.completed_percent )
@@ -286,11 +351,18 @@ jQuery(document).ready(function($){
     jQuery('.time_elapsed').html( jsObject.stats.time_elapsed_small )
     jQuery('.minutes_prayed').html( jsObject.stats.minutes_prayed )
     jQuery('.start_time').html( jsObject.stats.start_time_formatted )
-    jQuery('.end_time').html( jsObject.stats.end_time_formatted )
+    if ( jsObject.stats.on_going ) {
+      jQuery('.end_time').html( 'On-going' )
+    } else {
+      jQuery('.end_time').html( jsObject.stats.end_time_formatted )
+    }
     jQuery('#head_block').show()
     jQuery('#foot_block').show()
-
   } /* .preCache */
+
+  function load_user_locations() {
+
+  }
 
   function load_grid_details( grid_id ) {
     let div = jQuery('#grid_details_content')
