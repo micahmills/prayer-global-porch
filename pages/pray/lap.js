@@ -1095,6 +1095,11 @@ jQuery(document).ready(function(){
            <p class="mt-3 mb-3 font-weight-normal one-em">${data.section_summary}</p>
         </div>
       </div>
+      <div class="row text-center justify-content-center">
+        <div class="col-md-8">
+           <p class="mt-3 mb-3 font-weight-bold two-em">${data.prayer}</p>
+        </div>
+      </div>
       <div class="w-100"><hr></div>
     </div>`)
   }

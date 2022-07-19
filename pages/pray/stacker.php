@@ -60,10 +60,19 @@ class PG_Stacker {
         PG_Stacker_Text_V2::_population_prayers( $lists, $stack );
         PG_Stacker_Text_V2::_language_prayers( $lists, $stack );
         PG_Stacker_Text_V2::_religion_prayers( $lists, $stack );
-        PG_Stacker_Text_V2::_for_the_church( $lists, $stack );
-        PG_Stacker_Text_V2::_movement_prayers( $lists, $stack );
-//        PG_Stacker_Text_V2::_people_groups($lists, $stack );
+
+        PG_Stacker_Text_V2::_for_prayer_movement( $lists, $stack );
+        PG_Stacker_Text_V2::_for_abundant_gospel_sowing( $lists, $stack );
+        PG_Stacker_Text_V2::_for_new_churches( $lists, $stack );
+        PG_Stacker_Text_V2::_for_obedience( $lists, $stack );
+        PG_Stacker_Text_V2::_for_biblical_authority( $lists, $stack );
+        PG_Stacker_Text_V2::_for_leadership( $lists, $stack );
+        PG_Stacker_Text_V2::_for_house_churches( $lists, $stack );
+        PG_Stacker_Text_V2::_for_multiplication( $lists, $stack );
+        PG_Stacker_Text_V2::_for_urgency( $lists, $stack );
+        PG_Stacker_Text_V2::_for_church_health( $lists, $stack );
 //        PG_Stacker_Text_V2::_cities($lists, $stack );
+
         switch ( $stack['location']['favor'] ) {
             case 'non_christians':
                 PG_Stacker_Text_V2::_non_christian_deaths( $lists, $stack );
@@ -77,7 +86,7 @@ class PG_Stacker {
             default:
                 break;
         }
-        foreach ( $lists as $content ) {
+        foreach ( $lists as $content ) { // kill duplication
             $content['id'] = hash( 'sha256', serialize( $content ) . microtime() );
             $stack['list'][$content['id']] = [
                 'type' => 'basic_block',
@@ -85,16 +94,20 @@ class PG_Stacker {
             ];
         }
         shuffle( $stack['list'] );
+        $stack['list'] = array_slice( $stack['list'], 0, 8 );
+
 
         // FACT SHUFFLE
-        $position = [1,3,5];
-        shuffle( $position );
-        self::_photos( $stack, $position[0] );
-        self::_faith_status( $stack, $position[1] );
-        self::_least_reached( $stack, $position[2] );
-        
+//        $position = [1,3,5];
+//        shuffle( $position );
+        self::_photos( $stack, 1 );
+        self::_faith_status( $stack, 3 );
+        self::_least_reached( $stack, 5 );
+//        self::_demographics( $stack, 7 );
+        self::_people_groups( $stack, 7 );
+        self::_key_city( $stack, 9 );
+
         // APPEND TO END
-        self::_people_groups( $stack );
 //        self::_cities( $stack );
 
         // REDUCE STACK
@@ -106,7 +119,7 @@ class PG_Stacker {
         return $stack;
     }
 
-    private static function _demographics( &$stack ) {
+    private static function _demographics( &$stack, $position = false ) {
 
         $section_label = 'Demographics';
         $icon = $stack['location']['icon_color'];
@@ -178,9 +191,11 @@ class PG_Stacker {
             ];
         }
 
-
-        $stack['list'] = array_merge( [ $templates[array_rand( $templates )] ], $stack['list'] );
-
+        if ( empty( $position ) ) {
+            $stack['list'] = array_merge( [ $templates[array_rand( $templates )] ], $stack['list'] );
+        } else {
+            $stack['list'] = array_merge( array_slice( $stack['list'], 0, $position ), array( $templates[array_rand( $templates )] ), array_slice( $stack['list'], $position ) );
+        }
         return $stack;
     }
 
@@ -620,7 +635,8 @@ class PG_Stacker {
                         'focus_label' => 'Pray for the city of ' . $cities[0]['name'],
                         'icon' => 'ion-map', // ion icons from /pages/fonts/ionicons/
                         'color' => 'green',
-                        'section_summary' => $text['section_summary'],
+                        'section_summary' => '',
+                        'prayer' => $text['section_summary'],
                     ]
                 ];
 
@@ -749,7 +765,7 @@ class PG_Stacker {
 
     }
 
-    private static function _people_groups( &$stack ) {
+    private static function _people_groups( &$stack, $position = false ) {
         if ( ! empty( $stack['people_groups'] ) ) {
             $image_list = pg_jp_images_json();
             $base_url = pg_jp_image_url();
@@ -773,17 +789,23 @@ class PG_Stacker {
                 ];
             }
             if ( ! empty( $values ) ) {
-                $stack['list'][] = [
+                $template = [
                     'type' => 'people_groups_list',
                     'data' => [
                         'section_label' => 'People Groups In The Area',
                         'values' => $values,
                         'section_summary' => '',
-                        'prayer' => 'Pray that God call his worshippers out of these groups.'
+                        'prayer' => ''
                     ]
                 ];
+                if ( empty( $position ) ) {
+                    $stack['list'] = array_merge( [ $template ], $stack['list'] );
+                } else {
+                    $stack['list'] = array_merge( array_slice( $stack['list'], 0, $position ), [ $template ], array_slice( $stack['list'], $position ) );
+                }
             }
         }
+
         return $stack;
     }
 
@@ -930,6 +952,8 @@ class PG_Stacker {
         $grid_record['deaths_non_christians_next_month'] = self::_get_pace( 'deaths_non_christians_next_month', $grid_record );
         $grid_record['deaths_non_christians_next_year'] = self::_get_pace( 'deaths_non_christians_next_year', $grid_record );
 
+
+
         $grid_record['births_non_christians_last_hour'] = self::_get_pace( 'births_non_christians_last_hour', $grid_record );
         $grid_record['births_non_christians_last_100'] = self::_get_pace( 'births_non_christians_last_100', $grid_record );
         $grid_record['births_non_christians_last_week'] = self::_get_pace( 'births_non_christians_last_week', $grid_record );
@@ -948,6 +972,7 @@ class PG_Stacker {
         $grid_record['births_christian_adherents_last_month'] = self::_get_pace( 'births_christian_adherents_last_month', $grid_record );
         $grid_record['births_christian_adherents_last_year'] = self::_get_pace( 'births_christian_adherents_last_year', $grid_record );
 
+        $grid_record['deaths_among_lost'] = self::_get_pace( 'deaths_among_lost', $grid_record );
         $grid_record['new_churches_needed'] = self::_get_pace( 'new_churches_needed', $grid_record );
 
         $status = [];
@@ -1118,6 +1143,15 @@ class PG_Stacker {
                 break;
             case 'deaths_non_christians_next_year':
                 $return_value = ( $death_rate * ( $not_believers / 1000 ) );
+                break;
+            case 'deaths_among_lost':
+//                $number = [
+//                    $grid_record['deaths_christian_adherents_next_100']
+//                ];
+//                $in_the_next = [
+//
+//                ];
+                $return_value = '';
                 break;
 
             case 'births_christian_adherents_last_hour':
