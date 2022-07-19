@@ -91,7 +91,7 @@ class PG_Global_Prayer_App_Stats extends PG_Global_Prayer_App {
                     <div class="col-md-6 justify-content-end">
                         <h2 class="heading mb-3">Prayer</h2>
                         <div class="sub-heading pl-4">
-                            <p class="mb-0"><span class="minutes_prayed"></span> Minutes of Prayer</p>
+                            <p class="mb-0"><span class="minutes_prayed"></span> of Prayer</p>
                             <p class="mb-0"><span class="completed_percent"></span>% of the World Covered in Prayer</p>
                         </div>
                     </div>
@@ -99,7 +99,7 @@ class PG_Global_Prayer_App_Stats extends PG_Global_Prayer_App {
                         <h2 class="heading mb-3">Pace</h2>
                         <div class="sub-heading pl-4">
                             <p class="mb-0">Start: <span class="start_time_full"></span></p>
-                            <p class="mb-0">End: <span class="end_time_full"></span></p>
+<!--                            <p class="mb-0">End: <span class="end_time_full"></span></p>-->
                             <p class="mb-0"><span class="time_elapsed"></span></p>
                         </div>
                     </div>
@@ -172,7 +172,9 @@ class PG_Global_Prayer_App_Stats extends PG_Global_Prayer_App {
                         jQuery('.minutes_prayed').html(x.lap_stats.minutes_prayed_formatted)
                         jQuery('.completed_percent').html(x.lap_stats.completed_percent)
                         jQuery('.start_time_full').html(x.lap_stats.start_time_formatted)
-                        jQuery('.end_time_full').html(x.lap_stats.end_time_formatted)
+
+                        // jQuery('.end_time_full').html(x.lap_stats.end_time_formatted)
+
                         jQuery('.time_elapsed').html(x.lap_stats.time_elapsed)
                         jQuery('.prayer_warriors').html(x.lap_stats.participants)
 
