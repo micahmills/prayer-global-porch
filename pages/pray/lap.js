@@ -177,6 +177,10 @@ jQuery(document).ready(function(){
     praying_continue_button.on('click', function( e ) {
       toggle_timer( false )
     })
+    decision_home.off('click')
+    decision_home.on('click', function( e ) {
+      window.location.href = 'https://prayer.global'
+    })
     decision_next.off('click')
     decision_next.on('click', function( e ) {
       load_next()
