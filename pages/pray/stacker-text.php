@@ -904,9 +904,15 @@ class PG_Stacker_Text_V2 {
             ],
             [
                 'section_label' => 'Urgency',
-                'prayer' => 'Spirit, help the church in the '.$stack['location']['admin_level_name'].' of '.$stack['location']['name'].' to fight against being inward-focused.',
-                'reference' => 'Ephesians 5:15',
-                'verse' => 'Be very careful, then, how you live—not as unwise but as wise, making the most of every opportunity, because the days are evil.',
+                'prayer' => 'Spirit, encourage the disciples in '.$stack['location']['full_name'].' to live with urgency and a passion for making more disciples.',
+                'reference' => 'James 4:14',
+                'verse' => 'Yet you do not know what your life will be like tomorrow. You are just a vapor that appears for a little while and then vanishes away.',
+            ],
+            [
+                'section_label' => 'Urgency',
+                'prayer' => 'Spirit, defend the church in the '.$stack['location']['admin_level_name'].' of '.$stack['location']['name'].' against being inward-focused.',
+                'reference' => 'Isaiah 61:1',
+                'verse' => 'The Spirit of the Sovereign LORD is on me, because the LORD has anointed me to proclaim good news to the poor. He has sent me to bind up the brokenhearted, to proclaim freedom for the captives and release from darkness for the prisoners.',
             ],
             [
                 'section_label' => 'Urgency',
