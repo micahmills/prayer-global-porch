@@ -17,20 +17,9 @@ jQuery(document).ready(function(){
         console.log(e)
       })
   }
-  // function log( grid_id ) {
-  //   window.api_post( 'log', { grid_id: grid_id, pace: window.pace, user: window.user_location } )
-  //     .done(function(location) {
-  //       // console.log(location)
-  //       if ( location === false ) {
-  //         window.location = '/'+jsObject.parts.root+'/'+jsObject.parts.type+'/'+jsObject.parts.public_key
-  //       }
-  //       window.next_content = location
-  //     })
-  // }
   function refresh() {
     window.api_post( 'refresh', { grid_id: window.current_content.location.grid_id, favor: window.favor } )
       .done(function(location) {
-        // console.log(location)
         if ( location === false ) {
           window.location = '/'+jsObject.parts.root+'/'+jsObject.parts.type+'/'+jsObject.parts.public_key
         }
@@ -41,7 +30,6 @@ jQuery(document).ready(function(){
     toggle_timer( false )
     button_progress.css('width', '0' )
     window.time = 0
-    window.current_content = window.next_content
     load_location()
   }
   function ip_location() {
@@ -49,7 +37,6 @@ jQuery(document).ready(function(){
       .done(function(location) {
         window.user_location = []
         if ( location ) {
-          console.log(location)
           // persist user identity hash
           let pg_user_hash = Cookies.get('pg_user_hash')
           if ( ! pg_user_hash ) {
@@ -96,7 +83,7 @@ jQuery(document).ready(function(){
   let more_prayer_fuel = jQuery('#more_prayer_fuel')
   let i
 
-
+  window.previous_grids = []
   window.interval = false
   window.percent = 0
   window.time = 0
@@ -130,7 +117,7 @@ jQuery(document).ready(function(){
     // load current location
     window.api_post( 'refresh', { favor: window.favor } )
       .done( function(l1) {
-        window.current_content = l1
+        window.current_content = test_for_redundant_grid( l1 )
         load_location()
         if ( typeof window.viewed === 'undefined' ) {
           toggle_timer( true )
@@ -151,7 +138,7 @@ jQuery(document).ready(function(){
     // load next location
     window.api_post('refresh', { favor: window.favor } )
       .done( function(l2) {
-        window.next_content = l2
+        window.next_content = test_for_redundant_grid( l2 )
       })
 
     more_prayer_fuel.on('click', function(){
@@ -160,7 +147,17 @@ jQuery(document).ready(function(){
     })
   }
   initialize_location() // initialize prayer framework
-
+  function test_for_redundant_grid( content ) {
+    if ( window.previous_grids.includes( content.location.grid_id ) ) {
+      window.api_post('refresh', { favor: window.favor } )
+        .done( function(new_content) {
+          return test_for_redundant_grid( new_content )
+        })
+    } else {
+      window.previous_grids.push(content.location.grid_id )
+      return content
+    }
+  }
   /**
    * Widget Listeners
    */
@@ -228,7 +225,6 @@ jQuery(document).ready(function(){
 
       window.api_post( 'refresh', { favor: window.favor } )
         .done(function(x) {
-          console.log(x)
           window.next_content = x
         })
 
@@ -326,6 +322,10 @@ jQuery(document).ready(function(){
         window.api_post( 'log', { grid_id: window.current_content.location.grid_id, pace: window.pace, user: window.user_location } )
           .done(function(x) {
             console.log(x)
+            window.current_content = false
+            window.current_content = window.next_content
+            window.next_content = false
+            window.next_content = test_for_redundant_grid( x )
           })
         praying_panel.hide()
         question_panel.show()
