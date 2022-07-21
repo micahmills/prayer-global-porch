@@ -550,7 +550,7 @@ class PG_Stacker_Text_V2 {
             ],
             [
                 'section_label' => 'Prayer Movement',
-                'prayer' => 'Spirit, teach the children in '.$stack['location']['name'].' to pray with passion and pleading for your presence.',
+                'prayer' => 'Spirit, teach the children in the '.$stack['location']['admin_level_name'].' of '.$stack['location']['name'].' to pray with passion and pleading for your presence.',
                 'reference' => '',
                 'verse' => '',
             ],
@@ -826,6 +826,18 @@ class PG_Stacker_Text_V2 {
             ],
             [
                 'section_label' =>  $section_label['m'],
+                'prayer' => 'Spirit, please defend the '.$stack['location']['believers'].' believers in '.$stack['location']['name'].' against self-centered spirituality. Open their eyes to the fields white for harvest around them.',
+                'reference' => 'Exodus 19:6',
+                'verse' => '... you will be for me a kingdom of priests ...',
+            ],
+            [
+                'section_label' =>  $section_label['m'],
+                'prayer' => 'Spirit, please defend the '.$stack['location']['believers'].' believers in '.$stack['location']['name'].' against an unwillingness to suffer. Give them courage to face social rejection.',
+                'reference' => 'Exodus 19:6',
+                'verse' => '... you will be for me a kingdom of priests ...',
+            ],
+            [
+                'section_label' =>  $section_label['m'],
                 'prayer' => 'Father, please raise up pastors and teachers in '.$stack['location']['name'].' who can speak your gospel boldly and clearly in the ' . $stack['location']['primary_language'] . ' language.',
                 'reference' => 'Romans 10:14',
                 'verse' => 'How, then, can they call on the one they have not believed in? And how can they believe in the one of whom they have not heard? And how can they hear without someone preaching to them? And how can anyone preach unless they are sent?',
@@ -889,6 +901,12 @@ class PG_Stacker_Text_V2 {
                 'prayer' => 'Spirit, encourage the church in '.$stack['location']['full_name'].' to live with urgency and a passion for making disciples.',
                 'reference' => 'James 4:14',
                 'verse' => 'Yet you do not know what your life will be like tomorrow. You are just a vapor that appears for a little while and then vanishes away.',
+            ],
+            [
+                'section_label' => 'Urgency',
+                'prayer' => 'Spirit, help the church in the '.$stack['location']['admin_level_name'].' of '.$stack['location']['name'].' to fight against being inward-focused.',
+                'reference' => 'Ephesians 5:15',
+                'verse' => 'Be very careful, then, how you live—not as unwise but as wise, making the most of every opportunity, because the days are evil.',
             ],
             [
                 'section_label' => 'Urgency',
