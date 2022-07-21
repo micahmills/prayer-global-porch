@@ -140,7 +140,7 @@
         <div class="row align-items-center">
             <div class="col-md-12">
                 <h2 class="heading mb-5">Moravian Prayer Challenge</h2>
-                <p class="sub-heading mb-5 pb_color-light-opacity-8" style="border: 1px solid white;">Prayer for the World<br> x <br> 24 hours a day / 7 days a week / 365 days a year <br>x<br> 100 years</p>
+                <p class="sub-heading mb-5 pb_color-light-opacity-8" style="border: 1px solid white;">Prayer for the World<br> x <br> 24 hours a day / 7 days a week / 365 days a year <br>x<br> 100 years <br>=<br></p>
                 <p class="sub-heading mb-5 pb_color-light-opacity-8">Who are the Moravians? <br>What is the Moravian Prayer Challenge?<br> How are we going to accept the challenge? <br> Watch this video.</p>
                 <div class="text-center">
                     <img class="img-fluid video-image-link" src="<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/images/moravian-video.jpg" id="video-image-link" />

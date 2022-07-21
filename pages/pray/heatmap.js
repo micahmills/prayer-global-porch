@@ -226,7 +226,7 @@ jQuery(document).ready(function($){
               'paint': {
                 'fill-color': {
                   property: 'value',
-                  stops: [[0, 'rgba(255,0,0, 1)'], [1, 'rgba(0,128,0, 1)']]
+                  stops: [[0, 'rgba(255,0,0, .7)'], [1, 'rgba(0,128,0, .9)']]
                 },
                 'fill-opacity': 0.75,
                 'fill-outline-color': 'black'
