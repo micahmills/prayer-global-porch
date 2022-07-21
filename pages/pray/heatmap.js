@@ -102,7 +102,6 @@ jQuery(document).ready(function($){
   window.get_data_page( 'get_user_locations', data )
     .done(function(user_locations){
       jsObject.user_locations = user_locations
-      load_user_locations()
     })
     .fail(function(){
       console.log('Error getting user locations')
@@ -196,8 +195,9 @@ jQuery(document).ready(function($){
         }
       })
         .done(function (geojson) {
-          map.on('load', function() {
 
+          /* load prayer grid layer */
+          map.on('load', function() {
             jQuery.each(geojson.features, function (i, v) {
               if (typeof jsObject.grid_data.data[v.id] !== 'undefined' ) {
                 geojson.features[i].properties.value = jsObject.grid_data.data[v.id]
@@ -248,6 +248,7 @@ jQuery(document).ready(function($){
 
     }) /* for each loop */
 
+    /* load prayer warriors layer */
     map.on('load', function() {
       let features = []
       jQuery.each( jsObject.participants, function(i,v){
@@ -272,7 +273,6 @@ jQuery(document).ready(function($){
         'type': 'geojson',
         'data': geojson
       });
-
       map.loadImage(
         jsObject.image_folder + 'praying-hand-up-40.png',
         (error, image) => {
@@ -284,6 +284,8 @@ jQuery(document).ready(function($){
             'source': 'participants',
             'layout': {
               'icon-image': 'custom-marker',
+              "icon-size": .5,
+              'icon-padding': 0,
               'text-font': [
                 'Open Sans Semibold',
                 'Arial Unicode MS Bold'
@@ -295,6 +297,7 @@ jQuery(document).ready(function($){
         })
     })
 
+    /* load user locations layer */
     map.on('load', function() {
       let features = []
       jQuery.each( jsObject.user_locations, function(i,v){
@@ -314,12 +317,10 @@ jQuery(document).ready(function($){
         "type": "FeatureCollection",
         "features": features
       }
-
       map.addSource('user_locations', {
         'type': 'geojson',
         'data': geojson
       });
-
       map.loadImage(
         jsObject.image_folder + 'black-check-50.png',
         (error, image) => {
@@ -331,6 +332,8 @@ jQuery(document).ready(function($){
             'source': 'user_locations',
             'layout': {
               'icon-image': 'custom-marker-user',
+              "icon-size": .5,
+              'icon-padding': 0,
               'text-font': [
                 'Open Sans Semibold',
                 'Arial Unicode MS Bold'
@@ -359,10 +362,6 @@ jQuery(document).ready(function($){
     jQuery('#head_block').show()
     jQuery('#foot_block').show()
   } /* .preCache */
-
-  function load_user_locations() {
-
-  }
 
   function load_grid_details( grid_id ) {
     let div = jQuery('#grid_details_content')

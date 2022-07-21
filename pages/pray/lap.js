@@ -337,7 +337,6 @@ jQuery(document).ready(function(){
   }
 
 
-
   /**
    * Correction button
    */
