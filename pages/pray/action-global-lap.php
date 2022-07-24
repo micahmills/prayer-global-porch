@@ -138,6 +138,7 @@ class PG_Global_Prayer_App_Lap extends PG_Global_Prayer_App {
             <div class="container decision" id="decision-panel">
                 <div class="btn-group decision_button_group" role="group" aria-label="Decision Button">
                     <button type="button" class="btn btn-secondary decision" id="decision__home">Home</button>
+                    <button type="button" class="btn btn-secondary decision" id="decision__map">Map</button>
                     <button type="button" class="btn btn-secondary decision" id="decision__next">Next</button>
                 </div>
             </div>

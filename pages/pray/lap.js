@@ -67,6 +67,7 @@ jQuery(document).ready(function(){
   let praying_continue_button = jQuery('#praying__continue_button')
 
   let decision_home = jQuery('#decision__home')
+  let decision_map = jQuery('#decision__map')
   let decision_next = jQuery('#decision__next')
 
   // let question_no = jQuery('#question__no')
@@ -177,6 +178,10 @@ jQuery(document).ready(function(){
     decision_home.off('click')
     decision_home.on('click', function( e ) {
       window.location.href = 'https://prayer.global'
+    })
+    decision_map.off('click')
+    decision_map.on('click', function( e ) {
+      window.location = jsObject.map_url
     })
     decision_next.off('click')
     decision_next.on('click', function( e ) {

@@ -117,16 +117,16 @@ class PG_Global_Prayer_App_Map extends PG_Global_Prayer_App {
             <div id="map-wrapper">
                 <div id="head_block">
                     <div class="grid-x grid-padding-x">
-                        <div class="cell medium-4 hide-for-small-only">
+                        <div class="cell large-5 show-for-large">
                             <a href="/" class="navbar-brand">Prayer.Global</a>
                         </div>
-                        <div class="cell small-9 medium-4 center hide-for-small-only">
+                        <div class="cell small-9 large-2 center show-for-large">
                             <span class="two-em">Lap <?php echo esc_html( $lap_stats['lap_number'] ) ?></span>
                         </div>
-                        <div class="cell small-9 medium-4 show-for-small-only">
+                        <div class="cell small-9 large-5 hide-for-large">
                             <span class="two-em"><strong>Lap <?php echo esc_html( $lap_stats['lap_number'] ) ?></strong></span>
                         </div>
-                        <div class="cell small-3 medium-4 show-for-medium" id="nav-list">
+                        <div class="cell small-3 large-5 show-for-large" id="nav-list">
                             <ul>
                                 <li class="nav-item"><a class="nav-link btn smoothscroll pb_outline-dark highlight" style="border:1px black solid;" href="/newest/lap/">Start Praying</a></li>
                                 <li class="nav-item"><a class="nav-link" href="/#section-lap">Status</a></li>
@@ -135,7 +135,7 @@ class PG_Global_Prayer_App_Map extends PG_Global_Prayer_App {
                                 <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
                             </ul>
                         </div>
-                        <div class="cell small-3 medium-4 hide-for-medium" style="text-align:right;">
+                        <div class="cell small-3 large-4 hide-for-large" style="text-align:right;">
                             <button type="button" data-toggle="offcanvas_menu"><i class="fi-list three-em"></i></button>
                         </div>
                     </div>

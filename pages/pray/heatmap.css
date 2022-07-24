@@ -150,6 +150,11 @@ progress {
     background:black;
     color:white;
 }
+@media (max-width: 1150px) {
+    #nav-list li a {
+        padding: 10px;
+    }
+}
 .navbar-brand {
     display: inline-block;
     padding-top: 0.3125rem;
