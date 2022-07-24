@@ -287,7 +287,7 @@ jQuery(document).ready(function(){
     question_panel.hide()
     celebrate_panel.hide()
 
-    jQuery('#location-name').html(content.location.full_name)
+    jQuery('#location-name').html( content.location.admin_level_name_cap + ' of ' + content.location.full_name)
     div.empty()
 
     location_map_wrapper.show()
