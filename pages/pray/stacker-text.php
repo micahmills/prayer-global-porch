@@ -678,6 +678,18 @@ class PG_Stacker_Text_V2 {
                 'reference' => 'Genesis 22:2-3',
                 'verse' => 'Then God said, “Take your son, your only son, whom you love — Isaac — and go to the region of Moriah. Sacrifice him there as a burnt offering on a mountain I will show you.” Early the next morning Abraham got up and loaded his donkey. He took with him two of his servants and his son Isaac. When he had cut enough wood for the burnt offering, he set out for the place God had told him about.',
             ],
+            [
+                'section_label' => 'Obedience',
+                'prayer' => 'Jesus, teach the believers in the '.$stack['location']['admin_level_name'].' of '.$stack['location']['name'].' that love for You and obedience to You are the same thing.',
+                'reference' => 'John 14:15',
+                'verse' => 'If you love me, keep my commands.',
+            ],
+            [
+                'section_label' => 'Obedience',
+                'prayer' => 'Jesus, remind the disciple in '.$stack['location']['admin_level_name'].' of '.$stack['location']['name'].' to train each other to obey all that you commanded, and you will be with them as they do it.',
+                'reference' => 'Matthew 28:20',
+                'verse' => '...teaching them to obey everything I have commanded you. And surely I am with you always, to the very end of the age.',
+            ],
         ];
 
         if ( $all ) {
@@ -738,7 +750,7 @@ class PG_Stacker_Text_V2 {
             ],
             [
                 'section_label' => 'Local Leadership',
-                'prayer' => 'Spirit, build the strength and maturity of the local leaders in '.$stack['location']['full_name'].'. Show them that faithfulness is more important than knowledge. Show them that the Spirit, the Word and prayer is enough in order to grow and lead. ',
+                'prayer' => 'Spirit, build the strength and maturity of the local leaders in '.$stack['location']['full_name'].'. Show them that faithfulness is more important than knowledge. Show them that the Spirit, the Word, and prayer is enough in order to grow and lead. ',
                 'reference' => '',
                 'verse' => '',
             ],
@@ -747,6 +759,18 @@ class PG_Stacker_Text_V2 {
                 'prayer' => 'God, we ask you to raise up elders and deacons from the '.$stack['location']['believers'].' believers in '.$stack['location']['name'].', who will serve the church and equip it to do your work.',
                 'reference' => 'Ephesians 4:11',
                 'verse' => 'So Christ himself gave the apostles, the prophets, the evangelists, the pastors and teachers, to equip his people for works of service, so that the body of Christ may be built up until we all reach unity in the faith and in the knowledge of the Son of God and become mature, attaining to the whole measure of the fullness of Christ.',
+            ],
+            [
+                'section_label' => 'Local Leadership',
+                'prayer' => 'Lord, give grace to the local leaders to shepherd the '.$stack['location']['believers'].' believers in the '.$stack['location']['admin_level_name'].' of '.$stack['location']['name'].'.',
+                'reference' => 'John 10:11',
+                'verse' => 'I am the good shepherd. The good shepherd lays down his life for the sheep.',
+            ],
+            [
+                'section_label' => 'Local Leadership',
+                'prayer' => 'Lord, raise up local leaders in every town in the '.$stack['location']['admin_level_name'].' of '.$stack['location']['name'].'.',
+                'reference' => 'Titus 1:5',
+                'verse' => 'The reason I left you in Crete was that you might put in order what was left unfinished and appoint elders in every town, as I directed you.',
             ],
         ];
 
@@ -827,14 +851,14 @@ class PG_Stacker_Text_V2 {
             [
                 'section_label' =>  $section_label['m'],
                 'prayer' => 'Spirit, please defend the '.$stack['location']['believers'].' believers in '.$stack['location']['name'].' against self-centered spirituality. Open their eyes to the fields white for harvest around them.',
-                'reference' => 'Exodus 19:6',
-                'verse' => '... you will be for me a kingdom of priests ...',
+                'reference' => '',
+                'verse' => '',
             ],
             [
                 'section_label' =>  $section_label['m'],
                 'prayer' => 'Spirit, please defend the '.$stack['location']['believers'].' believers in '.$stack['location']['name'].' against an unwillingness to suffer. Give them courage to face social rejection.',
-                'reference' => 'Exodus 19:6',
-                'verse' => '... you will be for me a kingdom of priests ...',
+                'reference' => '',
+                'verse' => '',
             ],
             [
                 'section_label' =>  $section_label['m'],
@@ -886,7 +910,6 @@ class PG_Stacker_Text_V2 {
             ],
         ];
 
-
         if ( $all ) {
             return array_merge( $templates, $lists );
         }
@@ -896,12 +919,6 @@ class PG_Stacker_Text_V2 {
 
     public static function _for_urgency( &$lists, $stack, $all = false ) { // for rapid reproduction
         $templates = [
-            [
-                'section_label' => 'Urgency',
-                'prayer' => 'Spirit, encourage the church in '.$stack['location']['full_name'].' to live with urgency and a passion for making disciples.',
-                'reference' => 'James 4:14',
-                'verse' => 'Yet you do not know what your life will be like tomorrow. You are just a vapor that appears for a little while and then vanishes away.',
-            ],
             [
                 'section_label' => 'Urgency',
                 'prayer' => 'Spirit, encourage the disciples in '.$stack['location']['full_name'].' to live with urgency and a passion for making more disciples.',

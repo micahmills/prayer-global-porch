@@ -128,9 +128,7 @@ class PG_Global_Prayer_App_Lap extends PG_Global_Prayer_App {
                 </div>
             </div>
             <div class="container question" id="question-panel">
-<!--                Did you pray for this location?-->
                 <div class="btn-group question_button_group" role="group" aria-label="Praying Button">
-<!--                    <button type="button" class="btn btn-secondary question" id="question__no">No</button>-->
                     <button type="button" class="btn btn-secondary question" id="question__yes_done">Done</button>
                     <button type="button" class="btn btn-secondary question question__yes" id="question__yes_next">Next</button>
                 </div>
