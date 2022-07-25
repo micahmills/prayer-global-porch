@@ -662,19 +662,19 @@ class PG_Stacker_Text_V2 {
         $templates = [
             [
                 'section_label' => 'Church Planting',
-                'prayer' => 'Father, help '.$stack['location']['new_churches_needed'].' new house churches start in the '.$stack['location']['admin_level_name'].' of '.$stack['location']['full_name'].'.',
-                'reference' => '',
-                'verse' => '',
+                'prayer' => 'Father, help '.$stack['location']['new_churches_needed'].' new house churches start among the '.$stack['location']['population'].' people in the '.$stack['location']['admin_level_name'].' of '.$stack['location']['full_name'].'.',
+                'reference' => 'Habakkuk 2:14',
+                'verse' => 'For the earth will be filled with the knowledge of the glory of the Lord as the waters cover the sea.',
             ],
             [
                 'section_label' => 'Church Planting',
                 'prayer' => 'Spirit, please start new house churches in every neighborhood of the '.$stack['location']['admin_level_name'].' of '.$stack['location']['name'].'.',
-                'reference' => '',
-                'verse' => '',
+                'reference' => 'Habakkuk 2:14',
+                'verse' => 'For the earth will be filled with the knowledge of the glory of the Lord as the waters cover the sea.',
             ],
             [
                 'section_label' => 'Church Planting',
-                'prayer' => 'Spirit, please give every house church in '.$stack['location']['name'].' a passion to plant another house church.',
+                'prayer' => 'Spirit, please give every church in the '.$stack['location']['admin_level_name'].' of '.$stack['location']['name'].' a passion to plant another simple church.',
                 'reference' => '',
                 'verse' => '',
             ],
@@ -686,9 +686,27 @@ class PG_Stacker_Text_V2 {
             ],
             [
                 'section_label' => 'Church Planting',
-                'prayer' => 'Father, you desire the people in the '.$stack['location']['admin_level_name'].' of '.$stack['location']['name'].' to see about you and hear about you.',
+                'prayer' => 'Father, we agree with Your desire that the people in the '.$stack['location']['admin_level_name'].' of '.$stack['location']['name'].' hear about You.',
                 'reference' => 'Romans 15:21',
                 'verse' => 'Those who were not told about him will see, and those who have not heard will understand.',
+            ],
+            [
+                'section_label' => 'Church Planting',
+                'prayer' => 'Father, let every disciple be a disciple maker, every home a training center, and every church a church planting movement in the '.$stack['location']['admin_level_name'].' of '.$stack['location']['full_name'].'.',
+                'reference' => '',
+                'verse' => '',
+            ],
+            [
+                'section_label' => 'Church Planting',
+                'prayer' => 'Father, we ask for networks of simple churches in every city in the '.$stack['location']['admin_level_name'].' of '.$stack['location']['name'].', like Paul planted in Corinth and Ephesus.',
+                'reference' => '1 Corinthians 16:19',
+                'verse' => 'The churches in the province of Asia send you greetings. Aquila and Priscilla greet you warmly in the Lord, and so does the church that meets at their house.',
+            ],
+            [
+                'section_label' => 'Church Planting',
+                'prayer' => 'Jesus, '.$stack['location']['population'].' people live in the '.$stack['location']['admin_level_name'].' of '.$stack['location']['name'].'. Please, give them '.$stack['location']['new_churches_needed'].' new simple churches this year.',
+                'reference' => '',
+                'verse' => '',
             ],
         ];
 
@@ -703,25 +721,19 @@ class PG_Stacker_Text_V2 {
         $templates = [
             [
                 'section_label' => 'Obedience',
-                'prayer' => 'Father, move the ' . $stack['location']['believers'] . ' believers in ' . $stack['location']['name'] . ' to say "Not our will, but Yours be done".',
+                'prayer' => 'Father, move the ' . $stack['location']['believers'] . ' believers in the '.$stack['location']['admin_level_name'].' of '.$stack['location']['name'].' to say "Not our will, but Yours be done", like Jesus.',
                 'reference' => 'Luke 22:41-42',
                 'verse' => 'He withdrew about a stone’s throw beyond them, knelt down and prayed, "Father, if you are willing, take this cup from me; yet not my will, but Yours be done."',
             ],
             [
                 'section_label' => 'Obedience',
-                'prayer' => 'Father, move the ' . $stack['location']['believers'] . ' believers in ' . $stack['location']['name'] . ' to say "Not our will, but Yours be done" today.',
-                'reference' => 'Luke 22:41-42',
-                'verse' => 'He withdrew about a stone’s throw beyond them, knelt down and prayed, "Father, if you are willing, take this cup from me; yet not my will, but Yours be done."',
-            ],
-            [
-                'section_label' => 'Obedience',
-                'prayer' => 'Lord, stir the hearts of Your people in ' . $stack['location']['name'] . ' to agree with You and with one another in love.',
+                'prayer' => 'Lord, stir the hearts of Your people in the '.$stack['location']['admin_level_name'].' of '.$stack['location']['name'].' to agree with You and with one another in love.',
                 'reference' => 'John 17:21',
                 'verse' => 'that all of them may be one, Father, just as you are in me and I am in you. May they also be in us so that the world may believe that you have sent me.',
             ],
             [
                 'section_label' => 'Obedience',
-                'prayer' => 'Spirit, cause the ' . $stack['location']['believers'] . ' believers in ' . $stack['location']['name'] . ' to obey with immediate, radical, costly obedience like Abraham.',
+                'prayer' => 'Spirit, cause the '.$stack['location']['believers'].' believers in ' . $stack['location']['name'] . ' to obey with immediate, radical, costly obedience, like Abraham.',
                 'reference' => 'Genesis 22:2-3',
                 'verse' => 'Then God said, “Take Your son, Your only son, whom you love — Isaac — and go to the region of Moriah. Sacrifice him there as a burnt offering on a mountain I will show you.” Early the next morning Abraham got up and loaded his donkey. He took with him two of his servants and his son Isaac. When he had cut enough wood for the burnt offering, he set out for the place God had told him about.',
             ],
@@ -733,9 +745,15 @@ class PG_Stacker_Text_V2 {
             ],
             [
                 'section_label' => 'Obedience',
-                'prayer' => 'Jesus, remind the disciple in '.$stack['location']['admin_level_name'].' of '.$stack['location']['name'].' to train each other to obey all that you commanded, and you will be with them as they do it.',
+                'prayer' => 'Jesus, remind the disciples in '.$stack['location']['admin_level_name'].' of '.$stack['location']['name'].' to train each other to obey all that You commanded, and that You will be with them as they do it.',
                 'reference' => 'Matthew 28:20',
                 'verse' => '...teaching them to obey everything I have commanded you. And surely I am with you always, to the very end of the age.',
+            ],
+            [
+                'section_label' => 'Obedience',
+                'prayer' => 'Jesus, please help the '.$stack['location']['believers'].' believers in the '.$stack['location']['admin_level_name'].' of '.$stack['location']['name'].' to be filled with joyful obedience at all times, as you modeled for us all.',
+                'reference' => '',
+                'verse' => '',
             ],
         ];
 
@@ -756,27 +774,63 @@ class PG_Stacker_Text_V2 {
             ],
             [
                 'section_label' => 'Biblical Authority',
-                'prayer' => 'Spirit, give the people of '.$stack['location']['name'].' a desire to hide Your word in their heart.',
+                'prayer' => 'Spirit, instill a desire within the people of the '.$stack['location']['admin_level_name'].' of '.$stack['location']['name'].' to hide Your word in their heart.',
                 'reference' => 'Psalm 119:11',
                 'verse' => 'I have hidden Your word in my heart that I might not sin against you.',
             ],
             [
                 'section_label' => 'Biblical Authority',
-                'prayer' => 'Spirit, help the people of '.$stack['location']['name'].' to be consumed with longing for Your Word at all times, like David.',
+                'prayer' => 'Spirit, help the people of the '.$stack['location']['admin_level_name'].' of '.$stack['location']['name'].' to be consumed with longing for Your Word at all times, like David.',
                 'reference' => 'Psalm 119:20',
                 'verse' => 'My soul is consumed with longing for Your laws at all times.',
             ],
             [
                 'section_label' => 'Biblical Authority',
-                'prayer' => 'Lord, teach the people of '.$stack['location']['name'].' Your Word, so that they can follow Your ways all their life.',
+                'prayer' => 'Lord, teach Your Word to the people of the '.$stack['location']['admin_level_name'].' of '.$stack['location']['name'].', so that they can follow Your ways all their life.',
                 'reference' => 'Psalm 119:33',
                 'verse' => 'Teach me, Lord, the way of Your decrees, that I may follow it to the end.',
             ],
             [
                 'section_label' => 'Biblical Authority',
-                'prayer' => 'Lord, teach the believers of in the '.$stack['location']['admin_level_name'].' of '.$stack['location']['name'].' to trust Your Word in the darkness around them.',
+                'prayer' => 'Lord, teach the disciples in the '.$stack['location']['admin_level_name'].' of '.$stack['location']['name'].' to trust Your Word, like a lamp, in the darkness around them.',
                 'reference' => 'Psalm 119:105',
                 'verse' => 'Your word is a lamp for my feet, a light on my path.',
+            ],
+            [
+                'section_label' => 'Biblical Authority',
+                'prayer' => 'Lord, teach the young people in the '.$stack['location']['admin_level_name'].' of '.$stack['location']['name'].' to trust your Word and find the path of purity.',
+                'reference' => 'Psalm 119:9',
+                'verse' => 'How can a young person stay on the path of purity? By living according to your word.',
+            ],
+            [
+                'section_label' => 'Biblical Authority',
+                'prayer' => 'Spirit, we know that cultures come and go, even in the '.$stack['location']['admin_level_name'].' of '.$stack['location']['name'].', but the truth of You Word endures generations.',
+                'reference' => 'Psalm 119:89',
+                'verse' => 'You word, Lord, is eternal; it stands firm in the heavens.',
+            ],
+            [
+                'section_label' => 'Biblical Authority',
+                'prayer' => 'Father, defend those who are loyal to your Word in the '.$stack['location']['admin_level_name'].' of '.$stack['location']['name'].', even against fierce enemies.',
+                'reference' => 'Psalm 119:61',
+                'verse' => 'Though the wicked bind me with ropes, I will not forget your law.',
+            ],
+            [
+                'section_label' => 'Biblical Authority',
+                'prayer' => 'Spirit, fill the '.$stack['location']['population'].' souls living in the '.$stack['location']['admin_level_name'].' of '.$stack['location']['name'].' with a taste for your Word. Make it sweet as honey in their mouth.',
+                'reference' => 'Psalm 119:103',
+                'verse' => 'How sweet are your words to my taste, sweeter than honey to my mouth!',
+            ],
+            [
+                'section_label' => 'Biblical Authority',
+                'prayer' => 'Spirit, fill the '.$stack['location']['believers'].' believers in the '.$stack['location']['admin_level_name'].' of '.$stack['location']['name'].' with tears, because God is not obeyed by those around them.',
+                'reference' => 'Psalm 119:136',
+                'verse' => 'Streams of tears flow from my eyes, for your law is not obeyed.',
+            ],
+            [
+                'section_label' => 'Biblical Authority',
+                'prayer' => 'Father, see the suffering of Your people in the '.$stack['location']['admin_level_name'].' of '.$stack['location']['name'].'. Deliver all those who have not forgotten your Word.',
+                'reference' => 'Psalm 119:153',
+                'verse' => 'Look on my suffering and deliver me, for I have not forgotten your law.',
             ],
         ];
 
