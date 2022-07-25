@@ -892,13 +892,7 @@ class PG_Stacker_Text_V2 {
         $templates = [
             [
                 'section_label' => 'Simple Churches',
-                'prayer' => 'God, guide the  '.$stack['location']['believers'].' believers in '.$stack['location']['name'].' to see their homes as spiritual families that love You, love each other, and make disciples.',
-                'reference' => '',
-                'verse' => '',
-            ],
-            [
-                'section_label' => 'Simple Churches',
-                'prayer' => 'God, guide the '.$stack['location']['believers'].' believers in '.$stack['location']['name'].' to see their homes as spiritual families that love You, love each other, and make disciples.',
+                'prayer' => 'God, guide the '.$stack['location']['believers'].' believers in '.$stack['location']['name'].' to multiply spiritual families that love You, love each other, and make disciples.',
                 'reference' => '',
                 'verse' => '',
             ],
@@ -917,14 +911,26 @@ class PG_Stacker_Text_V2 {
             [
                 'section_label' => 'Simple Churches',
                 'prayer' => 'Father, we pray that the '.$stack['location']['admin_level_name'].' of '.$stack['location']['name'].' be filled with simple churches in every neighborhood.',
+                'reference' => 'Isaiah 11:9',
+                'verse' => 'For the earth will be full of the knowledge of the Lord, as the waters cover the sea.',
+            ],
+            [
+                'section_label' => 'Simple Churches',
+                'prayer' => 'Father, we ask for '.$stack['location']['new_churches_needed'].' new churches in the '.$stack['location']['admin_level_name'].' of '.$stack['location']['name'].' be filled with simple churches in every neighborhood.',
+                'reference' => 'Psalm 72:19',
+                'verse' => 'And blessed be His glorious name forever; And may the whole earth be filled with His glory. Amen, and Amen.',
+            ],
+            [
+                'section_label' => 'Simple Churches',
+                'prayer' => 'Spirit, teach the '.$stack['location']['believers'].' believers in the '.$stack['location']['admin_level_name'].' of '.$stack['location']['name'].' the wisdom of how to form simple, reproducible churches of 12-30 in every neighborhood.',
                 'reference' => '',
                 'verse' => '',
             ],
             [
                 'section_label' => 'Simple Churches',
-                'prayer' => 'Father, we ask for '.$stack['location']['new_churches_needed'].' new churches in the '.$stack['location']['admin_level_name'].' of '.$stack['location']['name'].' be filled with simple churches in every neighborhood.',
-                'reference' => '',
-                'verse' => '',
+                'prayer' => 'Father, bless the '.$stack['location']['admin_level_name'].' of '.$stack['location']['name'].' with a multiplying movement of house churches.',
+                'reference' => 'Numbers 14:21',
+                'verse' => '...but indeed, as I live, all the earth will be filled with the glory of the Lord.',
             ],
         ];
 
@@ -1049,6 +1055,60 @@ class PG_Stacker_Text_V2 {
                 'prayer' => 'Father, you desire the people in the '.$stack['location']['admin_level_name'].' of '.$stack['location']['name'].' to see about you and hear about you.',
                 'reference' => 'Romans 15:21',
                 'verse' => 'Those who were not told about him will see, and those who have not heard will understand.',
+            ],
+            [
+                'section_label' => 'Urgency',
+                'prayer' => 'Jesus, your return is closer than when we first believed. Please, set urgency in the hearts of the people living in the '.$stack['location']['admin_level_name'].' of '.$stack['location']['name'].'.',
+                'reference' => 'Romans 13:11',
+                'verse' => 'Besides this you know the time, that the hour has come for you to wake from sleep. For salvation is nearer to us now than when we first believed.',
+            ],
+            [
+                'section_label' => 'Urgency',
+                'prayer' => 'Spirit, disrupt complacency in the '.$stack['location']['believers'].' believers living in the '.$stack['location']['admin_level_name'].' of '.$stack['location']['name'].'. Remind them you are coming soon.',
+                'reference' => 'Matthew 24:42',
+                'verse' => 'Therefore, stay awake, for you do not know on what day your Lord is coming.',
+            ],
+            [
+                'section_label' => 'Urgency',
+                'prayer' => 'Spirit, give faith and responsive hearts to the '.$stack['location']['population'].' citizens of the '.$stack['location']['admin_level_name'].' of '.$stack['location']['name'].'.',
+                'reference' => 'Isaiah 55:6',
+                'verse' => 'Seek the Lord while he may be found; call upon him while he is near;',
+            ],
+            [
+                'section_label' => 'Urgency',
+                'prayer' => 'Spirit, renew the call of John the Baptist in the '.$stack['location']['admin_level_name'].' of '.$stack['location']['name'].'. Send out bold servants who will call all to repent.',
+                'reference' => 'Matthew 3:2',
+                'verse' => 'Repent, for the kingdom of heaven is at hand.',
+            ],
+            [
+                'section_label' => 'Urgency',
+                'prayer' => 'Father, set on fire the hearts and passion of your church in the '.$stack['location']['admin_level_name'].' of '.$stack['location']['name'].'.',
+                'reference' => 'Romans 12:11',
+                'verse' => 'Do not be slothful in zeal, be fervent in spirit, serve the Lord.',
+            ],
+            [
+                'section_label' => 'Urgency',
+                'prayer' => 'Spirit, awaken the sleepers and call them to repent and be baptized in the '.$stack['location']['admin_level_name'].' of '.$stack['location']['name'].'. Set an urgency in their hearts.',
+                'reference' => 'Acts 22:16',
+                'verse' => 'And now why do you wait? Rise and be baptized and wash away your sins, calling on his name.’',
+            ],
+            [
+                'section_label' => 'Urgency',
+                'prayer' => 'Jesus, defend your people in the '.$stack['location']['admin_level_name'].' of '.$stack['location']['name'].' against the difficulty of these last days.',
+                'reference' => '2 Timothy 3:1-4',
+                'verse' => 'But understand this, that in the last days there will come times of difficulty. For people will be lovers of self, lovers of money, proud, arrogant, abusive, disobedient to their parents, ungrateful, unholy, heartless, unappeasable, slanderous, without self-control, brutal, not loving good, treacherous, reckless, swollen with conceit, lovers of pleasure rather than lovers of God, having the appearance of godliness, but denying its power.',
+            ],
+            [
+                'section_label' => 'Urgency',
+                'prayer' => 'Jesus, purify the '.$stack['location']['believers'].' believers in the '.$stack['location']['admin_level_name'].' of '.$stack['location']['name'].' to not just be hearers, but doers of your Word.',
+                'reference' => 'Revelation 1:3',
+                'verse' => 'Blessed is the one who reads aloud the words of this prophecy, and blessed are those who hear, and who keep what is written in it, for the time is near.',
+            ],
+            [
+                'section_label' => 'Urgency',
+                'prayer' => 'Holy Spirit, have mercy on the simple who turned from you in the '.$stack['location']['admin_level_name'].' of '.$stack['location']['name'].'. Warn them again against their complacency.',
+                'reference' => 'Proverbs 1:32',
+                'verse' => 'For the simple are killed by their turning away, and the complacency of fools destroys them;',
             ],
         ];
 
