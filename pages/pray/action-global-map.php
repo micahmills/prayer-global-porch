@@ -171,7 +171,6 @@ class PG_Global_Prayer_App_Map extends PG_Global_Prayer_App {
             </ul>
             <div class="show-for-small-only">
                 <hr>
-                <i class="fi-marker" style="color:blue;"></i> = prayer warriors
             </div>
         </div>
         <div class="off-canvas position-right " id="offcanvas_location_details" data-close-on-click="true" data-content-overlay="false" data-off-canvas>
