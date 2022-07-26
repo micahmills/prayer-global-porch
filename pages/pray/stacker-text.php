@@ -739,7 +739,7 @@ class PG_Stacker_Text_V2 {
             ],
             [
                 'section_label' => 'Obedience',
-                'prayer' => 'Jesus, teach the believers in the '.$stack['location']['admin_level_name'].' of '.$stack['location']['name'].' that love for You and obedience to You are the same thing.',
+                'prayer' => 'Jesus, teach the believers in the '.$stack['location']['admin_level_name'].' of '.$stack['location']['name'].' that love for You and obedience to You are connected.',
                 'reference' => 'John 14:15',
                 'verse' => 'If you love me, keep my commands.',
             ],

@@ -148,8 +148,8 @@ class PG_Global_Prayer_App_Map extends PG_Global_Prayer_App {
                         <div class="cell center"><button type="button" data-toggle="offcanvas_stats"><i class="ion-chevron-up two-em"></i></button></div>
                         <div class="cell small-6 medium-3 center hide-for-small-only"><strong>Places Remaining</strong><br><strong><span class="one-em red stats-figure remaining"></span></strong></div>
                         <div class="cell small-6 medium-3 center hide-for-small-only"><strong>Places Covered</strong><br><strong><span class="one-em green stats-figure completed"></span></strong></div>
-                        <div class="cell small-6 medium-3 center"><strong>Places You Covered</strong><br><img class="three-em" style="padding-top:5px;" src="<?php echo plugin_dir_url( __DIR__ ) . 'assets/images/black-check-50.png' ?>" /></div>
                         <div class="cell small-6 medium-3 center"><strong>Prayer Warriors</strong><br><img class="three-em" style="padding-top:5px;" src="<?php echo plugin_dir_url( __DIR__ ) . 'assets/images/praying-hand-up-20.png' ?>" /></div>
+                        <div class="cell small-6 medium-3 center"><strong>Your Recent Prayers</strong><br><img class="three-em" style="padding-top:5px;" src="<?php echo plugin_dir_url( __DIR__ ) . 'assets/images/black-check-50.png' ?>" /></div>
                     </div>
 
                 </div>
@@ -160,14 +160,15 @@ class PG_Global_Prayer_App_Map extends PG_Global_Prayer_App {
             <hr>
             <ul class="navbar-nav two-em">
                 <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="/#section-lap">Prayer Laps</a></li>
                 <li class="nav-item"><a class="nav-link" href="/#section-about">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="/#section-challenge">Challenge</a></li>
+                <li class="nav-item"><a class="nav-link" href="/#section-lap">Status</a></li>
                 <li class="nav-item"><a class="nav-link btn smoothscroll pb_outline-dark" style="text-transform: capitalize;" href="/newest/lap/">Start Praying</a></li>
             </ul>
             <hr>
             <ul class="navbar-nav two-em">
-                <li class="nav-item"><a class="nav-link" href="/race_app/big_list/">Race List</a></li>
-                <li class="nav-item"><a class="nav-link" href="/race_app/big_map/">Race Map</a></li>
+                <li class="nav-item"><a class="nav-link" href="/race_app/big_list/">Big List</a></li>
+                <li class="nav-item"><a class="nav-link" href="/race_app/big_map/">Big Map</a></li>
             </ul>
             <div class="show-for-small-only">
                 <hr>
@@ -247,7 +248,10 @@ class PG_Global_Prayer_App_Map extends PG_Global_Prayer_App {
             case 'get_stats':
                 return pg_global_stats_by_key( $params['parts']['public_key'] );
             case 'get_grid':
-                return $this->get_grid( $params['parts'] );
+                return [
+                    'grid_data' => $this->get_grid( $params['parts'] ),
+                    'participants' => $this->get_participants( $params['parts'] ),
+                ];
             case 'get_grid_details':
                 return $this->get_grid_details( $params['data'] );
             case 'get_participants':

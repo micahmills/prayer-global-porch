@@ -200,9 +200,9 @@ class PG_Global_Prayer_App_Lap extends PG_Global_Prayer_App {
                         <p>
                             <img src="<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/images/welcome-keep.png" class="img-fluid" />
                         </p>
-                        <h2 class="center">Log</h2>
+                        <h2 class="center">Pray Again</h2>
                         <p>
-                            Once the timer transforms, <strong>log your prayer</strong> with "Yes"! Your prayer will be added to the prayer lap.
+                            Once the timer transforms, select "Done" and see your impact, or "Next" and cover another location in prayer.
                         </p>
                         <p>
                             <img src="<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/images/welcome-next.png" class="img-fluid" />

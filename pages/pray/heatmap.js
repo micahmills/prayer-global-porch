@@ -78,7 +78,10 @@ jQuery(document).ready(function($){
   window.get_page( 'get_grid')
     .done(function(x){
       list = 1
-      jsObject.grid_data = x
+
+      jsObject.grid_data = x.grid_data
+      jsObject.participants = x.participants
+
       if ( loop > 9 && list > 0 && window.load_map_triggered !== 1 ){
         window.load_map_triggered = 1
         load_map()
@@ -87,14 +90,6 @@ jQuery(document).ready(function($){
     .fail(function(){
       console.log('Error getting grid data')
       jsObject.grid_data = {'data': {}, 'highest_value': 1 }
-    })
-  window.get_page( 'get_participants')
-    .done(function(participants){
-      jsObject.participants = participants
-    })
-    .fail(function(){
-      console.log('Error getting grid data')
-      jsObject.participants = []
     })
   let data = {
     hash: Cookies.get('pg_user_hash')
@@ -286,6 +281,7 @@ jQuery(document).ready(function($){
               'icon-image': 'custom-marker',
               "icon-size": .5,
               'icon-padding': 0,
+              "icon-allow-overlap": true,
               'text-font': [
                 'Open Sans Semibold',
                 'Arial Unicode MS Bold'
@@ -334,6 +330,7 @@ jQuery(document).ready(function($){
               'icon-image': 'custom-marker-user',
               "icon-size": .5,
               'icon-padding': 0,
+              "icon-allow-overlap": true,
               'text-font': [
                 'Open Sans Semibold',
                 'Arial Unicode MS Bold'
