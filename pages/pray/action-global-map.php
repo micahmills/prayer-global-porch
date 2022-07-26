@@ -124,7 +124,7 @@ class PG_Global_Prayer_App_Map extends PG_Global_Prayer_App {
                             <span class="two-em">Lap <?php echo esc_html( $lap_stats['lap_number'] ) ?></span>
                         </div>
                         <div class="cell small-9 large-5 hide-for-large">
-                            <span class="two-em"><strong>Lap <?php echo esc_html( $lap_stats['lap_number'] ) ?></strong></span>
+                            <span class="two-em">Lap <?php echo esc_html( $lap_stats['lap_number'] ) ?></span>
                         </div>
                         <div class="cell small-3 large-5 show-for-large" id="nav-list">
                             <ul>
@@ -136,7 +136,7 @@ class PG_Global_Prayer_App_Map extends PG_Global_Prayer_App {
                             </ul>
                         </div>
                         <div class="cell small-3 large-4 hide-for-large" style="text-align:right;">
-                            <button type="button" data-toggle="offcanvas_menu"><i class="fi-list three-em"></i></button>
+                            <button type="button" data-toggle="offcanvas_menu"><i class="ion-navicon three-em"></i></button>
                         </div>
                     </div>
                 </div>

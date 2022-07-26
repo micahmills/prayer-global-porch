@@ -12,13 +12,12 @@ if ( '' === $url ) { ?>
             <span><i class="ion-navicon"></i></span>
         </button>
         <div class="collapse navbar-collapse" id="probootstrap-navbar">
-            <ul class="navbar-nav ml-auto">
+            <ul class="navbar-nav ml-auto pb-3">
                 <li class="nav-item"><a class="nav-link" href="#section-home">Home</a></li>
                 <li class="nav-item"><a class="nav-link" href="#section-about">About</a></li>
                 <li class="nav-item"><a class="nav-link" href="#section-challenge">Challenge</a></li>
                 <li class="nav-item"><a class="nav-link" href="#section-lap">Status</a></li>
                 <li class="nav-item"><a class="nav-link btn smoothscroll pb_outline-dark highlight" href="/newest/lap/">Start Praying</a></li>
-<!--                <li class="nav-item"><a class="nav-link btn smoothscroll pb_outline-dark highlight" href="/prayer_app/subscribe/">Start Praying</a></li>-->
             </ul>
         </div>
     </div>
@@ -32,13 +31,12 @@ if ( '' === $url ) { ?>
             <span><i class="ion-navicon"></i></span>
         </button>
         <div class="collapse navbar-collapse" id="probootstrap-navbar">
-            <ul class="navbar-nav ml-auto">
+            <ul class="navbar-nav ml-auto pb-3">
                 <li class="nav-item"><a class="nav-link" href="/#section-home">Home</a></li>
                 <li class="nav-item"><a class="nav-link" href="/#section-about">About</a></li>
                 <li class="nav-item"><a class="nav-link" href="/#section-challenge">Challenge</a></li>
                 <li class="nav-item"><a class="nav-link" href="/#section-lap">Status</a></li>
                 <li class="nav-item"><a class="nav-link btn smoothscroll pb_outline-dark highlight" href="/newest/lap/">Start Praying</a></li>
-<!--                <li class="nav-item"><a class="nav-link btn smoothscroll pb_outline-dark highlight" href="/prayer_app/subscribe/">Start Praying</a></li>-->
             </ul>
         </div>
     </div>
@@ -56,13 +54,12 @@ if ( '' === $url ) { ?>
                 <span><i class="ion-navicon"></i></span>
             </button>
             <div class="collapse navbar-collapse" id="probootstrap-navbar">
-                <ul class="navbar-nav ml-auto">
+                <ul class="navbar-nav ml-auto pb-3">
                     <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="/#section-about">About</a></li>
                     <li class="nav-item"><a class="nav-link" href="/#section-challenge">Challenge</a></li>
                     <li class="nav-item"><a class="nav-link" href="/#section-lap">Status</a></li>
                     <li class="nav-item"><a class="nav-link btn smoothscroll pb_outline-dark highlight" style="border:1px black solid;" href="/newest/lap/">Start Praying</a></li>
-<!--                    <li class="nav-item"><a class="nav-link btn smoothscroll pb_outline-dark highlight" style="border:1px black solid;" href="/prayer_app/subscribe/">Start Praying</a></li>-->
                 </ul>
             </div>
         </div>
