@@ -8,7 +8,6 @@
                 <div class="sub-heading">
                     <p class="mb-5">Community driven, movement-focused, saturation prayer.</p>
                     <p><a href="/newest/lap/" style="background-color:rgba(255,255,255,.7);" role="button" class="btn smoothscroll pb_font-25 btn-xl pb_font-13 p-4 rounded-0 pb_letter-spacing-2">Start Praying</a></p>
-<!--                    <p><a href="/prayer_app/subscribe/" style="background-color:rgba(255,255,255,.7);" role="button" class="btn smoothscroll pb_font-25 btn-xl pb_font-13 p-4 rounded-0 pb_letter-spacing-2">Start Praying</a></p>-->
                 </div>
             </div>
         </div>
@@ -375,5 +374,7 @@
         </div>
     </div>
 </section>
+
+
 
 <?php require_once( trailingslashit( plugin_dir_path( __DIR__ ) ) . '/assets/working-footer.php' ) ?>
