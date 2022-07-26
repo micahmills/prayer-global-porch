@@ -469,7 +469,7 @@ class PG_Stacker_Text_V2 {
         $templates = [
             [
                 'section_label' => $section_label,
-                'prayer' => 'The primary religion in '.$stack['location']['full_name'].' is '.$stack['location']['primary_religion'].'.',
+                'prayer' => 'The primary religion in the '.$stack['location']['admin_level_name'].' of '.$stack['location']['full_name'].' is '.$stack['location']['primary_religion'].'.',
                 'reference' => '',
                 'verse' => '',
             ],
