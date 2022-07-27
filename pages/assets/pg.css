@@ -135,7 +135,6 @@
     0% {
         transform: rotate(0deg);
     }
-
     100% {
         transform: rotate(360deg);
     }
@@ -160,6 +159,8 @@
 }
 .video-image-link {
     cursor: pointer;
-
+}
+.pg_cover_v1 {
+    height:100vh !important;
 }
 
