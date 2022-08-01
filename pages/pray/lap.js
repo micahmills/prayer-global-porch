@@ -190,13 +190,19 @@ jQuery(document).ready(function(){
     })
     question_yes_done.off('click')
     question_yes_done.on('click', function( e ) {
-      window.location = jsObject.map_url
+      question_panel.hide()
+      celebrate()
+      setTimeout(
+        function()
+        {
+          window.location = jsObject.map_url
+        }, 3000);
     })
     question_yes_next.off('click')
     question_yes_next.on('click', function( e ) {
       question_panel.hide()
       celebrate()
-      let next = setTimeout(
+      setTimeout(
         function()
         {
           load_next()
