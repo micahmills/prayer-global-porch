@@ -139,7 +139,8 @@ class PG_Stacker {
                     'focus_label' => $stack['location']['full_name'],
                     'icon' => 'ion-map',
                     'color' => $icon,
-                    'section_summary' => $text['section_summary']
+                    'section_summary' => $text['section_summary'],
+                    'prayer' => ''
                 ]
             ];
         }
