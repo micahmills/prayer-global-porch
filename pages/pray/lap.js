@@ -488,10 +488,9 @@ jQuery(document).ready(function(){
               'id': 'parent_collection_fill',
               'type': 'fill',
               'source': 'parent_collection',
-              // 'maxzoom': 12,
               'filter': [ '==', ['get', 'grid_id'], grid_row.grid_id ],
               'paint': {
-                'fill-color': '#0080ff',
+                'fill-color': 'red',
                 'fill-opacity': 0.75
               }
             });
@@ -513,22 +512,43 @@ jQuery(document).ready(function(){
                 'fill-opacity': 0
               }
             });
+
+
+            let point_geojson = {
+              'type': 'FeatureCollection',
+              'features': [
+                {
+                  'type': 'Feature',
+                  'properties': {
+                    'full_name': grid_row.full_name
+                  },
+                  'geometry': {
+                    'type': 'Point',
+                    'coordinates': [ grid_row.longitude, grid_row.latitude ]
+                  }
+                }]
+            }
+            console.log(point_geojson)
+            map.addSource('point_geojson', {
+              'type': 'geojson',
+              'data': point_geojson
+            });
             map.addLayer({
               'id': 'poi-labels',
               'type': 'symbol',
-              'source': 'parent_collection',
-              'filter': [ '==', ['get', 'grid_id'], grid_row.grid_id ],
+              'source': 'point_geojson',
               'layout': {
                 'text-field': ['get', 'full_name'],
                 'text-variable-anchor': ['top', 'bottom', 'left', 'right'],
                 'text-radial-offset': 0.5,
                 'text-justify': 'auto',
-                'icon-image': ['get', 'icon']
+                'text-allow-overlap': false,
+                'text-size': 26
               },
               "paint": {
                 "text-color": "#202",
-                "text-halo-color": "#fff",
-                "text-halo-width": 2
+                "text-halo-color": "#dbe9f4",
+                "text-halo-width": 3
               },
             });
 
