@@ -101,6 +101,7 @@ jQuery(document).ready(function(){
   }
   window.viewed = Cookies.get('pg_viewed')
   window.items = parseInt( window.pace ) + 5
+  window.report_content = []
 
 
   /**
@@ -118,7 +119,7 @@ jQuery(document).ready(function(){
     // load current location
     window.api_post( 'refresh', { favor: window.favor } )
       .done( function(l1) {
-        window.current_content = test_for_redundant_grid( l1 )
+        window.report_content = window.current_content = test_for_redundant_grid( l1 )
         load_location()
         if ( typeof window.viewed === 'undefined' ) {
           toggle_timer( true )
@@ -288,7 +289,7 @@ jQuery(document).ready(function(){
    * FRAMEWORK LOADERS
    */
   function load_location( ) {
-    let content = window.current_content
+    let content = window.report_content = window.current_content
 
     button_text.html('Keep Praying...')
     button_progress.css('width', '0' )
@@ -349,7 +350,7 @@ jQuery(document).ready(function(){
 
 
   /**
-   * Correction button
+   * Correction Report
    */
   let correction_field = jQuery('.correction_field')
   let correction_modal = jQuery('#correction_modal')
@@ -360,11 +361,11 @@ jQuery(document).ready(function(){
   let correction_error = jQuery('#correction_error')
   let correction_response = jQuery('#correction_response')
   jQuery('#correction_button').on('click', function() {
-    console.log(window.current_content)
-    correction_title.html(`<strong>${window.current_content.location.full_name}</strong>`)
+    console.log(window.report_content)
+    correction_title.html(`<strong>${window.report_content.location.full_name}</strong>`)
     correction_select.empty()
     correction_select.append(`<option value=""></option><option value="map">Map</option>`)
-    jQuery.each(window.current_content.list, function(i,v){
+    jQuery.each(window.report_content.list, function(i,v){
       correction_select.append(`<option value="${v.type}">${v.data.section_label}</option>`)
     })
     correction_select.append(`<option value="other">Other</option>`)
@@ -374,8 +375,8 @@ jQuery(document).ready(function(){
     correction_error.empty()
 
     let data = {
-      grid_id: window.current_content.location.grid_id,
-      current_content: window.current_content,
+      grid_id: window.report_content.location.grid_id,
+      current_content: window.report_content,
       user: window.user_location,
       language: 'en',
       section: correction_select.val(),
@@ -407,6 +408,7 @@ jQuery(document).ready(function(){
     correction_submit.prop('disabled', false)
     correction_spinner.removeClass('active')
   })
+  /** end correction report */
 
 
   /**
