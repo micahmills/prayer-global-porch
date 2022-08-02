@@ -186,8 +186,12 @@ jQuery(document).ready(function(){
     })
     decision_next.off('click')
     decision_next.on('click', function( e ) {
-      load_next()
+      window.api_post( 'refresh', { favor: window.favor } )
+        .done( function(l1) {
+          window.report_content = window.current_content = test_for_redundant_grid( l1 )
+        })
       refresh()
+      load_next()
     })
     question_yes_done.off('click')
     question_yes_done.on('click', function( e ) {
