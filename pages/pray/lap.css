@@ -244,3 +244,6 @@ nav {
 .hidden {
     display:none;
 }
+.mapboxgl-ctrl-logo {
+    display: none !important;
+}
