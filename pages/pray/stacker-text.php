@@ -659,7 +659,7 @@ class PG_Stacker_Text_V2 {
         $templates = [
             [
                 'section_label' => 'Church Planting',
-                'prayer' => 'Father, help '.$stack['location']['new_churches_needed'].' new house churches start among the '.$stack['location']['population'].' people in the '.$stack['location']['admin_level_name'].' of '.$stack['location']['full_name'].'.',
+                'prayer' => 'Father, help '.$stack['location']['new_churches_needed'].' new simple churches start among the '.$stack['location']['population'].' people in the '.$stack['location']['admin_level_name'].' of '.$stack['location']['full_name'].'. One within reach of everyone living here.',
                 'reference' => 'Habakkuk 2:14',
                 'verse' => 'For the earth will be filled with the knowledge of the glory of the Lord as the waters cover the sea.',
             ],
@@ -913,7 +913,7 @@ class PG_Stacker_Text_V2 {
             ],
             [
                 'section_label' => 'Simple Churches',
-                'prayer' => 'Father, we ask for '.$stack['location']['new_churches_needed'].' new churches in the '.$stack['location']['admin_level_name'].' of '.$stack['location']['name'].' be filled with simple churches in every neighborhood.',
+                'prayer' => 'Father, we ask for '.$stack['location']['new_churches_needed'].' new simple churches in the '.$stack['location']['admin_level_name'].' of '.$stack['location']['full_name'].'. Place a simple church in every community of the '.$stack['location']['population'].' people living here.',
                 'reference' => 'Psalm 72:19',
                 'verse' => 'And blessed be His glorious name forever; And may the whole earth be filled with His glory. Amen, and Amen.',
             ],
