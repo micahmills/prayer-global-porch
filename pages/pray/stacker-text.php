@@ -401,9 +401,7 @@ class PG_Stacker_Text_V2 {
         if ( $all ) {
             return array_merge( $templates, $lists );
         }
-
-        $lists = array_merge( [ $templates[array_rand( $templates ) ] ], $lists );
-        return $lists;
+        return array_merge( [ $templates[array_rand( $templates ) ] ], $lists );
     }
 
 
@@ -455,9 +453,7 @@ class PG_Stacker_Text_V2 {
         if ( $all ) {
             return array_merge( $templates, $lists );
         }
-
-        $lists = array_merge( [ $templates[array_rand( $templates ) ] ], $lists );
-        return $lists;
+        return array_merge( [ $templates[array_rand( $templates ) ] ], $lists );
     }
 
     public static function _religion_prayers( &$lists, $stack, $all = false ) {
@@ -502,9 +498,7 @@ class PG_Stacker_Text_V2 {
         if ( $all ) {
             return array_merge( $templates, $lists );
         }
-
-        $lists = array_merge( [ $templates[array_rand( $templates ) ] ], $lists );
-        return $lists;
+        return array_merge( [ $templates[array_rand( $templates ) ] ], $lists );
     }
 
     // https://www.missionfrontiers.org/issue/article/the-ten-universal-elements
@@ -565,8 +559,7 @@ class PG_Stacker_Text_V2 {
         if ( $all ) {
             return array_merge( $templates, $lists );
         }
-        $lists = array_merge( [ $templates[array_rand( $templates ) ] ], $lists );
-        return $lists;
+        return array_merge( [ $templates[array_rand( $templates ) ] ], $lists );
     }
 
     public static function _for_abundant_gospel_sowing( &$lists, $stack, $all = false ) {
@@ -654,8 +647,7 @@ class PG_Stacker_Text_V2 {
         if ( $all ) {
             return array_merge( $templates, $lists );
         }
-        $lists = array_merge( [ $templates[array_rand( $templates ) ] ], $lists );
-        return $lists;
+        return array_merge( [ $templates[array_rand( $templates ) ] ], $lists );
     }
 
     public static function _for_new_churches( &$lists, $stack, $all = false ) {
@@ -713,8 +705,7 @@ class PG_Stacker_Text_V2 {
         if ( $all ) {
             return array_merge( $templates, $lists );
         }
-        $lists = array_merge( [ $templates[array_rand( $templates ) ] ], $lists );
-        return $lists;
+        return array_merge( [ $templates[array_rand( $templates ) ] ], $lists );
     }
 
     public static function _for_obedience( &$lists, $stack, $all = false ) {
@@ -760,8 +751,7 @@ class PG_Stacker_Text_V2 {
         if ( $all ) {
             return array_merge( $templates, $lists );
         }
-        $lists = array_merge( [ $templates[array_rand( $templates ) ] ], $lists );
-        return $lists;
+        return array_merge( [ $templates[array_rand( $templates ) ] ], $lists );
     }
 
     public static function _for_biblical_authority( &$lists, $stack, $all = false ) {
@@ -837,8 +827,7 @@ class PG_Stacker_Text_V2 {
         if ( $all ) {
             return array_merge( $templates, $lists );
         }
-        $lists = array_merge( [ $templates[array_rand( $templates ) ] ], $lists );
-        return $lists;
+        return array_merge( [ $templates[array_rand( $templates ) ] ], $lists );
     }
 
     public static function _for_leadership( &$lists, $stack, $all = false ) { // local leadership and lay leadership
@@ -884,8 +873,7 @@ class PG_Stacker_Text_V2 {
         if ( $all ) {
             return array_merge( $templates, $lists );
         }
-        $lists = array_merge( [ $templates[array_rand( $templates ) ] ], $lists );
-        return $lists;
+        return array_merge( [ $templates[array_rand( $templates ) ] ], $lists );
     }
 
     public static function _for_house_churches( &$lists, $stack, $all = false ) {
@@ -937,8 +925,7 @@ class PG_Stacker_Text_V2 {
         if ( $all ) {
             return array_merge( $templates, $lists );
         }
-        $lists = array_merge( [ $templates[array_rand( $templates ) ] ], $lists );
-        return $lists;
+        return array_merge( [ $templates[array_rand( $templates ) ] ], $lists );
     }
 
     public static function _for_multiplication( &$lists, $stack, $all = false ) { // churches planting churches & disciple making disciples
@@ -1026,8 +1013,7 @@ class PG_Stacker_Text_V2 {
         if ( $all ) {
             return array_merge( $templates, $lists );
         }
-        $lists = array_merge( [ $templates[array_rand( $templates ) ] ], $lists );
-        return $lists;
+        return array_merge( [ $templates[array_rand( $templates ) ] ], $lists );
     }
 
     public static function _for_urgency( &$lists, $stack, $all = false ) { // for rapid reproduction
@@ -1115,8 +1101,7 @@ class PG_Stacker_Text_V2 {
         if ( $all ) {
             return array_merge( $templates, $lists );
         }
-        $lists = array_merge( [ $templates[array_rand( $templates ) ] ], $lists );
-        return $lists;
+        return array_merge( [ $templates[array_rand( $templates ) ] ], $lists );
     }
 
 
@@ -1187,8 +1172,7 @@ class PG_Stacker_Text_V2 {
         if ( $all ) {
             return array_merge( $templates, $lists );
         }
-        $lists = array_merge( [ $templates[array_rand( $templates ) ] ], $lists );
-        return $lists;
+        return array_merge( [ $templates[array_rand( $templates ) ] ], $lists );
     }
 
     public static function _cities( &$lists, $stack, $all = false ) {
@@ -1207,8 +1191,7 @@ class PG_Stacker_Text_V2 {
         if ( $all ) {
             return array_merge( $templates, $lists );
         }
-        $lists = array_merge( [ $templates[array_rand( $templates ) ] ], $lists );
-        return $lists;
+        return array_merge( [ $templates[array_rand( $templates ) ] ], $lists );
     }
 
     public static function _non_christian_deaths( &$lists, $stack, $all = false ) {
@@ -1225,8 +1208,7 @@ class PG_Stacker_Text_V2 {
         if ( $all ) {
             return array_merge( $templates, $lists );
         }
-        $lists = array_merge( [ $templates[array_rand( $templates ) ] ], $lists );
-        return $lists;
+        return array_merge( [ $templates[array_rand( $templates ) ] ], $lists );
     }
 
     public static function _christian_adherents_deaths( &$lists, $stack, $all = false ) {
@@ -1238,13 +1220,30 @@ class PG_Stacker_Text_V2 {
                 'reference' => '',
                 'verse' => '',
             ],
+            [
+                'section_label' => $section_label,
+                'prayer' => "Spirit, ".$stack['location']['christian_adherents']." cultural Christians in ".$stack['location']['full_name']." likely have a Bible in their home. Please, send conviction for them to open it and read it for themselves.",
+                'reference' => '',
+                'verse' => '',
+            ],
+            [
+                'section_label' => $section_label,
+                'prayer' => "Spirit, teach the ".$stack['location']['christian_adherents']." cultural Christians in ".$stack['location']['full_name']." to pray from the heart and not with scripts or formulas only.",
+                'reference' => '',
+                'verse' => '',
+            ],
+            [
+                'section_label' => $section_label,
+                'prayer' => "Spirit, bless the ".$stack['location']['christian_adherents']." cultural Christians in ".$stack['location']['name']." with more knowlege and curiosity about your beautiful gospel, that they might claim it for themselves personally and intimately.",
+                'reference' => '',
+                'verse' => '',
+            ],
         ];
 
         if ( $all ) {
             return array_merge( $templates, $lists );
         }
-        $lists = array_merge( [ $templates[array_rand( $templates ) ] ], $lists );
-        return $lists;
+        return array_merge( [ $templates[array_rand( $templates ) ] ], $lists );
     }
 
     public static function _believers_births( &$lists, $stack, $all = false ) {
@@ -1261,8 +1260,7 @@ class PG_Stacker_Text_V2 {
         if ( $all ) {
             return array_merge( $templates, $lists );
         }
-        $lists = array_merge( [ $templates[array_rand( $templates ) ] ], $lists );
-        return $lists;
+        return array_merge( [ $templates[array_rand( $templates ) ] ], $lists );
     }
 
 }
