@@ -32,7 +32,7 @@
 
         <div class="row" style="padding-top: 5rem;">
             <div class="col text-center">
-                <p class="pb_font-14">&copy; <script>document.write(new Date().getFullYear())</script>. All Rights Reserved.</p>
+                <p class="pb_font-14">Prayer Global &copy; <script>document.write(new Date().getFullYear())</script> Gospel Ambition</p>
             </div>
         </div>
     </div>
