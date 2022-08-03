@@ -37,8 +37,8 @@ add_filter( 'dt_post_type_modules', function( $modules ){
 require_once 'laps.php';
 Prayer_Global_Laps_Post_Type::instance();
 
-//require_once 'feedback.php';
-//Prayer_Global_Feedback_Post_Type::instance();
+require_once 'feedback.php';
+Prayer_Global_Feedback_Post_Type::instance();
 
 
 function prayer_global_list_languages(){
