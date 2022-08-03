@@ -62,6 +62,9 @@ body {
 .white {
     color: white;
 }
+.white:hover {
+    color: lightgrey;
+}
 .pb_outline-dark.highlight {
     border: 1px solid white;
     border-radius: 4px;

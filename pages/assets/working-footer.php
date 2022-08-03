@@ -4,6 +4,8 @@
             <div class="col-md-3">
                 <p class="pb_font-14">
                     Made with &#10084;&#65039; by <a class="white" href="https://pray4movement.org">Pray4Movement</a> and <a class="white" href="https://gospelambition.org">Gospel Ambition</a><br>
+                </p>
+                <p>
                     Powered by <a class="white" href="https://disciple.tools">Disciple.Tools</a>
                 </p>
             </div>
