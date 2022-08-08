@@ -780,7 +780,7 @@ class PG_Stacker {
                     continue;
                 }
 
-                $values[] = [
+                $values[$group['PeopleID3']] = [
                     'name' => $group['name'],
                     'image_url' => $image,
                     'description' => $group['name'] . '<br>(' . $group['PrimaryReligion'].')',
