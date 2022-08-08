@@ -260,11 +260,16 @@ class Prayer_Global_Porch_Stats_Big_Map extends DT_Magic_Url_Base
             case 'get_stats':
                 return pg_global_race_stats();
             case 'get_grid':
-                return $this->get_grid( $params['parts'] );
+                return [
+                    'grid_data' => $this->get_grid( $params['parts'] ),
+                    'participants' => $this->get_participants( $params['parts'] ),
+                ];
             case 'get_grid_details':
                 return $this->get_grid_details( $params['data'] );
             case 'get_participants':
                 return $this->get_participants( $params['parts'] );
+            case 'get_user_locations':
+                return $this->get_user_locations( $params['parts'], $params['data'] );
             default:
                 return new WP_Error( __METHOD__, 'missing action parameter' );
         }
@@ -337,6 +342,39 @@ class Prayer_Global_Porch_Stats_Big_Map extends DT_Magic_Url_Base
         }
 
         return $participants;
+    }
+
+    public function get_user_locations( $parts, $data ){
+        global $wpdb;
+        // Query based on hash
+        $hash = $data['hash'];
+        if ( empty( $hash ) ) {
+            return [];
+        }
+
+        $user_locations_raw  = $wpdb->get_results( $wpdb->prepare( "
+               SELECT lg.longitude, lg.latitude
+               FROM $wpdb->dt_reports r
+               LEFT JOIN $wpdb->dt_location_grid lg ON lg.grid_id=r.grid_id
+               WHERE r.post_type = 'laps'
+                    AND r.type = 'prayer_app'
+                    AND r.hash = %s
+                AND r.label IS NOT NULL
+            ", $hash ), ARRAY_A );
+
+        $user_locations = [];
+        if ( ! empty( $user_locations_raw ) ) {
+            foreach ( $user_locations_raw as $p ) {
+                if ( ! empty( $p['longitude'] ) ) {
+                    $user_locations[] = [
+                        'longitude' => (float) $p['longitude'],
+                        'latitude' => (float) $p['latitude']
+                    ];
+                }
+            }
+        }
+
+        return $user_locations;
     }
 
     public function get_grid_details( $data ) {
