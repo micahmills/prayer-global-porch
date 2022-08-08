@@ -457,7 +457,7 @@ class PG_Global_Prayer_App_Lap extends PG_Global_Prayer_App {
             } else { // if first load on finished lap, redirect to new lap
                 $current_lap = pg_current_global_lap();
                 $this->_generate_new_prayer_lap();
-                wp_redirect( '/prayer_app/global/'.$current_lap['key'] );
+                wp_redirect( '/newest/lap/' );
                 exit;
             }
         }

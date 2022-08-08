@@ -142,7 +142,6 @@ class PG_Global_Prayer_App_Map extends PG_Global_Prayer_App {
                 </div>
                 <span class="loading-spinner active"></span>
                 <div id='map'></div>
-                <
                 <div id="foot_block">
                     <div class="grid-x grid-padding-x">
                         <div class="cell center"><button type="button" data-toggle="offcanvas_stats"><i class="ion-chevron-up two-em"></i></button></div>
@@ -151,7 +150,6 @@ class PG_Global_Prayer_App_Map extends PG_Global_Prayer_App {
                         <div class="cell small-6 medium-3 center"><strong>Prayer Warriors</strong><br><img class="three-em" style="padding-top:5px;" src="<?php echo plugin_dir_url( __DIR__ ) . 'assets/images/praying-hand-up-20.png' ?>" /></div>
                         <div class="cell small-6 medium-3 center"><strong>Your Recent Prayers</strong><br><img class="three-em" style="padding-top:5px;" src="<?php echo plugin_dir_url( __DIR__ ) . 'assets/images/black-check-50.png' ?>" /></div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -369,7 +367,6 @@ class PG_Global_Prayer_App_Map extends PG_Global_Prayer_App {
 
     public function get_grid_details( $data ) {
         $details = PG_Stacker::build_location_stack( $data['grid_id'] );
-
         return $details;
     }
 
