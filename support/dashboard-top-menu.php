@@ -28,7 +28,7 @@ class PG_DT_Dashboard {
         $url = dt_get_url_path();
         if ( strpos( $url, "porch_dashboard" ) !== false ) {
             $plugin_dir = dirname( __FILE__ );
-            $path = $plugin_dir . '/template-dashboard.php';
+            $path = $plugin_dir . '/template-dashboard.php'; // @todo change this template
             status_header( 200 );
             include( $path );
             die();
@@ -41,7 +41,7 @@ class PG_DT_Dashboard {
     
     public function front_page( $page ) {
         ?>
-        <iframe src="/" width="100%" height="95vh" ></iframe>
+        <iframe src="/" style="width: 100%; height: 90vh;" ></iframe>
         <?php
     }
 
