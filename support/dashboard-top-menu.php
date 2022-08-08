@@ -46,12 +46,11 @@ class PG_DT_Dashboard {
     }
 
     public function nav_menu( $tabs ) {
-        $tabs['dashboard'] = [
-            "link"  => site_url( '/dashboard/' ),
-            "label" => __( "Dashboard", "disciple-tools-dashboard" )
+        $tabs['porch_dashboard'] = [
+            "link"  => site_url( '/porch_dashboard/' ),
+            "label" => __( "Porch", "prayer-global" )
         ];
         return $tabs;
-
     }
 }
 PG_DT_Dashboard::instance();
