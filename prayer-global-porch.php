@@ -105,6 +105,7 @@ class Prayer_Global_Porch {
         require_once( 'pages/media/magic-media.php' );
         require_once( 'pages/contact/loader.php' );
         require_once( 'pages/privacy/magic-privacy.php' );
+        require_once( 'pages/data-sources/magic-data-sources.php' );
 
         // prayer_app
         require_once( 'pages/pray/magic-global.php' );
