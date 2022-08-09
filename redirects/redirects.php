@@ -103,11 +103,15 @@ class Prayer_Global_Porch_Newest_Lap_Map extends DT_Magic_Url_Base
 
         $url = dt_get_url_path();
 
-        if (substr( $url, 0, strlen( $this->url_token ) ) !== $this->root . '/' . $this->type) {
-            return;
+        if (substr( $url, 0, strlen( $this->url_token ) ) === $this->root . '/' . $this->type) {
+            $this->redirect();
         }
 
-        $this->redirect();
+        if (substr( $url, 0, 3 ) === 'map' ) {
+            $this->redirect();
+        }
+
+
     }
 
     public function redirect() {
