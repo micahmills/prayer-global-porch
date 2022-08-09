@@ -137,18 +137,17 @@ class Prayer_Global_Porch_Stats_Big_Map extends DT_Magic_Url_Base
             <div id="map-wrapper">
                 <div id="head_block">
                     <div class="grid-x grid-padding-x">
-                        <div class="cell medium-5 hide-for-small-only">
+                        <div class="cell large-5 show-for-large">
                             <a href="/" class="navbar-brand">Prayer.Global</a>
                         </div>
-                        <div class="cell small-9 medium-2 center hide-for-small-only">
-                            <span class="two-em lap-title">Big Map</span>
+                        <div class="cell small-9 large-2 center show-for-large">
+                            <span class="two-em">Big Map</span>
                         </div>
-                        <div class="cell small-9 medium-4 show-for-small-only">
-                            <span class="two-em lap-title"><strong>Big Map</strong></span>
+                        <div class="cell small-9 large-5 hide-for-large">
+                            <span class="two-em">Big Map</span>
                         </div>
-                        <div class="cell small-3 medium-5 hide-for-small-only" id="nav-list">
+                        <div class="cell small-3 large-5 show-for-large" id="nav-list">
                             <ul>
-                                <!--                    <li class="nav-item"><a class="nav-link btn smoothscroll pb_outline-dark" style="border:1px black solid;" href="/newest/lap/">Start Praying</a></li>-->
                                 <li class="nav-item"><a class="nav-link btn smoothscroll pb_outline-dark highlight" style="border:1px black solid;" href="/newest/lap/">Start Praying</a></li>
                                 <li class="nav-item"><a class="nav-link" href="/#section-lap">Status</a></li>
                                 <li class="nav-item"><a class="nav-link" href="/#section-challenge">Challenge</a></li>
@@ -156,8 +155,8 @@ class Prayer_Global_Porch_Stats_Big_Map extends DT_Magic_Url_Base
                                 <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
                             </ul>
                         </div>
-                        <div class="cell small-3 medium-4 show-for-small-only" style="text-align:right;">
-                            <button type="button" data-toggle="offcanvas_menu"><i class="fi-list three-em"></i></button>
+                        <div class="cell small-3 large-4 hide-for-large" style="text-align:right;">
+                            <button type="button" data-toggle="offcanvas_menu"><i class="ion-navicon three-em"></i></button>
                         </div>
                     </div>
                 </div>
@@ -175,18 +174,22 @@ class Prayer_Global_Porch_Stats_Big_Map extends DT_Magic_Url_Base
             </div>
         </div>
         <div class="off-canvas position-right" id="offcanvas_menu" data-close-on-click="true" data-off-canvas>
-            <button type="button" data-toggle="offcanvas_menu"><i class="ion-chevron-right three-em"></i></button>
+            <button type="button" data-toggle="offcanvas_menu"><i class="ion-chevron-right two-em"></i></button>
             <hr>
             <ul class="navbar-nav two-em">
                 <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="/#section-lap">Prayer Laps</a></li>
                 <li class="nav-item"><a class="nav-link" href="/#section-about">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="/#section-challenge">Challenge</a></li>
+                <li class="nav-item"><a class="nav-link" href="/#section-lap">Status</a></li>
+            </ul>
+            <hr>
+            <ul class="navbar-nav two-em">
                 <li class="nav-item"><a class="nav-link btn smoothscroll pb_outline-dark" style="text-transform: capitalize;" href="/newest/lap/">Start Praying</a></li>
             </ul>
             <hr>
             <ul class="navbar-nav two-em">
-                <li class="nav-item"><a class="nav-link" href="/race_app/big_list/">Big List</a></li>
                 <li class="nav-item"><a class="nav-link" href="/race_app/big_map/">Big Map</a></li>
+                <li class="nav-item"><a class="nav-link" href="/race_app/big_list/">Big List</a></li>
             </ul>
         </div>
         <div class="off-canvas position-right " id="offcanvas_location_details" data-close-on-click="true" data-content-overlay="false" data-off-canvas>

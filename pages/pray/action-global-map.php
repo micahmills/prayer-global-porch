@@ -154,19 +154,22 @@ class PG_Global_Prayer_App_Map extends PG_Global_Prayer_App {
             </div>
         </div>
         <div class="off-canvas position-right" id="offcanvas_menu" data-close-on-click="true" data-off-canvas>
-            <button type="button" data-toggle="offcanvas_menu"><i class="ion-chevron-right three-em"></i></button>
+            <button type="button" data-toggle="offcanvas_menu"><i class="ion-chevron-right two-em"></i></button>
             <hr>
             <ul class="navbar-nav two-em">
                 <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
                 <li class="nav-item"><a class="nav-link" href="/#section-about">About</a></li>
                 <li class="nav-item"><a class="nav-link" href="/#section-challenge">Challenge</a></li>
                 <li class="nav-item"><a class="nav-link" href="/#section-lap">Status</a></li>
+            </ul>
+            <hr>
+            <ul class="navbar-nav two-em">
                 <li class="nav-item"><a class="nav-link btn smoothscroll pb_outline-dark" style="text-transform: capitalize;" href="/newest/lap/">Start Praying</a></li>
             </ul>
             <hr>
             <ul class="navbar-nav two-em">
-                <li class="nav-item"><a class="nav-link" href="/race_app/big_list/">Big List</a></li>
                 <li class="nav-item"><a class="nav-link" href="/race_app/big_map/">Big Map</a></li>
+                <li class="nav-item"><a class="nav-link" href="/race_app/big_list/">Big List</a></li>
             </ul>
             <div class="show-for-small-only">
                 <hr>
