@@ -368,6 +368,8 @@ jQuery(document).ready(function($){
 
     window.get_data_page( 'get_grid_details', {grid_id: grid_id} )
       .done(function(response){
+        window.report_content = response
+
         console.log(response)
         let bodies_1 = ''
         let bodies_2 = ''
@@ -418,9 +420,12 @@ jQuery(document).ready(function($){
                 <hr>
               </div>
               <div class="cell">
-                Primary Religion: ${response.location.primary_religion}<br>
-                Primary Language: ${response.location.primary_language}<br>
+                Religion: ${response.location.primary_religion}<br>
+                Official Language: ${response.location.primary_language}<br>
                 <hr>
+              </div>
+              <div class="cell">
+                  <button class="button clear" id="correction_button" onclick="window.load_report_modal()">Correction Needed?</button>
               </div>
           </div>
           `

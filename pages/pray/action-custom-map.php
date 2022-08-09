@@ -93,6 +93,7 @@ class PG_Custom_Prayer_App_Map extends PG_Custom_Prayer_App {
         <link rel="stylesheet" href="<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/fonts/ionicons/css/ionicons.min.css">
         <link rel="stylesheet" href="<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/basic.css?ver=<?php echo esc_attr( fileatime( trailingslashit( plugin_dir_path( __DIR__ ) ) . 'assets/basic.css' ) ) ?>" type="text/css" media="all">
         <link rel="stylesheet" href="<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) ) ?>heatmap.css?ver=<?php echo esc_attr( fileatime( trailingslashit( plugin_dir_path( __FILE__ ) ) . 'heatmap.css' ) ) ?>" type="text/css" media="all">
+        <script src="<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) ) ?>report.js?ver=<?php echo esc_attr( fileatime( trailingslashit( plugin_dir_path( __FILE__ ) ) . 'report.js' ) ) ?>"></script>
         <?php
     }
 
@@ -175,6 +176,33 @@ class PG_Custom_Prayer_App_Map extends PG_Custom_Prayer_App {
             <button type="button" data-toggle="offcanvas_location_details"><i class="ion-chevron-right three-em"></i></button>
             <hr>
             <div class="grid-x grid-padding-x" id="grid_details_content"></div>
+        </div>
+        <!-- report modal -->
+        <div class="reveal " id="correction_modal" data-v-offset="10px;" data-reveal>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Thank you! Leave us a correction below.</h5>
+                    <hr>
+                </div>
+                <div class="modal-body">
+                    <p><span id="correction_title" class="correction_field"></span></p>
+                    <p>
+                        Section:<br>
+                        <select class="form-control correction_field" id="correction_select"></select>
+                    </p>
+                    <p>
+                        Correction Requested:<br>
+                        <textarea class="form-control correction_field" id="correction_response" rows="3"></textarea>
+                    </p>
+                    <p>
+                        <button type="button" class="button button-secondary" id="correction_submit_button">Submit</button> <span class="loading-spinner correction_modal_spinner"></span>
+                    </p>
+                    <p id="correction_error" class="correction_field"></p>
+                </div>
+            </div>
+            <button class="close-button" data-close aria-label="Close modal" type="button">
+                <span aria-hidden="true">&times;</span>
+            </button>
         </div>
         <div class="off-canvas position-bottom" id="offcanvas_stats" data-close-on-click="true" data-off-canvas>
             <div class="center"><button type="button" data-toggle="offcanvas_stats"><i class="ion-chevron-down three-em"></i></button></div>

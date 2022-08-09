@@ -17,7 +17,7 @@ jQuery(document).ready(function(){
         console.log(e)
       })
   }
-  function refresh() {
+  function load_next_content() {
     window.api_post( 'refresh', { grid_id: window.current_content.location.grid_id, favor: window.favor } )
       .done(function(location) {
         if ( location === false ) {
@@ -26,7 +26,7 @@ jQuery(document).ready(function(){
         window.next_content = location
       })
   }
-  function load_next() {
+  function advance_to_next_location() {
     toggle_timer( false )
     button_progress.css('width', '0' )
     window.time = 0
@@ -189,9 +189,9 @@ jQuery(document).ready(function(){
       window.api_post( 'refresh', { favor: window.favor } )
         .done( function(l1) {
           window.report_content = window.current_content = test_for_redundant_grid( l1 )
+          load_next_content()
+          advance_to_next_location()
         })
-      refresh()
-      load_next()
     })
     question_yes_done.off('click')
     question_yes_done.on('click', function( e ) {
@@ -210,7 +210,7 @@ jQuery(document).ready(function(){
       setTimeout(
         function()
         {
-          load_next()
+          advance_to_next_location()
         }, 3000);
     })
     pace_buttons.off('click')
@@ -318,6 +318,8 @@ jQuery(document).ready(function(){
     jQuery('.container.block:nth-child(+n+' + window.items + ')').hide()
 
     prayer_progress_indicator( window.time ) // SETS THE PRAYER PROGRESS WIDGET
+
+    window.load_report_modal()
   }
   function prayer_progress_indicator( time_start ) {
     window.time = time_start
@@ -352,67 +354,6 @@ jQuery(document).ready(function(){
     }, 100);
   }
 
-
-  /**
-   * Correction Report
-   */
-  let correction_field = jQuery('.correction_field')
-  let correction_modal = jQuery('#correction_modal')
-  let correction_title = jQuery('#correction_title')
-  let correction_select = jQuery('#correction_select')
-  let correction_submit = jQuery('#correction_submit_button')
-  let correction_spinner = jQuery('.loading-spinner.correction_modal_spinner')
-  let correction_error = jQuery('#correction_error')
-  let correction_response = jQuery('#correction_response')
-  jQuery('#correction_button').on('click', function() {
-    console.log(window.report_content)
-    correction_title.html(`<strong>${window.report_content.location.full_name}</strong>`)
-    correction_select.empty()
-    correction_select.append(`<option value=""></option><option value="map">Map</option>`)
-    jQuery.each(window.report_content.list, function(i,v){
-      correction_select.append(`<option value="${v.type}">${v.data.section_label}</option>`)
-    })
-    correction_select.append(`<option value="other">Other</option>`)
-    correction_modal.modal('show')
-  })
-  correction_submit.on('click', function(){
-    correction_error.empty()
-
-    let data = {
-      grid_id: window.report_content.location.grid_id,
-      current_content: window.report_content,
-      user: window.user_location,
-      language: 'en',
-      section: correction_select.val(),
-      section_label: jQuery('#correction_select option:selected').text(),
-      response: correction_response.val(),
-
-    }
-
-    if ( ! data.response ) {
-      correction_error.html(`You must enter a correction in order to submit.`)
-      return
-    }
-
-    correction_spinner.addClass('active')
-    correction_submit.prop('disabled', true)
-
-    window.api_post( 'correction', data )
-      .done(function(x) {
-        console.log(x)
-        correction_modal.modal('hide')
-        correction_field.empty().val('')
-        correction_submit.prop('disabled', false)
-        correction_spinner.removeClass('active')
-      })
-
-  })
-  jQuery('#correction_close').on( 'click', function(){
-    correction_field.empty().val('')
-    correction_submit.prop('disabled', false)
-    correction_spinner.removeClass('active')
-  })
-  /** end correction report */
 
 
   /**

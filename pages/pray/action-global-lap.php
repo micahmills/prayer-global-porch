@@ -104,6 +104,7 @@ class PG_Global_Prayer_App_Lap extends PG_Global_Prayer_App {
             <link rel="prefetch" href="<?php echo esc_url( plugin_dir_url( __DIR__ ) . 'assets/images/celebrate2.gif' ) ?>" >
             <link rel="prefetch" href="<?php echo esc_url( plugin_dir_url( __DIR__ ) . 'assets/images/celebrate3.gif' ) ?>" >
             <script src="<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) ) ?>lap.js?ver=<?php echo esc_attr( fileatime( trailingslashit( plugin_dir_path( __FILE__ ) ) . 'lap.js' ) ) ?>"></script>
+            <script src="<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) ) ?>report.js?ver=<?php echo esc_attr( fileatime( trailingslashit( plugin_dir_path( __FILE__ ) ) . 'report.js' ) ) ?>"></script>
             <?php
         }
     }
@@ -216,30 +217,6 @@ class PG_Global_Prayer_App_Lap extends PG_Global_Prayer_App {
                 </div>
             </div>
         </div>
-        <div class="modal fade" id="correction_modal" tabindex="-1" role="dialog" aria-labelledby="correction_modal_label" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Thank you! Leave us a correction below.</h5>
-                        <button type="button" id="correction_close" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <p><span id="correction_title" class="correction_field"></span></p>
-                        <p>
-                            Section:<br>
-                            <select class="form-control correction_field" id="correction_select"></select>
-                        </p>
-                        <p>
-                            Correction Requested:<br>
-                            <textarea class="form-control correction_field" id="correction_response" rows="3"></textarea></p>
-                        <p><button type="button" class="btn btn-primary" id="correction_submit_button">Submit</button> <span class="loading-spinner correction_modal_spinner"></span></p>
-                        <p id="correction_error" class="correction_field"></p>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         <!-- content section -->
         <section>
@@ -254,9 +231,36 @@ class PG_Global_Prayer_App_Lap extends PG_Global_Prayer_App {
             <div id="content"></div>
             <div class="container">
                 <div class="row text-center pb-4"><div class="col"><button type="button" class="btn btn-outline-primary" id="more_prayer_fuel">Show More Prayer Fuel</button></div></div>
-                <div class="row text-center">
-                    <div class="col" style="padding-bottom:2em;">
+                <div class="row">
+                    <div class="col text-center" style="padding-bottom:2em;">
                         <button class="btn btn-link" id="correction_button">Correction Needed?</button>
+                    </div>
+                    <div class="modal fade" id="correction_modal"  role="dialog" aria-labelledby="correction_modal_label" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Thank you! Leave us a correction below.</h5>
+                                    <button type="button" id="correction_close" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p><span id="correction_title" class="correction_field"></span></p>
+                                    <p>
+                                        Section:<br>
+                                        <select class="form-control correction_field" id="correction_select"></select>
+                                    </p>
+                                    <p>
+                                        Correction Requested:<br>
+                                        <textarea class="form-control correction_field" id="correction_response" rows="3"></textarea>
+                                    </p>
+                                    <p>
+                                        <button type="button" class="btn btn-primary" id="correction_submit_button">Submit</button> <span class="loading-spinner correction_modal_spinner"></span>
+                                    </p>
+                                    <p id="correction_error" class="correction_field"></p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
