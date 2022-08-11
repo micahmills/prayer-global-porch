@@ -106,6 +106,20 @@ class Prayer_Global_Porch_Data_Source extends DT_Magic_Url_Base
                         </p>
                     </div>
 
+                    <div style="padding:1em;border:2px solid gray;">
+                        <h4>Recommended Resource: <a href="https://locationgrid.app">Location Grid Project</a></h4>
+                        <p>
+                            Prayer.Global is build on Disciple.Tools open source software, and Disciple.Tools mapping and
+                            geolocation system is an open source project called Location Grid Project. The Location Grid Project
+                            is a geographic framework of world locations and polygons for disciple making movement saturation efforts.
+                        </p>
+                    </div>
+
+                    <div class="row justify-content-md-center text-center mb-5">
+                        <div class="col-lg-7">
+                            <h2 class="mt-0 pt-5 font-weight-normal">Data and Methodology</h2>
+                        </div>
+                    </div>
 
                     <!-- Item -->
                     <div class="cell">
@@ -248,11 +262,16 @@ class Prayer_Global_Porch_Data_Source extends DT_Magic_Url_Base
                         </ul>
                     </div>
 
+                    <hr>
+                    <div class="row justify-content-md-center text-center mb-5">
+                        <div class="col-lg-7">
+                            <h2 class="mt-0 pt-5 font-weight-normal">Statistical Resources</h2>
+                        </div>
+                    </div>
 
                     <!-- Item -->
                     <div class="cell">
                         <hr>
-                        <h3 class="secondary">Statistic Resources</h3>
                         <div style="padding-left:1em;">
                             <u>National Statistical Offices</u>
                             <table class="overview">
