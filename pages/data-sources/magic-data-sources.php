@@ -98,48 +98,153 @@ class Prayer_Global_Porch_Data_Source extends DT_Magic_Url_Base
                         </p>
                         <p>
                             No government has this exact number, no business, ... nobody but God has the facts of a person's true faith or whereabouts. Therefore, every demographic fact
-                            is a mathematical deduction. (Sorry friends who like exact numbers.)
+                            is a mathematical deduction or extrapolation. (Sorry friends who like exact numbers.)
                         </p>
                         <p>
-                            But leveraging the best data sources we can use, we have created a prayer tool to offer informative prayer guidance combined with a more radically specific location breakdown of the world.
+                            But leveraging the best data sources we can access, we have created a prayer tool to offer
+                            informative prayer guidance featuring a unique, close-up location breakdown of the world.
                         </p>
                     </div>
 
+
                     <!-- Item -->
                     <div class="cell">
                         <hr>
-                        <h3 class="secondary">Location Grid - Boundaries</h3>
+                        <h3 class="secondary">Population Data</h3>
+                        <p>The population data was acquired and cross-checked through multiple sources; country level data
+                            is easy to find; most state level data is relatively easy to find; but county level data for non-western countries
+                            often required significant research to compile recent census data.
+                        </p>
+
+                        <u>Country Level Population</u>
                         <ul>
-                            <li>Location Grid Project - Disciple Tools</li>
-                            <li>GADM Data</li>
-                            <li>GeoNames</li>
+                            <li><a href="https://data.un.org/">UN Data</a> - United Nations is a recognized source of
+                                reliable population data and provided highest level country population.</li>
+                        </ul>
+                        <u>State Level Population</u><br>
+                        <ul>
+                            <li><a href="http://www.citypopulation.de/">City Population</a></li>
+                            <li><a href="https://worldpopulationreview.com/">World Population Review</a></li>
+                            <li>Various census reports published by governments.</li>
+                        </ul>
+                        <u>County Level Population</u><br>
+                        Many western countries have organized, open census websites and population for county (administrative level 2) locations
+                        are readily available. There are a number of governments that either deliberately do not easily publish their population data
+                        or are not organized to distribute it easily. These countries required significant research to get population data.
+                        <ul>
+                            <li><a href="http://www.citypopulation.de/">City Population</a></li>
+                            <li><a href="https://geonames.org">GeoNames</a></li>
+                            <li>Various census reports published by governments</li>
+                            <li>Various population reports published by humanitarian agencies</li>
+                            <li>Wikipedia</li>
+                            <li>State websites</li>
                         </ul>
                     </div>
 
                     <!-- Item -->
                     <div class="cell">
                         <hr>
-                        <h3 class="secondary">Location Grid - Population Data</h3>
+                        <h3 class="secondary">Faith Status Data</h3>
+                        <p>
+                            <u>Categories</u><br>
+                        </p>
                         <ul>
-                            <li></li>
+                            <li>Non-Christian<br><i>Someone who is far from a true knowledge Jesus Christ and far from a commitment to Jesus Christ.</i></li>
+                            <li>Cultural Christian <br><i>(aka. Christian Adherent) Someone who has access to the knowledge of Jesus Christ through a cultural presence of the Church, but may or may not have been encouraged to seek Jesus in a personal, intimate way.</i></li>
+                            <li>Believer<br><i>(aka. Disciple, Christian) Someone who has accepted in faith the knowledge of Jesus Christ and who has surrendered their life to Jesus as a personal savior.</i></li>
+                        </ul>
+                        <p>
+                            <u><strong>Source and Method of Calculation</strong></u><br>
+                        </p>
+                        <ul>
+                            <li>
+                                <u>Source</u><br>
+                                <a href="https://prayer.global/content_app/data_sources/">Joshua Project</a> - Values for "Christian Adherent" and "Evangelical"
+                                (which determine unreached status) are often informed estimates, some more accurate than others at the country level.
+                            </li>
+                            <li>
+                                <u>Extrapolation</u><br>
+                                Prayer.Global has used the population data at the county and state levels from the Location Grid project and
+                                divided percentages by the location population to arrive at the faith status population estimates.
+                            </li>
+                            <li>
+                                <u>Acknowledged Weakness</u><br>
+                                <p>
+                                    At best, this methodology can offer a general, estimated target for the faith status of various locations. Actual faith status for each location
+                                    could vary enormously above or below our estimates.
+                                </p>
+                                <p>
+                                    All calculations of faith status data anywhere suffer the same limitations ... no matter the source ... they are all generalizations.
+                                </p>
+                                <p>
+                                    Our belief is that the estimated numbers for non-christian, cultural christian, and disciple help the person praying to better understand the challenge facing the church
+                                    in that location. It helps answer questions like: Is this a weak and small church surrounded by a dominant religion? Is this church holding out against an atheist culture?
+                                    Is this a church trying to be faithful while surrounded by a lukewarm historic cultural church?
+                                </p>
+                                <p>
+                                    More than the exact number, it is the distribution of knowledge of Jesus that is informative to the praying person.
+                                </p>
+                            </li>
                         </ul>
                     </div>
 
                     <!-- Item -->
                     <div class="cell">
                         <hr>
-                        <h3 class="secondary">Joshua Project - People Groups</h3>
+                        <h3 class="secondary">People Group Data</h3>
                         <ul>
-                            <li>Joshua Project</li>
+                            <li><a href="https://joshuaproject.net/">Joshua Project</a> - </li>
+                            <li><a href="https://grd.imb.org/">International Mission Board - Global Research</a></li>
                         </ul>
                     </div>
 
                     <!-- Item -->
                     <div class="cell">
                         <hr>
-                        <h3 class="secondary">Joshua Project - Faith Status</h3>
+                        <h3 class="secondary">Language and Religion Data</h3>
                         <ul>
-                            <li></li>
+                            <li><a href="https://joshuaproject.net/resources/datasets">Joshua Project</a> - Two columns from Joshua Project resources were used to identify Primary Language and Primary Religion. These were identified at the country level, and future versions of Prayer Global intend to push deeper and more accurately into the spoken languages per location.</li>
+                        </ul>
+                    </div>
+
+
+                    <!-- Item -->
+                    <div class="cell">
+                        <hr>
+                        <h3 class="secondary">Administrative Divisions and Polygon Resources</h3>
+                        <p>
+                            <u>Location Grid Project</u><br>
+                            The Location Grid Project is an open source project born out of the <a href="https://disciple.tools">Disciple Tools</a> open source project. It was built to support a standardized geolocation grid for disciple making movements activity.  (<a href="https://locationgrid.app">Location Grid Project Website</a>) (<a href="https://github.com/DiscipleTools/location-grid-project">Github Project</a>)
+                        </p>
+                        <p>
+                            <u>Location Grid - Data Sources</u><br>
+                            The Location Grid database and polygon set are derived these data sources, although significant processing of original polygon files were implemented for lightweight web distribution:
+                        </p>
+                        <ul>
+                            <li><a href="https://gadm.org/">GADM</a> - GADM is an academic project that provides administrative polygon boundaries. These boundaries provided the seed for the grid system.</li>
+                            <li><a href="https://geonames.org">GeoNames</a> - GeoNames is an open source location database of over 11 million places. It has a redistributable polygon set and associated location name database that also served as a seed for the location grid system.</li>
+                            <li><a href="https://www.openstreetmap.org/">Open Street maps</a> - Open Street Maps is the best open alternative to closed mapping systems like Google Maps or Apple Maps. Intentional coordination and polygon preparation was designed for use with this tiling system.</li>
+                            <li><a href="https://www.mapbox.com/">Mapbox</a> - Mapbox is a service that uses Open Street Maps system but adds a developer friendly programming and hosting layer to mapping source.</li>
+                            <li><a href="https://locationgrid.app/">Location Grid - Database and Public Mirror</a> - An enormous amount of custom processing, configuration, and web hosting is provided as a result of the Location Grid Project.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Item -->
+                    <div class="cell">
+                        <hr>
+                        <h3 class="secondary">City Data</h3>
+                        <ul>
+                            <li><a href="https://geonames.org">GeoNames</a> - Geonames provided the original 200k city names, population, longitude, and latitude.</li>
+                            <li><a href="https://locationgrid.app">Location Grid - Geocoding</a> - Populated cities from geonames were coded against the Location Grid using the longitude, latitude. Then they were crafted into a new resource table.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Item -->
+                    <div class="cell">
+                        <hr>
+                        <h3 class="secondary">Bible Citations</h3>
+                        <ul>
+                            <li>English - The <a href="https://www.zondervan.com/about-us/permissions/">NIV</a> is the primary translation used in the prayers. ESV used occasionally.</li>
                         </ul>
                     </div>
 
