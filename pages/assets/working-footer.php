@@ -3,9 +3,9 @@
         <div class="row" >
             <div class="col-md-3">
                 <p class="pb_font-14">
-                    Made with &#10084;&#65039; by <a href="https://gospelambition.org">Gospel Ambition</a>.<br>
-                    Powered by <a href="https://disciple.tools">Disciple.Tools</a>.<br>
-                    Part of the <a href="https://pray4movement.org">Pray4Movement network</a>.
+                    Made with &#10084;&#65039; by <a href="https://gospelambition.org" style="color:black;">Gospel Ambition</a>.<br>
+                    Powered by <a href="https://disciple.tools" style="color:black;">Disciple.Tools</a>.<br>
+                    Part of the <a href="https://pray4movement.org" style="color:black;">Pray4Movement network</a>.
                 </p>
             </div>
             <div class="col-md-3">
