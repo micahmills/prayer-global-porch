@@ -10,9 +10,8 @@
             </div>
             <div class="col-md-3">
                 <ul style="list-style: none;">
-                    <li><a class="white" href="/newest/lap/">Start Praying</a></li>
-                    <li><a class="white" href="/download_app/media/">Media & Promotion</a></li>
-                    <li><a class="white" href="/prayer_app/subscribe/">Subscribe for News</a></li>
+                    <li><a class="white" href="https://apps.apple.com/us/app/prayer-global/id1636889534?uo=4"><i class="ion-social-apple"></i> iPhone/iPad App</a></li>
+                    <li><a class="white" href="https://play.google.com/store/apps/details?id=app.global.prayer"><i class="ion-social-android"></i> Android App</a></li>
                 </ul>
             </div>
             <div class="col-md-3">
@@ -20,6 +19,8 @@
                     <li><a class="white" href="/prayer_app/contact_us/">Contact Us</a></li>
                     <li><a class="white" href="https://gospelambition.org/donate/">Donate</a></li>
                     <li><a class="white" href="/content_app/data_sources/">Data Sources</a></li>
+                    <li><a class="white" href="/download_app/media/">Media & Promotion</a></li>
+                    <li><a class="white" href="/prayer_app/subscribe/">Subscribe for News</a></li>
                 </ul>
             </div>
             <div class="col-md-3">
