@@ -264,15 +264,42 @@
 <!-- END section -->
 
 
-
+<style>
+    .hover-box {
+        max-width:400px;
+        border: 1px solid white;
+        vertical-align:middle;
+        margin: .5em auto;
+        padding:.7em;
+        border-radius: 15px;
+    }
+    .hover-box:hover {
+        background-color: white;
+        color: black !important;
+    }
+    .hover-box:hover a {
+        color: black !important;
+    }
+</style>
 <section class="pb_sm_py_cover text-center cover-bg-black cover-bg-opacity-4" style="background-image: url(<?php echo esc_url( trailingslashit( plugin_dir_url( dirname( __FILE__ ) ) ) ) ?>assets/images/1900x1200_img_3.jpg)">
     <div class="container">
         <div class="row align-items-center">
             <div class="col-md-12">
-                <h2 class="heading mb-3">Join Us</h2>
-                <p class="sub-heading mb-5 pb_color-light-opacity-8">Cover the world in extra-ordinary prayer.</p>
-                <p><a href="/newest/lap/" role="button" class="btn smoothscroll pb_outline-light btn-xl p-4 rounded-0 pb_font-13 pb_letter-spacing-2">Start Praying</a></p>
-<!--                <p><a href="/prayer_app/subscribe/" role="button" class="btn smoothscroll pb_outline-light btn-xl p-4 rounded-0 pb_font-13 pb_letter-spacing-2">Start Praying</a></p>-->
+                <h2 class="heading mb-3">Get the Mobile App</h2>
+
+                <a class="white" href="https://apps.apple.com/us/app/prayer-global/id1636889534?uo=4" style="font-size:2em;">
+                    <div class="hover-box">
+                        <i class="ion-social-apple" ></i>
+                        iPhone/iPad App
+                    </div>
+                </a>
+                <a class="white" href="https://play.google.com/store/apps/details?id=app.global.prayer" style="font-size:2em;">
+                    <div class="hover-box">
+                        <i class="ion-social-android"></i>
+                        Android App
+                    </div>
+                </a>
+                
             </div>
         </div>
 
