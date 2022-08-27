@@ -33,9 +33,9 @@ function pg_current_global_lap() : array {
  */
 function pg_get_global_lap_by_key( $key ) {
 
-    if ( wp_cache_get( __METHOD__. $key ) ) {
-        return wp_cache_get( __METHOD__. $key );
-    }
+//    if ( wp_cache_get( __METHOD__. $key ) ) {
+//        return wp_cache_get( __METHOD__. $key );
+//    }
 
     global $wpdb;
     $result = $wpdb->get_row( $wpdb->prepare(
@@ -68,15 +68,15 @@ function pg_get_global_lap_by_key( $key ) {
         ];
     }
 
-    wp_cache_set( __METHOD__.$key, $lap );
+//    wp_cache_set( __METHOD__.$key, $lap );
 
     return $lap;
 }
 function pg_get_custom_lap_by_post_id( $post_id ) {
 
-    if ( wp_cache_get( __METHOD__. $post_id ) ) {
-        return wp_cache_get( __METHOD__. $post_id );
-    }
+//    if ( wp_cache_get( __METHOD__. $post_id ) ) {
+//        return wp_cache_get( __METHOD__. $post_id );
+//    }
 
     global $wpdb;
     $result = $wpdb->get_row( $wpdb->prepare(
@@ -110,16 +110,16 @@ function pg_get_custom_lap_by_post_id( $post_id ) {
         ];
     }
 
-    wp_cache_set( __METHOD__.$post_id, $lap );
+//    wp_cache_set( __METHOD__.$post_id, $lap );
 
     return $lap;
 }
 
 function pg_get_global_lap_by_lap_number( $lap_number ) {
 
-    if ( wp_cache_get( __METHOD__.$lap_number ) ) {
-        return wp_cache_get( __METHOD__.$lap_number );
-    }
+//    if ( wp_cache_get( __METHOD__.$lap_number ) ) {
+//        return wp_cache_get( __METHOD__.$lap_number );
+//    }
 
     global $wpdb;
     $result = $wpdb->get_row( $wpdb->prepare(
@@ -152,7 +152,7 @@ function pg_get_global_lap_by_lap_number( $lap_number ) {
         ];
     }
 
-    wp_cache_set( __METHOD__.$lap_number, $lap );
+//    wp_cache_set( __METHOD__.$lap_number, $lap );
 
     return $lap;
 }
@@ -168,9 +168,9 @@ function pg_global_stats_by_key( $key ) {
 }
 function pg_get_global_race(){
 
-    if ( wp_cache_get( __METHOD__ ) ) {
-        return wp_cache_get( __METHOD__ );
-    }
+//    if ( wp_cache_get( __METHOD__ ) ) {
+//        return wp_cache_get( __METHOD__ );
+//    }
 
     global $wpdb;
     $result = $wpdb->get_row(
@@ -192,7 +192,7 @@ function pg_get_global_race(){
         'on_going' => true,
     ];
 
-    wp_cache_set( __METHOD__, $lap );
+//    wp_cache_set( __METHOD__, $lap );
 
     return $lap;
 }
