@@ -118,21 +118,17 @@ class PG_Custom_Prayer_App_Map extends PG_Custom_Prayer_App {
                 <div id="head_block">
                     <div class="grid-x grid-padding-x">
                         <div class="cell large-5 show-for-large">
-                            <a href="/" class="navbar-brand">Prayer.Global</a>
+                            <span class="two-em"><?php echo esc_html( $lap_stats['title'] ) ?></span>
                         </div>
                         <div class="cell small-9 large-2 center show-for-large">
-                            <span class="two-em"><?php echo esc_html( $lap_stats['title'] ) ?></span>
+<!--                            <span class="two-em">--><?php //echo esc_html( $lap_stats['title'] ) ?><!--</span>-->
                         </div>
                         <div class="cell small-9 large-5 hide-for-large">
-                            <span class="two-em"><?php echo esc_html( $lap_stats['title'] ) ?></span>
+<!--                            <span class="two-em">--><?php //echo esc_html( $lap_stats['title'] ) ?><!--</span>-->
                         </div>
                         <div class="cell small-3 large-5 show-for-large" id="nav-list">
                             <ul>
-                                <li class="nav-item"><a class="nav-link btn smoothscroll pb_outline-dark highlight" style="border:1px black solid;" href="/newest/lap/">Start Praying</a></li>
-                                <li class="nav-item"><a class="nav-link" href="/#section-lap">Status</a></li>
-                                <li class="nav-item"><a class="nav-link" href="/#section-challenge">Challenge</a></li>
-                                <li class="nav-item"><a class="nav-link" href="/#section-about">About</a></li>
-                                <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                                <li class="nav-item"><a class="nav-link btn smoothscroll pb_outline-dark highlight" style="border:1px black solid;" href="/prayer_app/custom/<?php echo esc_attr( $parts['public_key'] ) ?>">Start Praying</a></li>
                             </ul>
                         </div>
                         <div class="cell small-3 large-4 hide-for-large" style="text-align:right;">
@@ -157,11 +153,7 @@ class PG_Custom_Prayer_App_Map extends PG_Custom_Prayer_App {
             <button type="button" data-toggle="offcanvas_menu"><i class="ion-chevron-right three-em"></i></button>
             <hr>
             <ul class="navbar-nav two-em">
-                <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="/#section-about">About</a></li>
-                <li class="nav-item"><a class="nav-link" href="/#section-challenge">Challenge</a></li>
-                <li class="nav-item"><a class="nav-link" href="/#section-lap">Status</a></li>
-                <li class="nav-item"><a class="nav-link btn smoothscroll pb_outline-dark" style="text-transform: capitalize;" href="/newest/lap/">Start Praying</a></li>
+                <li class="nav-item"><a class="nav-link btn smoothscroll pb_outline-dark" style="text-transform: capitalize;" href="/prayer_app/custom/<?php echo esc_attr( $parts['public_key'] ) ?>">Start Praying</a></li>
             </ul>
             <hr>
             <ul class="navbar-nav two-em">
@@ -247,6 +239,7 @@ class PG_Custom_Prayer_App_Map extends PG_Custom_Prayer_App {
                     <p class="stats-figure end_time">0</p>
                 </div>
             </div>
+            <div class="text-center"><a href="/" class="navbar-brand text-center">Prayer.Global</a></div>
         </div>
         <?php
     }
