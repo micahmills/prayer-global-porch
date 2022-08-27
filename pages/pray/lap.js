@@ -178,7 +178,11 @@ jQuery(document).ready(function(){
     })
     decision_home.off('click')
     decision_home.on('click', function( e ) {
-      window.location.href = 'https://prayer.global'
+      if ( jsObject.is_custom ) {
+        window.location.href = jsObject.map_url
+      } else {
+        window.location.href = 'https://prayer.global'
+      }
     })
     decision_map.off('click')
     decision_map.on('click', function( e ) {
