@@ -124,7 +124,7 @@ class PG_Custom_Prayer_App_Map extends PG_Custom_Prayer_App {
 <!--                            <span class="two-em">--><?php //echo esc_html( $lap_stats['title'] ) ?><!--</span>-->
                         </div>
                         <div class="cell small-9 large-5 hide-for-large">
-<!--                            <span class="two-em">--><?php //echo esc_html( $lap_stats['title'] ) ?><!--</span>-->
+                            <span class="two-em"><?php echo esc_html( $lap_stats['title'] ) ?></span>
                         </div>
                         <div class="cell small-3 large-5 show-for-large" id="nav-list">
                             <ul>
