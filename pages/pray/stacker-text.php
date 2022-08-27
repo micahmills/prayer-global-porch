@@ -752,6 +752,12 @@ class PG_Stacker_Text_V2 {
                 'reference' => '',
                 'verse' => '',
             ],
+            [
+                'section_label' => 'Obedience',
+                'prayer' => 'Lord, please give the '.$stack['location']['believers'].' believers in the '.$stack['location']['admin_level_name'].' of '.$stack['location']['name'].' the Spirit of wisdom and revelation, so that they might know you better.',
+                'reference' => 'Ephesians 1:17',
+                'verse' => 'I keep asking that the God of our Lord Jesus Christ, the glorious Father, may give you the Spirit of wisdom and revelation, so that you may know him better.',
+            ],
         ];
 
         if ( $all ) {
@@ -875,6 +881,12 @@ class PG_Stacker_Text_V2 {
                 'prayer' => 'Lord, raise up local leaders in every town in the '.$stack['location']['admin_level_name'].' of '.$stack['location']['name'].'.',
                 'reference' => 'Titus 1:5',
                 'verse' => 'The reason I left you in Crete was that you might put in order what was left unfinished and appoint elders in every town, as I directed you.',
+            ],
+            [
+                'section_label' => 'Local Leadership',
+                'prayer' => 'Lord, for the leaders in the '.$stack['location']['admin_level_name'].' of '.$stack['location']['name'].', let the eyes of their hearts be enlightened in order that they may know the hope to which they are called.',
+                'reference' => 'Ephesians 1:18',
+                'verse' => 'I pray that the eyes of your heart may be enlightened in order that you may know the hope to which he has called you, the riches of his glorious inheritance in his holy people, and his incomparably great power for us who believe. ',
             ],
         ];
 
@@ -1133,7 +1145,7 @@ class PG_Stacker_Text_V2 {
             ],
             [
                 'section_label' => 'The Church',
-                'prayer' => 'Father, please provide access to Your Word in ' . $stack['location']['primary_language'] . '. Provide translators, printers, books sellers, and app developers the resources and skill to get Your Word to '.$stack['location']['full_name'].'.',
+                'prayer' => 'Father, please provide access to Your Word. Please provide the translators, printers, books sellers, and app developers the resources and skill to get Your Word to '.$stack['location']['full_name'].'.',
                 'reference' => 'Matthew 24:14',
                 'verse' => 'And this gospel of the kingdom will be preached in the whole world as a testimony to all nations, and then the end will come.',
             ],
@@ -1163,7 +1175,7 @@ class PG_Stacker_Text_V2 {
             ],
             [
                 'section_label' => 'The Church',
-                'prayer' => 'God, we pray for the believers in ' . $stack['location']['full_name'] . ' that they will know how easy it is to spend an hour in prayer with you, and will do it.',
+                'prayer' => 'God, we pray for the believers in ' . $stack['location']['full_name'] . ' that they will know how to spend an hour in prayer with you.',
                 'reference' => '',
                 'verse' => '',
             ],
@@ -1178,6 +1190,30 @@ class PG_Stacker_Text_V2 {
                 'prayer' => 'God, we pray for the believers in ' . $stack['location']['full_name'] . ' to be generous so that they would be worthy of greater investment by you.',
                 'reference' => '',
                 'verse' => '',
+            ],
+            [
+                'section_label' => 'The Church',
+                'prayer' => 'Father, remind your church in ' . $stack['location']['full_name'] . ' that you have set your Son over all rule and authority, power and dominion, and every name that is invoked.',
+                'reference' => 'Ephesians 1:21',
+                'verse' => '...he raised Christ from the dead and seated him at his right hand in the heavenly realms, far above all rule and authority, power and dominion, and every name that is invoked, not only in the present age but also in the one to come.',
+            ],
+            [
+                'section_label' => 'The Church',
+                'prayer' => 'Father, we rejoice that You who began a good work in the church of ' . $stack['location']['full_name'] . ' will carry it on to completion until the day of Jesus Christ!',
+                'reference' => 'Philippians 1:6',
+                'verse' => '...being confident of this, that he who began a good work in you will carry it on to completion until the day of Christ Jesus.',
+            ],
+            [
+                'section_label' => 'The Church',
+                'prayer' => 'Father, let love abound more and more in the church of ' . $stack['location']['full_name'] . '.',
+                'reference' => 'Philippians 1:9',
+                'verse' => 'And this is my prayer: that your love may abound more and more in knowledge and depth of insight',
+            ],
+            [
+                'section_label' => 'The Church',
+                'prayer' => 'Father, let knowledge and depth of insight abound more and more in the church of ' . $stack['location']['full_name'] . '.',
+                'reference' => 'Philippians 1:9',
+                'verse' => 'And this is my prayer: that your love may abound more and more in knowledge and depth of insight',
             ],
         ];
 
@@ -1208,7 +1244,7 @@ class PG_Stacker_Text_V2 {
         return $lists;
     }
 
-    public static function _non_christian_deaths( &$lists, $stack, $all = false ) {
+    public static function _non_christians( &$lists, $stack, $all = false ) {
         $section_label = 'Non-Christians';
         $templates = [
             [
@@ -1217,6 +1253,13 @@ class PG_Stacker_Text_V2 {
                 'reference' => '',
                 'verse' => '',
             ],
+            [
+                'section_label' => $section_label,
+                'prayer' => 'Over '.$stack['location']['percent_non_christians'].' percent of the people of '.$stack['location']['name'].' are far from Jesus.',
+                'reference' => '',
+                'verse' => '',
+            ],
+
         ];
 
         if ( $all ) {
@@ -1226,7 +1269,7 @@ class PG_Stacker_Text_V2 {
         return $lists;
     }
 
-    public static function _christian_adherents_deaths( &$lists, $stack, $all = false ) {
+    public static function _christian_adherents( &$lists, $stack, $all = false ) {
         $section_label = 'Cultural Christians';
         $templates = [
             [
@@ -1262,9 +1305,15 @@ class PG_Stacker_Text_V2 {
         return $lists;
     }
 
-    public static function _believers_births( &$lists, $stack, $all = false ) {
+    public static function _believers( &$lists, $stack, $all = false ) {
         $section_label = 'Believer Families';
         $templates = [
+            [
+                'section_label' => $section_label,
+                'prayer' => "Spirit, consider the ".$stack['location']['believers']." believers in ".$stack['location']['name'].". You promised to convict of sin, righteousness and judgement. Please show mercy and don't leave them idle and distant from Jesus.",
+                'verse' => '',
+                'reference' => '',
+            ],
             [
                 'section_label' => $section_label,
                 'prayer' => "Spirit, consider the ".$stack['location']['believers']." believers in ".$stack['location']['name'].". You promised to convict of sin, righteousness and judgement. Please show mercy and don't leave them idle and distant from Jesus.",
