@@ -75,13 +75,13 @@ class PG_Stacker {
 
         switch ( $stack['location']['favor'] ) {
             case 'non_christians':
-                PG_Stacker_Text_V2::_non_christian_deaths( $lists, $stack );
+                PG_Stacker_Text_V2::_non_christians( $lists, $stack );
                 break;
             case 'christian_adherents':
-                PG_Stacker_Text_V2::_christian_adherents_deaths( $lists, $stack );
+                PG_Stacker_Text_V2::_christian_adherents( $lists, $stack );
                 break;
             case 'believers':
-                PG_Stacker_Text_V2::_believers_births( $lists, $stack );
+                PG_Stacker_Text_V2::_believers( $lists, $stack );
                 break;
             default:
                 break;
@@ -95,7 +95,6 @@ class PG_Stacker {
         }
         shuffle( $stack['list'] );
         $stack['list'] = array_slice( $stack['list'], 0, 8 );
-
 
         // FACT SHUFFLE
 //        $position = [1,3,5];

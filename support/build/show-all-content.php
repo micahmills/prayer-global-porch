@@ -107,12 +107,11 @@ class Prayer_Global_Show_All extends DT_Magic_Url_Base
 //        $lists = PG_Stacker_Text_V2::_language_prayers( $lists, $stack, true );
 //        $lists = PG_Stacker_Text_V2::_religion_prayers( $lists, $stack, true );
 //        $lists = PG_Stacker_Text_V2::_for_the_church( $lists, $stack, true );
-//        $lists = PG_Stacker_Text_V2::_people_groups($lists, $stack, true );
-//        $lists = PG_Stacker_Text_V2::_cities($lists, $stack, true );
+        $lists = PG_Stacker_Text_V2::_cities($lists, $stack, true );
 
-        $lists = PG_Stacker_Text_V2::_non_christian_deaths( $lists, $stack, true );
-        $lists = PG_Stacker_Text_V2::_christian_adherents_deaths( $lists, $stack, true );
-        $lists = PG_Stacker_Text_V2::_believers_births( $lists, $stack, true );
+        $lists = PG_Stacker_Text_V2::_non_christians( $lists, $stack, true );
+        $lists = PG_Stacker_Text_V2::_christian_adherents( $lists, $stack, true );
+        $lists = PG_Stacker_Text_V2::_believers( $lists, $stack, true );
 
         $lists = array_reverse( $lists );
 

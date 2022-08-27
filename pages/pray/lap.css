@@ -215,12 +215,12 @@ nav {
     margin: 0 2px;
 }
 
-#map-wrapper, #map-content, #mabox-map {
+#map-wrapper, #map-content, #mapbox-map {
     height:300px;
     padding-top:10px;
 }
 @media (min-width: 768px) {
-    #map-wrapper, #map-content, #mabox-map {
+    #map-wrapper, #map-content, #mapbox-map {
         height: 500px;
     }
 }
