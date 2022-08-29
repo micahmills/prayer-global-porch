@@ -103,6 +103,11 @@ class PG_Custom_Prayer_App_Map extends PG_Custom_Prayer_App {
         DT_Mapbox_API::geocoder_scripts();
         ?>
         <style id="custom-style"></style>
+        <style>
+            .map-title {
+
+            }
+        </style>
         <div id="map-content">
             <div id="initialize-screen">
                 <div id="initialize-spinner-wrapper" class="center">
@@ -117,22 +122,13 @@ class PG_Custom_Prayer_App_Map extends PG_Custom_Prayer_App {
             <div id="map-wrapper">
                 <div id="head_block">
                     <div class="grid-x grid-padding-x">
-                        <div class="cell large-5 show-for-large">
+                        <div class="cell small-6 large-9">
                             <span class="two-em"><?php echo esc_html( $lap_stats['title'] ) ?></span>
                         </div>
-                        <div class="cell small-9 large-2 center show-for-large">
-<!--                            <span class="two-em">--><?php //echo esc_html( $lap_stats['title'] ) ?><!--</span>-->
-                        </div>
-                        <div class="cell small-9 large-5 hide-for-large">
-                            <span class="two-em"><?php echo esc_html( $lap_stats['title'] ) ?></span>
-                        </div>
-                        <div class="cell small-3 large-5 show-for-large" id="nav-list">
+                        <div class="cell small-6 large-3" id="nav-list">
                             <ul>
                                 <li class="nav-item"><a class="nav-link btn smoothscroll pb_outline-dark highlight" style="border:1px black solid;" href="/prayer_app/custom/<?php echo esc_attr( $parts['public_key'] ) ?>">Start Praying</a></li>
                             </ul>
-                        </div>
-                        <div class="cell small-3 large-4 hide-for-large" style="text-align:right;">
-                            <button type="button" data-toggle="offcanvas_menu"><i class="ion-navicon three-em"></i></button>
                         </div>
                     </div>
                 </div>
@@ -154,11 +150,6 @@ class PG_Custom_Prayer_App_Map extends PG_Custom_Prayer_App {
             <hr>
             <ul class="navbar-nav two-em">
                 <li class="nav-item"><a class="nav-link btn smoothscroll pb_outline-dark" style="text-transform: capitalize;" href="/prayer_app/custom/<?php echo esc_attr( $parts['public_key'] ) ?>">Start Praying</a></li>
-            </ul>
-            <hr>
-            <ul class="navbar-nav two-em">
-                <li class="nav-item"><a class="nav-link" href="/race_app/big_list/">Big List</a></li>
-                <li class="nav-item"><a class="nav-link" href="/race_app/big_map/">Big Map</a></li>
             </ul>
             <div class="show-for-small-only">
                 <hr>
