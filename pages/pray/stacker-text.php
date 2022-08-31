@@ -576,7 +576,7 @@ class PG_Stacker_Text_V2 {
             ],
             [
                 'section_label' => 'Abundant Gospel Sowing',
-                'prayer' => 'Father, please send new teachers into the harvest, who can correct the lied of our enemy in the '.$stack['location']['admin_level_name'].' of '.$stack['location']['full_name'].'.',
+                'prayer' => 'Father, please send new teachers into the harvest, who can correct the lies of our enemy in the '.$stack['location']['admin_level_name'].' of '.$stack['location']['full_name'].'.',
                 'reference' => 'Matthew 9:38',
                 'verse' => 'Ask the Lord of the harvest, therefore, to send out workers into his harvest field.',
             ],
