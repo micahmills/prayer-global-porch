@@ -97,12 +97,9 @@ class PG_Stacker {
         $stack['list'] = array_slice( $stack['list'], 0, 8 );
 
         // FACT SHUFFLE
-//        $position = [1,3,5];
-//        shuffle( $position );
         self::_photos( $stack, 1 );
         self::_faith_status( $stack, 3 );
         self::_least_reached( $stack, 5 );
-//        self::_demographics( $stack, 7 );
         self::_people_groups( $stack, 7 );
         self::_key_city( $stack, 9 );
 
