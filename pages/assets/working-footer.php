@@ -25,7 +25,7 @@
             </div>
             <div class="col-md-3">
                 <ul style="list-style: none;">
-                    <li><a class="white" href="/challenges/active/">Active Challenges</a></li>
+                    <li><a class="white" href="/challenges/active/">Group Challenges</a></li>
                 </ul>
             </div>
         </div>

@@ -121,7 +121,7 @@ class Prayer_Global_Porch_Challenge_List extends DT_Magic_Url_Base
             <div class="container pb-4">
                 <div class="row">
                     <div class="col-md text-center">
-                        <span class="two-em lap-title">Active Challenges</span>
+                        <span class="two-em lap-title">Group Challenges</span>
                     </div>
                 </div>
             </div>
