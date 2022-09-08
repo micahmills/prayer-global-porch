@@ -83,7 +83,7 @@ jQuery(document).ready(function() {
             </div>`
       )
 
-      jQuery('.challenge-row').on('click', function(i,v){
+      jQuery('.challenge-full-row').on('click', function(i,v){
         let url = jQuery(this).data('value')
         window.location.href = jsObject.site_url + url
       })
