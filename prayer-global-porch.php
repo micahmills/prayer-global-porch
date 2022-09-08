@@ -115,6 +115,10 @@ class Prayer_Global_Porch {
         require_once( 'pages/race/big-list.php' );
         require_once( 'pages/race/big-map.php' );
 
+        // challenges
+        require_once( 'pages/challenges/active-list.php' );
+
+
         // user
         require_once( 'pages/user/user-link.php' );
 
