@@ -117,7 +117,7 @@ class Prayer_Global_Porch_Challenge_List extends DT_Magic_Url_Base
                 background-color: #f9f9f9;
             }
         </style>
-        <section style="height: 95vh;">
+        <section>
             <div class="container pb-4">
                 <div class="row">
                     <div class="col-md text-center">
@@ -128,6 +128,7 @@ class Prayer_Global_Porch_Challenge_List extends DT_Magic_Url_Base
             <div class="container" id="content"><span class="loading-spinner active"></span></div>
 
         </section>
+        <div style="height:300px;"></div>
 
         <?php require_once( trailingslashit( plugin_dir_path( __DIR__ ) ) . '/assets/working-footer.php' ) ?>
         <?php

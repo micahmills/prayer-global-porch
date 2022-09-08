@@ -59,7 +59,6 @@ class PG_Custom_Prayer_App_Tools extends PG_Custom_Prayer_App {
     public function body(){
         $parts = $this->parts;
         $lap_stats = pg_custom_lap_stats_by_post_id( $parts['post_id'] );
-        dt_write_log($lap_stats);
         require_once( trailingslashit( plugin_dir_path( __DIR__ ) ) . '/assets/nav.php' );
         ?>
         <style>
@@ -67,7 +66,7 @@ class PG_Custom_Prayer_App_Tools extends PG_Custom_Prayer_App {
                 margin-top: 110px;
             }
         </style>
-        <section style="height: 95vh;">
+        <section>
             <div class="container pb-4">
                 <div class="row">
                     <div class="col-md text-center">
@@ -89,10 +88,10 @@ class PG_Custom_Prayer_App_Tools extends PG_Custom_Prayer_App {
                 <div class="row">
                     <div class="col-6 center">
 
-                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=400x400&amp;data=https://apps.apple.com/us/app/prayer-global/id1636889534?uo=4" style="width: 100%;max-width:400px;"><br>Apple App Store
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=1000x1000&amp;data=https://apps.apple.com/us/app/prayer-global/id1636889534?uo=4" style="width: 100%;max-width:400px;"><br>Apple App Store
                     </div>
                     <div class="col-6 center">
-                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=400x400&amp;data=https://play.google.com/store/apps/details?id=app.global.prayer" style="width: 100%;max-width:400px;"><br>Android Play Store
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=1000x1000&amp;data=https://play.google.com/store/apps/details?id=app.global.prayer" style="width: 100%;max-width:400px;"><br>Android Play Store
                     </div>
                 </div>
                 <div class="row ">
@@ -102,17 +101,20 @@ class PG_Custom_Prayer_App_Tools extends PG_Custom_Prayer_App {
                 </div>
                 <div class="row ">
                     <div class="col center p-3">
-                        <h2>Restoration Challenge Map</h2>
+                        <h2><?php echo esc_html( $lap_stats['title']) ?> Challenge Map</h2>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col center">
-                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=400x400&amp;data=https://prayer.global/prayer_app/custom/<?php echo esc_html( $lap_stats['key'] ) ?>/map" style="width: 100%;max-width:400px;">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=1000x1000&amp;data=https://prayer.global/prayer_app/custom/<?php echo esc_html( $lap_stats['key'] ) ?>/map" style="width: 100%;max-width:400px;"><br><br>
+                        <p><input value="https://prayer.global/prayer_app/custom/<?php echo esc_html( $lap_stats['key'] ) ?>/map" style="width:600px;" /></p>
                     </div>
                 </div>
+
             </div>
 
         </section>
+        <div style="height:300px;"></div>
         <!-- END section -->
         <?php require_once( trailingslashit( plugin_dir_path( __DIR__ ) ) . '/assets/working-footer.php' ) ?>
         <?php // end html

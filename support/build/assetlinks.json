@@ -1,0 +1,14 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "app.global.prayer",
+      "sha256_cert_fingerprints": [
+        "47:F2:DC:68:38:B4:00:38:0E:D1:1F:03:FB:94:A3:05:3A:4C:DE:AA:28:C4:1F:D7:66:B8:47:09:56:BD:01:8E"
+      ]
+    }
+  }
+]
