@@ -103,11 +103,6 @@ class PG_Custom_Prayer_App_Map extends PG_Custom_Prayer_App {
         DT_Mapbox_API::geocoder_scripts();
         ?>
         <style id="custom-style"></style>
-        <style>
-            .map-title {
-
-            }
-        </style>
         <div id="map-content">
             <div id="initialize-screen">
                 <div id="initialize-spinner-wrapper" class="center">
@@ -192,7 +187,7 @@ class PG_Custom_Prayer_App_Map extends PG_Custom_Prayer_App {
             <hr>
             <div class="grid-x grid-padding-x center">
                 <div class="cell">
-                    <span class="three-em">Lap <?php echo esc_html( $lap_stats['lap_number'] ) ?></span>
+                    <span class="three-em"><?php echo esc_html( $lap_stats['title'] ) ?></span>
                     <hr>
                 </div>
                 <div class="cell small-6 medium-3">

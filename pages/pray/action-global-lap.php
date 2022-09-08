@@ -71,10 +71,10 @@ class PG_Global_Prayer_App_Lap extends PG_Global_Prayer_App {
         if ( (int) $current_lap['post_id'] === (int) $this->parts['post_id'] ) {
             ?>
             <!-- Resources -->
-            <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
-            <script src="https://cdn.amcharts.com/lib/5/map.js"></script>
-            <script src="https://cdn.amcharts.com/lib/5/geodata/worldLow.js"></script>
-            <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+<!--            <script src="https://cdn.amcharts.com/lib/5/index.js"></script>-->
+<!--            <script src="https://cdn.amcharts.com/lib/5/map.js"></script>-->
+<!--            <script src="https://cdn.amcharts.com/lib/5/geodata/worldLow.js"></script>-->
+<!--            <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>-->
             <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js?ver=3"></script>
             <script>
                 let jsObject = [<?php echo json_encode([
@@ -193,27 +193,29 @@ class PG_Global_Prayer_App_Lap extends PG_Global_Prayer_App {
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-body">
-                        <h2 class="center">Pray</h2>
+                        <p class="center">How Prayer.Global works</p>
+                        <h2 class="center">Step 1</h2>
                         <p>
-                            1. <strong>Pray over the location</strong> using the maps, photos, prayers and facts provided.
+                            <strong>Pray over the location</strong> provided using the maps, photos, prayers, people group info, and facts.
                         </p>
 
+                        <h2 class="center">Step 2</h2>
                         <p>
-                            2. <strong>Pray for one minute</strong> or longer as the Spirit leads.
+                            <strong>Pray for one minute</strong> (or longer) as the Spirit leads.
                         </p>
                         <p>
-                            <img src="<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/images/welcome-keep.png" class="img-fluid" />
+                            <img src="<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/images/welcome-keep.png" style="opacity:0.5;" class="img-fluid" />
                         </p>
-                        <h2 class="center">Pray Again</h2>
+                        <h2 class="center">Step 3</h2>
                         <p>
-                            Once the timer transforms, select "Done" and see your impact, or "Next" and cover another location in prayer.
+                            Once the timer transforms, either select "Done" and see your impact, or select "Next" and cover another location in prayer.
                         </p>
                         <p>
-                            <img src="<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/images/welcome-next.png" class="img-fluid" />
+                            <img src="<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/images/welcome-next.png" style="opacity:0.5;" class="img-fluid" />
                         </p>
                     </div>
                     <div class="modal-footer justify-content-center">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Let's Go!</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Let's Go!</button>
                     </div>
                 </div>
             </div>
