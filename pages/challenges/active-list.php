@@ -110,10 +110,10 @@ class Prayer_Global_Porch_Challenge_List extends DT_Magic_Url_Base
         ?>
         <!-- content section -->
         <style>
-            .challenge-row {
+            .challenge-cell {
                 cursor:pointer;
             }
-            .challenge-full-row:hover{
+            .challenge-row:hover{
                 background-color: #f9f9f9;
             }
         </style>

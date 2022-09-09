@@ -55,7 +55,7 @@
         padding-right: 0 !important; } }
 @media (max-width: 991px) {
     .pb_navbar_light .navbar-nav {
-        background: rgba(255, 255, 255, 0.8);
+        background: rgba(255, 255, 255);
         border-radius: 0px;
         padding-left: 1rem !important;
         padding-right: 1rem !important;

@@ -75,6 +75,24 @@ class PG_Custom_Prayer_App_Tools extends PG_Custom_Prayer_App {
                 </div>
             </div>
             <div class="container" id="content">
+
+                <div class="row ">
+                    <div class="col center">
+                        <hr>
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="col center p-3">
+                        <h2><?php echo esc_html( $lap_stats['title']) ?> Challenge Map</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col center">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=1000x1000&amp;data=https://prayer.global/prayer_app/custom/<?php echo esc_html( $lap_stats['key'] ) ?>/map" style="width: 100%;max-width:400px;"><br><br>
+                        <p><input value="https://prayer.global/prayer_app/custom/<?php echo esc_html( $lap_stats['key'] ) ?>/map" style="width:600px;" /></p>
+                    </div>
+                </div>
+
                 <div class="row ">
                     <div class="col center">
                         <hr>
@@ -92,22 +110,6 @@ class PG_Custom_Prayer_App_Tools extends PG_Custom_Prayer_App {
                     </div>
                     <div class="col-6 center">
                         <img src="https://api.qrserver.com/v1/create-qr-code/?size=1000x1000&amp;data=https://play.google.com/store/apps/details?id=app.global.prayer" style="width: 100%;max-width:400px;"><br>Android Play Store
-                    </div>
-                </div>
-                <div class="row ">
-                    <div class="col center">
-                        <hr>
-                    </div>
-                </div>
-                <div class="row ">
-                    <div class="col center p-3">
-                        <h2><?php echo esc_html( $lap_stats['title']) ?> Challenge Map</h2>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col center">
-                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=1000x1000&amp;data=https://prayer.global/prayer_app/custom/<?php echo esc_html( $lap_stats['key'] ) ?>/map" style="width: 100%;max-width:400px;"><br><br>
-                        <p><input value="https://prayer.global/prayer_app/custom/<?php echo esc_html( $lap_stats['key'] ) ?>/map" style="width:600px;" /></p>
                     </div>
                 </div>
 
