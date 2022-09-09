@@ -174,12 +174,11 @@ jQuery(document).ready(function($){
       showCompass: false,
       showZoom: true
     });
-    map.addControl(nav, "top-right");
 
     if ( ! isMobile ) {
       map.fitBounds([
-        [-90, -60],
-        [60, 90]
+        [-70, -70], // southwestern corner of the bounds
+        [70, 90] // northeastern corner of the bounds
       ]);
     }
 
@@ -292,55 +291,6 @@ jQuery(document).ready(function($){
             'source': 'participants',
             'layout': {
               'icon-image': 'custom-marker',
-              "icon-size": .5,
-              'icon-padding': 0,
-              "icon-allow-overlap": true,
-              'text-font': [
-                'Open Sans Semibold',
-                'Arial Unicode MS Bold'
-              ],
-              'text-offset': [0, 1.25],
-              'text-anchor': 'top'
-            }
-          });
-        })
-    })
-
-    /* load user locations layer */
-    map.on('load', function() {
-      let features = []
-      jQuery.each( jsObject.user_locations, function(i,v){
-        features.push({
-            "type": "Feature",
-            "geometry": {
-              "type": "Point",
-              "coordinates": [v.longitude, v.latitude]
-            },
-            "properties": {
-              "name": "Name"
-            }
-          }
-        )
-      })
-      let geojson = {
-        "type": "FeatureCollection",
-        "features": features
-      }
-      map.addSource('user_locations', {
-        'type': 'geojson',
-        'data': geojson
-      });
-      map.loadImage(
-        jsObject.image_folder + 'black-check-50.png',
-        (error, image) => {
-          if (error) throw error;
-          map.addImage('custom-marker-user', image);
-          map.addLayer({
-            'id': 'points_user',
-            'type': 'symbol',
-            'source': 'user_locations',
-            'layout': {
-              'icon-image': 'custom-marker-user',
               "icon-size": .5,
               'icon-padding': 0,
               "icon-allow-overlap": true,
