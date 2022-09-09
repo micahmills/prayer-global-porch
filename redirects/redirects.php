@@ -153,10 +153,29 @@ class Prayer_Global_Porch_App_Store_Redirect extends DT_Magic_Url_Base
     }
 
     public function redirect() {
-        $current_lap = pg_current_global_lap();
-        $link = '/prayer_app/global/' . $current_lap['key'] . '/map';
-        wp_redirect( $link );
-        exit;
+        if ( isset( $_SERVER['HTTP_USER_AGENT'] ) ) {
+
+            $iPod = stripos( $_SERVER['HTTP_USER_AGENT'], "iPod" );
+            $iPhone = stripos( $_SERVER['HTTP_USER_AGENT'], "iPhone" );
+            $iPad = stripos( $_SERVER['HTTP_USER_AGENT'], "iPad" );
+            $Android = stripos( $_SERVER['HTTP_USER_AGENT'], "Android" );
+            $webOS = stripos( $_SERVER['HTTP_USER_AGENT'], "webOS" );
+
+            // detect os version
+            if ( $iPod || $iPhone || $iPad ) {
+                header('HTTP/1.1 301 Moved Permanently');
+                header( 'Location: https://apps.apple.com/us/app/prayer-global/id1636889534?uo=4' );
+                die();
+            } else if ( $Android ) {
+                header('HTTP/1.1 301 Moved Permanently');
+                header( 'Location: https://play.google.com/store/apps/details?id=app.global.prayer' );
+                die();
+            }
+
+        } else {
+            header( 'Location: https://prayer.global' );
+            die();
+        }
     }
 }
 Prayer_Global_Porch_App_Store_Redirect::instance();
