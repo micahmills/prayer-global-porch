@@ -128,8 +128,8 @@ class Prayer_Global_Porch_App_Store_Redirect extends DT_Magic_Url_Base
 {
     public $page_title = 'Prayer.Global -  QR Redirect';
     public $root = 'qr';
-    public $type = 'app_stores';
-    public $url_token = 'qr/app_stores';
+    public $type = 'app';
+    public $url_token = 'qr/app';
     public $type_name = 'App Store Redirect';
     public $post_type = 'laps';
 
@@ -163,20 +163,15 @@ class Prayer_Global_Porch_App_Store_Redirect extends DT_Magic_Url_Base
 
             // detect os version
             if ( $iPod || $iPhone || $iPad ) {
-//                header('HTTP/1.1 301 Moved Permanently');
-//                header( 'Location: https://apps.apple.com/us/app/prayer-global/id1636889534?uo=4' );
                 wp_redirect( 'https://apps.apple.com/us/app/prayer-global/id1636889534?uo=4' );
                 exit;
             } else if ( $Android ) {
-//                header('HTTP/1.1 301 Moved Permanently');
-//                header( 'Location: https://play.google.com/store/apps/details?id=app.global.prayer' );
                 wp_redirect( 'https://play.google.com/store/apps/details?id=app.global.prayer' );
                 exit;
             }
 
         } else {
             wp_redirect( 'https://prayer.global' );
-//            header( 'Location: https://prayer.global' );
             exit;
         }
     }
