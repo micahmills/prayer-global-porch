@@ -159,7 +159,6 @@ class Prayer_Global_Porch_App_Store_Redirect extends DT_Magic_Url_Base
             $iPhone = stripos( $_SERVER['HTTP_USER_AGENT'], "iPhone" );
             $iPad = stripos( $_SERVER['HTTP_USER_AGENT'], "iPad" );
             $Android = stripos( $_SERVER['HTTP_USER_AGENT'], "Android" );
-            $webOS = stripos( $_SERVER['HTTP_USER_AGENT'], "webOS" );
 
             // detect os version
             if ( $iPod || $iPhone || $iPad ) {
@@ -168,6 +167,43 @@ class Prayer_Global_Porch_App_Store_Redirect extends DT_Magic_Url_Base
             } else if ( $Android ) {
                 wp_redirect( 'https://play.google.com/store/apps/details?id=app.global.prayer' );
                 exit;
+            } else {
+                ?>
+                <script>
+                    var isMobile = {
+                        Android: function() {
+                            return navigator.userAgent.match(/Android/i);
+                        },
+                        BlackBerry: function() {
+                            return navigator.userAgent.match(/BlackBerry/i);
+                        },
+                        iOS: function() {
+                            return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+                        },
+                        Opera: function() {
+                            return navigator.userAgent.match(/Opera Mini/i);
+                        },
+                        Windows: function() {
+                            return navigator.userAgent.match(/IEMobile/i);
+                        },
+                        any: function() {
+                            return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+                        }
+
+                    };
+
+
+                    if ( isMobile.Android() ) {
+                        document.location.href = "https://play.google.com/store/apps/details?id=app.global.prayer";
+                    }
+                    else if(isMobile.iOS())
+                    {
+                        document.location.href = "https://apps.apple.com/us/app/prayer-global/id1636889534?uo=4";
+                    } else {
+                        document.location.href = "https://prayer.global";
+                    }
+                </script>
+                <?php
             }
 
         } else {
