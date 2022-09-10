@@ -26,7 +26,7 @@ jQuery(document).ready(function() {
       jQuery.each( data, function(i,v){
         html_content += `<tr data-value="/prayer_app/custom/${v.lap_key}/map">
                           <th>${v.post_title}</th>
-                          <td style="text-align:right;">
+                          <td style="text-align:right; white-space:nowrap;">
                             <a href="/prayer_app/custom/${v.lap_key}">Pray</a> |
                             <a href="/prayer_app/custom/${v.lap_key}/map">Map</a> |
                             <a href="/prayer_app/custom/${v.lap_key}/tools">Share</a>
