@@ -9,7 +9,7 @@ class PG_DT_Dashboard {
         }
         return self::$_instance;
     }
-    
+
     public function __construct() {
         $this->namespace = $this->context . "/v" . intval( $this->version );
         add_filter( 'dt_front_page', [ $this, 'front_page' ] );
@@ -34,11 +34,11 @@ class PG_DT_Dashboard {
             die();
         }
     }
-    
+
     public function scripts() {
-      
+
     }
-    
+
     public function front_page( $page ) {
         ?>
         <iframe src="/" style="width: 100%; height: 90vh;" ></iframe>

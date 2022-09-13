@@ -102,6 +102,19 @@ class PG_Custom_Prayer_App_Map_Display extends PG_Custom_Prayer_App {
         DT_Mapbox_API::geocoder_scripts();
         ?>
         <style id="custom-style"></style>
+        <style>
+            #qr-code {
+                width: 250px;
+                /*max-width:200px;*/
+                position: absolute;
+                bottom: 0;
+                padding: 2em;
+                background: white;
+            }
+            .qr-div {
+                width: 100%;
+            }
+        </style>
         <div id="map-content">
             <div id="initialize-screen">
                 <div id="initialize-spinner-wrapper" class="center">
@@ -119,11 +132,11 @@ class PG_Custom_Prayer_App_Map_Display extends PG_Custom_Prayer_App {
                 <div id='map'></div>
                 <div id="foot_block">
                     <div class="grid-x grid-padding-x">
-                        <div class="cell small-6 medium-2 center"><strong>Places Covered</strong><br><strong><span class="one-em green stats-figure completed"></span></strong></div>
+                        <div class="cell small-6 medium-3 center"><strong>Places Covered</strong><br><strong><span class="one-em green stats-figure completed"></span></strong></div>
                         <div class="cell small-6 medium-2 center"><strong>Places Remaining</strong><br><strong><span class="one-em red stats-figure remaining"></span></strong></div>
-                        <div class="cell small-6 medium-4 center"><img src="https://api.qrserver.com/v1/create-qr-code/?size=500x500&amp;data=https://prayer.global/prayer_app/custom/<?php echo esc_html( $lap_stats['key'] ) ?>" style="width: 100%;max-width:200px;"></div>
-                        <div class="cell small-6 medium-2 center hide-for-small-only"><strong>World Coverage</strong><br><strong><span class="one-em stats-figure completed completed_percent"></span><span class="one-em">%</span></div>
-                        <div class="cell small-6 medium-2 center hide-for-small-only"><strong>Pace of Lap</strong><br><span class="one-em stats-figure start_time">0</span></div>
+                        <div class="cell small-6 medium-2"><div class="qr-div"><img src="https://api.qrserver.com/v1/create-qr-code/?size=500x500&amp;data=https://prayer.global/prayer_app/custom/<?php echo esc_html( $lap_stats['key'] ) ?>" id="qr-code"></div></div>
+                        <div class="cell small-6 medium-2 center hide-for-small-only"><strong>World Coverage</strong><br><strong><span class="one-em stats-figure completed completed_percent"></span><span class="one-em">%</span></strong></div>
+                        <div class="cell small-6 medium-3 center hide-for-small-only"><strong>Pace of Lap</strong><br><strong><span class="one-em stats-figure time_elapsed">0</span></strong></div>
                     </div>
                 </div>
             </div>
@@ -140,7 +153,12 @@ class PG_Custom_Prayer_App_Map_Display extends PG_Custom_Prayer_App {
             <hr>
             <div class="grid-x grid-padding-x" id="grid_details_content"></div>
         </div>
-
+        <script>
+            jQuery(document).ready(function(){
+                let qr_width = jQuery('.qr-div').width()
+                jQuery('#qr-code').css('width', qr_width+'px' )
+            })
+        </script>
         <?php
     }
 

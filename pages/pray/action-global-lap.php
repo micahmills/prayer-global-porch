@@ -208,7 +208,7 @@ class PG_Global_Prayer_App_Lap extends PG_Global_Prayer_App {
                         </p>
                         <h2 class="center">Step 3</h2>
                         <p>
-                            Once the timer transforms, either select "Done" and see your impact, or select "Next" and cover another location in prayer.
+                            Once the timer transforms, select either "Done" and see your impact, or select "Next" and cover another location in prayer.
                         </p>
                         <p>
                             <img src="<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/images/welcome-next.png" style="opacity:0.5;" class="img-fluid" />

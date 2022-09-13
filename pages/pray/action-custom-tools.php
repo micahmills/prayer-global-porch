@@ -73,7 +73,7 @@ class PG_Custom_Prayer_App_Tools extends PG_Custom_Prayer_App {
             <div class="container pb-4">
                 <div class="row">
                     <div class="col-md text-center">
-                        <span class="two-em lap-title"><?php echo esc_html( $lap_stats['title']) ?> Challenge Tools</span>
+                        <span class="two-em lap-title"><?php echo esc_html( $lap_stats['title'] ) ?> Challenge Tools</span>
                     </div>
                 </div>
             </div>
@@ -86,7 +86,7 @@ class PG_Custom_Prayer_App_Tools extends PG_Custom_Prayer_App {
                 </div>
                 <div class="row ">
                     <div class="col center p-3">
-                        <h2><?php echo esc_html( $lap_stats['title']) ?> Challenge Map</h2>
+                        <h2><?php echo esc_html( $lap_stats['title'] ) ?> Challenge Map</h2>
                     </div>
                 </div>
                 <div class="row">

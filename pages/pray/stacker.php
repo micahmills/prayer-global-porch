@@ -1040,7 +1040,7 @@ class PG_Stacker {
             $people_groups_list = [ 'names' => [], 'names_pop' => [] ];
             foreach ( $people_groups as $i => $pg ) {
                 $people_groups_list['names'][] = $pg['name'];
-                $pop = empty( $pg['population'] ) ? '': ' ('.$pg['population'].')';
+                $pop = empty( $pg['population'] ) ? '' : ' ('.$pg['population'].')';
                 $people_groups_list['names_pop'][] = $pg['name'] . $pop;
             }
             $grid_record['people_groups_list'] = implode( ', ', $people_groups_list['names'] );
@@ -1082,7 +1082,7 @@ class PG_Stacker {
             $cities_list = [ 'names' => [], 'names_pop' => [] ];
             foreach ( $cities as $city_value ) {
                 $cities_list['names'][] = $city_value['name'];
-                $pop = empty($city_value['population']) ? '': ' ('.$city_value['population'].')';
+                $pop = empty( $city_value['population'] ) ? '' : ' ('.$city_value['population'].')';
                 $cities_list['names_pop'][] = $city_value['name'] . $pop;
             }
             $grid_record['cities_list'] = implode( ', ', $cities_list['names'] );
