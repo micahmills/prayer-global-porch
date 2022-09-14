@@ -437,9 +437,7 @@ jQuery(document).ready(function($){
                 Official Language: ${response.location.primary_language}<br>
                 <hr>
               </div>
-              <div class="cell">
-                  <button class="button clear" id="correction_button" onclick="window.load_report_modal()">Correction Needed?</button>
-              </div>
+
           </div>
           `
         )

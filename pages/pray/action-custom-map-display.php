@@ -70,6 +70,7 @@ class PG_Custom_Prayer_App_Map_Display extends PG_Custom_Prayer_App {
         wp_footer();
     }
 
+
     public function header_javascript(){
         ?>
         <script>
@@ -88,6 +89,7 @@ class PG_Custom_Prayer_App_Map_Display extends PG_Custom_Prayer_App {
                     'add' => __( 'Add Magic', 'prayer-global' ),
                 ],
             ]) ?>][0]
+
         </script>
         <link href="https://fonts.googleapis.com/css?family=Crimson+Text:400,400i,600|Montserrat:200,300,400" rel="stylesheet">
         <link rel="stylesheet" href="<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/fonts/ionicons/css/ionicons.min.css">
@@ -105,13 +107,12 @@ class PG_Custom_Prayer_App_Map_Display extends PG_Custom_Prayer_App {
         <style>
             #qr-code {
                 width: 250px;
-                /*max-width:200px;*/
                 position: absolute;
                 bottom: 0;
-                padding: 2em;
+                padding: 2rem;
                 background: white;
             }
-            .qr-div {
+            #qr-div {
                 width: 100%;
             }
         </style>
@@ -132,11 +133,11 @@ class PG_Custom_Prayer_App_Map_Display extends PG_Custom_Prayer_App {
                 <div id='map'></div>
                 <div id="foot_block">
                     <div class="grid-x grid-padding-x">
-                        <div class="cell small-6 medium-3 center"><strong>Places Covered</strong><br><strong><span class="one-em green stats-figure completed"></span></strong></div>
-                        <div class="cell small-6 medium-2 center"><strong>Places Remaining</strong><br><strong><span class="one-em red stats-figure remaining"></span></strong></div>
-                        <div class="cell small-6 medium-2"><div class="qr-div"><img src="https://api.qrserver.com/v1/create-qr-code/?size=500x500&amp;data=https://prayer.global/prayer_app/custom/<?php echo esc_html( $lap_stats['key'] ) ?>" id="qr-code"></div></div>
-                        <div class="cell small-6 medium-2 center hide-for-small-only"><strong>World Coverage</strong><br><strong><span class="one-em stats-figure completed completed_percent"></span><span class="one-em">%</span></strong></div>
-                        <div class="cell small-6 medium-3 center hide-for-small-only"><strong>Pace of Lap</strong><br><strong><span class="one-em stats-figure time_elapsed">0</span></strong></div>
+                        <div class="cell small-6 medium-2" id="qr-cell"><div id="qr-div"><img src="https://api.qrserver.com/v1/create-qr-code/?size=500x500&amp;data=https://prayer.global/prayer_app/custom/<?php echo esc_html( $lap_stats['key'] ) ?>" id="qr-code" style="display:none;"></div></div>
+                        <div class="cell small-6 medium-3 center"><strong>Places Covered</strong><br><strong><span class="three-em green  completed"></span></strong></div>
+                        <div class="cell small-6 medium-2 center"><strong>Places Remaining</strong><br><strong><span class="three-em red  remaining"></span></strong></div>
+                        <div class="cell small-6 medium-2 center hide-for-small-only"><strong>World Coverage</strong><br><strong><span class="three-em completed completed_percent"></span><span class="three-em">%</span></strong></div>
+                        <div class="cell small-6 medium-3 center hide-for-small-only"><strong>Pace of Lap</strong><br><strong><span class="three-em time_elapsed">0</span></strong></div>
                     </div>
                 </div>
             </div>
@@ -153,10 +154,17 @@ class PG_Custom_Prayer_App_Map_Display extends PG_Custom_Prayer_App {
             <hr>
             <div class="grid-x grid-padding-x" id="grid_details_content"></div>
         </div>
+        <?php
+    }
+
+    public function footer_javascript(){
+        ?>
         <script>
             jQuery(document).ready(function(){
-                let qr_width = jQuery('.qr-div').width()
-                jQuery('#qr-code').css('width', qr_width+'px' )
+                setTimeout(function() {
+                    let qr_width = jQuery('#qr-cell').width()
+                    jQuery('#qr-code').css('width', qr_width+'px' ).show()
+                }, 1000);
             })
         </script>
         <?php
@@ -185,6 +193,7 @@ class PG_Custom_Prayer_App_Map_Display extends PG_Custom_Prayer_App {
                 return [
                     'grid_data' => $this->get_grid( $params['parts'] ),
                     'participants' => $this->get_participants( $params['parts'] ),
+                    'stats' => pg_custom_lap_stats_by_post_id( $params['parts']['post_id'] ),
                 ];
             case 'get_grid_details':
                 return $this->get_grid_details( $params['data'] );

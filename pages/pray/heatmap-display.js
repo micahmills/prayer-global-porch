@@ -62,7 +62,7 @@ jQuery(document).ready(function($){
 `)
 
   let initialize_screen = jQuery('.initialize-progress')
-  let grid_details_content = jQuery('#grid-details-content')
+  // let grid_details_content = jQuery('#grid-details-content')
 
   // preload all geojson
   let asset_list = []
@@ -75,7 +75,7 @@ jQuery(document).ready(function($){
   let loop = 0
   let list = 0
   window.load_map_triggered = 0
-  window.get_page( 'get_grid')
+  window.get_page('get_grid')
     .done(function(x){
       list = 1
 
@@ -151,21 +151,19 @@ jQuery(document).ready(function($){
     jQuery('#initialize-screen').hide()
     jQuery('.loading-spinner').removeClass('active')
 
-    let center = [0, 30]
-    let zoom = 2
-    if ( isMobile ) {
-      center = [-90, 30]
-      zoom = 1
-    }
+    let center = [0, 20]
+    let zoom = 1.5
+
 
     mapboxgl.accessToken = jsObject.map_key;
     map = new mapboxgl.Map({
       container: 'map',
       style: 'mapbox://styles/discipletools/cl2ksnvie001i15qm1h5ahqea',
       center: center,
-      minZoom: 0,
+      minZoom: 1,
       maxZoom: 12,
-      zoom: zoom
+      zoom: zoom,
+      maxBounds: [ [-170, -85], [180, 85] ]
     });
     map.dragRotate.disable();
     map.touchZoomRotate.disableRotation();
@@ -175,15 +173,25 @@ jQuery(document).ready(function($){
       showZoom: true
     });
 
-    if ( ! isMobile ) {
-      map.fitBounds([
-        [-70, -70], // southwestern corner of the bounds
-        [70, 90] // northeastern corner of the bounds
-      ]);
-    }
 
     load_grid()
   }
+
+  setInterval(function(){
+    window.get_page('get_grid')
+      .done(function(x){
+        jsObject.grid_data = x.grid_data
+        jsObject.stats = x.stats
+        load_grid()
+        console.log(x.stats)
+        // add stats
+        jQuery('.completed').html( jsObject.stats.completed )
+        jQuery('.completed_percent').html( jsObject.stats.completed_percent )
+        jQuery('.remaining').html( jsObject.stats.remaining )
+        jQuery('.time_elapsed').html( jsObject.stats.time_elapsed_small )
+
+      })
+  }, 30000 )
 
   function load_grid() {
     window.previous_hover = false
@@ -240,9 +248,9 @@ jQuery(document).ready(function($){
               }
             },'waterway-label' )
 
-            map.on('click', i.toString() + 'fills_heat', function (e) {
-              load_grid_details( e.features[0].id )
-            })
+            // map.on('click', i.toString() + 'fills_heat', function (e) {
+            //   load_grid_details( e.features[0].id )
+            // })
             map.on('mouseenter', i.toString() + 'fills_heat', () => {
               map.getCanvas().style.cursor = 'pointer'
             })
@@ -254,56 +262,6 @@ jQuery(document).ready(function($){
         }) /* ajax call */
 
     }) /* for each loop */
-
-    /* load prayer warriors layer */
-    map.on('load', function() {
-      let features = []
-      jQuery.each( jsObject.participants, function(i,v){
-        features.push({
-            "type": "Feature",
-            "geometry": {
-              "type": "Point",
-              "coordinates": [v.longitude, v.latitude]
-            },
-            "properties": {
-              "name": "Name"
-            }
-          }
-        )
-      })
-      let geojson = {
-        "type": "FeatureCollection",
-        "features": features
-      }
-
-      map.addSource('participants', {
-        'type': 'geojson',
-        'data': geojson
-      });
-      map.loadImage(
-        jsObject.image_folder + 'praying-hand-up-40.png',
-        (error, image) => {
-          if (error) throw error;
-          map.addImage('custom-marker', image);
-          map.addLayer({
-            'id': 'points',
-            'type': 'symbol',
-            'source': 'participants',
-            'layout': {
-              'icon-image': 'custom-marker',
-              "icon-size": .5,
-              'icon-padding': 0,
-              "icon-allow-overlap": true,
-              'text-font': [
-                'Open Sans Semibold',
-                'Arial Unicode MS Bold'
-              ],
-              'text-offset': [0, 1.25],
-              'text-anchor': 'top'
-            }
-          });
-        })
-    })
 
     // add stats
     jQuery('.completed').html( jsObject.stats.completed )
@@ -323,82 +281,6 @@ jQuery(document).ready(function($){
     jQuery('#foot_block').show()
   } /* .preCache */
 
-  function load_grid_details( grid_id ) {
-    let div = jQuery('#grid_details_content')
-    div.empty().html(`<span class="loading-spinner active"></span>`)
-
-    jQuery('#offcanvas_location_details').foundation('open')
-
-    window.get_data_page( 'get_grid_details', {grid_id: grid_id} )
-      .done(function(response){
-        window.report_content = response
-
-        console.log(response)
-        let bodies_1 = ''
-        let bodies_2 = ''
-        let bodies_3 = ''
-        i = 0
-        while ( i < response.location.percent_non_christians ) {
-          bodies_1 += '<i class="ion-ios-body red two-em"></i>';
-          i++;
-        }
-        i = 0
-        while ( i < response.location.percent_christian_adherents ) {
-          bodies_2 += '<i class="ion-ios-body orange two-em"></i>';
-          i++;
-        }
-        i = 0
-        while ( i < response.location.percent_believers ) {
-          bodies_3 += '<i class="ion-ios-body green two-em"></i>';
-          i++;
-        }
-        div.html(
-          `
-          <div class="grid-x grid-padding-x">
-              <div class="cell">
-                <p><span class="stats-title two-em">${response.location.full_name}</span></p>
-                <p>1 believer for every ${numberWithCommas(Math.ceil(response.location.all_lost_int / response.location.believers_int ) ) } lost neighbors.</p>
-                <hr>
-              </div>
-              <div class="cell">
-                 <div class="grid-x">
-                    <div class="cell center">
-                        <p><strong>Don't Know Jesus</strong></p>
-                        <p>${bodies_1} <span>(${response.location.non_christians})</span></p>
-                    </div>
-                    <div class="cell center">
-                        <p><strong>Know about Jesus</strong></p>
-                        <p>${bodies_2} <span>(${response.location.christian_adherents})</span></p>
-                    </div>
-                    <div class="cell center">
-                        <p><strong>Know Jesus</strong></p>
-                        <p>${bodies_3} <span>(${response.location.believers})</span></p>
-                    </div>
-                </div>
-                <hr>
-              </div>
-              <div class="cell">
-                The ${response.location.admin_level_name} of <strong>${response.location.full_name}</strong> has a population of ${response.location.population}. We estimate ${response.location.name} has ${response.location.non_christians} who are far from Jesus, ${response.location.christian_adherents} who might know about Jesus culturally, and ${response.location.believers} people who know Jesus personally.
-                ${response.location.full_name} is 1 of ${response.location.peer_locations} ${response.location.admin_level_name_plural} in ${response.location.parent_name}.
-                <hr>
-              </div>
-              <div class="cell">
-                Religion: ${response.location.primary_religion}<br>
-                Official Language: ${response.location.primary_language}<br>
-                <hr>
-              </div>
-              <div class="cell">
-                  <button class="button clear" id="correction_button" onclick="window.load_report_modal()">Correction Needed?</button>
-              </div>
-          </div>
-          `
-        )
-      })
-  }
-
-  function numberWithCommas(x) {
-    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  }
 })
 
 
