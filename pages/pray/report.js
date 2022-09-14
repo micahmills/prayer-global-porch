@@ -50,7 +50,16 @@ window.load_report_modal = () => {
     correction_spinner.addClass('active')
     correction_submit.prop('disabled', true)
 
-    window.api_post( 'correction', data )
+    jQuery.ajax({
+      type: "POST",
+      data: JSON.stringify({action: 'correction', parts: jsObject.parts, data: data}),
+      contentType: "application/json; charset=utf-8",
+      dataType: "json",
+      url: jsObject.root + jsObject.parts.root + '/v1/' + jsObject.parts.type,
+      beforeSend: function (xhr) {
+        xhr.setRequestHeader('X-WP-Nonce', jsObject.nonce)
+      }
+    })
       .done(function(x) {
         console.log(x)
         correction_modal.modal('hide')
@@ -68,3 +77,4 @@ window.load_report_modal = () => {
   /** end correction report */
 
 }
+

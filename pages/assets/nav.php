@@ -17,9 +17,9 @@ if ( '' === $url ) { ?>
                 <li class="nav-item"><a class="nav-link" href="#section-about">About</a></li>
                 <li class="nav-item"><a class="nav-link" href="#section-challenge">Challenge</a></li>
                 <li class="nav-item"><a class="nav-link" href="#section-lap">Status</a></li>
+                <li class="nav-item"><a class="nav-link" href="/challenges/active/">Groups</a></li>
                 <li class="nav-item d-lg-none"><a class="nav-link" href="/newest/map/">Current Map</a></li>
                 <li class="nav-item d-lg-none"><a class="nav-link" href="/race_app/big_map/">Race Map</a></li>
-                <li class="nav-item d-lg-none"><a class="nav-link" href="/challenges/active/">Group Challenges</a></li>
                 <li class="nav-item d-lg-none"></li>
                 <li class="nav-item"><a class="nav-link btn smoothscroll pb_outline-dark highlight" href="/newest/lap/">Start Praying</a></li>
             </ul>
@@ -40,9 +40,9 @@ if ( '' === $url ) { ?>
                 <li class="nav-item"><a class="nav-link" href="/#section-about">About</a></li>
                 <li class="nav-item"><a class="nav-link" href="/#section-challenge">Challenge</a></li>
                 <li class="nav-item"><a class="nav-link" href="/#section-lap">Status</a></li>
+                <li class="nav-item"><a class="nav-link" href="/challenges/active/">Groups</a></li>
                 <li class="nav-item d-lg-none"><a class="nav-link" href="/newest/map/">Current Map</a></li>
                 <li class="nav-item d-lg-none"><a class="nav-link" href="/race_app/big_map/">Race Map</a></li>
-                <li class="nav-item d-lg-none"><a class="nav-link" href="/challenges/active/">Group Challenges</a></li>
                 <li class="nav-item d-lg-none"></li>
                 <li class="nav-item"><a class="nav-link btn smoothscroll pb_outline-dark highlight" href="/newest/lap/">Start Praying</a></li>
             </ul>
@@ -67,9 +67,9 @@ if ( '' === $url ) { ?>
                     <li class="nav-item"><a class="nav-link" href="/#section-about">About</a></li>
                     <li class="nav-item"><a class="nav-link" href="/#section-challenge">Challenge</a></li>
                     <li class="nav-item"><a class="nav-link" href="/#section-lap">Status</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/challenges/active/">Groups</a></li>
                     <li class="nav-item d-lg-none"><a class="nav-link" href="/newest/map/">Current Map</a></li>
                     <li class="nav-item d-lg-none"><a class="nav-link" href="/race_app/big_map/">Race Map</a></li>
-                    <li class="nav-item d-lg-none"><a class="nav-link" href="/challenges/active/">Group Challenges</a></li>
                     <li class="nav-item d-lg-none"></li>
                     <li class="nav-item"><a class="nav-link btn smoothscroll pb_outline-dark highlight" style="border:1px black solid;" href="/newest/lap/">Start Praying</a></li>
                 </ul>
