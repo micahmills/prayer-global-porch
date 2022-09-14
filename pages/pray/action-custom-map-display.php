@@ -172,7 +172,6 @@ class PG_Custom_Prayer_App_Map_Display extends PG_Custom_Prayer_App {
 
     public static function _wp_enqueue_scripts(){
         DT_Mapbox_API::load_mapbox_header_scripts();
-
         wp_enqueue_script( 'heatmap-js', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'heatmap-display.js', [
             'jquery',
             'mapbox-gl'

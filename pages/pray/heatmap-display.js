@@ -191,7 +191,7 @@ jQuery(document).ready(function($){
         jQuery('.time_elapsed').html( jsObject.stats.time_elapsed_small )
 
       })
-  }, 30000 )
+  }, 60000 )
 
   function load_grid() {
     window.previous_hover = false

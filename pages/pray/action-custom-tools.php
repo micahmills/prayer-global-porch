@@ -114,6 +114,29 @@ class PG_Custom_Prayer_App_Tools extends PG_Custom_Prayer_App {
                 </div>
                 <div class="row ">
                     <div class="col center p-3">
+                        <h2>Display Map (60 Second Refresh)</h2>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <input type="text" class="form-control copy-display"
+                           value="https://prayer.global/prayer_app/custom/<?php echo esc_html( $lap_stats['key'] ) ?>/display" placeholder="Some path" id="copy-display-input">
+                    <span class="input-group-btn">
+                      <button class="btn btn-default copy-button" type="button" id="copy-button-display"
+                              data-toggle="tooltip" data-placement="button"
+                              title="Copy to Clipboard" data-clipboard-action="copy" data-clipboard-target="#copy-display-input">
+                        Copy
+                      </button>
+                    </span>
+                </div>
+
+
+                <div class="row ">
+                    <div class="col center">
+                        <hr>
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="col center p-3">
                         <h2>App Stores: Prayer.Global App</h2>
                     </div>
                 </div>
@@ -149,10 +172,6 @@ class PG_Custom_Prayer_App_Tools extends PG_Custom_Prayer_App {
                     e.clearSelection();
                 });
 
-                clipboard.on('error', function(e) {
-                    console.error('Action:', e.action);
-                    console.error('Trigger:', e.trigger);
-                });
 
                 var clipboard_qrapp = new ClipboardJS('#copy-button-qrapp');
                 clipboard_qrapp.on('success', function(e) {
@@ -163,10 +182,17 @@ class PG_Custom_Prayer_App_Tools extends PG_Custom_Prayer_App {
                     e.clearSelection();
                 });
 
-                clipboard_qrapp.on('error', function(e) {
-                    console.error('Action:', e.action);
-                    console.error('Trigger:', e.trigger);
+
+
+                var clipboard_display = new ClipboardJS('#copy-button-display');
+                clipboard_display.on('success', function(e) {
+                    console.info('Action:', e.action);
+                    console.info('Text:', e.text);
+                    console.info('Trigger:', e.trigger);
+                    jQuery('#copy-button-display').text('Copied')
+                    e.clearSelection();
                 });
+
 
             });
         </script>
