@@ -8,8 +8,8 @@ if ( !defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly.
 class PG_Custom_Prayer_App extends DT_Magic_Url_Base {
 
     public $magic = false;
-    public $page_title = 'Custom Lap';
-    public $page_description = 'Custom Prayer Laps';
+    public $page_title = 'Custom Prayer Lap';
+    public $page_description = 'Custom Prayer Lap';
     public $root = "prayer_app";
     public $type = 'custom';
     public $type_actions = [
@@ -24,6 +24,7 @@ class PG_Custom_Prayer_App extends DT_Magic_Url_Base {
     public $post_type = 'laps';
     private $meta_key = '';
     public $show_app_tile = true;
+    public $stats = [];
 
     private static $_instance = null;
     public $meta = []; // Allows for instance specific data.
@@ -84,6 +85,8 @@ class PG_Custom_Prayer_App extends DT_Magic_Url_Base {
         } else {
             wp_redirect( trailingslashit( site_url() ) );
         }
+
+        $this->stats = pg_custom_lap_stats_by_post_id( $this->parts['post_id'] );
 
     }
 

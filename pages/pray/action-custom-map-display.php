@@ -32,6 +32,9 @@ class PG_Custom_Prayer_App_Map_Display extends PG_Custom_Prayer_App {
             return;
         }
 
+        
+        $this->page_title = $this->part
+
         // load if valid url
         add_action( 'dt_blank_head', [ $this, '_header' ] );
         add_action( 'dt_blank_body', [ $this, 'body' ] );
@@ -89,7 +92,6 @@ class PG_Custom_Prayer_App_Map_Display extends PG_Custom_Prayer_App {
                     'add' => __( 'Add Magic', 'prayer-global' ),
                 ],
             ]) ?>][0]
-
         </script>
         <link href="https://fonts.googleapis.com/css?family=Crimson+Text:400,400i,600|Montserrat:200,300,400" rel="stylesheet">
         <link rel="stylesheet" href="<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/fonts/ionicons/css/ionicons.min.css">

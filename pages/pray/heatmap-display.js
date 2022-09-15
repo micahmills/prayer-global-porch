@@ -165,7 +165,7 @@ jQuery(document).ready(function($){
     });
 
     map.on('load', function() {
-    load_grid()
+      load_grid()
     })
   }
 
@@ -247,7 +247,6 @@ jQuery(document).ready(function($){
               map.getCanvas().style.cursor = ''
             })
           
-
         }) /* ajax call */
 
     }) /* for each loop */
