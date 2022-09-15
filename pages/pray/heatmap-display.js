@@ -164,7 +164,9 @@ jQuery(document).ready(function($){
       showZoom: true
     });
 
+    map.on('load', function() {
     load_grid()
+    })
   }
 
   setInterval(function(){
@@ -202,7 +204,7 @@ jQuery(document).ready(function($){
         .done(function (geojson) {
 
           /* load prayer grid layer */
-          map.on('load', function() {
+          
             jQuery.each(geojson.features, function (i, v) {
               if (typeof jsObject.grid_data.data[v.id] !== 'undefined' ) {
                 geojson.features[i].properties.value = jsObject.grid_data.data[v.id]
@@ -244,7 +246,7 @@ jQuery(document).ready(function($){
             map.on('mouseleave', i.toString() + 'fills_heat', () => {
               map.getCanvas().style.cursor = ''
             })
-          })
+          
 
         }) /* ajax call */
 
