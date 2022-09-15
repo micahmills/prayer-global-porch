@@ -29,9 +29,9 @@ jQuery(document).ready(function() {
                           <td style="text-align:right; white-space:nowrap;">
                             <a href="/prayer_app/custom/${v.lap_key}">Pray</a> |
                             <a href="/prayer_app/custom/${v.lap_key}/map">Map</a> |
-                            <a href="/prayer_app/custom/${v.lap_key}/tools">Share</a>
+                            <a href="/prayer_app/custom/${v.lap_key}/tools">Share</a> |
+                            <a href="/prayer_app/custom/${v.lap_key}/display">Display</a>
                           </td>
-
                         </tr>`
       })
 

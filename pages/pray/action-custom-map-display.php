@@ -82,8 +82,7 @@ class PG_Custom_Prayer_App_Map_Display extends PG_Custom_Prayer_App {
                 'nonce' => wp_create_nonce( 'wp_rest' ),
                 'parts' => $this->parts,
                 'grid_data' => [],
-                'participants' => [],
-                'stats' => pg_custom_lap_stats_by_post_id( $this->parts['post_id'] ),
+                'stats' => $this->stats,
                 'image_folder' => plugin_dir_url( __DIR__ ) . 'assets/images/',
                 'translations' => [
                     'add' => __( 'Add Magic', 'prayer-global' ),
@@ -98,26 +97,10 @@ class PG_Custom_Prayer_App_Map_Display extends PG_Custom_Prayer_App {
     }
 
     public function body(){
-        $parts = $this->parts;
         $lap_stats = $this->stats;
         DT_Mapbox_API::geocoder_scripts();
         ?>
         <style id="custom-style"></style>
-        <style>
-            #qr-code-block {
-                background:white;
-                z-index:10;
-                width:300px;
-                height: 300px;
-                position:absolute;
-                bottom: 2em;
-                left: 1em;
-            }
-            .qr-code-image {
-                padding: 1em 1em 0 1em;
-                width: 100%;
-            }
-        </style>
         <div id="map-content">
             <div id="initialize-screen">
                 <div id="initialize-spinner-wrapper" class="center">
@@ -144,11 +127,11 @@ class PG_Custom_Prayer_App_Map_Display extends PG_Custom_Prayer_App {
                         <div class="cell medium-2 center"><strong>Places Covered</strong><br><strong><span class="three-em green completed"></span></strong></div>
                         <div class="cell medium-2 center"><strong>Places Remaining</strong><br><strong><span class="three-em red remaining"></span></strong></div>
                         <div class="cell medium-2 center hide-for-small-only"><strong>World Coverage</strong><br><strong><span class="three-em completed completed_percent"></span><span class="three-em">%</span></strong></div>
-                        <div class="cell medium-2 center hide-for-small-only"><strong>Pace of Lap</strong><br><strong><span class="three-em time_elapsed">0</span></strong></div>
+                        <div class="cell medium-2 center hide-for-small-only"><strong>Timer Since Start</strong><br><strong><span class="three-em time_elapsed">0</span></strong></div>
                     </div>
                     <div id="qr-code-block">
                         <img class="qr-code-image" src="https://api.qrserver.com/v1/create-qr-code/?size=500x500&amp;data=https://prayer.global/prayer_app/custom/<?php echo esc_html( $lap_stats['key'] ) ?>"><br>
-                        <div class="center">JOIN AND PRAY</div>
+                        <div class="center">START PRAYING</div>
                     </div>
                 </div>
             </div>

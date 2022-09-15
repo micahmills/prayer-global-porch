@@ -170,8 +170,6 @@ jQuery(document).ready(function($){
   }
 
   function load_grid() {
-    window.previous_hover = false
-
     jQuery.each(asset_list, function(i,file){
 
       jQuery.ajax({
@@ -224,12 +222,64 @@ jQuery(document).ready(function($){
               }
             },'waterway-label' )
 
-            map.on('mouseenter', i.toString() + 'fills_heat', () => {
-              map.getCanvas().style.cursor = 'pointer'
-            })
-            map.on('mouseleave', i.toString() + 'fills_heat', () => {
-              map.getCanvas().style.cursor = ''
-            })
+        }) /* ajax call */
+
+    }) /* for each loop */
+
+    // add stats
+    jQuery('.completed').html( jsObject.stats.completed )
+    jQuery('.completed_percent').html( jsObject.stats.completed_percent )
+    jQuery('.remaining').html( jsObject.stats.remaining )
+    jQuery('.time_elapsed').html( jsObject.stats.time_elapsed_small )
+    jQuery('.prayer_warriors').html( jsObject.stats.participants )
+
+    jQuery('#head_block').show()
+    jQuery('#foot_block').show()
+  } /* .loadgrid */
+
+  setInterval(function(){
+    window.get_page('get_grid')
+      .done(function(x){
+        console.log('reload')
+        // add stats
+        jsObject.stats = x.stats
+        jQuery('.completed').html( jsObject.stats.completed )
+        jQuery('.completed_percent').html( jsObject.stats.completed_percent )
+        jQuery('.remaining').html( jsObject.stats.remaining )
+        jQuery('.time_elapsed').html( jsObject.stats.time_elapsed_small )
+        jQuery('.prayer_warriors').html( jsObject.stats.participants )
+
+        jsObject.grid_data = x.grid_data
+        reload_load_grid()
+      })
+  }, 60000 )
+
+  function reload_load_grid() {
+    jQuery.each(asset_list, function(i,file){
+
+      jQuery.ajax({
+        url: jsObject.mirror_url + 'tiles/world/flat_states/' + file,
+        dataType: 'json',
+        data: null,
+        cache: true,
+        beforeSend: function (xhr) {
+          if (xhr.overrideMimeType) {
+            xhr.overrideMimeType("application/json");
+          }
+        }
+      })
+        .done(function (geojson) {
+
+          /* load prayer grid layer */
+          jQuery.each(geojson.features, function (i, v) {
+            if (typeof jsObject.grid_data.data[v.id] !== 'undefined' ) {
+              geojson.features[i].properties.value = jsObject.grid_data.data[v.id]
+            } else {
+              geojson.features[i].properties.value = 0
+            }
+          })
+
+          map.getSource(i.toString()).setData(geojson);
 
         }) /* ajax call */
 
@@ -244,24 +294,7 @@ jQuery(document).ready(function($){
 
     jQuery('#head_block').show()
     jQuery('#foot_block').show()
-  } /* .preCache */
-
-  setInterval(function(){
-    window.get_page('get_grid')
-      .done(function(x){
-        jsObject.grid_data = x.grid_data
-        jsObject.stats = x.stats
-        load_grid()
-
-        // add stats
-        jQuery('.completed').html( jsObject.stats.completed )
-        jQuery('.completed_percent').html( jsObject.stats.completed_percent )
-        jQuery('.remaining').html( jsObject.stats.remaining )
-        jQuery('.time_elapsed').html( jsObject.stats.time_elapsed_small )
-        jQuery('.prayer_warriors').html( jsObject.stats.participants )
-
-      })
-  }, 60000 )
+  } /* .loadgrid */
 
 })
 

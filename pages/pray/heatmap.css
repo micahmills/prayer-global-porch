@@ -183,13 +183,16 @@ progress {
     white-space: nowrap;
 }
 
-#qr-code {
-    width: 250px;
-    position: absolute;
-    bottom: 0;
-    padding: 2rem;
-    background: white;
+#qr-code-block {
+    background:white;
+    z-index:10;
+    width:300px;
+    height: 300px;
+    position:absolute;
+    bottom: 2em;
+    left: 1em;
 }
-#qr-div {
+.qr-code-image {
+    padding: 1em 1em 0 1em;
     width: 100%;
 }
