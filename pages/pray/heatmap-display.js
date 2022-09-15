@@ -79,7 +79,7 @@ jQuery(document).ready(function($){
       list = 1
 
       jsObject.grid_data = x.grid_data
-      jsObject.participants = x.participants
+      jsObject.stats = x.stats
 
       if ( loop > 9 && list > 0 && window.load_map_triggered !== 1 ){
         window.load_map_triggered = 1
