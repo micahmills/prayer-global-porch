@@ -124,7 +124,13 @@ class Prayer_Global_Porch_Challenge_List extends DT_Magic_Url_Base
                 </div>
             </div>
             <div class="container" id="content"><span class="loading-spinner active"></span></div>
-
+            <div class="container pb-4">
+                <div class="row">
+                    <div class="col-md text-center">
+                        <a href="/prayer_app/group_challenge_request">Request a Group Challenge</a>
+                    </div>
+                </div>
+            </div>
         </section>
         <div style="height:300px;"></div>
 
