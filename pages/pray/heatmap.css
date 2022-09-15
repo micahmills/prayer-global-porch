@@ -36,6 +36,21 @@ progress {
 #head_block {
     margin: 0 auto 1em;
 }
+#head_block_wrapper {
+    position: absolute;
+    z-index: 5;
+    padding: 0;
+    width: 100%;
+}
+#head_block_display {
+    position: relative;
+    background: white;
+    width: -moz-fit-content;
+    width: fit-content;
+    padding: 1em;
+    opacity: .9;
+    margin: 0 auto 1em;
+}
 #foot_block {
     bottom: 0;
     margin: 1em auto 0;
@@ -166,4 +181,15 @@ progress {
 }
 .lap-title {
     white-space: nowrap;
+}
+
+#qr-code {
+    width: 250px;
+    position: absolute;
+    bottom: 0;
+    padding: 2rem;
+    background: white;
+}
+#qr-div {
+    width: 100%;
 }

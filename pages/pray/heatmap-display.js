@@ -93,7 +93,7 @@ jQuery(document).ready(function($){
   let data = {
     hash: Cookies.get('pg_user_hash')
   }
-  
+
 
   let map
   jQuery.each(asset_list, function(i,v) {
@@ -169,22 +169,6 @@ jQuery(document).ready(function($){
     })
   }
 
-  setInterval(function(){
-    window.get_page('get_grid')
-      .done(function(x){
-        jsObject.grid_data = x.grid_data
-        jsObject.stats = x.stats
-        load_grid()
-        
-        // add stats
-        jQuery('.completed').html( jsObject.stats.completed )
-        jQuery('.completed_percent').html( jsObject.stats.completed_percent )
-        jQuery('.remaining').html( jsObject.stats.remaining )
-        jQuery('.time_elapsed').html( jsObject.stats.time_elapsed_small )
-
-      })
-  }, 60000 )
-
   function load_grid() {
     window.previous_hover = false
 
@@ -204,7 +188,7 @@ jQuery(document).ready(function($){
         .done(function (geojson) {
 
           /* load prayer grid layer */
-          
+
             jQuery.each(geojson.features, function (i, v) {
               if (typeof jsObject.grid_data.data[v.id] !== 'undefined' ) {
                 geojson.features[i].properties.value = jsObject.grid_data.data[v.id]
@@ -246,7 +230,7 @@ jQuery(document).ready(function($){
             map.on('mouseleave', i.toString() + 'fills_heat', () => {
               map.getCanvas().style.cursor = ''
             })
-          
+
         }) /* ajax call */
 
     }) /* for each loop */
@@ -256,10 +240,28 @@ jQuery(document).ready(function($){
     jQuery('.completed_percent').html( jsObject.stats.completed_percent )
     jQuery('.remaining').html( jsObject.stats.remaining )
     jQuery('.time_elapsed').html( jsObject.stats.time_elapsed_small )
-    
+    jQuery('.prayer_warriors').html( jsObject.stats.participants )
+
     jQuery('#head_block').show()
     jQuery('#foot_block').show()
   } /* .preCache */
+
+  setInterval(function(){
+    window.get_page('get_grid')
+      .done(function(x){
+        jsObject.grid_data = x.grid_data
+        jsObject.stats = x.stats
+        load_grid()
+
+        // add stats
+        jQuery('.completed').html( jsObject.stats.completed )
+        jQuery('.completed_percent').html( jsObject.stats.completed_percent )
+        jQuery('.remaining').html( jsObject.stats.remaining )
+        jQuery('.time_elapsed').html( jsObject.stats.time_elapsed_small )
+        jQuery('.prayer_warriors').html( jsObject.stats.participants )
+
+      })
+  }, 60000 )
 
 })
 

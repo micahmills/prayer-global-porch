@@ -32,9 +32,6 @@ class PG_Custom_Prayer_App_Map_Display extends PG_Custom_Prayer_App {
             return;
         }
 
-        
-        $this->page_title = $this->part
-
         // load if valid url
         add_action( 'dt_blank_head', [ $this, '_header' ] );
         add_action( 'dt_blank_body', [ $this, 'body' ] );
@@ -102,19 +99,22 @@ class PG_Custom_Prayer_App_Map_Display extends PG_Custom_Prayer_App {
 
     public function body(){
         $parts = $this->parts;
-        $lap_stats = pg_custom_lap_stats_by_post_id( $parts['post_id'] );
+        $lap_stats = $this->stats;
         DT_Mapbox_API::geocoder_scripts();
         ?>
         <style id="custom-style"></style>
         <style>
-            #qr-code {
-                width: 250px;
-                position: absolute;
-                bottom: 0;
-                padding: 2rem;
-                background: white;
+            #qr-code-block {
+                background:white;
+                z-index:10;
+                width:300px;
+                height: 300px;
+                position:absolute;
+                bottom: 2em;
+                left: 1em;
             }
-            #qr-div {
+            .qr-code-image {
+                padding: 1em 1em 0 1em;
                 width: 100%;
             }
         </style>
@@ -130,15 +130,25 @@ class PG_Custom_Prayer_App_Map_Display extends PG_Custom_Prayer_App {
                 </div>
             </div>
             <div id="map-wrapper">
+                <div id="head_block_wrapper">
+                    <div id="head_block_display">
+                        <span class="two-em"><?php echo esc_html( $lap_stats['title'] ) ?> Prayer Challenge</span>
+                    </div>
+                </div>
                 <span class="loading-spinner active"></span>
                 <div id='map'></div>
                 <div id="foot_block">
                     <div class="grid-x grid-padding-x">
-                        <div class="cell small-6 medium-2" id="qr-cell"><div id="qr-div"><img src="https://api.qrserver.com/v1/create-qr-code/?size=500x500&amp;data=https://prayer.global/prayer_app/custom/<?php echo esc_html( $lap_stats['key'] ) ?>" id="qr-code" style="display:none;"></div></div>
-                        <div class="cell small-6 medium-3 center"><strong>Places Covered</strong><br><strong><span class="three-em green  completed"></span></strong></div>
-                        <div class="cell small-6 medium-2 center"><strong>Places Remaining</strong><br><strong><span class="three-em red  remaining"></span></strong></div>
-                        <div class="cell small-6 medium-2 center hide-for-small-only"><strong>World Coverage</strong><br><strong><span class="three-em completed completed_percent"></span><span class="three-em">%</span></strong></div>
-                        <div class="cell small-6 medium-3 center hide-for-small-only"><strong>Pace of Lap</strong><br><strong><span class="three-em time_elapsed">0</span></strong></div>
+                        <div class="cell medium-2"></div>
+                        <div class="cell medium-2 center"><strong>Prayer Warriors</strong><br><strong><span class="three-em prayer_warriors"></span></strong></div>
+                        <div class="cell medium-2 center"><strong>Places Covered</strong><br><strong><span class="three-em green completed"></span></strong></div>
+                        <div class="cell medium-2 center"><strong>Places Remaining</strong><br><strong><span class="three-em red remaining"></span></strong></div>
+                        <div class="cell medium-2 center hide-for-small-only"><strong>World Coverage</strong><br><strong><span class="three-em completed completed_percent"></span><span class="three-em">%</span></strong></div>
+                        <div class="cell medium-2 center hide-for-small-only"><strong>Pace of Lap</strong><br><strong><span class="three-em time_elapsed">0</span></strong></div>
+                    </div>
+                    <div id="qr-code-block">
+                        <img class="qr-code-image" src="https://api.qrserver.com/v1/create-qr-code/?size=500x500&amp;data=https://prayer.global/prayer_app/custom/<?php echo esc_html( $lap_stats['key'] ) ?>"><br>
+                        <div class="center">JOIN AND PRAY</div>
                     </div>
                 </div>
             </div>
@@ -195,12 +205,6 @@ class PG_Custom_Prayer_App_Map_Display extends PG_Custom_Prayer_App {
                     'participants' => [],
                     'stats' => pg_custom_lap_stats_by_post_id( $params['parts']['post_id'] ),
                 ];
-            case 'get_grid_details':
-                return [];
-            case 'get_participants':
-                return [];
-            case 'get_user_locations':
-                return [];
             default:
                 return new WP_Error( __METHOD__, 'missing action parameter' );
         }

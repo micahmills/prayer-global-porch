@@ -86,7 +86,9 @@ class PG_Custom_Prayer_App extends DT_Magic_Url_Base {
             wp_redirect( trailingslashit( site_url() ) );
         }
 
+        // set page title
         $this->stats = pg_custom_lap_stats_by_post_id( $this->parts['post_id'] );
+        $this->page_title = $this->stats['title'] ?? 'Prayer Challenge';
 
     }
 
