@@ -20,32 +20,54 @@ jQuery(document).ready(function() {
 
   window.api_post( 'get_global_list', {} )
     .done(function(data) {
-      console.log(data)
-
+        console.log(data)
       let html_content = ''
       jQuery.each( data, function(i,v){
-        html_content += `<tr data-value="/prayer_app/custom/${v.lap_key}/map">
+        html_content += `<tr>
+                          <td>${v.start_time}</td>
                           <th>${v.post_title}</th>
-                          <td style="text-align:right; white-space:nowrap;">
+                          <td>${v.stats.participants}</td>
+                          <td>${v.stats.completed}</td>
+                          <td>${v.stats.remaining}</td>
+                          <td>${v.stats.time_elapsed_small}</td>
+                          <td style="text-align:right;">
                             <a href="/prayer_app/custom/${v.lap_key}">Pray</a> |
-                            <a href="/prayer_app/custom/${v.lap_key}/map">Map</a> |
-                            <a href="/prayer_app/custom/${v.lap_key}/tools">Share</a> |
-                            <a href="/prayer_app/custom/${v.lap_key}/display">Display</a>
+                            <a href="/prayer_app/custom/${v.lap_key}/map">View Map</a> |
+                            <a href="/prayer_app/custom/${v.lap_key}/tools">Share Tools</a> |
+                            <a href="/prayer_app/custom/${v.lap_key}/display">Screen Display</a>
                           </td>
                         </tr>`
       })
 
-      jQuery('#content').html( `<table class="table table-hover">
-
+      jQuery('#content').html(
+            `<table class="display responsive" style="width:100%;" id="list-table" data-order='[[ 0, "desc" ]]'>
+                    <thead>
+                        <th></th>
+                        <th>Name</th>
+                        <th class="desktop">Warriors</th>
+                        <th class="desktop">Complete</th>
+                        <th class="desktop">Left</th>
+                        <th class="desktop">Pace</th>
+                        <th class="desktop">Links</th>
+                      </thead>
                     <tbody>
                        ${html_content}
                     </tbody>
-                    </table>` )
+                    </table>`
+      )
 
-      jQuery('.challenge-row').on('click', function(i,v){
-        let url = jQuery(this).data('value')
-        window.location.href = jsObject.site_url + url
-      })
+      jQuery('#list-table').DataTable({
+        lengthChange: false,
+        pageLength: 30,
+        responsive: true,
+        order: [[0, 'desc']],
+        columnDefs: [
+          {
+            target: 0,
+            visible: false,
+          }
+        ],
+      });
 
 
     })
