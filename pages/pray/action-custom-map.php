@@ -225,7 +225,7 @@ class PG_Custom_Prayer_App_Map extends PG_Custom_Prayer_App {
                     <p class="stats-figure end_time">0</p>
                 </div>
             </div>
-            <div class="text-center"><a href="/" class="navbar-brand text-center">Exit <?php echo esc_html( $lap_stats['title'] ) ?> to Prayer.Global</a></div>
+            <div class="text-center"><a href="/" class="navbar-brand text-center">Exit <?php echo esc_html( $lap_stats['title'] ) ?></a></div>
         </div>
         <?php
     }

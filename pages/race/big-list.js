@@ -25,93 +25,58 @@ jQuery(document).ready(function() {
   window.api_post( 'get_global_list', {} )
     .done(function(data) {
       console.log(data)
-
-      let end_time
-
-      content.empty()
-      content.append(`<div class="row">
-                <div class="col-sm-2">
-                    <strong>Lap Number</strong>
-                </div>
-                <div class="col-sm-2">
-                    <strong>Completed Date</strong>
-                </div>
-                <div class="col-sm-2">
-                    <strong>Warriors</strong>
-                </div>
-                <div class="col-sm-2">
-                    <strong>Minutes Prayed</strong>
-                </div>
-                <div class="col-sm-2">
-                    <strong>Pace</strong>
-                </div>
-                <div class="col-sm-2">
-                    <strong>Map</strong>
-                </div>
-            </div>`)
+      let html_content = ''
       jQuery.each( data, function(i,v){
         end_time = v.stats.end_time_formatted
         if( ! v.end_time ) {
           end_time = 'running'
         }
-        content.append(
-          `<div class="w-100"><hr></div>
-            <div class="row">
-                <div class="col-sm-2">
-                    Lap #${v.lap_number}
-                </div>
-                <div class="col-sm-2">
-                    ${ end_time }
-                </div>
-                <div class="col-sm-2">
-                    ${v.stats.participants}
-                </div>
-                <div class="col-sm-2">
-                    ${v.stats.minutes_prayed}
-                </div>
-                <div class="col-sm-2">
-                    ${v.stats.time_elapsed_small}
-                </div>
-                <div class="col-sm-2">
-                    <a href="/prayer_app/global/${v.lap_key}/map">Map</a>
-                </div>
-            </div>`
-        )
+        html_content += `<tr>
+                      <td>${v.lap_number}</td>
+                      <th>Lap #${v.lap_number}</th>
+                      <td>${ end_time }</td>
+                      <td>${v.stats.participants}</td>
+                      <td>${v.stats.minutes_prayed}</td>
+                      <td>${v.stats.time_elapsed_small}</td>
+                      <td>
+                         <a href="/prayer_app/global/${v.lap_key}/map">View Map</a>
+                      </td>
+                    </tr>`
       })
 
-      content.append(
-        `<div class="w-100"><hr style="border-top:1px solid darkgrey;border-bottom:1px solid darkgrey;"></div>
-            <div class="row">
-                <div class="col-sm-2">
-                    Total
-                </div>
-                <div class="col-sm-2">
-
-                </div>
-                <div class="col-sm-2">
-                    ${jsObject.global_race.participants} <span style="vertical-align:super;font-size:.6em;">*</span>
-                </div>
-                <div class="col-sm-2">
-                    ${jsObject.global_race.minutes_prayed}
-                </div>
-                <div class="col-sm-2">
-                    ${jsObject.global_race.time_elapsed_small}
-                </div>
-                <div class="col-sm-2">
-                    <a href="/race_app/big_map/">Big Map</a>
-                </div>
-            </div>`
+      jQuery('#content').html(
+        `<table class="display responsive" style="width:100%;" id="list-table" >
+                <thead>
+                    <th></th>
+                    <th>Lap Number</th>
+                    <th class="desktop">Completed</th>
+                    <th class="desktop">Warriors</th>
+                    <th class="desktop">Minutes Prayed</th>
+                    <th class="desktop">Pace</th>
+                    <th class="desktop">Map</th>
+                  </thead>
+                <tbody>
+                   ${html_content}
+                </tbody>
+                </table>`
       )
 
-      content.append(
-        `<div class="w-100"><br><br></div>
-            <div class="row">
-                <div class="col" style="font-size:.6em;">
-                    * unique warriors over all laps.
-                </div>
-            </div>`
-      )
-
-
+      jQuery('#list-table').DataTable({
+        lengthChange: false,
+        pageLength: 30,
+        responsive: true,
+        order: [[0, 'desc']],
+        columnDefs: [
+          {
+            target: 0,
+            visible: false,
+          }
+        ],
+      });
     })
+
+  jQuery('#totals_block').html(`Totals across all Laps: Total Warriors: ${jsObject.global_race.participants}
+                        | Total Minutes Prayed: ${jsObject.global_race.minutes_prayed} | Total Time Elapsed: ${jsObject.global_race.time_elapsed_small}`)
+
+
 }) // end .ready

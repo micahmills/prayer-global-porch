@@ -45,8 +45,8 @@ jQuery(document).ready(function() {
                         <th></th>
                         <th>Name</th>
                         <th class="desktop">Warriors</th>
-                        <th class="desktop">Complete</th>
-                        <th class="desktop">Left</th>
+                        <th class="desktop">Covered</th>
+                        <th class="desktop">Remaining</th>
                         <th class="desktop">Pace</th>
                         <th class="desktop">Links</th>
                       </thead>

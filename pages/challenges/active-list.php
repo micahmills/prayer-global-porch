@@ -118,9 +118,14 @@ class Prayer_Global_Porch_Challenge_List extends DT_Magic_Url_Base
         <section>
             <div class="container pb-4">
                 <div class="row">
-                    <div class="col-md text-center">
-                        <span class="two-em lap-title">Group Challenges</span>
+                    <div class="col-12 text-center">
+                        <span class="two-em lap-title">Group Challenges</span><br>
                     </div>
+                    <div class="col-md-3 text-center"></div>
+                    <div class="col-md-6 text-center">
+                        <p>Group challenges are communities of prayer warriors who have picked up the challenge of praying for the entire world as a group. All prayers prayed in the group challenges contribute to the global laps.</p>
+                    </div>
+                    <div class="col-md-3 text-center"></div>
                 </div>
             </div>
             <div class="container" id="content"><span class="loading-spinner active"></span></div>
