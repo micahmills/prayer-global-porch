@@ -62,7 +62,6 @@ jQuery(document).ready(function($){
 `)
 
   let initialize_screen = jQuery('.initialize-progress')
-  // let grid_details_content = jQuery('#grid-details-content')
 
   // preload all geojson
   let asset_list = []
@@ -94,14 +93,7 @@ jQuery(document).ready(function($){
   let data = {
     hash: Cookies.get('pg_user_hash')
   }
-  window.get_data_page( 'get_user_locations', data )
-    .done(function(user_locations){
-      jsObject.user_locations = user_locations
-    })
-    .fail(function(){
-      console.log('Error getting user locations')
-      jsObject.user_locations = []
-    })
+  
 
   let map
   jQuery.each(asset_list, function(i,v) {
@@ -154,7 +146,6 @@ jQuery(document).ready(function($){
     let center = [0, 20]
     let zoom = 1.5
 
-
     mapboxgl.accessToken = jsObject.map_key;
     map = new mapboxgl.Map({
       container: 'map',
@@ -173,7 +164,6 @@ jQuery(document).ready(function($){
       showZoom: true
     });
 
-
     load_grid()
   }
 
@@ -183,7 +173,7 @@ jQuery(document).ready(function($){
         jsObject.grid_data = x.grid_data
         jsObject.stats = x.stats
         load_grid()
-        console.log(x.stats)
+        
         // add stats
         jQuery('.completed').html( jsObject.stats.completed )
         jQuery('.completed_percent').html( jsObject.stats.completed_percent )
@@ -248,9 +238,6 @@ jQuery(document).ready(function($){
               }
             },'waterway-label' )
 
-            // map.on('click', i.toString() + 'fills_heat', function (e) {
-            //   load_grid_details( e.features[0].id )
-            // })
             map.on('mouseenter', i.toString() + 'fills_heat', () => {
               map.getCanvas().style.cursor = 'pointer'
             })
@@ -267,16 +254,8 @@ jQuery(document).ready(function($){
     jQuery('.completed').html( jsObject.stats.completed )
     jQuery('.completed_percent').html( jsObject.stats.completed_percent )
     jQuery('.remaining').html( jsObject.stats.remaining )
-    jQuery('.remaining_percent').html( jsObject.stats.remaining_percent )
-    jQuery('.warriors').html( jsObject.stats.participants )
     jQuery('.time_elapsed').html( jsObject.stats.time_elapsed_small )
-    jQuery('.minutes_prayed').html( jsObject.stats.minutes_prayed )
-    jQuery('.start_time').html( jsObject.stats.start_time_formatted )
-    if ( jsObject.stats.on_going ) {
-      jQuery('.end_time').html( 'On-going' )
-    } else {
-      jQuery('.end_time').html( jsObject.stats.end_time_formatted )
-    }
+    
     jQuery('#head_block').show()
     jQuery('#foot_block').show()
   } /* .preCache */

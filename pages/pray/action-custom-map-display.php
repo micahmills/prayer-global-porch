@@ -128,7 +128,6 @@ class PG_Custom_Prayer_App_Map_Display extends PG_Custom_Prayer_App {
                 </div>
             </div>
             <div id="map-wrapper">
-
                 <span class="loading-spinner active"></span>
                 <div id='map'></div>
                 <div id="foot_block">
@@ -191,19 +190,18 @@ class PG_Custom_Prayer_App_Map_Display extends PG_Custom_Prayer_App {
             case 'get_grid':
                 return [
                     'grid_data' => $this->get_grid( $params['parts'] ),
-                    'participants' => $this->get_participants( $params['parts'] ),
+                    'participants' => [],
                     'stats' => pg_custom_lap_stats_by_post_id( $params['parts']['post_id'] ),
                 ];
             case 'get_grid_details':
-                return $this->get_grid_details( $params['data'] );
+                return [];
             case 'get_participants':
-                return $this->get_participants( $params['parts'] );
+                return [];
             case 'get_user_locations':
-                return $this->get_user_locations( $params['parts'], $params['data'] );
+                return [];
             default:
                 return new WP_Error( __METHOD__, 'missing action parameter' );
         }
-
     }
 
     public function get_grid( $parts ) {
@@ -244,73 +242,6 @@ class PG_Custom_Prayer_App_Map_Display extends PG_Custom_Prayer_App {
         return [
             'data' => $data,
         ];
-    }
-
-    public function get_participants( $parts ){
-        global $wpdb;
-        $participants_raw = $wpdb->get_results( $wpdb->prepare( "
-           SELECT r.lng as longitude, r.lat as latitude
-           FROM $wpdb->dt_reports r
-           LEFT JOIN $wpdb->dt_location_grid lg ON lg.grid_id=r.grid_id
-            WHERE r.post_type = 'laps'
-                AND r.type = 'prayer_app'
-                AND r.post_id = %d
-                AND r.hash IS NOT NULL
-        ", $parts['post_id'] ), ARRAY_A );
-        $participants = [];
-        if ( ! empty( $participants_raw ) ) {
-            foreach ( $participants_raw as $p ) {
-                if ( ! empty( $p['longitude'] ) ) {
-                    $participants[] = [
-                        'longitude' => (float) $p['longitude'],
-                        'latitude' => (float) $p['latitude']
-                    ];
-                }
-            }
-        }
-
-        return $participants;
-    }
-
-    public function get_user_locations( $parts, $data ){
-        global $wpdb;
-        // Query based on hash
-        $hash = $data['hash'];
-        if ( empty( $hash ) ) {
-            return [];
-        }
-//        $lap_stats = pg_global_stats_by_key( $parts['public_key'] );
-        $lap_stats = pg_custom_lap_stats_by_post_id( $parts['post_id'] );
-
-        $user_locations_raw  = $wpdb->get_results( $wpdb->prepare( "
-               SELECT lg.longitude, lg.latitude
-               FROM $wpdb->dt_reports r
-               LEFT JOIN $wpdb->dt_location_grid lg ON lg.grid_id=r.grid_id
-               WHERE r.post_type = 'laps'
-                    AND r.type = 'prayer_app'
-                    AND r.hash = %s
-                AND r.timestamp >= %d AND r.timestamp <= %d
-                AND r.label IS NOT NULL
-            ", $hash, $lap_stats['start_time'], $lap_stats['end_time'] ), ARRAY_A );
-
-        $user_locations = [];
-        if ( ! empty( $user_locations_raw ) ) {
-            foreach ( $user_locations_raw as $p ) {
-                if ( ! empty( $p['longitude'] ) ) {
-                    $user_locations[] = [
-                        'longitude' => (float) $p['longitude'],
-                        'latitude' => (float) $p['latitude']
-                    ];
-                }
-            }
-        }
-
-        return $user_locations;
-    }
-
-    public function get_grid_details( $data ) {
-        $details = PG_Stacker::build_location_stack( $data['grid_id'] );
-        return $details;
     }
 
 }
