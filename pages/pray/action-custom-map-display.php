@@ -114,24 +114,26 @@ class PG_Custom_Prayer_App_Map_Display extends PG_Custom_Prayer_App {
             </div>
             <div id="map-wrapper">
                 <div id="head_block_wrapper">
-                    <div id="head_block_display">
-                        <span class="two-em"><?php echo esc_html( $lap_stats['title'] ) ?> Prayer Challenge</span>
+                    <div id="head_block_display" class="center">
+                        <span class="two-em uppercase"><?php echo esc_html( $lap_stats['title'] ) ?> Prayer Challenge</span><br>
+                        <span>COVER THE WORLD IN PRAYER</span>
                     </div>
                 </div>
                 <span class="loading-spinner active"></span>
                 <div id='map'></div>
                 <div id="foot_block">
                     <div class="grid-x grid-padding-x">
-                        <div class="cell medium-2"></div>
+                        <div class="cell medium-2" id="qr-cell"></div>
                         <div class="cell medium-2 center"><strong>Prayer Warriors</strong><br><strong><span class="three-em prayer_warriors"></span></strong></div>
                         <div class="cell medium-2 center"><strong>Places Covered</strong><br><strong><span class="three-em green completed"></span></strong></div>
                         <div class="cell medium-2 center"><strong>Places Remaining</strong><br><strong><span class="three-em red remaining"></span></strong></div>
                         <div class="cell medium-2 center hide-for-small-only"><strong>World Coverage</strong><br><strong><span class="three-em completed completed_percent"></span><span class="three-em">%</span></strong></div>
-                        <div class="cell medium-2 center hide-for-small-only"><strong>Timer Since Start</strong><br><strong><span class="three-em time_elapsed">0</span></strong></div>
+                        <div class="cell medium-2 center hide-for-small-only"><strong>Since Start</strong><br><strong><span class="three-em time_elapsed">0</span></strong></div>
                     </div>
                     <div id="qr-code-block">
-                        <img class="qr-code-image" src="https://api.qrserver.com/v1/create-qr-code/?size=500x500&amp;data=https://prayer.global/prayer_app/custom/<?php echo esc_html( $lap_stats['key'] ) ?>"><br>
-                        <div class="center">START PRAYING</div>
+                        <div class="two-em center">PRAY WITH US</div>
+                        <img class="qr-code-image" src="https://api.qrserver.com/v1/create-qr-code/?size=500x500&amp;data=https://prayer.global/prayer_app/custom/<?php echo esc_html( $lap_stats['key'] ) ?>">
+                        <div class="center uppercase">TURN THE MAP FROM RED TO GREEN</div>
                     </div>
                 </div>
             </div>
@@ -157,7 +159,12 @@ class PG_Custom_Prayer_App_Map_Display extends PG_Custom_Prayer_App {
             jQuery(document).ready(function(){
                 setTimeout(function() {
                     let qr_width = jQuery('#qr-cell').width()
-                    jQuery('#qr-code').css('width', qr_width+'px' ).show()
+                    let qr_height = ( qr_width * .15 ) + qr_width
+                    let div = jQuery('#qr-code-block')
+                    if ( 0 < qr_width || 0 < qr_height ) {
+                        div.css('width', qr_width+'px' ).css('height', qr_height + 'px')
+                    }
+                    div.show()
                 }, 1000);
             })
         </script>
