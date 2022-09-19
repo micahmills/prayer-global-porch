@@ -165,8 +165,53 @@ progress {
     background:black;
     color:white;
 }
+.nav-list ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+.nav-list li {
+    float:right;
+}
+.nav-list li a {
+    display: block;
+    text-align: center;
+    padding: 16px;
+    text-decoration: none;
+    color:black;
+}
+.nav-list li a.highlight {
+    border: 1px black solid;
+    border-radius: 4px;
+}
+.nav-list li a.highlight:hover {
+    background:black;
+    color:white;
+}
+.nav-list-link a {
+    display: block;
+    text-align: center;
+    padding: 16px;
+    text-decoration: none;
+    color:black;
+}
+.nav-list-link a.highlight {
+    border: 1px black solid;
+    border-radius: 4px;
+}
+.nav-list-link a.highlight:hover {
+    background:black;
+    color:white;
+}
 @media (max-width: 1150px) {
     #nav-list li a {
+        padding: 10px;
+    }
+    .nav-list li a {
+        padding: 10px;
+    }
+    .nav-list-link li a {
         padding: 10px;
     }
 }

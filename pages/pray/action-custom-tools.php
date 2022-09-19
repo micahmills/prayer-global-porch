@@ -142,7 +142,7 @@ class PG_Custom_Prayer_App_Tools extends PG_Custom_Prayer_App {
                 </div>
                 <div class="row">
                     <div class="col center">
-                        <img src="<?php echo trailingslashit( plugin_dir_url( __DIR__ ) ) . 'assets/images/prayer.global.app.png' ?>" style="width: 100%;max-width:400px;"><br><br>
+                        <img src="<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) . 'assets/images/prayer.global.app.png' ) ?>" style="width: 100%;max-width:400px;"><br><br>
                         <div class="input-group">
                             <input type="text" class="form-control copy-input"
                                    value="https://prayer.global/qr/app" placeholder="Some path" id="copy-input-qrapp">

@@ -118,27 +118,26 @@ class PG_Global_Prayer_App_Map extends PG_Global_Prayer_App {
             <div id="map-wrapper">
                 <div id="head_block">
                     <div class="grid-x grid-padding-x">
-                        <div class="cell large-5 show-for-large">
+                        <div class="cell medium-2 large-5 show-for-large">
                             <a href="/" class="navbar-brand">Prayer.Global</a>
                         </div>
-                        <div class="cell small-9 large-2 center show-for-large">
+                        <div class="cell medium-2 large-2 center show-for-large">
                             <span class="two-em">Lap <?php echo esc_html( $lap_stats['lap_number'] ) ?></span>
                         </div>
-                        <div class="cell small-9 large-5 hide-for-large">
-                            <span class="two-em">Lap <?php echo esc_html( $lap_stats['lap_number'] ) ?></span>
-                        </div>
-                        <div class="cell small-3 large-5 show-for-large" id="nav-list">
+                        <div class="cell medium-8 large-5 show-for-large" id="nav-list">
                             <ul>
                                 <li class="nav-item"><a class="nav-link btn smoothscroll pb_outline-dark highlight" style="border:1px black solid;" href="/newest/lap/">Start Praying</a></li>
                                 <li class="nav-item"><a class="nav-link" href="/challenges/active/">Groups</a></li>
                                 <li class="nav-item"><a class="nav-link" href="/#section-lap">Status</a></li>
-                                <li class="nav-item"><a class="nav-link" href="/#section-challenge">Challenge</a></li>
                                 <li class="nav-item"><a class="nav-link" href="/#section-about">About</a></li>
                                 <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
                             </ul>
                         </div>
-                        <div class="cell small-3 large-4 hide-for-large" style="text-align:right;">
-                            <button type="button" data-toggle="offcanvas_menu"><i class="ion-navicon three-em"></i></button>
+                        <div class="cell small-6 hide-for-large">
+                            <span class="two-em"><a href="/">Lap <?php echo esc_html( $lap_stats['lap_number'] ) ?></a></span>
+                        </div>
+                        <div class="cell small-6 hide-for-large nav-list-link" style="text-align:right; whitespace:nowrap;">
+                             <a class="nav-link btn smoothscroll pb_outline-dark highlight" style="border:1px black solid;" href="/newest/lap/">Start Praying</a>
                         </div>
                     </div>
                 </div>
@@ -149,8 +148,8 @@ class PG_Global_Prayer_App_Map extends PG_Global_Prayer_App {
                         <div class="cell center"><button type="button" data-toggle="offcanvas_stats"><i class="ion-chevron-up two-em"></i></button></div>
                         <div class="cell small-6 medium-3 center hide-for-small-only"><strong>Places Remaining</strong><br><strong><span class="one-em red stats-figure remaining"></span></strong></div>
                         <div class="cell small-6 medium-3 center hide-for-small-only"><strong>Places Covered</strong><br><strong><span class="one-em green stats-figure completed"></span></strong></div>
-                        <div class="cell small-6 medium-3 center"><strong>Prayer Warriors</strong><br><img class="three-em" style="padding-top:5px;" src="<?php echo plugin_dir_url( __DIR__ ) . 'assets/images/praying-hand-up-20.png' ?>" /></div>
-                        <div class="cell small-6 medium-3 center"><strong>Your Recent Prayers</strong><br><img class="three-em" style="padding-top:5px;" src="<?php echo plugin_dir_url( __DIR__ ) . 'assets/images/black-check-50.png' ?>" /></div>
+                        <div class="cell small-6 medium-3 center"><strong>Prayer Warriors</strong><br><img class="three-em" style="padding-top:5px;" src="<?php echo esc_url( plugin_dir_url( __DIR__ ) . 'assets/images/praying-hand-up-20.png' ) ?>" /></div>
+                        <div class="cell small-6 medium-3 center"><strong>Your Recent Prayers</strong><br><img class="three-em" style="padding-top:5px;" src="<?php echo esc_url( plugin_dir_url( __DIR__ ) . 'assets/images/black-check-50.png' ) ?>" /></div>
                     </div>
                 </div>
             </div>
