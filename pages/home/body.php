@@ -285,8 +285,7 @@
     <div class="container">
         <div class="row align-items-center">
             <div class="col-md-12">
-                <h2 class="heading mb-3">Get the Mobile App</h2>
-
+                <h2 class="heading mb-3"><a href="/qr/app/">Get the Mobile App</a></h2>
                 <a class="white" href="https://apps.apple.com/us/app/prayer-global/id1636889534?uo=4" style="font-size:2em;">
                     <div class="hover-box">
                         <i class="ion-social-apple" ></i>
@@ -299,7 +298,7 @@
                         Android App
                     </div>
                 </a>
-                
+
             </div>
         </div>
 
