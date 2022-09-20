@@ -183,7 +183,7 @@ class Prayer_Global_Porch_App_Store_Redirect extends DT_Magic_Url_Base
             {
                 document.location.href = "https://apps.apple.com/us/app/prayer-global/id1636889534?uo=4";
             } else {
-                document.location.href = "https://prayer.global";
+                document.location.href = "https://play.google.com/store/apps/details?id=app.global.prayer";
             }
         </script>
         <?php
