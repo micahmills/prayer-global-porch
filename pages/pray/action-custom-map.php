@@ -339,7 +339,6 @@ class PG_Custom_Prayer_App_Map extends PG_Custom_Prayer_App {
         if ( empty( $hash ) ) {
             return [];
         }
-//        $lap_stats = pg_global_stats_by_key( $parts['public_key'] );
         $lap_stats = pg_custom_lap_stats_by_post_id( $parts['post_id'] );
 
         $user_locations_raw  = $wpdb->get_results( $wpdb->prepare( "
@@ -349,9 +348,9 @@ class PG_Custom_Prayer_App_Map extends PG_Custom_Prayer_App {
                WHERE r.post_type = 'laps'
                     AND r.type = 'prayer_app'
                     AND r.hash = %s
-                AND r.timestamp >= %d AND r.timestamp <= %d
+                AND r.post_id = %s
                 AND r.label IS NOT NULL
-            ", $hash, $lap_stats['start_time'], $lap_stats['end_time'] ), ARRAY_A );
+            ", $hash, $parts['post_id'] ), ARRAY_A );
 
         $user_locations = [];
         if ( ! empty( $user_locations_raw ) ) {

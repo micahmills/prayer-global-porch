@@ -124,7 +124,7 @@ jQuery(document).ready(function(){
         if ( typeof window.viewed === 'undefined' ) {
           toggle_timer( true )
           open_welcome.modal('show')
-          Cookies.set('pg_viewed', true, { expires: 7 } )
+          Cookies.set('pg_viewed', true, { expires: 90 } )
         } else {
           setTimeout(function() {
             jQuery('.tutorial').animate({
