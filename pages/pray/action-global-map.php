@@ -129,8 +129,7 @@ class PG_Global_Prayer_App_Map extends PG_Global_Prayer_App {
                                 <li class="nav-item"><a class="nav-link btn smoothscroll pb_outline-dark highlight" style="border:1px black solid;" href="/newest/lap/">Start Praying</a></li>
                                 <li class="nav-item"><a class="nav-link" href="/challenges/active/">Groups</a></li>
                                 <li class="nav-item"><a class="nav-link" href="/#section-lap">Status</a></li>
-                                <li class="nav-item"><a class="nav-link" href="/#section-about">About</a></li>
-                                <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                                <li class="nav-item"><a class="nav-link" href="/#section-challenge">Challenge</a></li>
                             </ul>
                         </div>
                         <div class="cell small-6 hide-for-large">
@@ -158,8 +157,6 @@ class PG_Global_Prayer_App_Map extends PG_Global_Prayer_App {
             <button type="button" data-toggle="offcanvas_menu"><i class="ion-chevron-right two-em"></i></button>
             <hr>
             <ul class="navbar-nav two-em">
-                <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="/#section-about">About</a></li>
                 <li class="nav-item"><a class="nav-link" href="/#section-challenge">Challenge</a></li>
                 <li class="nav-item"><a class="nav-link" href="/#section-lap">Status</a></li>
                 <li class="nav-item"><a class="nav-link" href="/challenges/active/">Groups</a></li>
