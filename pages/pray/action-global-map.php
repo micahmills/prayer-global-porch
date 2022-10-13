@@ -248,6 +248,11 @@ class PG_Global_Prayer_App_Map extends PG_Global_Prayer_App {
                     <p class="stats-title">End Time</p>
                     <p class="stats-figure end_time">0</p>
                 </div>
+
+                <div class="cell small-6 medium-3">
+                    <p class="stats-title">Location Pace</p>
+                    <p class="stats-figure lap_pace">0</p>
+                </div>
             </div>
         </div>
         <?php

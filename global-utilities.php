@@ -271,6 +271,23 @@ function _pg_stats_builder( $data ) : array {
         $data['time_elapsed_small'] = $days."d, ".$hours."h, ".$minutes."m";
     }
 
+    $pace = $time_difference / (int) $data['locations_completed'];
+    $days = floor( $pace / 60 / 60 / 24 );
+    $hours = floor( ( $pace / 60 / 60 ) - ( $days * 24 ) );
+    $minutes = floor( ( $pace / 60 ) - ( $hours * 60 ) - ( $days * 24 * 60 ) );
+    if ( empty( $days ) && empty( $hours ) ){
+        $data['lap_pace'] = "$minutes minutes";
+        $data['lap_pace_small'] = $minutes."m";
+    }
+    else if ( empty( $days ) ) {
+        $data['lap_pace'] = "$hours hours, $minutes minutes";
+        $data['lap_pace_small'] = $hours."h, ".$minutes."m";
+    }
+    else {
+        $data['lap_pace'] = "$days days, $hours hours, $minutes minutes";
+        $data['lap_pace_small'] = $days."d, ".$hours."h, ".$minutes."m";
+    }
+
     /**
      * COMPLETED & REMAINING
      */
