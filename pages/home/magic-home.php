@@ -189,7 +189,7 @@ class Prayer_Global_Porch_Home extends DT_Magic_Url_Base
             'global_time_elapsed' => $global_race['time_elapsed'],
             'global_participants' => $global_race['participants'],
             'global_minutes_prayed' => $global_race['minutes_prayed'],
-            'global_lap_number' => $global_race['number_of_laps'],
+            'global_lap_number' => (int) $global_race['number_of_laps'] - 1,
         ];
     }
 
