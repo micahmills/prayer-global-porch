@@ -65,6 +65,7 @@ class PG_Porch_404 extends DT_Magic_Url_Base
             add_filter( "dt_override_header_meta", function (){ return true;
             }, 100, 1 );
         }
+
     }
 
     public function dt_magic_url_base_allowed_js( $allowed_js ) {
@@ -102,9 +103,6 @@ class PG_Porch_404 extends DT_Magic_Url_Base
             ]) ?>][0]
         </script>
         <link rel="stylesheet" href="<?php echo esc_url( trailingslashit( plugin_dir_url( __DIR__ ) ) ) ?>assets/basic.css?ver=<?php echo esc_attr( fileatime( trailingslashit( plugin_dir_path( __DIR__ ) ) . 'assets/basic.css' ) ) ?>" type="text/css" media="all">
-        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.12.1/r-2.3.0/datatables.min.css"/>
-        <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.12.1/r-2.3.0/datatables.min.js"></script>
-        <script src="<?php echo esc_url( trailingslashit( plugin_dir_url( __FILE__ ) ) ) ?>big-list.js?ver=<?php echo esc_attr( fileatime( trailingslashit( plugin_dir_path( __FILE__ ) ) . 'big-list.js' ) ) ?>"></script>
         <style>
             section {
                 margin-top: 110px;
@@ -130,6 +128,7 @@ class PG_Porch_404 extends DT_Magic_Url_Base
                 </div>
             </div>
         </section>
+        <div style="height:300px;"></div>
 
         <?php require_once( trailingslashit( plugin_dir_path( __DIR__ ) ) . '/assets/working-footer.php' ) ?>
         <?php
