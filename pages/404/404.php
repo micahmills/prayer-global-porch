@@ -127,6 +127,46 @@ class PG_Porch_404 extends DT_Magic_Url_Base
                     </div>
                 </div>
             </div>
+            <div class="container center">
+                <div class="row">
+                    <div class="col center">
+                        Not where you meant to be? Try some of the links below (or above) to get back into the action...
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="container center">
+                <div class="row">
+                    <div class="col center">
+                        <ul style="list-style: none; padding-left: 0;">
+                            <li><a href="newest/lap">Start Praying</a></li>
+                            <li><a href="newest/map">The map</a></li>
+                            <li><a href="newest/stats">More stats</a></li>
+                            <li><a href="challengs/active">Group Challenges</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="container pb-4">
+                <div class="row">
+                    <div class="col-md text-center">
+                        <span class="two-em lap-title">
+                            Other interesting links
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="container center">
+                <div class="row">
+                    <div class="col center">
+                        <ul style="list-style: none; padding-left: 0;">
+                            <li><a href="content_app/data_sources">Where does all the data come from?</a></li>
+                            <li><a href="download_app/media">Invites for sharing on social media</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </section>
         <div style="height:300px;"></div>
 
