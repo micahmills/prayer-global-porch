@@ -250,43 +250,19 @@ function _pg_stats_builder( $data ) : array {
      * TIME CALCULATIONS
      */
     $time_difference = $data['end_time'] - $data['start_time'];
-    $days = floor( $time_difference / 60 / 60 / 24 );
-    $hours = floor( ( $time_difference / 60 / 60 ) - ( $days * 24 ) );
-    $minutes = floor( ( $time_difference / 60 ) - ( $hours * 60 ) - ( $days * 24 * 60 ) );
-    if ( empty( $days ) && empty( $hours ) ){
-        $data['time_elapsed'] = "$minutes minutes";
-        $data['time_elapsed_small'] = $minutes."m";
-    }
-    else if ( empty( $days ) ) {
-        $data['time_elapsed'] = "$hours hours, $minutes minutes";
-        $data['time_elapsed_small'] = $hours."h, ".$minutes."m";
-    }
-    else if ( $days > 365 ) {
-        $years = floor( $time_difference / 60 / 60 / 24 / 365 );
-        $data['time_elapsed'] = "$years years, $days days, $hours hours, $minutes minutes";
-        $data['time_elapsed_small'] = $years."y, ".$days."d, ".$hours."h, ".$minutes."m";
-    }
-    else {
-        $data['time_elapsed'] = "$days days, $hours hours, $minutes minutes";
-        $data['time_elapsed_small'] = $days."d, ".$hours."h, ".$minutes."m";
-    }
+    _pg_format_duration( $data, $time_difference, 'time_elapsed', 'time_elapsed_small' );
 
-    $pace = $time_difference / (int) $data['locations_completed'];
-    $days = floor( $pace / 60 / 60 / 24 );
-    $hours = floor( ( $pace / 60 / 60 ) - ( $days * 24 ) );
-    $minutes = floor( ( $pace / 60 ) - ( $hours * 60 ) - ( $days * 24 * 60 ) );
-    if ( empty( $days ) && empty( $hours ) ){
-        $data['lap_pace'] = "$minutes minutes";
-        $data['lap_pace_small'] = $minutes."m";
-    }
-    else if ( empty( $days ) ) {
-        $data['lap_pace'] = "$hours hours, $minutes minutes";
-        $data['lap_pace_small'] = $hours."h, ".$minutes."m";
-    }
-    else {
-        $data['lap_pace'] = "$days days, $hours hours, $minutes minutes";
-        $data['lap_pace_small'] = $days."d, ".$hours."h, ".$minutes."m";
-    }
+    $pace =  (int) $data['locations_completed'] !== 0 ? $time_difference / (int) $data['locations_completed'] : 0;
+    _pg_format_duration( $data, $pace, 'lap_pace', 'lap_pace_small' );
+
+    /**
+     * QUANTITY OF PRAYER
+     */
+    $minutes_prayed = (int) $data['minutes_prayed'];
+    $data['minutes_prayed'] = number_format( $minutes_prayed );
+    $data['minutes_prayed_int'] = $minutes_prayed;
+    $seconds_prayed = $minutes_prayed * 60;
+    _pg_format_duration( $data, $seconds_prayed, 'minutes_prayed_formatted', 'minutes_prayer_formatted_small' );
 
     /**
      * COMPLETED & REMAINING
@@ -310,39 +286,35 @@ function _pg_stats_builder( $data ) : array {
     $data['participants'] = number_format( $participants );
     $data['participants_int'] = $participants;
 
-    /**
-     * QUANTITY OF PRAYER
-     */
-    $minutes_prayed = (int) $data['minutes_prayed'];
-    $data['minutes_prayed'] = number_format( $minutes_prayed );
-    $data['minutes_prayed_int'] = $minutes_prayed;
-    $seconds_prayed = $minutes_prayed * 60;
-    $days = floor( $seconds_prayed / 60 / 60 / 24 );
-    $hours = floor( ( $seconds_prayed / 60 / 60 ) - ( $days * 24 ) );
-    $minutes = floor( ( $seconds_prayed / 60 ) - ( $hours * 60 ) - ( $days * 24 * 60 ) );
-    if ( empty( $days ) && empty( $hours ) ){
-        $data['minutes_prayed_formatted'] = "$minutes minutes";
-        $data['minutes_prayed_formatted_small'] = $minutes."m";
-    }
-    else if ( empty( $days ) ) {
-        $data['minutes_prayed_formatted'] = "$hours hours, $minutes minutes";
-        $data['minutes_prayed_formatted_small'] = $hours."h, ".$minutes."m";
-    }
-    else if ( $days > 365 ) {
-        $years = floor( $seconds_prayed / 60 / 60 / 24 / 365 );
-        $data['minutes_prayed_formatted'] = "$years years, $days days, $hours hours, $minutes minutes";
-        $data['minutes_prayed_formatted_small'] = $years."y, ".$days."d, ".$hours."h, ".$minutes."m";
-    }
-    else {
-        $data['minutes_prayed_formatted'] = "$days days, $hours hours, $minutes minutes";
-        $data['minutes_prayed_formatted_small'] = $days."d, ".$hours."h, ".$minutes."m";
-    }
     $data['start_time_formatted'] = gmdate( 'M d, Y', $data['start_time'] );
     $data['end_time_formatted'] = gmdate( 'M d, Y', $data['end_time'] );
 
 //    dt_write_log(__METHOD__);
 //    dt_write_log($data);
     return $data;
+}
+
+function _pg_format_duration( &$data, $time, $key_long, $key_short ) {
+    $days = floor( $time / 60 / 60 / 24 );
+    $hours = floor( ( $time / 60 / 60 ) - ( $days * 24 ) );
+    $minutes = floor( ( $time / 60 ) - ( $hours * 60 ) - ( $days * 24 * 60 ) );
+    if ( empty( $days ) && empty( $hours ) ){
+        $data[$key_long] = "$minutes minutes";
+        $data[$key_short] = $minutes."m";
+    }
+    else if ( empty( $days ) ) {
+        $data[$key_long] = "$hours hours, $minutes minutes";
+        $data[$key_short] = $hours."h, ".$minutes."m";
+    }
+    else if ( $days > 365 ) {
+        $years = floor( $time / 60 / 60 / 24 / 365 );
+        $data[$key_long] = "$years years, $days days, $hours hours, $minutes minutes";
+        $data[$key_short] = $years."y, ".$days."d, ".$hours."h, ".$minutes."m";
+    }
+    else {
+        $data[$key_long] = "$days days, $hours hours, $minutes minutes";
+        $data[$key_short] = $days."d, ".$hours."h, ".$minutes."m";
+    }
 }
 
 
