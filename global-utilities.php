@@ -258,8 +258,8 @@ function _pg_stats_builder( $data ) : array {
     $prayer_speed =  (int) $time_difference !== 0 ? (int) $data['locations_completed'] / $time_difference : 0;
     $locations_per_hour = $prayer_speed * 60 * 60;
     $locations_per_day = $locations_per_hour * 24;
-    $data['locations_per_hour'] = $locations_per_hour < 1 ? number_format( $locations_per_hour, 2 ) : number_format( $locations_per_hour );
-    $data['locations_per_day'] = $locations_per_day < 1 ? number_format( $locations_per_day, 2 ) : number_format( $locations_per_day );
+    $data['locations_per_hour'] = $locations_per_hour < 1 && $locations_per_hour !== 0 ? number_format( $locations_per_hour, 2 ) : number_format( $locations_per_hour );
+    $data['locations_per_day'] = $locations_per_day < 1 && $locations_per_day !== 0 ? number_format( $locations_per_day, 2 ) : number_format( $locations_per_day );
 
     if ( $data['on_going'] === false ) {
         $time_remaining = $data['end_time'] - $now;
@@ -269,8 +269,8 @@ function _pg_stats_builder( $data ) : array {
         $needed_prayer_speed =   $time_remaining !== 0 ? $locations_remaining / $time_remaining : 0 ;
         $locations_per_hour = $needed_prayer_speed * 60 * 60;
         $locations_per_day = $locations_per_hour * 24;
-        $data['needed_locations_per_hour'] = $locations_per_hour < 1 ? number_format( $locations_per_hour, 2 ) : number_format( $locations_per_hour );
-        $data['needed_locations_per_day'] = $locations_per_day < 1 ? number_format( $locations_per_day, 2 ) : number_format( $locations_per_day );
+        $data['needed_locations_per_hour'] = $locations_per_hour < 1 && $locations_per_hour !== 0 ? number_format( $locations_per_hour, 2 ) : number_format( $locations_per_hour );
+        $data['needed_locations_per_day'] = $locations_per_day < 1 && $locations_per_day !== 0 ? number_format( $locations_per_day, 2 ) : number_format( $locations_per_day );
     }
     /**
      * QUANTITY OF PRAYER
