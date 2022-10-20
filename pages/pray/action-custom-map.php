@@ -226,12 +226,18 @@ class PG_Custom_Prayer_App_Map extends PG_Custom_Prayer_App {
                 </div>
 
                 <div class="cell small-6 medium-3">
-                    <p class="stats-title">Location Pace</p>
-                    <p class="stats-figure lap_pace">0</p>
+                    <p class="stats-title">Locations per Hour</p>
+                    <p class="stats-figure locations_per_hour" style="margin-bottom: 0">0</p>
+                    <p class="stats-small">
+                        <small class="locations_per_day">0</small> <small>per day</small>
+                    </p>
                 </div>
                 <div class="cell small-6 medium-3">
-                    <p class="stats-title">Needed Pace</p>
-                    <p class="stats-figure needed_pace">0</p>
+                    <p class="stats-title">Target Locations per Hour</p>
+                    <p class="stats-figure needed_locations_per_hour" style="margin-bottom: 0">0</p>
+                    <p class="stats-small">
+                        <small class="needed_locations_per_day">0</small> <small>per day</small>
+                    </p>
                 </div>
                 <div class="cell small-6 medium-3">
                     <p class="stats-title">Time Remaining</p>

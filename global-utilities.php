@@ -255,16 +255,22 @@ function _pg_stats_builder( $data ) : array {
     $time_difference = $now - $data['start_time'];
     _pg_format_duration( $data, $time_difference, 'time_elapsed', 'time_elapsed_small' );
 
-    $pace =  (int) $data['locations_completed'] !== 0 ? $time_difference / (int) $data['locations_completed'] : 0;
-    _pg_format_duration( $data, $pace, 'lap_pace', 'lap_pace_small' );
+    $prayer_speed =  (int) $time_difference !== 0 ? (int) $data['locations_completed'] / $time_difference : 0;
+    $locations_per_hour = $prayer_speed * 60 * 60;
+    $locations_per_day = $locations_per_hour * 24;
+    $data['locations_per_hour'] = $locations_per_hour < 1 ? number_format( $locations_per_hour, 2 ) : number_format( $locations_per_hour );
+    $data['locations_per_day'] = $locations_per_day < 1 ? number_format( $locations_per_day, 2 ) : number_format( $locations_per_day );
 
     if ( $data['on_going'] === false ) {
         $time_remaining = $data['end_time'] - $now;
         _pg_format_duration( $data, $time_remaining, 'time_remaining', 'time_remaining_small' );
 
         $locations_remaining = $PG_TOTAL_STATES - (int) $data['locations_completed'];
-        $needed_pace =   $locations_remaining !== 0 ? $time_remaining / $locations_remaining : 0 ;
-        _pg_format_duration( $data, $needed_pace, 'needed_pace', 'needed_pace_small' );
+        $needed_prayer_speed =   $time_remaining !== 0 ? $locations_remaining / $time_remaining : 0 ;
+        $locations_per_hour = $needed_prayer_speed * 60 * 60;
+        $locations_per_day = $locations_per_hour * 24;
+        $data['needed_locations_per_hour'] = $locations_per_hour < 1 ? number_format( $locations_per_hour, 2 ) : number_format( $locations_per_hour );
+        $data['needed_locations_per_day'] = $locations_per_day < 1 ? number_format( $locations_per_day, 2 ) : number_format( $locations_per_day );
     }
     /**
      * QUANTITY OF PRAYER
@@ -317,7 +323,7 @@ function _pg_format_duration( &$data, $time, $key_long, $key_short ) {
     $minutes = floor( ( $time / 60 ) - ( $hours * 60 ) - ( $days * 24 * 60 ) );
     if ( empty( $days ) && empty( $hours ) ){
         $data[$key_long] = "$minutes minutes";
-        $data[$key_short] = $minutes."m";
+        $data[$key_short] = $minutes." min";
     }
     else if ( empty( $days ) ) {
         $data[$key_long] = "$hours hours, $minutes minutes";
@@ -333,7 +339,6 @@ function _pg_format_duration( &$data, $time, $key_long, $key_short ) {
         $data[$key_short] = $days."d, ".$hours."h, ".$minutes."m";
     }
 }
-
 
 function pg_query_4770_locations() {
 
