@@ -526,13 +526,13 @@ class PG_Stacker_Text_V2 {
             [
                 'section_label' => 'Prayer Movement',
                 'prayer' => 'Lord, cause a passion for prayer among the people of ' . $stack['location']['full_name'] . '.',
-                'reference' => 'Matthew 17:20',
+                'reference' => 'John 17:20-21',
                 'verse' => 'I (Jesus) pray also for those who will believe in me through their message, that all of them may be one, Father, just as you are in me and I am in you. May they also be in us so that the world my believe that you have sent me.',
             ],
             [
                 'section_label' => 'Prayer Movement',
                 'prayer' => 'Lord, stir the hearts of Your people in the '.$stack['location']['admin_level_name'].' of ' . $stack['location']['name'] . ' to agree with You and agree with one another in love.',
-                'reference' => 'Matthew 17:20',
+                'reference' => 'John 17:20-21',
                 'verse' => 'I (Jesus) pray also for those who will believe in me through their message, that all of them may be one, Father, just as you are in me and I am in you. May they also be in us so that the world my believe that you have sent me.',
             ],
             [
