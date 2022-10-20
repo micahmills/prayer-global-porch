@@ -527,13 +527,13 @@ class PG_Stacker_Text_V2 {
                 'section_label' => 'Prayer Movement',
                 'prayer' => 'Lord, cause a passion for prayer among the people of ' . $stack['location']['full_name'] . '.',
                 'reference' => 'Matthew 17:20',
-                'verse' => 'I (Jesus) pray also for those who will believe in me through their message, that all of them may be one, Father, just aas you are in me and I am in you. May they also be in us so that the world my believe that you have sent me.',
+                'verse' => 'I (Jesus) pray also for those who will believe in me through their message, that all of them may be one, Father, just as you are in me and I am in you. May they also be in us so that the world my believe that you have sent me.',
             ],
             [
                 'section_label' => 'Prayer Movement',
                 'prayer' => 'Lord, stir the hearts of Your people in the '.$stack['location']['admin_level_name'].' of ' . $stack['location']['name'] . ' to agree with You and agree with one another in love.',
                 'reference' => 'Matthew 17:20',
-                'verse' => 'I (Jesus) pray also for those who will believe in me through their message, that all of them may be one, Father, just aas you are in me and I am in you. May they also be in us so that the world my believe that you have sent me.',
+                'verse' => 'I (Jesus) pray also for those who will believe in me through their message, that all of them may be one, Father, just as you are in me and I am in you. May they also be in us so that the world my believe that you have sent me.',
             ],
             [
                 'section_label' => 'Prayer Movement',
@@ -738,7 +738,7 @@ class PG_Stacker_Text_V2 {
             ],
             [
                 'section_label' => 'Obedience',
-                'prayer' => 'Jesus, remind the disciples in '.$stack['location']['admin_level_name'].' of '.$stack['location']['name'].' to train each other to obey all that You commanded, and that You will be with them as they do it.',
+                'prayer' => 'Jesus, remind the disciples in the '.$stack['location']['admin_level_name'].' of '.$stack['location']['name'].' to train each other to obey all that You commanded, and that You will be with them as they do it.',
                 'reference' => 'Matthew 28:20',
                 'verse' => '...teaching them to obey everything I have commanded you. And surely I am with you always, to the very end of the age.',
             ],
@@ -803,9 +803,9 @@ class PG_Stacker_Text_V2 {
             ],
             [
                 'section_label' => 'Biblical Authority',
-                'prayer' => 'Spirit, we know that cultures come and go, even in the '.$stack['location']['admin_level_name'].' of '.$stack['location']['name'].', but the truth of You Word endures generations.',
+                'prayer' => 'Spirit, we know that cultures come and go, even in the '.$stack['location']['admin_level_name'].' of '.$stack['location']['name'].', but the truth of Your Word endures generations.',
                 'reference' => 'Psalm 119:89',
-                'verse' => 'You word, Lord, is eternal; it stands firm in the heavens.',
+                'verse' => 'Your word, Lord, is eternal; it stands firm in the heavens.',
             ],
             [
                 'section_label' => 'Biblical Authority',
