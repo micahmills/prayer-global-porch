@@ -229,6 +229,14 @@ class PG_Custom_Prayer_App_Map extends PG_Custom_Prayer_App {
                     <p class="stats-title">Location Pace</p>
                     <p class="stats-figure lap_pace">0</p>
                 </div>
+                <div class="cell small-6 medium-3">
+                    <p class="stats-title">Needed Pace</p>
+                    <p class="stats-figure needed_pace">0</p>
+                </div>
+                <div class="cell small-6 medium-3">
+                    <p class="stats-title">Time Remaining</p>
+                    <p class="stats-figure time_remaining">0</p>
+                </div>
 
             </div>
             <div class="text-center"><a href="/" class="navbar-brand text-center">Exit <?php echo esc_html( $lap_stats['title'] ) ?></a></div>

@@ -365,6 +365,9 @@ jQuery(document).ready(function($){
     jQuery('.minutes_prayed').html( jsObject.stats.minutes_prayed )
     jQuery('.start_time').html( jsObject.stats.start_time_formatted )
     jQuery('.lap_pace').html( jsObject.stats.lap_pace_small )
+    jQuery('.needed_pace').html( jsObject.stats.needed_pace_small )
+    jQuery('.time_remaining').html( jsObject.stats.time_remaining_small )
+
     if ( jsObject.stats.on_going ) {
       jQuery('.end_time').html( 'On-going' )
     } else {

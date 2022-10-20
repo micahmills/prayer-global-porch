@@ -245,16 +245,27 @@ function _pg_custom_stats_builder_query( &$data ) {
 
 function _pg_stats_builder( $data ) : array {
 //    dt_write_log(__METHOD__);
+    global $PG_TOTAL_STATES;
+    $PG_TOTAL_STATES = 4770;
 
     /**
      * TIME CALCULATIONS
      */
-    $time_difference = $data['end_time'] - $data['start_time'];
+    $now = time();
+    $time_difference = $now - $data['start_time'];
     _pg_format_duration( $data, $time_difference, 'time_elapsed', 'time_elapsed_small' );
 
     $pace =  (int) $data['locations_completed'] !== 0 ? $time_difference / (int) $data['locations_completed'] : 0;
     _pg_format_duration( $data, $pace, 'lap_pace', 'lap_pace_small' );
 
+    if ( $data['on_going'] === false ) {
+        $time_remaining = $data['end_time'] - $now;
+        _pg_format_duration( $data, $time_remaining, 'time_remaining', 'time_remaining_small' );
+
+        $locations_remaining = $PG_TOTAL_STATES - (int) $data['locations_completed'];
+        $needed_pace =   $locations_remaining !== 0 ? $time_remaining / $locations_remaining : 0 ;
+        _pg_format_duration( $data, $needed_pace, 'needed_pace', 'needed_pace_small' );
+    }
     /**
      * QUANTITY OF PRAYER
      */
@@ -270,13 +281,13 @@ function _pg_stats_builder( $data ) : array {
     $completed = (int) $data['locations_completed'];
     $data['completed'] = number_format( $completed );
     $data['completed_int'] = $completed;
-    $completed_percent = ROUND( $completed / 4770 * 100, 0 );
+    $completed_percent = ROUND( $completed / $PG_TOTAL_STATES * 100, 0 );
     if ( 100 < $completed_percent ) {
         $completed_percent = 100;
     }
     $data['completed_percent'] = $completed_percent;
-    $data['remaining'] = number_format( 4770 - $completed );
-    $data['remaining_int'] = 4770 - $completed;
+    $data['remaining'] = number_format( $PG_TOTAL_STATES - $completed );
+    $data['remaining_int'] = $PG_TOTAL_STATES - $completed;
     $data['remaining_percent'] = 100 - $data['completed_percent'];
 
     /**
@@ -295,6 +306,12 @@ function _pg_stats_builder( $data ) : array {
 }
 
 function _pg_format_duration( &$data, $time, $key_long, $key_short ) {
+
+    if ( $time === 0 ) {
+        $data[$key_long] = "--";
+        $data[$key_short] = "--";
+        return;
+    }
     $days = floor( $time / 60 / 60 / 24 );
     $hours = floor( ( $time / 60 / 60 ) - ( $days * 24 ) );
     $minutes = floor( ( $time / 60 ) - ( $hours * 60 ) - ( $days * 24 * 60 ) );
@@ -474,11 +491,12 @@ function pg_recursive_parse_args( $args, $defaults ) {
 }
 
 function pg_is_lap_complete( $post_id ) {
+    global $PG_TOTAL_STATES;
     $complete = get_post_meta( $post_id, 'lap_completed', true );
     if ( ! $complete ) {
         global $wpdb;
         $count = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT( DISTINCT( grid_id ) ) FROM $wpdb->dt_reports WHERE post_id = %d AND type = 'prayer_app' AND subtype = 'custom'", $post_id ) );
-        if ( $count >= 4770 ){
+        if ( $count >= $PG_TOTAL_STATES  ){
             update_post_meta( $post_id, 'lap_completed', time() );
             return true;
         } else {
