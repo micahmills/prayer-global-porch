@@ -188,6 +188,21 @@ jQuery(document).ready(function($){
 
   function load_grid() {
     window.previous_hover = false
+    const red = 'rgba(255,0,0, .7)'
+    const green = 'rgba(0,128,0, .9)'
+
+    const layers = [
+      {
+        label: 'Unprayed for',
+        color: red,
+      },
+      {
+        label: 'Prayed for',
+        color: green,
+      }
+    ]
+    const legendDiv = document.getElementById('map-legend');
+    loadLegend( legendDiv, layers )
 
     jQuery.each(asset_list, function(i,file){
 
@@ -234,7 +249,7 @@ jQuery(document).ready(function($){
               'paint': {
                 'fill-color': {
                   property: 'value',
-                  stops: [[0, 'rgba(255,0,0, .7)'], [1, 'rgba(0,128,0, .9)']]
+                  stops: [[0, red], [1, green]]
                 },
                 'fill-opacity': 0.75,
                 'fill-outline-color': 'black'
@@ -442,6 +457,26 @@ jQuery(document).ready(function($){
           `
         )
       })
+  }
+
+  function loadLegend(legendDiv, layers) {
+    layers.forEach( ({ label, color }) => {
+      const container = document.createElement('div')
+      container.classList.add('map-legend__layer')
+
+      const colorSwatch = document.createElement('div')
+      colorSwatch.classList.add('map-legend__color-swatch')
+      colorSwatch.style.backgroundColor = color
+
+      const text = document.createElement('span')
+      text.classList.add('map-legend__label')
+      text.innerHTML = label
+
+      container.appendChild(colorSwatch)
+      container.appendChild(text)
+
+      legendDiv.appendChild(container)
+    })
   }
 
   function numberWithCommas(x) {

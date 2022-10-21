@@ -162,8 +162,8 @@ class Prayer_Global_Porch_Stats_Big_Map extends DT_Magic_Url_Base
                 </div>
                 <span class="loading-spinner active"></span>
                 <div id='map'></div>
-                <div class="map-overlay" id="legend"></div>
                 <div id="foot_block">
+                    <div class="map-overlay" id="map-legend"></div>
                     <div class="grid-x grid-padding-x">
                         <div class="cell center"><button type="button" data-toggle="offcanvas_stats"><i class="ion-chevron-up two-em"></i></button></div>
                         <div class="cell small-6 medium-3 center"><strong>Warriors</strong> <i class="fi-marker" style="color:blue;"></i><br><span class="one-em"><?php echo esc_html( $lap_stats['participants'] ) ?></span></div>
