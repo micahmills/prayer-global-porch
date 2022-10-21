@@ -193,11 +193,11 @@ jQuery(document).ready(function($){
 
     const layers = [
       {
-        label: 'Unprayed for',
+        label: 'Places Remaining',
         color: red,
       },
       {
-        label: 'Prayed for',
+        label: 'Covered in Prayer',
         color: green,
       }
     ]
