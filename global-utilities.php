@@ -251,7 +251,7 @@ function _pg_stats_builder( $data ) : array {
     /**
      * TIME CALCULATIONS
      */
-    $now = time();
+    $now = $data['end_time'];
     $time_difference = $now - $data['start_time'];
     _pg_format_duration( $data, $time_difference, 'time_elapsed', 'time_elapsed_small' );
 
