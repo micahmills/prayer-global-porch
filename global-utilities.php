@@ -245,9 +245,6 @@ function _pg_custom_stats_builder_query( &$data ) {
 
 function _pg_stats_builder( $data ) : array {
 //    dt_write_log(__METHOD__);
-    global $PG_TOTAL_STATES;
-    $PG_TOTAL_STATES = 4770;
-
     /**
      * TIME CALCULATIONS
      */
@@ -265,7 +262,7 @@ function _pg_stats_builder( $data ) : array {
         $time_remaining = $data['end_time'] - $now;
         _pg_format_duration( $data, $time_remaining, 'time_remaining', 'time_remaining_small' );
 
-        $locations_remaining = $PG_TOTAL_STATES - (int) $data['locations_completed'];
+        $locations_remaining = PG_TOTAL_STATES - (int) $data['locations_completed'];
         $needed_prayer_speed =   $time_remaining !== 0 ? $locations_remaining / $time_remaining : 0 ;
         $locations_per_hour = $needed_prayer_speed * 60 * 60;
         $locations_per_day = $locations_per_hour * 24;
@@ -287,13 +284,13 @@ function _pg_stats_builder( $data ) : array {
     $completed = (int) $data['locations_completed'];
     $data['completed'] = number_format( $completed );
     $data['completed_int'] = $completed;
-    $completed_percent = ROUND( $completed / $PG_TOTAL_STATES * 100, 0 );
+    $completed_percent = ROUND( $completed / PG_TOTAL_STATES * 100, 0 );
     if ( 100 < $completed_percent ) {
         $completed_percent = 100;
     }
     $data['completed_percent'] = $completed_percent;
-    $data['remaining'] = number_format( $PG_TOTAL_STATES - $completed );
-    $data['remaining_int'] = $PG_TOTAL_STATES - $completed;
+    $data['remaining'] = number_format( PG_TOTAL_STATES - $completed );
+    $data['remaining_int'] = PG_TOTAL_STATES - $completed;
     $data['remaining_percent'] = 100 - $data['completed_percent'];
 
     /**

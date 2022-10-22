@@ -298,7 +298,7 @@ class PG_Custom_Prayer_App_Lap extends PG_Custom_Prayer_App {
             case 'correction':
                 return $this->save_correction( $params['parts'], $params['data'] );
             case 'refresh':
-                return $this->get_new_location( $params['data']['favor'] );
+                return $this->get_new_location( $params['parts'], $params['data']['favor'] );
             case 'ip_location':
                 return $this->get_ip_location();
             default:
@@ -435,8 +435,11 @@ class PG_Custom_Prayer_App_Lap extends PG_Custom_Prayer_App {
      * Global query
      * @return array|false|void
      */
-    public function get_new_location( $favor = 'guided' ) {
+    public function get_new_location( $parts, $favor = 'guided' ) {
         // get 4770 list
+        if ( empty( $this->parts ) && ! empty( $parts ) ) {
+            $this->parts = $parts;
+        }
         $list_4770 = pg_query_4770_locations();
 
         // subtract prayed places
