@@ -153,7 +153,13 @@ jQuery(document).ready(function(){
     if ( window.previous_grids.includes( content.location.grid_id ) ) {
       window.api_post('refresh', { favor: window.favor } )
         .done( function(new_content) {
-          return test_for_redundant_grid( new_content )
+          if ( typeof window.test_for_redundant === 'undefined' ) {
+            window.test_for_redundant = 0
+          }
+          if ( window.test_for_redundant < 3 ) {
+            window.test_for_redundant++
+            return test_for_redundant_grid( new_content )
+          }
         })
     } else {
       window.previous_grids.push(content.location.grid_id )
@@ -298,6 +304,10 @@ jQuery(document).ready(function(){
    */
   function load_location( ) {
     let content = window.report_content = window.current_content
+    if ( typeof content === 'undefined' ) {
+      window.current_content = window.next_content
+      content = window.next_content
+    }
 
     button_text.html('Keep Praying...')
     button_progress.css('width', '0' )
@@ -343,6 +353,10 @@ jQuery(document).ready(function(){
       else {
         window.api_post( 'log', { grid_id: window.current_content.location.grid_id, pace: window.pace, user: window.user_location } )
           .done(function(x) {
+            if ( ! x ) {
+              window.location.href = jsObject.map_url
+              return
+            }
             console.log(x)
             window.current_content = false
             window.current_content = window.next_content

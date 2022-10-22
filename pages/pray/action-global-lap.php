@@ -436,7 +436,6 @@ class PG_Global_Prayer_App_Lap extends PG_Global_Prayer_App {
 
         $result = DT_Posts::create_post( 'feedback', $fields, true, false );
 
-
         return $result;
     }
 
@@ -457,16 +456,19 @@ class PG_Global_Prayer_App_Lap extends PG_Global_Prayer_App {
                 }
             }
         }
+        dt_write_log($list_4770);
 
         if ( empty( $list_4770 ) ) {
-            if ( dt_is_rest() ) { // signal new lap to rest request
-                return false;
-            } else { // if first load on finished lap, redirect to new lap
-                $current_lap = pg_current_global_lap();
                 $this->_generate_new_prayer_lap();
-                wp_redirect( '/newest/lap/' );
-                exit;
-            }
+                return false;
+//            if ( dt_is_rest() ) { // signal new lap to rest request
+//                return false;
+//            } else { // if first load on finished lap, redirect to new lap
+//                $current_lap = pg_current_global_lap();
+//                $this->_generate_new_prayer_lap();
+//                wp_redirect( '/newest/lap/' );
+//                exit;
+//            }
         }
 
         shuffle( $list_4770 );

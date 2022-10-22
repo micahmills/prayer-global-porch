@@ -187,14 +187,16 @@ class Prayer_Global_Laps_Post_Type extends DT_Module_Base {
                 'description' => '',
                 'type'        => 'number',
                 'default'     => '',
-                "hidden" => true,
+                'tile' => 'details',
+                "hidden" => false,
             ];
             $fields['end_time'] = [
                 'name'        => __( 'End Time', 'prayer-global' ),
                 'description' => '',
                 'type'        => 'number',
                 'default'     => '',
-                "hidden" => true,
+                'tile' => 'details',
+                "hidden" => false,
             ];
 
             $fields['global_lap_number'] = [

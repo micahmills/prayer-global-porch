@@ -32,9 +32,9 @@ class Prayer_Global_Add extends DT_Magic_Url_Base
 
     public function redirect() {
         // @phpcs:disable
-        require_once( trailingslashit( plugin_dir_path( __DIR__ ) ) . 'pages/pray/stacker.php' );
+//        require_once( trailingslashit( plugin_dir_path( __DIR__ ) ) . 'pages/pray/stacker.php' );
         global $wpdb;
-        $start =2;
+        $start =1;
         if ( isset( $_GET['start'] ) ) {
             $start = $_GET['start'];
         }

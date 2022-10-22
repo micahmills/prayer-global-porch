@@ -73,7 +73,8 @@ class PG_Global_Prayer_App_Stats extends PG_Global_Prayer_App {
                 padding-top:10vh;
             }
             .pb_cover_v1 {
-                height: 100vh;
+                min-height: 100vh;
+                height: fit-content;
             }
         </style>
 
