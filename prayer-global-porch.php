@@ -22,6 +22,8 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit; // Exit if accessed directly
 }
 
+define( 'PG_TOTAL_STATES', 4770 );
+
 /**
  * Gets the instance of the `Prayer_Global_Porch` class.
  *
