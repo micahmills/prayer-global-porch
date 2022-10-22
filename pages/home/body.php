@@ -211,7 +211,7 @@
         </div>
         <div class="row">
             <div class="col-md text-center">
-                <a href="/newest/map/" role="button" class="btn smoothscroll pb_outline-dark btn-xl pb_font-13 p-4 rounded-0 pb_letter-spacing-2">Current Map</a>
+                <a href="/newest/map/" role="button" class="btn smoothscroll pb_outline-dark btn-xl pb_font-13 p-4 rounded-0 pb_letter-spacing-2" data-reverse-color>Current Map</a>
             </div>
         </div>
         <div class="row">
@@ -255,8 +255,8 @@
         </div>
         <div class="row">
             <div class="col-md text-center">
-                <a href="/race_app/big_map/" role="button" class="btn smoothscroll pb_outline-dark btn-xl pb_font-13 p-4 rounded-0 pb_letter-spacing-2">Big Map</a>
-                <a href="/race_app/big_list/" role="button" class="btn smoothscroll pb_outline-dark btn-xl pb_font-13 p-4 rounded-0 pb_letter-spacing-2">Big List</a>
+                <a href="/race_app/big_map/" role="button" class="btn smoothscroll pb_outline-dark btn-xl pb_font-13 p-4 rounded-0 pb_letter-spacing-2" data-reverse-color>Big Map</a>
+                <a href="/race_app/big_list/" role="button" class="btn smoothscroll pb_outline-dark btn-xl pb_font-13 p-4 rounded-0 pb_letter-spacing-2" data-reverse-color>Big List</a>
             </div>
         </div>
     </div>
