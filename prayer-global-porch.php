@@ -126,6 +126,9 @@ class Prayer_Global_Porch {
 //        require_once( 'charts/charts-loader.php' );
         require_once( 'support/build/show-all-content.php' );
 
+        // 404
+        require_once( 'pages/404/404.php' );
+
 
 //        require_once( 'support/cron.php' );
 //        require_once( 'support/config-required-plugins.php' );
