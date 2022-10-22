@@ -417,7 +417,7 @@ class PG_Global_Prayer_App_Lap extends PG_Global_Prayer_App {
             ],
             'user_hash' => $data['user']['hash'],
             'notes' => [
-                'Review Link' => 'https://prayer.global/show_app/all_content/?grid_id='.$data['grid_id'],
+                'Review Link' =>  get_site_url() . '/show_app/all_content/?grid_id='.$data['grid_id'],
                 'Current_Location' => $current_location_list,
                 'User_Location' => $user_location,
             ]

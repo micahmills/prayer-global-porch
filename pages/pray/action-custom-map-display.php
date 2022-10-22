@@ -132,7 +132,7 @@ class PG_Custom_Prayer_App_Map_Display extends PG_Custom_Prayer_App {
                     </div>
                     <div id="qr-code-block">
                         <div class="two-em center">PRAY WITH US</div>
-                        <img class="qr-code-image" src="https://api.qrserver.com/v1/create-qr-code/?size=500x500&amp;data=https://prayer.global/prayer_app/custom/<?php echo esc_html( $lap_stats['key'] ) ?>">
+                        <img class="qr-code-image" src="https://api.qrserver.com/v1/create-qr-code/?size=500x500&amp;data=<?php echo get_site_url() ?>/prayer.global/prayer_app/custom/<?php echo esc_html( $lap_stats['key'] ) ?>">
                         <div class="center uppercase">TURN THE MAP FROM RED TO GREEN</div>
                     </div>
                 </div>

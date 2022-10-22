@@ -173,7 +173,7 @@ class Prayer_Global_Porch_Data_Source extends DT_Magic_Url_Base
                         <ul>
                             <li>
                                 <u>Source</u><br>
-                                <a href="https://prayer.global/content_app/data_sources/">Joshua Project</a> - Values for "Christian Adherent" and "Evangelical"
+                                <a href="https://joshuaproject.net/">Joshua Project</a> - Values for "Christian Adherent" and "Evangelical"
                                 (which determine unreached status) are often informed estimates, some more accurate than others at the country level.
                             </li>
                             <li>
