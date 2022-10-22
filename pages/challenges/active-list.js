@@ -32,9 +32,9 @@ jQuery(document).ready(function() {
                           <td>${v.stats.time_elapsed_small}</td>
                           <td style="text-align:right;">
                             <a href="/prayer_app/custom/${v.lap_key}">Pray</a> |
-                            <a href="/prayer_app/custom/${v.lap_key}/map">View Map</a> |
-                            <a href="/prayer_app/custom/${v.lap_key}/tools">Share Tools</a> |
-                            <a href="/prayer_app/custom/${v.lap_key}/display">Screen Display</a>
+                            <a href="/prayer_app/custom/${v.lap_key}/map">Map</a> |
+                            <a href="/prayer_app/custom/${v.lap_key}/tools">Sharing</a> |
+                            <a href="/prayer_app/custom/${v.lap_key}/display">Display</a>
                           </td>
                         </tr>`
       })

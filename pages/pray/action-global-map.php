@@ -166,11 +166,6 @@ class PG_Global_Prayer_App_Map extends PG_Global_Prayer_App {
             <ul class="navbar-nav two-em">
                 <li class="nav-item"><a class="nav-link btn smoothscroll pb_outline-dark" style="text-transform: capitalize;" href="/newest/lap/">Start Praying</a></li>
             </ul>
-            <hr>
-            <ul class="navbar-nav two-em">
-                <li class="nav-item"><a class="nav-link" href="/race_app/big_map/">Big Map</a></li>
-                <li class="nav-item"><a class="nav-link" href="/race_app/big_list/">Big List</a></li>
-            </ul>
             <div class="show-for-small-only">
                 <hr>
             </div>
