@@ -122,6 +122,7 @@ class PG_Custom_Prayer_App_Map_Display extends PG_Custom_Prayer_App {
                 <span class="loading-spinner active"></span>
                 <div id='map'></div>
                 <div id="foot_block">
+                    <div class="map-overlay" id="map-legend"></div>
                     <div class="grid-x grid-padding-x">
                         <div class="cell medium-2" id="qr-cell"></div>
                         <div class="cell medium-2 center"><strong>Prayer Warriors</strong><br><strong><span class="three-em prayer_warriors"></span></strong></div>

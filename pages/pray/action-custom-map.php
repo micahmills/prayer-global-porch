@@ -130,6 +130,7 @@ class PG_Custom_Prayer_App_Map extends PG_Custom_Prayer_App {
                 <span class="loading-spinner active"></span>
                 <div id='map'></div>
                 <div id="foot_block">
+                    <div class="map-overlay" id="map-legend"></div>
                     <div class="grid-x grid-padding-x">
                         <div class="cell center"><button type="button" data-toggle="offcanvas_stats"><i class="ion-chevron-up two-em"></i></button></div>
                         <div class="cell small-6 medium-3 center hide-for-small-only"><strong>Places Remaining</strong><br><strong><span class="one-em red stats-figure remaining"></span></strong></div>
