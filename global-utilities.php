@@ -245,31 +245,41 @@ function _pg_custom_stats_builder_query( &$data ) {
 
 function _pg_stats_builder( $data ) : array {
 //    dt_write_log(__METHOD__);
+    global $PG_TOTAL_STATES;
+    $PG_TOTAL_STATES = 4770;
 
     /**
      * TIME CALCULATIONS
      */
-    $time_difference = $data['end_time'] - $data['start_time'];
-    $days = floor( $time_difference / 60 / 60 / 24 );
-    $hours = floor( ( $time_difference / 60 / 60 ) - ( $days * 24 ) );
-    $minutes = floor( ( $time_difference / 60 ) - ( $hours * 60 ) - ( $days * 24 * 60 ) );
-    if ( empty( $days ) && empty( $hours ) ){
-        $data['time_elapsed'] = "$minutes minutes";
-        $data['time_elapsed_small'] = $minutes."m";
+    $now = time();
+    $time_difference = $now - $data['start_time'];
+    _pg_format_duration( $data, $time_difference, 'time_elapsed', 'time_elapsed_small' );
+
+    $prayer_speed =  (int) $time_difference !== 0 ? (int) $data['locations_completed'] / $time_difference : 0;
+    $locations_per_hour = $prayer_speed * 60 * 60;
+    $locations_per_day = $locations_per_hour * 24;
+    $data['locations_per_hour'] = $locations_per_hour < 1 && $locations_per_hour !== 0 ? number_format( $locations_per_hour, 2 ) : number_format( $locations_per_hour );
+    $data['locations_per_day'] = $locations_per_day < 1 && $locations_per_day !== 0 ? number_format( $locations_per_day, 2 ) : number_format( $locations_per_day );
+
+    if ( $data['on_going'] === false ) {
+        $time_remaining = $data['end_time'] - $now;
+        _pg_format_duration( $data, $time_remaining, 'time_remaining', 'time_remaining_small' );
+
+        $locations_remaining = $PG_TOTAL_STATES - (int) $data['locations_completed'];
+        $needed_prayer_speed =   $time_remaining !== 0 ? $locations_remaining / $time_remaining : 0 ;
+        $locations_per_hour = $needed_prayer_speed * 60 * 60;
+        $locations_per_day = $locations_per_hour * 24;
+        $data['needed_locations_per_hour'] = $locations_per_hour < 1 && $locations_per_hour !== 0 ? number_format( $locations_per_hour, 2 ) : number_format( $locations_per_hour );
+        $data['needed_locations_per_day'] = $locations_per_day < 1 && $locations_per_day !== 0 ? number_format( $locations_per_day, 2 ) : number_format( $locations_per_day );
     }
-    else if ( empty( $days ) ) {
-        $data['time_elapsed'] = "$hours hours, $minutes minutes";
-        $data['time_elapsed_small'] = $hours."h, ".$minutes."m";
-    }
-    else if ( $days > 365 ) {
-        $years = floor( $time_difference / 60 / 60 / 24 / 365 );
-        $data['time_elapsed'] = "$years years, $days days, $hours hours, $minutes minutes";
-        $data['time_elapsed_small'] = $years."y, ".$days."d, ".$hours."h, ".$minutes."m";
-    }
-    else {
-        $data['time_elapsed'] = "$days days, $hours hours, $minutes minutes";
-        $data['time_elapsed_small'] = $days."d, ".$hours."h, ".$minutes."m";
-    }
+    /**
+     * QUANTITY OF PRAYER
+     */
+    $minutes_prayed = (int) $data['minutes_prayed'];
+    $data['minutes_prayed'] = number_format( $minutes_prayed );
+    $data['minutes_prayed_int'] = $minutes_prayed;
+    $seconds_prayed = $minutes_prayed * 60;
+    _pg_format_duration( $data, $seconds_prayed, 'minutes_prayed_formatted', 'minutes_prayer_formatted_small' );
 
     /**
      * COMPLETED & REMAINING
@@ -277,13 +287,13 @@ function _pg_stats_builder( $data ) : array {
     $completed = (int) $data['locations_completed'];
     $data['completed'] = number_format( $completed );
     $data['completed_int'] = $completed;
-    $completed_percent = ROUND( $completed / 4770 * 100, 0 );
+    $completed_percent = ROUND( $completed / $PG_TOTAL_STATES * 100, 0 );
     if ( 100 < $completed_percent ) {
         $completed_percent = 100;
     }
     $data['completed_percent'] = $completed_percent;
-    $data['remaining'] = number_format( 4770 - $completed );
-    $data['remaining_int'] = 4770 - $completed;
+    $data['remaining'] = number_format( $PG_TOTAL_STATES - $completed );
+    $data['remaining_int'] = $PG_TOTAL_STATES - $completed;
     $data['remaining_percent'] = 100 - $data['completed_percent'];
 
     /**
@@ -293,33 +303,6 @@ function _pg_stats_builder( $data ) : array {
     $data['participants'] = number_format( $participants );
     $data['participants_int'] = $participants;
 
-    /**
-     * QUANTITY OF PRAYER
-     */
-    $minutes_prayed = (int) $data['minutes_prayed'];
-    $data['minutes_prayed'] = number_format( $minutes_prayed );
-    $data['minutes_prayed_int'] = $minutes_prayed;
-    $seconds_prayed = $minutes_prayed * 60;
-    $days = floor( $seconds_prayed / 60 / 60 / 24 );
-    $hours = floor( ( $seconds_prayed / 60 / 60 ) - ( $days * 24 ) );
-    $minutes = floor( ( $seconds_prayed / 60 ) - ( $hours * 60 ) - ( $days * 24 * 60 ) );
-    if ( empty( $days ) && empty( $hours ) ){
-        $data['minutes_prayed_formatted'] = "$minutes minutes";
-        $data['minutes_prayed_formatted_small'] = $minutes."m";
-    }
-    else if ( empty( $days ) ) {
-        $data['minutes_prayed_formatted'] = "$hours hours, $minutes minutes";
-        $data['minutes_prayed_formatted_small'] = $hours."h, ".$minutes."m";
-    }
-    else if ( $days > 365 ) {
-        $years = floor( $seconds_prayed / 60 / 60 / 24 / 365 );
-        $data['minutes_prayed_formatted'] = "$years years, $days days, $hours hours, $minutes minutes";
-        $data['minutes_prayed_formatted_small'] = $years."y, ".$days."d, ".$hours."h, ".$minutes."m";
-    }
-    else {
-        $data['minutes_prayed_formatted'] = "$days days, $hours hours, $minutes minutes";
-        $data['minutes_prayed_formatted_small'] = $days."d, ".$hours."h, ".$minutes."m";
-    }
     $data['start_time_formatted'] = gmdate( 'M d, Y', $data['start_time'] );
     $data['end_time_formatted'] = gmdate( 'M d, Y', $data['end_time'] );
 
@@ -328,6 +311,34 @@ function _pg_stats_builder( $data ) : array {
     return $data;
 }
 
+function _pg_format_duration( &$data, $time, $key_long, $key_short ) {
+
+    if ( $time === 0 ) {
+        $data[$key_long] = "--";
+        $data[$key_short] = "--";
+        return;
+    }
+    $days = floor( $time / 60 / 60 / 24 );
+    $hours = floor( ( $time / 60 / 60 ) - ( $days * 24 ) );
+    $minutes = floor( ( $time / 60 ) - ( $hours * 60 ) - ( $days * 24 * 60 ) );
+    if ( empty( $days ) && empty( $hours ) ){
+        $data[$key_long] = "$minutes minutes";
+        $data[$key_short] = $minutes." min";
+    }
+    else if ( empty( $days ) ) {
+        $data[$key_long] = "$hours hours, $minutes minutes";
+        $data[$key_short] = $hours."h, ".$minutes."m";
+    }
+    else if ( $days > 365 ) {
+        $years = floor( $time / 60 / 60 / 24 / 365 );
+        $data[$key_long] = "$years years, $days days, $hours hours, $minutes minutes";
+        $data[$key_short] = $years."y, ".$days."d, ".$hours."h, ".$minutes."m";
+    }
+    else {
+        $data[$key_long] = "$days days, $hours hours, $minutes minutes";
+        $data[$key_short] = $days."d, ".$hours."h, ".$minutes."m";
+    }
+}
 
 function pg_query_4770_locations() {
 
@@ -485,11 +496,12 @@ function pg_recursive_parse_args( $args, $defaults ) {
 }
 
 function pg_is_lap_complete( $post_id ) {
+    global $PG_TOTAL_STATES;
     $complete = get_post_meta( $post_id, 'lap_completed', true );
     if ( ! $complete ) {
         global $wpdb;
         $count = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT( DISTINCT( grid_id ) ) FROM $wpdb->dt_reports WHERE post_id = %d AND type = 'prayer_app' AND subtype = 'custom'", $post_id ) );
-        if ( $count >= 4770 ){
+        if ( $count >= $PG_TOTAL_STATES  ){
             update_post_meta( $post_id, 'lap_completed', time() );
             return true;
         } else {

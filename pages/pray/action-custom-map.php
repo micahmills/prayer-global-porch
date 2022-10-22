@@ -212,7 +212,7 @@ class PG_Custom_Prayer_App_Map extends PG_Custom_Prayer_App {
                     <p class="stats-figure"><span class="completed_percent">0</span>%</p>
                 </div>
                 <div class="cell small-6 medium-3">
-                    <p class="stats-title">Pace of Lap</p>
+                    <p class="stats-title">Time Elapsed</p>
                     <p class="stats-figure time_elapsed">0</p>
                 </div>
 
@@ -224,6 +224,26 @@ class PG_Custom_Prayer_App_Map extends PG_Custom_Prayer_App {
                     <p class="stats-title">End Time</p>
                     <p class="stats-figure end_time">0</p>
                 </div>
+
+                <div class="cell small-6 medium-3">
+                    <p class="stats-title">Locations per Hour</p>
+                    <p class="stats-figure locations_per_hour" style="margin-bottom: 0">0</p>
+                    <p class="stats-small">
+                        <small class="locations_per_day">0</small> <small>per day</small>
+                    </p>
+                </div>
+                <div class="cell small-6 medium-3">
+                    <p class="stats-title">Target Locations per Hour</p>
+                    <p class="stats-figure needed_locations_per_hour" style="margin-bottom: 0">0</p>
+                    <p class="stats-small">
+                        <small class="needed_locations_per_day">0</small> <small>per day</small>
+                    </p>
+                </div>
+                <div class="cell small-6 medium-3">
+                    <p class="stats-title">Time Remaining</p>
+                    <p class="stats-figure time_remaining">0</p>
+                </div>
+
             </div>
             <div class="text-center"><a href="/" class="navbar-brand text-center">Exit <?php echo esc_html( $lap_stats['title'] ) ?></a></div>
         </div>

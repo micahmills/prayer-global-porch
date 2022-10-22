@@ -236,7 +236,7 @@ class PG_Global_Prayer_App_Map extends PG_Global_Prayer_App {
                     <p class="stats-figure"><span class="completed_percent">0</span>%</p>
                 </div>
                 <div class="cell small-6 medium-3">
-                    <p class="stats-title">Pace of Lap</p>
+                    <p class="stats-title">Time Elapsed</p>
                     <p class="stats-figure time_elapsed">0</p>
                 </div>
 
@@ -247,6 +247,11 @@ class PG_Global_Prayer_App_Map extends PG_Global_Prayer_App {
                 <div class="cell small-6 medium-3">
                     <p class="stats-title">End Time</p>
                     <p class="stats-figure end_time">0</p>
+                </div>
+
+                <div class="cell small-6 medium-3">
+                    <p class="stats-title">Location Pace</p>
+                    <p class="stats-figure lap_pace">0</p>
                 </div>
             </div>
         </div>
