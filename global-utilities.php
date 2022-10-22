@@ -497,6 +497,7 @@ function pg_recursive_parse_args( $args, $defaults ) {
 
 function pg_is_lap_complete( $post_id ) {
     global $PG_TOTAL_STATES;
+    $PG_TOTAL_STATES = 4770;
     $complete = get_post_meta( $post_id, 'lap_completed', true );
     if ( ! $complete ) {
         global $wpdb;
