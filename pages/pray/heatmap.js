@@ -379,12 +379,15 @@ jQuery(document).ready(function($){
     jQuery('.time_elapsed').html( jsObject.stats.time_elapsed_small )
     jQuery('.minutes_prayed').html( jsObject.stats.minutes_prayed )
     jQuery('.start_time').html( jsObject.stats.start_time_formatted )
-    jQuery('.locations_per_hour').html( jsObject.stats.locations_per_hour )
-    jQuery('.locations_per_day').html( jsObject.stats.locations_per_day )
-    jQuery('.needed_locations_per_hour').html( jsObject.stats.needed_locations_per_hour )
-    jQuery('.needed_locations_per_day').html( jsObject.stats.needed_locations_per_day )
-    jQuery('.time_remaining').html( jsObject.stats.time_remaining_small )
-
+    if ( ! jsObject.stats.on_going ) {
+      // jQuery('.on-going').show()
+      jQuery('.locations_per_hour').html( jsObject.stats.locations_per_hour )
+      jQuery('.locations_per_day').html( jsObject.stats.locations_per_day )
+      jQuery('.needed_locations_per_hour').html( jsObject.stats.needed_locations_per_hour )
+      jQuery('.needed_locations_per_day').html( jsObject.stats.needed_locations_per_day )
+      jQuery('.time_remaining').html( jsObject.stats.time_remaining_small )
+    }
+    
     if ( jsObject.stats.on_going ) {
       jQuery('.end_time').html( 'On-going' )
     } else {
