@@ -354,7 +354,7 @@ class PG_Custom_Prayer_App_Lap extends PG_Custom_Prayer_App {
         }
         $id = dt_report_insert( $args, true, false );
 
-        return $this->get_new_location( $parts['post_id'] );
+        return $this->get_new_location( $parts, $data['favor'] );
     }
 
     /**
