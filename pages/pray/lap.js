@@ -352,7 +352,7 @@ jQuery(document).ready(function(){
         button_progress.css('width', window.percent+'%' )
       }
       else {
-        window.api_post( 'log', { grid_id: window.current_content.location.grid_id, pace: window.pace, user: window.user_location } )
+        window.api_post( 'log', { grid_id: window.current_content.location.grid_id, pace: window.pace, user: window.user_location, favor: window.favor } )
           .done(function(x) {
             if ( ! x ) {
               window.location.href = jsObject.map_url
