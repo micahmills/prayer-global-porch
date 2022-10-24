@@ -417,7 +417,7 @@ class PG_Global_Prayer_App_Lap extends PG_Global_Prayer_App {
             ],
             'user_hash' => $data['user']['hash'],
             'notes' => [
-                'Review Link' =>  get_site_url() . '/show_app/all_content/?grid_id='.$data['grid_id'],
+                'Review Link' => get_site_url() . '/show_app/all_content/?grid_id='.$data['grid_id'],
                 'Current_Location' => $current_location_list,
                 'User_Location' => $user_location,
             ]
@@ -456,7 +456,7 @@ class PG_Global_Prayer_App_Lap extends PG_Global_Prayer_App {
                 }
             }
         }
-        dt_write_log($list_4770);
+        dt_write_log( $list_4770 );
 
         if ( empty( $list_4770 ) ) {
                 $this->_generate_new_prayer_lap();

@@ -153,16 +153,17 @@ jQuery(document).ready(function(){
     if ( window.previous_grids.includes( content.location.grid_id ) ) {
       window.api_post('refresh', { favor: window.favor } )
         .done( function(new_content) {
-          return test_for_redundant_grid( new_content )
-          // if ( typeof window.test_for_redundant === 'undefined' ) {
-          //   window.test_for_redundant = 0
-          // }
-          // if ( window.test_for_redundant < 3 ) {
-          //   window.test_for_redundant++
-          //   return test_for_redundant_grid( new_content )
-          // }
+          // return test_for_redundant_grid( new_content )
+          if ( typeof window.test_for_redundant === 'undefined' ) {
+            window.test_for_redundant = 0
+          }
+          if ( window.test_for_redundant < 3 ) {
+            window.test_for_redundant++
+            return test_for_redundant_grid( new_content )
+          }
         })
     } else {
+      window.test_for_redundant = 0
       window.previous_grids.push(content.location.grid_id )
       return content
     }

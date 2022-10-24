@@ -252,7 +252,7 @@ function _pg_stats_builder( $data ) : array {
     $time_difference = $now - $data['start_time'];
     _pg_format_duration( $data, $time_difference, 'time_elapsed', 'time_elapsed_small' );
 
-    $prayer_speed =  (int) $time_difference !== 0 ? (int) $data['locations_completed'] / $time_difference : 0;
+    $prayer_speed = (int) $time_difference !== 0 ? (int) $data['locations_completed'] / $time_difference : 0;
     $locations_per_hour = $prayer_speed * 60 * 60;
     $locations_per_day = $locations_per_hour * 24;
     $data['locations_per_hour'] = $locations_per_hour < 1 && $locations_per_hour !== 0 ? number_format( $locations_per_hour, 2 ) : number_format( $locations_per_hour );
@@ -263,7 +263,7 @@ function _pg_stats_builder( $data ) : array {
         _pg_format_duration( $data, $time_remaining, 'time_remaining', 'time_remaining_small' );
 
         $locations_remaining = PG_TOTAL_STATES - (int) $data['locations_completed'];
-        $needed_prayer_speed =   $time_remaining !== 0 ? $locations_remaining / $time_remaining : 0 ;
+        $needed_prayer_speed = $time_remaining !== 0 ? $locations_remaining / $time_remaining : 0;
         $locations_per_hour = $needed_prayer_speed * 60 * 60;
         $locations_per_day = $locations_per_hour * 24;
         $data['needed_locations_per_hour'] = $locations_per_hour < 1 && $locations_per_hour !== 0 ? number_format( $locations_per_hour, 2 ) : number_format( $locations_per_hour );
@@ -497,7 +497,7 @@ function pg_is_lap_complete( $post_id ) {
     if ( ! $complete ) {
         global $wpdb;
         $count = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT( DISTINCT( grid_id ) ) FROM $wpdb->dt_reports WHERE post_id = %d AND type = 'prayer_app' AND subtype = 'custom'", $post_id ) );
-        if ( $count >= PG_TOTAL_STATES  ){
+        if ( $count >= PG_TOTAL_STATES ){
             update_post_meta( $post_id, 'lap_completed', time() );
             return true;
         } else {
