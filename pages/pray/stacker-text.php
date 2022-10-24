@@ -418,13 +418,13 @@ class PG_Stacker_Text_V2 {
             ],
             [
                 'section_label' => $section_label,
-                'prayer' => 'Father, please call new disciples full of yearning to see You praised in '.$stack['location']['full_name'].'.',
+                'prayer' => 'Father, please call new believers full of yearning to see You praised in '.$stack['location']['full_name'].'.',
                 'reference' => 'Psalm 96:3',
                 'verse' => 'Declare his glory among the nations, his marvelous deeds among all peoples.',
             ],
             [
                 'section_label' => $section_label,
-                'prayer' => 'Spirit, guide the disciples in the '.$stack['location']['admin_level_name'].' of '.$stack['location']['name'].' into all truth as they interpret Scriptures.',
+                'prayer' => 'Spirit, guide the '.$stack['location']['believers'].' believers in the '.$stack['location']['admin_level_name'].' of '.$stack['location']['name'].' into all truth as they interpret Scriptures.',
                 'reference' => 'Hebrews 4:12',
                 'verse' => 'For the Word of God is alive and active. Sharper than any two-edged sword, it penetrates even to dividing soul and spirit, joints and marrow.',
             ],
@@ -442,9 +442,15 @@ class PG_Stacker_Text_V2 {
             ],
             [
                 'section_label' => $section_label,
-                'prayer' => "Spirit, teach the disciples that when they seek first God's Kingdom and His righteousness, He will abundantly provide all they need.",
+                'prayer' => "Spirit, teach the ".$stack['location']['believers']." believers in ".$stack['location']['name']." that when they seek first God's Kingdom and His righteousness, He will abundantly provide all they need.",
                 'reference' => '2 Corinthians 9:8',
                 'verse' => 'And God is able to bless you abundantly, so that in all things at all times, having all that you need, you will abound in every good work.',
+            ],
+            [
+                'section_label' => $section_label,
+                'prayer' => 'Spirit, give the disciples of the '.$stack['location']['admin_level_name'].' of '.$stack['location']['name'].' words, actions, signs and wonders, to proclaim the coming of the Kingdom with boldness and power.',
+                'reference' => 'Matthew 10:7',
+                'verse' => 'As you go, proclaim this message: "The kingdom of heaven has come near."',
             ],
         ];
 

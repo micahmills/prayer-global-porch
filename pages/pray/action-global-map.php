@@ -240,7 +240,7 @@ class PG_Global_Prayer_App_Map extends PG_Global_Prayer_App {
                     <p class="stats-title">Start Time</p>
                     <p class="stats-figure start_time">0</p>
                 </div>
-                <div class="cell small-6 medium-3">
+                <div class="cell small-6 medium-3 on-going" style="display:none;">
                     <p class="stats-title">End Time</p>
                     <p class="stats-figure end_time">0</p>
                 </div>
