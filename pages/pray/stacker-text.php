@@ -401,6 +401,59 @@ class PG_Stacker_Text_V2 {
         return $lists;
     }
 
+    public static function _for_movement( &$lists, $stack, $all = false ) {
+        $section_label = 'Movement Health';
+        $templates = [
+            [
+                'section_label' => $section_label,
+                'prayer' => 'Father, we pray for every movement leader and disciple in the that they would have deepening intimacy with You.',
+                'reference' => 'John 14:20',
+                'verse' => 'On that day you will realize that I am in my Father, and you are in me, and I am in you.',
+            ],
+            [
+                'section_label' => $section_label,
+                'prayer' => 'Spirit, raise up prayer leaders in the '.$stack['location']['admin_level_name'].' of '.$stack['location']['full_name'].'.',
+                'reference' => 'Colossians 4:2',
+                'verse' => 'Devote yourselves to prayer, being watchful and thankful.',
+            ],
+            [
+                'section_label' => $section_label,
+                'prayer' => 'Father, please call new disciples full of yearning to see You praised in '.$stack['location']['full_name'].'.',
+                'reference' => 'Psalm 96:3',
+                'verse' => 'Declare his glory among the nations, his marvelous deeds among all peoples.',
+            ],
+            [
+                'section_label' => $section_label,
+                'prayer' => 'Spirit, guide the disciples in the '.$stack['location']['admin_level_name'].' of '.$stack['location']['name'].' into all truth as they interpret Scriptures.',
+                'reference' => 'Hebrews 4:12',
+                'verse' => 'For the Word of God is alive and active. Sharper than any two-edged sword, it penetrates even to dividing soul and spirit, joints and marrow.',
+            ],
+            [
+                'section_label' => $section_label,
+                'prayer' => 'Spirit, give the believers of the '.$stack['location']['admin_level_name'].' of '.$stack['location']['name'].' unity and humility as they work to bring the kingdom to new people and places.',
+                'reference' => '',
+                'verse' => '',
+            ],
+            [
+                'section_label' => $section_label,
+                'prayer' => 'Father, give the disciples of the '.$stack['location']['admin_level_name'].' of '.$stack['location']['name'].' an urgency of seeing every people and place reached for the gospel.',
+                'reference' => 'John 9:4',
+                'verse' => 'As long as it is day, we must do the works of him who sent me. Night is coming, when no one can work.',
+            ],
+            [
+                'section_label' => $section_label,
+                'prayer' => "Spirit, teach the disciples that when they seek first God's Kingdom and His righteousness, He will abundantly provide all they need.",
+                'reference' => '2 Corinthians 9:8',
+                'verse' => 'And God is able to bless you abundantly, so that in all things at all times, having all that you need, you will abound in every good work.',
+            ],
+        ];
+
+        if ( $all ) {
+            return array_merge( $templates, $lists );
+        }
+        $lists = array_merge( [ $templates[array_rand( $templates ) ] ], $lists );
+        return $lists;
+    }
 
     public static function _language_prayers( &$lists, $stack, $all = false ) {
         if ( 'English' === $stack['location']['primary_language'] ) {

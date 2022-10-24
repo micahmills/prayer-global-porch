@@ -387,7 +387,7 @@ jQuery(document).ready(function($){
       jQuery('.needed_locations_per_day').html( jsObject.stats.needed_locations_per_day )
       jQuery('.time_remaining').html( jsObject.stats.time_remaining_small )
     }
-    
+
     if ( jsObject.stats.on_going ) {
       jQuery('.end_time').html( 'On-going' )
     } else {

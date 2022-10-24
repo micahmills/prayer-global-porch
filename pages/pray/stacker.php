@@ -57,6 +57,7 @@ class PG_Stacker {
         $lists = [];
 
         // PRAYER SHUFFLE
+        PG_Stacker_Text_V2::_for_movement( $lists, $stack );
         PG_Stacker_Text_V2::_population_prayers( $lists, $stack );
         PG_Stacker_Text_V2::_language_prayers( $lists, $stack );
         PG_Stacker_Text_V2::_religion_prayers( $lists, $stack );
