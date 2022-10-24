@@ -379,8 +379,8 @@ jQuery(document).ready(function($){
     jQuery('.time_elapsed').html( jsObject.stats.time_elapsed_small )
     jQuery('.minutes_prayed').html( jsObject.stats.minutes_prayed )
     jQuery('.start_time').html( jsObject.stats.start_time_formatted )
-    if ( ! jsObject.stats.on_going ) {
-      // jQuery('.on-going').show()
+    if ( jsObject.stats.remaining_int < 1 ) {
+      jQuery('.on-going').show()
       jQuery('.locations_per_hour').html( jsObject.stats.locations_per_hour )
       jQuery('.locations_per_day').html( jsObject.stats.locations_per_day )
       jQuery('.needed_locations_per_hour').html( jsObject.stats.needed_locations_per_hour )
