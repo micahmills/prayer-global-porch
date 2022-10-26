@@ -71,10 +71,6 @@ class PG_Global_Prayer_App_Lap extends PG_Global_Prayer_App {
         if ( (int) $current_lap['post_id'] === (int) $this->parts['post_id'] ) {
             ?>
             <!-- Resources -->
-<!--            <script src="https://cdn.amcharts.com/lib/5/index.js"></script>-->
-<!--            <script src="https://cdn.amcharts.com/lib/5/map.js"></script>-->
-<!--            <script src="https://cdn.amcharts.com/lib/5/geodata/worldLow.js"></script>-->
-<!--            <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>-->
             <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js?ver=3"></script>
             <script>
                 let jsObject = [<?php echo json_encode([
@@ -456,19 +452,10 @@ class PG_Global_Prayer_App_Lap extends PG_Global_Prayer_App {
                 }
             }
         }
-        dt_write_log( $list_4770 );
 
         if ( empty( $list_4770 ) ) {
                 $this->_generate_new_prayer_lap();
                 return false;
-//            if ( dt_is_rest() ) { // signal new lap to rest request
-//                return false;
-//            } else { // if first load on finished lap, redirect to new lap
-//                $current_lap = pg_current_global_lap();
-//                $this->_generate_new_prayer_lap();
-//                wp_redirect( '/newest/lap/' );
-//                exit;
-//            }
         }
 
         shuffle( $list_4770 );
