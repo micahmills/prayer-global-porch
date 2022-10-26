@@ -125,11 +125,12 @@ class PG_Custom_Prayer_App_Map_Display extends PG_Custom_Prayer_App {
                     <div class="map-overlay" id="map-legend"></div>
                     <div class="grid-x grid-padding-x">
                         <div class="cell medium-2" id="qr-cell"></div>
+                        <div class="cell medium-1"></div>
                         <div class="cell medium-2 center"><strong>Prayer Warriors</strong><br><strong><span class="three-em prayer_warriors"></span></strong></div>
                         <div class="cell medium-2 center"><strong>Places Covered</strong><br><strong><span class="three-em green completed"></span></strong></div>
                         <div class="cell medium-2 center"><strong>Places Remaining</strong><br><strong><span class="three-em red remaining"></span></strong></div>
                         <div class="cell medium-2 center hide-for-small-only"><strong>World Coverage</strong><br><strong><span class="three-em completed completed_percent"></span><span class="three-em">%</span></strong></div>
-                        <div class="cell medium-2 center hide-for-small-only"><strong>Since Start</strong><br><strong><span class="three-em time_elapsed" style="whitespace:nowrap;">0</span></strong></div>
+                        <div class="cell medium-1"></div>
                     </div>
                     <div id="qr-code-block">
                         <div class="two-em center">PRAY WITH US</div>
