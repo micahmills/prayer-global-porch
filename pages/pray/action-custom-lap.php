@@ -443,7 +443,7 @@ class PG_Custom_Prayer_App_Lap extends PG_Custom_Prayer_App {
         $list_4770 = pg_query_4770_locations();
 
         // subtract prayed places
-        $list_prayed = $this->_query_prayed_list();
+        $list_prayed = $this->_query_prayed_list( $parts['post_id'] );
         if ( ! empty( $list_prayed ) ) {
             foreach ( $list_prayed as $grid_id ) {
                 if ( isset( $list_4770[$grid_id] ) ) {
@@ -473,7 +473,7 @@ class PG_Custom_Prayer_App_Lap extends PG_Custom_Prayer_App {
         }
     }
 
-    public function _query_prayed_list() {
+    public function _query_prayed_list( $post_id ) {
         global $wpdb;
         $current_lap = pg_get_custom_lap_by_post_id( $this->parts['post_id'] );
 
@@ -485,7 +485,7 @@ class PG_Custom_Prayer_App_Lap extends PG_Custom_Prayer_App {
                       AND type = 'prayer_app'
                       AND subtype = 'custom'
                       ",
-        $current_lap['start_time'] ) );
+            $post_id ) );
 
         $list = [];
         if ( ! empty( $raw_list ) ) {
