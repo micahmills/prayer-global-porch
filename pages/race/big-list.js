@@ -33,7 +33,7 @@ jQuery(document).ready(function() {
         }
         html_content += `<tr>
                       <td>${v.lap_number}</td>
-                      <th>Lap #${v.lap_number}</th>
+                      <th><a href="/prayer_app/global/${v.lap_key}">Lap #${v.lap_number}</a></th>
                       <td>${ end_time }</td>
                       <td>${v.stats.participants}</td>
                       <td>${v.stats.minutes_prayed}</td>

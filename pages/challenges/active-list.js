@@ -25,7 +25,7 @@ jQuery(document).ready(function() {
       jQuery.each( data, function(i,v){
         html_content += `<tr>
                           <td>${v.start_time}</td>
-                          <th>${v.post_title}</th>
+                          <th><a href="/prayer_app/custom/${v.lap_key}">${v.post_title}</a></th>
                           <td>${v.stats.participants}</td>
                           <td>${v.stats.completed}</td>
                           <td>${v.stats.remaining}</td>
@@ -40,7 +40,7 @@ jQuery(document).ready(function() {
       })
 
       jQuery('#content').html(
-            `<table class="display responsive" style="width:100%;" id="list-table" data-order='[[ 0, "desc" ]]'>
+            `<table class="display " style="width:100%;" id="list-table" data-order='[[ 0, "desc" ]]'>
                     <thead>
                         <th></th>
                         <th>Name</th>
