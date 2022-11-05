@@ -440,26 +440,35 @@ class PG_Global_Prayer_App_Lap extends PG_Global_Prayer_App {
      * @return array|false|void
      */
     public function get_new_location( $favor = 'guided' ) {
+        $selected_location = 100222418;
         // get 4770 list
         $list_4770 = pg_query_4770_locations();
+        $selected_location_list = pg_query_selected_locations($selected_location);
+
+        if ( $selected_location ) {
+            $location_list = $selected_location_list;
+        } else {
+            $location_list = $list_4770;
+        }
+
 
         // subtract prayed places
         $list_prayed = $this->_query_prayed_list();
         if ( ! empty( $list_prayed ) ) {
             foreach ( $list_prayed as $grid_id ) {
-                if ( isset( $list_4770[$grid_id] ) ) {
-                    unset( $list_4770[$grid_id] );
+                if ( isset( $location_list[$grid_id] ) ) {
+                    unset( $location_list[$grid_id] );
                 }
             }
         }
 
-        if ( empty( $list_4770 ) ) {
+        if ( empty( $location_list ) ) {
                 $this->_generate_new_prayer_lap();
                 return false;
         }
 
-        shuffle( $list_4770 );
-        $grid_id = $list_4770[0];
+        shuffle( $location_list );
+        $grid_id = $location_list[0];
 
         if ( 'guided' === $favor ) {
             return PG_Stacker::build_location_stack_v2( $grid_id );
